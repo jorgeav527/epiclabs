@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+        <div class="card shadow">
+          <div class="card-body">
+            <h2 class="card-title text-center">Salir</h2>
+            <hr class="my-3">
+            <div>
+                <p>
+                  A serrado satisfactoriamente su sesión. 
+                  <a href="{% url 'accounts:login' %}">Entrar de Nuevo</a>.
+                </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+{% endblock content %}

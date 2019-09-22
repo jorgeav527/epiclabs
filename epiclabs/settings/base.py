@@ -13,13 +13,28 @@ SECRET_KEY = config('SECRET_KEY')
 # Application definition
 
 INSTALLED_APPS = [
+    # Created Apps
+    'accounts.apps.AccountsConfig',
+    'equipments.apps.EquipmentsConfig',
+    'labs.apps.LabsConfig',
+    'materials.apps.MaterialsConfig',
+    'sectors.apps.SectorsConfig',
+    'tests_concrete.apps.TestsConcreteConfig',
+    'tests_material.apps.TestsMaterialConfig',
+    'tests_soil.apps.TestsSoilConfig',
+    # Django thrid parties
+    'crispy_forms',
+    # Django Apps Default
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Others
 ]
+
+AUTH_USER_MODEL = "accounts.User" 
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -97,10 +112,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 # Crispy forms for bootstrap4
-# CRISPY_TEMPLATE_PACK = 'bootstrap4'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # Login roots
-# LOGIN_REDIRECT_URL = 'quotes-home'
+LOGIN_REDIRECT_URL = 'labs:home'
 # LOGIN_URL = 'login'
 # LOGOUT_URL = 'logout'
 

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+        <div class="card shadow">
+          <div class="card-body">
+            <h2 class="card-title text-center">Entrar</h2>
+            <hr class="my-3">
+            <div>              
+              <form method="POST" action="{% url 'accounts:login' %}">
+                  {% csrf_token %}
+                  {{ form|crispy }}
+                  <input type="hidden" name="next" value="{{ next }}">
+                  <input class="btn btn-primary btn-lg btn-block" type="submit" value="Entrar">
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+{% endblock content %}

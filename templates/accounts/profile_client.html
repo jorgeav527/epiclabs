@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+        <div class="card shadow">
+          <div class="card-body">
+            <h2 class="card-title text-center">Perfil cliente</h2>
+            <hr class="my-3">
+            <div>
+                <div class="media-body">
+                    <h4 class="">{{ user.username }}</h4>
+                    <div><small class="text-secondary ">{{ user.email }}</small></div>
+                    <div><small class="text-secondary text-capitalize">{{ user.clientprofile.long_name }}</small></div>
+                    <div><small class="text-secondary text-capitalize">{{ user.clientprofile.direction }}</small></div>
+                    <div><small class="text-secondary text-capitalize">{{ user.clientprofile.reference }}</small></div>
+                    <div><small class="text-secondary text-capitalize">{{ user.clientprofile.ruc }}</small></div>
+                    <div><small class="text-secondary text-capitalize">{{ user.clientprofile.phone }}</small></div>
+                </div>
+            </div>
+            <div>              
+                <form method="POST" action=".">
+                    {% csrf_token %}
+                    {{ profile_account|crispy }}
+                    {{ profile_client|crispy }}
+                    <input class="btn btn-primary btn-lg btn-block" type="submit" value="Actualizar Perfil">
+                </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+{% endblock content %}

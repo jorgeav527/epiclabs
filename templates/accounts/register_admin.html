@@ -1,10 +1,10 @@
-{% extends "base.html" %}
+{% extends "base_normal.html" %}
 {% load crispy_forms_tags %}
 
 {% block content %}
 <div class="container">
     <div class="row">
-      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+      <div class="col-sm-12 col-md-8 col-lg-5 mx-auto my-5">
         <div class="card shadow">
           <div class="card-body">
             <h2 class="card-title text-center">Registro Admin</h2>
@@ -13,7 +13,7 @@
               <form method="POST">
                   {% csrf_token %}
                   {{ form|crispy }}
-                  <input class="btn btn-primary btn-lg btn-block" type="submit" value="Registrar">
+                  <button class="btn btn-primary btn-block mt-5" type="submit">Registrar</button>
               </form>
             </div>
           </div>

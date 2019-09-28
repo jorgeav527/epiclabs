@@ -1,0 +1,20 @@
+<div id="menu">
+  <div class="list-group">
+    <a href="#" class="list-group-item" data-toggle="collapse" data-target="#list-one" data-parent="#menu"><i class="fas fa-laptop mr-2 pr-3"></i>Resitencia de Materiales</a>
+    <div class="list-group collapse" id="list-one">
+      <a class="list-group-item" href="{% url 'tests_material:info' %}"><i class="fas fa-angle-double-right mr-3 pr-3"></i>Información</a>
+      <a class="list-group-item list-group-item-action" data-toggle="list" href="#equipment" role="tab"><i class="fas fa-angle-double-right mr-3 pr-3"></i>Equipos</a>
+      <a class="list-group-item list-group-item-action" data-toggle="list" href="#course" role="tab"><i class="fas fa-angle-double-right mr-3 pr-3"></i>Cursos</a>
+      <a class="list-group-item list-group-item-action" data-toggle="list" href="#teachers" role="tab"><i class="fas fa-angle-double-right mr-3 pr-3"></i>Plana docente</a>
+    </div>
+    <a href="#" class="list-group-item" data-toggle="collapse" data-target="#list-two" data-parent="#menu"><i class="fas fa-vials mr-2 pr-3"></i>Ensayos</a>
+    <div class="list-group collapse" id="list-two">
+      <a class="list-group-item" href="{% url 'tests_material:dice_break' %}" ><i class="fas fa-angle-double-right mr-1 pr-1"></i>Rotura de Probetas</a>
+      <a class="list-group-item list-group-item-action" data-toggle="list" href="#compression-two" role="tab"><i class="fas fa-angle-double-right mr-1 pr-1"></i>Rotura de Dados de Grout</a>
+      <a class="list-group-item list-group-item-action" data-toggle="list" href="#compression-three" role="tab"><i class="fas fa-angle-double-right mr-1 pr-1"></i>Rotura de Ladrillos</a>
+      <a class="list-group-item list-group-item-action" data-toggle="list" href="#compression-four" role="tab"><i class="fas fa-angle-double-right mr-1 pr-1"></i>Rotura de Madera</a>
+      <a class="list-group-item list-group-item-action" data-toggle="list" href="#compression-four" role="tab"><i class="fas fa-angle-double-right mr-1 pr-1"></i>Adoquines de Concreto</a>
+    </div>
+    <a href="{% url 'tests_material:info' %}" class="list-group-item"><i class="fas fa-chart-line mr-2 pr-3"></i>Estadisticas</a>
+  </div>
+</div>

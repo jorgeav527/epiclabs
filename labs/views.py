@@ -3,16 +3,16 @@ from django.shortcuts import render
 # Create your views here.
 
 def labs_home_view(request):
-    return render(request, 'labs/labs_home.html')
+    return render(request, 'labs/home.html')
 
 def labs_concrete_view(request):
-    return render(request, 'labs/labs_concrete.html')
+    return render(request, 'labs/concrete.html')
 
 def labs_material_view(request):
-    return render(request, 'labs/labs_material.html')
+    return render(request, 'labs/material.html')
 
 def labs_soil_view(request):
-    return render(request, 'labs/labs_soil.html')
+    return render(request, 'labs/soil.html')
 
 
 def pricing_view(request):

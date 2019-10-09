@@ -2,6 +2,9 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
 
+from course.models import Course
+from category.models import Category
+
 # Create your models here.
 
 class User(AbstractUser):
@@ -12,20 +15,6 @@ class User(AbstractUser):
     is_admin    = models.BooleanField(default=False)
 
 alphanumeric = RegexValidator(r'^[0-9a-zA-Z]*$', 'Only alphanumeric characters are allowed.')
-
-
-class Course(models.Model):
-    course = models.CharField(max_length=20)
-
-    def __str__(self):
-        return f"{self.course}"
-
-
-class Category(models.Model):
-    category = models.CharField(max_length=20)
-
-    def __str__(self):
-        return f"{self.category}"
 
 
 class StudentProfile(models.Model):
@@ -43,14 +32,13 @@ class StudentProfile(models.Model):
 class BachProfile(models.Model):
     user        = models.OneToOneField(User, on_delete=models.CASCADE)
     active      = models.BooleanField(default=True)
-    thesis_name = models.CharField(max_length=64, null=True, blank=True)
     dni         = models.BigIntegerField(null=True, blank=True, validators=[alphanumeric])
     codigo      = models.BigIntegerField(null=True, blank=True, validators=[alphanumeric])
     created     = models.DateTimeField(auto_now_add=True)
     updated     = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"Bach {self.user.first_name} {self.user.last_name} {self.codigo} {self.thesis_name} as {self.user.username}"
+        return f"Bach {self.user.first_name} {self.user.last_name} {self.codigo} as {self.user.username}"
 
 
 class TeacherProfile(models.Model):
@@ -79,7 +67,7 @@ class ClientProfile(models.Model):
     updated     = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"Org. {self.user.username} {self.name} {self.ruc}"
+        return f"Org. {self.user.username} {self.ruc}"
 
 
 class AdminProfile(models.Model):

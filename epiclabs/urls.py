@@ -5,8 +5,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('labs.urls', namespace="labs")),
     path('accounts/', include('accounts.urls', namespace="accounts")),
-    path('sectors/', include('sectors.urls', namespace="sectors")),
     path('tests-material/', include('tests_material.urls', namespace="tests_material")),
+    path('tests-concrete/', include('tests_concrete.urls', namespace="tests_concrete")),
 ]
 
 admin.site.site_header = 'EPIC-labs Admin'       # default: "Django Administration"

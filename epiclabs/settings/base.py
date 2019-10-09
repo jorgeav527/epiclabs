@@ -15,15 +15,19 @@ SECRET_KEY = config('SECRET_KEY')
 INSTALLED_APPS = [
     # Created Apps
     'accounts.apps.AccountsConfig',
+    'category.apps.CategoryConfig',
+    'construction.apps.ConstructionConfig',
+    'course.apps.CourseConfig',
     'equipments.apps.EquipmentsConfig',
     'labs.apps.LabsConfig',
-    'materials.apps.MaterialsConfig',
-    'sectors.apps.SectorsConfig',
     'tests_concrete.apps.TestsConcreteConfig',
     'tests_material.apps.TestsMaterialConfig',
     'tests_soil.apps.TestsSoilConfig',
+    'thesis.apps.ThesisConfig',
+    'tools.apps.ToolsConfig',
     # Django thrid parties
     'crispy_forms',
+    'qr_code',
     # Django Apps Default
     'django.contrib.admin',
     'django.contrib.auth',
@@ -94,10 +98,9 @@ TIME_ZONE = 'America/Lima'
 
 USE_I18N = True
 
-USE_L10N = True
+USE_L10N = False
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/

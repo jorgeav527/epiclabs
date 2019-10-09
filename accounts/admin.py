@@ -11,18 +11,6 @@ class UserAdmin(admin.ModelAdmin):
 admin.site.register(User, UserAdmin)
 
 
-class CourseAdmin(admin.ModelAdmin):
-    list_display = ['course',]
-
-admin.site.register(Course, CourseAdmin)
-
-
-class CategoryAdmin(admin.ModelAdmin):
-    list_display = ['category',]
-
-admin.site.register(Category, CategoryAdmin)
-
-
 class StudentProfileAdmin(admin.ModelAdmin):
     list_display = ['dni', 'codigo',]
 
@@ -36,7 +24,7 @@ admin.site.register(TeacherProfile, TeacherProfileAdmin)
 
 
 class BachProfileAdmin(admin.ModelAdmin):
-    list_display = ['thesis_name', 'dni', 'codigo',]
+    list_display = ['dni', 'codigo',]
 
 admin.site.register(BachProfile, StudentProfileAdmin)
 

@@ -1,7 +1,9 @@
 from django.db import models
-from accounts.models import User
 import datetime
 import math
+
+from accounts.models import User
+from equipments.models import Equip
 
 # Create your models here.
 
@@ -26,6 +28,7 @@ class GroutDiceBreak(models.Model):
     fc_280          = models.FloatField(editable=False)
     created         = models.DateTimeField(auto_now_add=True)
     updated         = models.DateTimeField(auto_now=True)
+    equipment       = models.ManyToManyField(Equip)
 
     def save(self, *args, **kwargs):
         # Generate the code for the barcode (e.g. RDC2009092701)
@@ -36,7 +39,7 @@ class GroutDiceBreak(models.Model):
             letters += word[0]
         self.code = f"{letters.upper()}{date.year}{date.month}{date.day}{date.hour}{date.minute}{date.second}"
 
-        # # Generate the edad from the fecha_vaciado
+        # Generate the edad from the fecha_vaciado
         diff = self.fecha_rotura - self.fecha_vaciado
         self.edad = diff.days
 
@@ -65,3 +68,6 @@ class GroutDiceBreak(models.Model):
 
     def __str__(self):
         return f"{self.id} {self.name} {self.code}"
+
+
+

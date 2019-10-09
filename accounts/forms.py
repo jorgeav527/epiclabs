@@ -75,7 +75,7 @@ class BachUpdateForm(forms.ModelForm):
 
     class Meta:
         model   = BachProfile
-        fields  = ("dni", "codigo", "thesis_name")
+        fields  = ("dni", "codigo")
 
 # TEACHER
 #========

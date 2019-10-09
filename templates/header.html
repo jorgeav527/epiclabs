@@ -27,9 +27,9 @@
               aria-haspopup="true" aria-expanded="false">Sector
             </a>
             <div class="dropdown-menu dropdown-default" aria-labelledby="navbarDropdownMenuLink-333">
-              <a class="dropdown-item" href="{% url 'sectors:client' %}">Servicios a Terceros</a>
-              <a class="dropdown-item" href="{% url 'sectors:student' %}">Estudiantes - Académico</a>
-              <a class="dropdown-item" href="{% url 'sectors:thesis' %}">Tesistas</a>
+              <a class="dropdown-item" href="#">Servicios a Terceros</a>
+              <a class="dropdown-item" href="#">Estudiantes - Académico</a>
+              <a class="dropdown-item" href="#">Tesistas</a>
             </div>
         </li>
         <li class="nav-item">
@@ -64,7 +64,6 @@
           <i class="fas fa-user"></i> Registrate </a>
           <div class="dropdown-menu dropdown-default" aria-labelledby="navbarDropdownMenuLink-4">
             <a class="dropdown-item" href="{% url 'accounts:register_student' %}">Estudiantes</a>
-            <a class="dropdown-item" href="{% url 'accounts:register_bach' %}">Bachiller</a>
           </div>
         </li>
         {% endif %}

@@ -1,0 +1,18 @@
+<div id="menu">
+  <div class="list-group">
+    <a href="#" class="list-group-item unique-color white-text" data-toggle="collapse" data-target="#list-one" data-parent="#menu"><i class="fas fa-laptop mr-2 pr-3"></i>Tecnología del Concreto</a>
+    <div class="list-group collapse" id="list-one">
+      <a class="list-group-item" href="{% url 'tests_concrete:info' %}"><i class="fas fa-angle-double-right mr-3 pr-3"></i>Información</a>
+      <a class="list-group-item list-group-item-action" data-toggle="list" href="#equipment" role="tab"><i class="fas fa-angle-double-right mr-3 pr-3"></i>Equipos</a>
+      <a class="list-group-item list-group-item-action" data-toggle="list" href="#course" role="tab"><i class="fas fa-angle-double-right mr-3 pr-3"></i>Cursos</a>
+      <a class="list-group-item list-group-item-action" data-toggle="list" href="#teachers" role="tab"><i class="fas fa-angle-double-right mr-3 pr-3"></i>Plana docente</a>
+    </div>
+    <a href="#" class="list-group-item unique-color white-text" data-toggle="collapse" data-target="#list-two" data-parent="#menu"><i class="fas fa-vials mr-2 pr-3"></i>Ensayos</a>
+    <div class="list-group collapse" id="list-two">
+      <a class="list-group-item" href="{% url 'tests_concrete:pice_break_list' %}" ><i class="fas fa-angle-double-right mr-1 pr-1"></i>Rotura de Testigos</a>
+      <a class="list-group-item" href="#" ><i class="fas fa-angle-double-right mr-1 pr-1"></i>Rotura de Dados de Grout</a>
+      <a class="list-group-item" href="#" ><i class="fas fa-angle-double-right mr-1 pr-1"></i>Rotura de Adoquines</a>
+    </div>
+    <a href="#" class="list-group-item unique-color white-text"><i class="fas fa-chart-line mr-2 pr-3"></i>Estadisticas</a>
+  </div>
+</div>

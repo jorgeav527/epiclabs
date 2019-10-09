@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "f6c9f4cdc621fa7e30624629d6a06dff1af04c2317f80d183d3b1a7e886c183b"
+            "sha256": "def35e1afa1a522fc61f34e47f4443e190be8fee388d1c85bb0127fa5ec61eb5"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -31,6 +31,23 @@
             ],
             "index": "pypi",
             "version": "==1.7.2"
+        },
+        "django-qr-code": {
+            "hashes": [
+                "sha256:23a8d871aaac5287b827cd9f75f38ca12602b576d527bf34722d97b00f9dbea0",
+                "sha256:cd4eaf77b796f6addcc205a73b227ccfe24c1ff25eb72ea819c5c6cc937effda"
+            ],
+            "index": "pypi",
+            "version": "==1.0.0"
+        },
+        "pdfkit": {
+            "hashes": [
+                "sha256:05f1c631e8d9ab877886955da825e48b459e097886a21448ab17b34c60cfd66c",
+                "sha256:6a866c9659e62a81abd72cdb32b400762d76085b964beb0b15106d573a539677",
+                "sha256:ef1da35b78d534197e7ce4a604a4a190e9aa769e56634957535f3479a50d8cd1"
+            ],
+            "index": "pypi",
+            "version": "==0.6.1"
         },
         "psycopg2-binary": {
             "hashes": [
@@ -75,10 +92,24 @@
         },
         "pytz": {
             "hashes": [
-                "sha256:26c0b32e437e54a18161324a2fca3c4b9846b74a8dccddd843113109e1116b32",
-                "sha256:c894d57500a4cd2d5c71114aaab77dbab5eabd9022308ce5ac9bb93a60a6f0c7"
+                "sha256:1c557d7d0e871de1f5ccd5833f60fb2550652da6be2693c1e02300743d21500d",
+                "sha256:b02c06db6cf09c12dd25137e563b31700d3b80fcc4ad23abb7a315f2789819be"
             ],
-            "version": "==2019.2"
+            "version": "==2019.3"
+        },
+        "qrcode": {
+            "hashes": [
+                "sha256:3996ee560fc39532910603704c82980ff6d4d5d629f9c3f25f34174ce8606cf5",
+                "sha256:505253854f607f2abf4d16092c61d4e9d511a3b4392e60bff957a68592b04369"
+            ],
+            "version": "==6.1"
+        },
+        "six": {
+            "hashes": [
+                "sha256:3350809f0555b11f552448330d0b52d5f24c91a322ea4a15ef22629740f3761c",
+                "sha256:d16a0141ec1a18405cd4ce8b4613101da75da0e9a7aec5bdd4fa804d0e0eba73"
+            ],
+            "version": "==1.12.0"
         },
         "sqlparse": {
             "hashes": [

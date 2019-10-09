@@ -1,0 +1,23 @@
+{% load crispy_forms_tags %}
+
+{% if obj %}
+<form role="form" action="{% url 'tests_material:dice_break_update' obj.id %}" method="POST">
+{% else %}
+<form role="form" action="{% url 'tests_material:dice_break_create' %}" method="POST">
+{% endif %}
+    <div>
+        {% csrf_token %}
+        {{ form|crispy }}
+        {% if obj %}
+        <button class="btn btn-primary btn-block" name="submit" type="submit">Actualizar</button>
+        {% else %}
+        <button class="btn btn-primary btn-block" name="submit" type="submit">Registrar</button>
+        {% endif %}
+        <button class="btn btn-primary btn-block" type="button"  onclick="return close_modal()">Cancelar</button>
+    </div>
+</form>
+<script>
+  $( function() {
+    $( ".datepicker" ).datepicker();
+  } );
+</script>

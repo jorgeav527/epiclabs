@@ -45,9 +45,9 @@
         <!-- Grid column -->  
     </div>
     <!-- Grid row -->
-
 </section>
 <!-- Section: Blog v.3 -->
+
 <hr class="my-5">  
 <!-- Widgets  -->
 <section class="my-3">
@@ -80,7 +80,7 @@
                 <div class="card-body">
                     <i class="fas fa-flask fa-3x blue-text"></i>
                     <div class="text-right">
-                        <div class="h4-responsive">Nº<span class="count"> Cantidad</span></div>
+                        <div class="h4-responsive">Nº<span class="count"> {{ object_list.count }}</span></div>
                         <div class="text-primary">Cantidad</div>
                     </div>
                 </div>
@@ -91,7 +91,7 @@
                 <div class="card-body">
                     <i class="fas fa-users fa-3x red-text"></i>
                     <div class="text-right">
-                        <div class="h4-responsive">Sr.<span class="count"> Nombre</span></div>
+                        <div class="h4-responsive">Sr.<span class="count"> {{ user.username }}</span></div>
                         <div class="text-danger">Usuario</div>
                     </div>
                 </div>
@@ -107,47 +107,71 @@
     <div class="card">
       <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Ensayos de Rotura de Dados de Grout</h3>
       <div class="card-body">
-        <div id="table">
-          <span class="table-add float-right mb-3 mr-2"><a href="#!" class="text-primary"><i
-                class="fas fa-plus fa-2x" aria-hidden="true"></i></a></span>
-          <table class="table table-bordered table-responsive table-striped text-center">
+        <div>
+          <span class="table-add float-right mb-3 mr-2">
+            <a onclick="return open_modal('{% url 'tests_material:dice_break_create' %}','Crear Ensayo')" class="text-primary">
+              <i class="fas fa-plus fa-2x" aria-hidden="true"></i>
+            </a>
+          </span>
+          <table id="myTable" class="display compact table table-bordered table-responsive table-striped text-center">
             <thead class="primary-color-dark white-text">
               <tr>
-                <th class="text-center">Codigo</th>
-                <th class="text-center">f'c Esp.</th>
-                <th class="text-center">Fecha Vaciado</th>
-                <th class="text-center">Fecha Rotura</th>
-                <th class="text-center">Edad (dias)</th>
+                <th rowspan="2" class="text-center">Id</th>
+                <th rowspan="2" class="text-center">Codigo</th>
+                <th rowspan="2" class="text-center">f'c Esp.</th>
+                <th colspan="2" class="text-center">Fecha</th>
+                <th rowspan="2" class="text-center">Edad (dias)</th>
+                <th colspan="4" class="text-center">Dimenciones</th>
+                <th rowspan="2" class="text-center">H (cm)</th>
+                <th rowspan="2" class="text-center">F (kgf)</th>
+                <th rowspan="2" class="text-center">Opciones</th>
+              </tr>
+              <tr>
+                <th class="text-center">Vaciado</th>
+                <th class="text-center">Rotura</th>
                 <th class="text-center">Largo-1 (cm)</th>
                 <th class="text-center">Largo-2 (cm)</th>
                 <th class="text-center">Ancho-1 (cm)</th>
                 <th class="text-center">Ancho-2 (cm)</th>
-                <th class="text-center">H (cm)</th>
-                <th class="text-center">F (kgf)</th>
-                <th class="text-center">Opciones</th>
               </tr>
             </thead>
             <tbody>
+              {% for object in object_list %}
               <tr>
-                <td class="pt-3-half">2019000001</td>
-                <td class="pt-3-half">280.00</td>
-                <td class="pt-3-half">2019-01-01</td>
-                <td class="pt-3-half">2019-01-27</td>
-                <td class="pt-3-half">26</td>
-                <td class="pt-3-half">5.00</td>
-                <td class="pt-3-half">5.03</td>
-                <td class="pt-3-half">5.01</td>
-                <td class="pt-3-half">5.04</td>
-                <td class="pt-3-half">5.00</td>
-                <td class="pt-3-half">285.80</td>
+                <td class="pt-3-half">{{ object.id }}</td>
+                <td class="pt-3-half">{{ object.code }}</td>
+                <td class="pt-3-half">{{ object.fc_esp }}</td>
+                <td class="pt-3-half">{{ object.fecha_vaciado|date:"d/m/Y" }}</td>
+                <td class="pt-3-half">{{ object.fecha_rotura|date:"d/m/Y" }}</td>
+                <td class="pt-3-half">{{ object.edad }}</td>
+                <td class="pt-3-half">{{ object.largo_1 }}</td>
+                <td class="pt-3-half">{{ object.largo_2 }}</td>
+                <td class="pt-3-half">{{ object.ancho_1 }}</td>
+                <td class="pt-3-half">{{ object.ancho_2 }}</td>
+                <td class="pt-3-half">{{ object.h }}</td>
+                <td class="pt-3-half">{{ object.F }}</td>
                 <td>
                     <div class="btn-group" role="group" aria-label="Basic example">
-                        <a data-toggle="tooltip" title="Editar" role="button" class="btn btn-success btn-sm"><i class="fas fa-edit"></i></a>
-                        <a data-toggle="tooltip" title="Borrar" role="button" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
-                        <a data-toggle="tooltip" title="Descargar PDF" role="button" class="btn btn-orange btn-sm"><i class="far fa-file-pdf"></i></a>
+                        <a 
+                          onclick="return open_modal('{% url 'tests_material:dice_break_update' object.id %}','Ensayo {{ object.id }}')" 
+                          data-toggle="tooltip" title="Editar" role="button" class="btn btn-success btn-sm px-2 mx-1"><i class="fas fa-edit"></i>
+                        </a>
+                        <a 
+                          onclick="return open_modal('{% url 'tests_material:dice_break_delete' object.id %}','Ensayo {{ object.id }}')"
+                          data-toggle="tooltip" title="Borrar" role="button" class="btn btn-danger btn-sm px-2 mx-1"><i class="fas fa-trash"></i>
+                        </a>
+                        <a
+                          onclick="return open_modal('{% url 'tests_material:dice_break_detail' object.id %}','Ensayo {{ object.id }}')"
+                          data-toggle="tooltip" title="Detalles" role="button" class="btn btn-primary btn-sm px-2 mx-1"><i class="far fa-eye"></i>
+                        </a>
+                        <a 
+                          href="{% url 'tests_material:dice_break_pdf' object.id %}" 
+                          data-toggle="tooltip" title="Descargar PDF" role="button" class="btn btn-orange btn-sm px-2 mx-1"><i class="far fa-file-pdf"></i>
+                        </a>
                     </div>
                 </td>
               </tr>
+              {% endfor %}
               <!-- This is our clonable table line -->
             </tbody>
           </table>
@@ -157,7 +181,51 @@
     <!-- Editable table -->
 </section>
 
+<div id="popup"></div>
+
 <hr class="my-5">
+{% endblock %}
+
+{% block js %}
+<script>
+  $(document).ready( function () {
+    $('#myTable').DataTable({
+      "scrollX": true,
+      dom: 'B<"clear">lfrtip',
+      buttons: [
+          'csv', 'excel',
+          {
+            extend: 'pdfHtml5',
+            orientation: 'landscape',
+            pageSize: 'LEGAL',
+            filename: '{{ file_name }}_{{ user.username }}_{{ object_list.count }}'
+          }
+      ]
+    });
+  } );
+</script>
+<script>
+  var modal;
+
+  function open_modal(url, title)
+  {
+      modal = $('#popup').dialog(
+      {
+          title: title,
+          modal: true,
+          height: "auto",
+          width: "auto",
+          resizable: false,
+      }).dialog('open').load(url)
+  }
+  
+  function close_modal()
+  {
+    modal.dialog("close");
+  }
+  
+</script>
+{% endblock %}
 
 
-{% endblock%}
+

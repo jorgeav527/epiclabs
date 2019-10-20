@@ -20,12 +20,14 @@ INSTALLED_APPS = [
     'course.apps.CourseConfig',
     'equipments.apps.EquipmentsConfig',
     'labs.apps.LabsConfig',
+    'reference_person.apps.ReferencePersonConfig',
     'tests_concrete.apps.TestsConcreteConfig',
     'tests_material.apps.TestsMaterialConfig',
     'tests_soil.apps.TestsSoilConfig',
     'thesis.apps.ThesisConfig',
     'tools.apps.ToolsConfig',
     # Django thrid parties
+    'django_extensions',
     'crispy_forms',
     'qr_code',
     # Django Apps Default
@@ -116,6 +118,13 @@ MEDIA_URL = '/media/'
 
 # Crispy forms for bootstrap4
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+# Graph Models Settings
+GRAPH_MODELS = {
+    'all_applications': True,
+    'group_models': True,
+}
+
 
 # Login roots
 LOGIN_REDIRECT_URL = 'labs:home'

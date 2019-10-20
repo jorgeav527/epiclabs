@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
+
 from .models import (
     User,
     StudentProfile,
@@ -8,12 +9,14 @@ from .models import (
     ClientProfile,
     AdminProfile,
 )
+from course.models import Course
+from category.models import Category
 
 # For all the users the same user update form
 class AccountUpdateForm(forms.ModelForm):
-    first_name = forms.CharField(max_length=30, required=True) 
-    last_name = forms.CharField(max_length=30, required=True)
-    email = forms.EmailField(max_length=30, required=True)
+    first_name = forms.CharField(max_length=30, required=True, label='Nombres',) 
+    last_name = forms.CharField(max_length=30, required=True, label='Apellidos',)
+    email = forms.EmailField(max_length=30, required=True, help_text='Solo @gmail',)
 
     class Meta:
         model = User
@@ -23,9 +26,7 @@ class AccountUpdateForm(forms.ModelForm):
 #========
 
 class StudentRegister(UserCreationForm):
-    email = forms.EmailField(required=True, widget=forms.TextInput(attrs={
-        'placeholder': 'gmail or outlook!',
-    }))
+    email = forms.EmailField(required=True, help_text='Solo @gmail',)
 
     class Meta:
         model = User
@@ -40,8 +41,8 @@ class StudentRegister(UserCreationForm):
 
 
 class StudentUpdateForm(forms.ModelForm):
-    dni = forms.IntegerField(required=True)
-    codigo = forms.IntegerField(required=True)
+    dni = forms.IntegerField(required=True, label='DNI', help_text='Documento Nacional de Identidad',)
+    codigo = forms.IntegerField(required=True, label='Codigo de Matricula', help_text='2008702131',)
 
     class Meta:
         model = StudentProfile
@@ -52,9 +53,7 @@ class StudentUpdateForm(forms.ModelForm):
 #=====
 
 class BachRegister(UserCreationForm):
-    email = forms.EmailField(required=True, widget=forms.TextInput(attrs={
-        'placeholder': 'gmail or outlook!',
-    }))
+    email = forms.EmailField(required=True, help_text='Solo @gmail',)
 
     class Meta:
         model = User
@@ -69,9 +68,8 @@ class BachRegister(UserCreationForm):
 
 
 class BachUpdateForm(forms.ModelForm):
-    dni         = forms.IntegerField(required=True)
-    codigo      = forms.IntegerField(required=True)
-    thesis_name = forms.CharField(required=True)
+    dni         = forms.IntegerField(required=True, label='DNI', help_text='Documento Nacional de Identidad',)
+    codigo      = forms.IntegerField(required=True, label='Codigo de Matricula', help_text='2008702131',)
 
     class Meta:
         model   = BachProfile
@@ -81,9 +79,7 @@ class BachUpdateForm(forms.ModelForm):
 #========
 
 class TeacherRegister(UserCreationForm):
-    email = forms.EmailField(required=True, widget=forms.TextInput(attrs={
-        'placeholder': 'gmail or outlook!',
-    }))
+    email = forms.EmailField(required=True, help_text='Solo @gmail',)
 
     class Meta:
         model = User
@@ -98,9 +94,9 @@ class TeacherRegister(UserCreationForm):
 
 
 class TeacherUpdateForm(forms.ModelForm):
-    dni         = forms.IntegerField(required=True)
-    codigo      = forms.IntegerField(required=True)
-    course = forms.CharField(required=True)
+    dni         = forms.IntegerField(required=True, label='DNI', help_text='Documento Nacional de Identidad',)
+    codigo      = forms.IntegerField(required=True, label='Codigo de Colegiatura',)
+    course      = forms.ModelMultipleChoiceField(queryset=Course.objects.all() ,required=True, label='Cursos Impartidos', help_text='Selecciona todas las materias que imparte.',)
 
     class Meta:
         model   = TeacherProfile
@@ -111,9 +107,7 @@ class TeacherUpdateForm(forms.ModelForm):
 #========
 
 class ClientRegister(UserCreationForm):
-    email = forms.EmailField(required=True, widget=forms.TextInput(attrs={
-        'placeholder': 'gmail or outlook!',
-    }))
+    email = forms.EmailField(required=True, help_text='Solo @gmail',)
 
     class Meta:
         model = User
@@ -127,10 +121,22 @@ class ClientRegister(UserCreationForm):
         return client
 
 
+class ClientAccountUpdatedForm(forms.ModelForm):
+    email = forms.EmailField(max_length=30, required=True, help_text='Solo @gmail',)
+
+    class Meta:
+        model = User
+        fields = ("username", "email",)
+        # exclude = ("first_name", "last_name",)
+
+
 class ClientUpdateForm(forms.ModelForm):
-    long_name   = forms.CharField(required=True)
-    direction   = forms.CharField(required=True)
-    reference   = forms.CharField(required=False)
+    long_name   = forms.CharField(required=True, label='Nombre de la Empresa',)
+    direction   = forms.CharField(required=True, label='Dirección de la Empresa',)
+    reference   = forms.CharField(required=True, label='Referencia de la Dirección',)
+    category    = forms.ModelMultipleChoiceField(queryset=Category.objects.all() ,required=True, label='Categoria', help_text='Selecciona la Categoria',)
+    ruc         = forms.IntegerField(required=True, label='Registro Único de Contribuyentes',)
+    phone       = forms.IntegerField(required=True, label='Telefono o Celular',)
 
     class Meta:
         model   = ClientProfile
@@ -141,9 +147,7 @@ class ClientUpdateForm(forms.ModelForm):
 #========
 
 class AdminRegister(UserCreationForm):
-    email = forms.EmailField(required=True, widget=forms.TextInput(attrs={
-        'placeholder': 'gmail or outlook!',
-    }))
+    email = forms.EmailField(required=True, help_text='Solo @gmail',)
 
     class Meta:
         model = User
@@ -158,9 +162,15 @@ class AdminRegister(UserCreationForm):
 
 
 class AdminUpdateForm(forms.ModelForm):
-    dni         = forms.IntegerField(required=True)
-    codigo      = forms.IntegerField(required=True)
-    course = forms.CharField(required=True)
+    STAFF_CHOICES = (
+        ("NN", "Ninguna"),
+        ("OT", "Oficina Técnica"),
+        ("S", "Secretaria"),
+        ("C", "Coordinador"),
+    )
+    dni         = forms.IntegerField(required=True, label='DNI', help_text='Documento Nacional de Identidad',)
+    codigo      = forms.IntegerField(required=True, label='Codigo de Colegiatura',)
+    staff       = forms.ChoiceField(required=True, choices=STAFF_CHOICES, label='Personal de', help_text='Selecciona la labor',)
 
     class Meta:
         model   = AdminProfile

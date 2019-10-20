@@ -1,18 +1,24 @@
 <div id="menu">
   <div class="list-group">
-    <a href="#" class="list-group-item unique-color white-text" data-toggle="collapse" data-target="#list-one" data-parent="#menu"><i class="fas fa-laptop mr-2 pr-3"></i>Tecnología del Concreto</a>
+    <a href="#" class="list-group-item unique-color white-text" data-toggle="collapse" data-target="#list-one" data-parent="#menu"><i class="fas fa-laptop  pr-2"></i>Tecnología del Concreto</a>
     <div class="list-group collapse" id="list-one">
-      <a class="list-group-item" href="{% url 'tests_concrete:info' %}"><i class="fas fa-angle-double-right mr-3 pr-3"></i>Información</a>
-      <a class="list-group-item list-group-item-action" data-toggle="list" href="#equipment" role="tab"><i class="fas fa-angle-double-right mr-3 pr-3"></i>Equipos</a>
-      <a class="list-group-item list-group-item-action" data-toggle="list" href="#course" role="tab"><i class="fas fa-angle-double-right mr-3 pr-3"></i>Cursos</a>
-      <a class="list-group-item list-group-item-action" data-toggle="list" href="#teachers" role="tab"><i class="fas fa-angle-double-right mr-3 pr-3"></i>Plana docente</a>
+      <a class="list-group-item" href="{% url 'tests_concrete:info' %}"><i class="fas fa-angle-double-right pr-2"></i>Información General</a>
+
+      <a class="list-group-item" href="{% url 'tests_concrete:equips' %}"><i class="fas fa-angle-double-right pr-2"></i>Equipos Implementados</a>
+      <a class="list-group-item" href="{% url 'tests_concrete:guides' %}"><i class="fas fa-angle-double-right pr-2"></i>Guias de Ensayos</a>
+      <a class="list-group-item" href="{% url 'tests_concrete:teachers' %}"><i class="fas fa-angle-double-right pr-2"></i>Plana Docente</a>
     </div>
-    <a href="#" class="list-group-item unique-color white-text" data-toggle="collapse" data-target="#list-two" data-parent="#menu"><i class="fas fa-vials mr-2 pr-3"></i>Ensayos</a>
+    <a href="#" class="list-group-item unique-color white-text" data-toggle="collapse" data-target="#list-two" data-parent="#menu"><i class="fas fa-vials  pr-2"></i>Ensayos</a>
     <div class="list-group collapse" id="list-two">
-      <a class="list-group-item" href="{% url 'tests_concrete:pice_break_list' %}" ><i class="fas fa-angle-double-right mr-1 pr-1"></i>Rotura de Testigos</a>
-      <a class="list-group-item" href="#" ><i class="fas fa-angle-double-right mr-1 pr-1"></i>Rotura de Dados de Grout</a>
-      <a class="list-group-item" href="#" ><i class="fas fa-angle-double-right mr-1 pr-1"></i>Rotura de Adoquines</a>
+      <a class="list-group-item" href="{% url 'tests_concrete:pice_break_list' %}" ><i class="fas fa-angle-double-right pr-2"></i>Compresión de Testigos de Concreto</a>
+      <a class="list-group-item" href="#" ><i class="fas fa-angle-double-right pr-2"></i>Compresión de Dados de Grout</a>
+      <a class="list-group-item" href="#" ><i class="fas fa-angle-double-right pr-2"></i>Compresión de Adoquines de Concreto</a>
+      <a class="list-group-item" href="#" ><i class="fas fa-angle-double-right pr-2"></i>Compresión de Dados de Cal</a>
+      <a class="list-group-item" href="#" ><i class="fas fa-angle-double-right pr-2"></i>Compresión de Testigos de Cal</a>
+      <a class="list-group-item" href="#" ><i class="fas fa-angle-double-right pr-2"></i>Extracción de Testigos Diamantinos en Campo</a>
+      <a class="list-group-item" href="#" ><i class="fas fa-angle-double-right pr-2"></i>Extracción de Testigos Diamantinos en Laboratorio</a>
+      <a class="list-group-item" href="#" ><i class="fas fa-angle-double-right pr-2"></i>Compresión de Testigos Diamantinos</a>
     </div>
-    <a href="#" class="list-group-item unique-color white-text"><i class="fas fa-chart-line mr-2 pr-3"></i>Estadisticas</a>
+    <a href="#" class="list-group-item unique-color white-text"><i class="fas fa-chart-line pr-2"></i>Estadisticas</a>
   </div>
 </div>

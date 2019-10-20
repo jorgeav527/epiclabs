@@ -2,11 +2,11 @@
 
 {% block concrete %}
 <div class="row">
-    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto my-2">
+    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto my-3">
         <div class="card shadow">
             <div class="card-body">
                 <!-- Section heading -->
-                <h4 class="h4-responsive font-weight-bold text-center mb-0">Ensayo de Rotura de Dados de Grout</h4>
+                <h4 class="h4-responsive font-weight-bold text-center mb-0">{{ title }}</h4>
                 <p class="text-center dark-grey-text w-responsive mx-auto mb-0">((NORMA ASTM C-109) / (NTP 334.051))</p>
 
                 <!-- Section description -->
@@ -43,9 +43,9 @@
                 <p class="text-left mx-auto mb-0"><span class="font-weight-bold">Creado:</span> {{ obj.created }}</p>
                 <p class="text-left mx-auto mb-0"><span class="font-weight-bold">Actualizado:</span> {{ obj.updated }}</p>
                 <p class="text-left mx-auto mb-0"><span class="font-weight-bold">Nombre del Ensayo:</span> {{ obj.name }}</p>
-                <div class="btn-group mt-4" role="group" aria-label="Basic example">
-                    <a href="{% url 'tests_concrete:pice_break_update' obj.id %}" class="btn btn-success btn-md" type="button">Editar</a>
-                    <a href="{% url 'tests_concrete:pice_break_list' %}" class="btn btn-primary btn-md mx-1" type="button">Cancelar</a>
+                <div class="mt-5">
+                    <a href="{% url 'tests_concrete:pice_break_update' obj.id %}" class="btn btn-primary btn-block" type="button">Editar Ensayo</a>
+                    <a href="{% url 'tests_concrete:pice_break_list' %}" class="btn btn-primary btn-block" type="button">Cancelar</a>
                 </div>
             </div>
         </div>

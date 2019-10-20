@@ -5,7 +5,11 @@ from . import views as tests_concrete_views
 app_name = "tests_concrete"
 
 urlpatterns = [
+    # General views Concrete
     path('info/', tests_concrete_views.tests_concrete_info_view, name="info"),
+    path('equips/', tests_concrete_views.tests_concrete_equips_view, name="equips"),
+    path('guides/', tests_concrete_views.tests_concrete_guides_view, name="guides"),
+    path('teachers/', tests_concrete_views.tests_concrete_teachers_view, name="teachers"),
     # Pice Break CRUD and PDF
     path('pice-break/', tests_concrete_views.pice_break_list_view, name="pice_break_list"),
     path('pice-break/create/', tests_concrete_views.pice_break_create , name="pice_break_create"),

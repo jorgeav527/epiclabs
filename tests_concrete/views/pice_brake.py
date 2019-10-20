@@ -12,20 +12,13 @@ from equipments.models import Equip
 
 # Create your views here.
 
-def tests_concrete_info_view(request):
-    context = {
-        "title": "Tecnología del Concreto Información",
-    }
-    return render(request, 'tests_concrete/info_tests_concrete.html', context)
-
-
 @login_required
 def pice_break_list_view(request):
     if request.user.is_bach or request.user.is_student:
         obj_list = PiceBreak.objects.filter(user=request.user)
         context = {
             "file_name": "Testigos_de_Concreto",
-            "title": "Ensayo de Rotura de Testigos de Concreto",
+            "title": "Ensayo de Rotura de Testigos de Concreto 6\" 4\" y 2\" ",
             "obj_list": obj_list,
         }
         return render(request, 'tests_concrete/pice_break/pice_break_list.html', context)        
@@ -33,7 +26,7 @@ def pice_break_list_view(request):
         obj_list = PiceBreak.objects.all()
         context = {
             "file_name": "Testigos_de_Concreto",
-            "title": "Ensayo de Rotura de Testigos de Concreto",
+            "title": "Ensayo de Rotura de Testigos de Concreto 6\" 4\" y 2\" ",
             "obj_list": obj_list,
         }
         return render(request, 'tests_concrete/pice_break/pice_break_list.html', context)        
@@ -79,7 +72,6 @@ def pice_break_update(request, id):
     form = PiceBreakForm(request.POST or None, instance=obj)
     if request.method == "POST":
         if form.is_valid():
-            form.instance.user = request.user
             form.save()
             messages.success(request, f"El ensayo ha sido actualizado")
             return redirect('tests_concrete:pice_break_list')
@@ -98,6 +90,7 @@ def pice_break_detail(request, id):
 
     context = {
         "obj": obj,
+        "title": "Ensayo de Rotura de Testigos de Concreto",
     }
 
     return render(request, 'tests_concrete/pice_break/pice_break_detail.html', context)
@@ -116,6 +109,7 @@ def pice_break_delete(request, id):
     }
 
     return render(request, 'tests_concrete/pice_break/pice_break_delete_comfirm.html', context)
+
 
 @login_required
 def pice_break_pdf(request, id):

@@ -4,6 +4,9 @@ import math
 
 from accounts.models import User
 from equipments.models import Equip
+from tools.models import Tool
+from reference_person.models import ReferencePerson
+from construction.models import Construction
 
 
 class PiceBreak(models.Model):
@@ -26,12 +29,16 @@ class PiceBreak(models.Model):
     h               = models.FloatField(default=15.00)
     F               = models.FloatField()
     fc              = models.FloatField(editable=False)
+    fc_MPa          = models.FloatField(editable=False)
     fc_175          = models.FloatField(editable=False)
     fc_210          = models.FloatField(editable=False)
     fc_280          = models.FloatField(editable=False)
     created         = models.DateTimeField(auto_now_add=True)
     updated         = models.DateTimeField(auto_now=True)
     equipment       = models.ManyToManyField(Equip)
+    tool            = models.ManyToManyField(Tool)    
+    ref_person      = models.ManyToManyField(ReferencePerson, blank=True)
+    construction    = models.ManyToManyField(Construction, blank=True)
 
 
     def save(self, *args, **kwargs):
@@ -62,6 +69,10 @@ class PiceBreak(models.Model):
         effort_fc = self.F/self.area
         self.fc = round(effort_fc, 2)
 
+        # Generate fc_MPa
+        effort_fc_MPa = self.fc*0.0981 
+        self.fc_MPa = round(effort_fc_MPa, 2)
+
         # Generate the fc_175
         effort_fc_175 = (self.fc/175)*100 
         self.fc_175 = round(effort_fc_175, 2)
@@ -73,6 +84,7 @@ class PiceBreak(models.Model):
         # Generate the fc_280
         effort_fc_280 = (self.fc/280)*100 
         self.fc_280 = round(effort_fc_280, 2)
+
 
         super(PiceBreak, self).save(*args, **kwargs)
 

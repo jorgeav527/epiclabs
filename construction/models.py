@@ -1,14 +1,14 @@
 from django.db import models
 import datetime
 
-# Create your models here.
-
 from accounts.models import ClientProfile
 
+# Create your models here.
+
 class Construction(models.Model):
-    name            = models.CharField(max_length=150)
-    location        = models.CharField(max_length=150)
-    reference       = models.CharField(max_length=150)
+    name            = models.CharField(max_length=300)
+    location        = models.CharField(max_length=300)
+    reference       = models.CharField(max_length=300)
     start_day       = models.DateField(default=datetime.datetime.now)
     finish_day      = models.DateField()
     duration        = models.IntegerField(editable=False)

@@ -137,7 +137,7 @@ def register_client(request):
 
 
 def profile_client(request):
-    profile_account = AccountUpdateForm(request.POST, instance=request.user)
+    profile_account = ClientAccountUpdatedForm(request.POST, instance=request.user)
     profile_client = ClientUpdateForm(request.POST, instance=request.user.clientprofile)
     if profile_account.is_valid() and profile_client.is_valid():
         profile_account.save()
@@ -146,7 +146,7 @@ def profile_client(request):
         return redirect('accounts:profile_client')
 
     else:
-        profile_account = AccountUpdateForm(instance=request.user)
+        profile_account = ClientAccountUpdatedForm(instance=request.user)
         profile_client = ClientUpdateForm(instance=request.user.clientprofile)
 
     context = {

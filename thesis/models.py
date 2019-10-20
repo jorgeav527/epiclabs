@@ -1,11 +1,24 @@
 from django.db import models
 import datetime
 
-from accounts.models import BachProfile
+from accounts.models import BachProfile, TeacherProfile
+from course.models import Course
+
 
 # Create your models here.
+
 class Thesis(models.Model):
-    title           = models.CharField(max_length=150)
+    LINE_CHOICES = (
+        ("NN", "Ninguna"),
+        ("TC", "Agregados"),
+        ("S", "Geotecnia"),
+        ("MC", "Mecánica de Materiales"),
+        ("TM", "Tecnologías Modernas"),
+    )
+    title           = models.CharField(max_length=300)
+    line            = models.CharField(max_length=5, choices=LINE_CHOICES, default="NN")
+    course          = models.ManyToManyField(Course)
+    adviser         = models.ManyToManyField(TeacherProfile)
     start_day       = models.DateField(default=datetime.datetime.now)
     finish_day      = models.DateField()
     duration        = models.IntegerField(editable=False)

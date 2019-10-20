@@ -71,15 +71,9 @@ class ClientProfile(models.Model):
 
 
 class AdminProfile(models.Model):
-    STAFF_CHOICES = (
-        ("NN", "Ninguna"),
-        ("OT", "Oficina Técnica"),
-        ("S", "Secretaria"),
-        ("C", "Coordinador"),
-    )
     user        = models.OneToOneField(User, on_delete=models.CASCADE)
     active      = models.BooleanField(default=True)
-    staff       = models.CharField(max_length=5, choices=STAFF_CHOICES, default="NN")
+    staff       = models.CharField(max_length=5)
     dni         = models.BigIntegerField(null=True, blank=True, validators=[alphanumeric])
     codigo      = models.BigIntegerField(null=True, blank=True, validators=[alphanumeric])
     created     = models.DateTimeField(auto_now_add=True)

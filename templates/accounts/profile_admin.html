@@ -4,21 +4,23 @@
 {% block content %}
 <div class="container">
     <div class="row">
-      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto my-5">
+      <div class="col-sm-12 col-md-8 col-lg-5 mx-auto my-5">
         <div class="card shadow">
           <div class="card-body">
-            <h2 class="card-title text-center">Perfil Admin</h2>
+            <h2 class="h2-responsive card-title text-center">Perfil Admin</h2>
             <hr class="my-3">
             <div>
                 <div class="media-body">
-                    <h4 class="">{{ user.username }}</h4>
-                    <div><small class="text-secondary ">{{ user.email }}</small></div>
-                    <div><small class="text-secondary text-capitalize">{{ user.first_name }}</small></div>
-                    <div><small class="text-secondary text-capitalize">{{ user.last_name }}</small></div>
-                    <div><small class="text-secondary">{{ user.adminprofile.staff }}</small></div>
-                    <div><small class="text-secondary">{{ user.adminprofile.dni }}</small></div>
+                  <p class="card-meta mb-2"><i class="fas fa-user-cog mr-2"></i><strong>Usuario: </strong>{{ user.username }}</p>
+                  <p class="card-meta mb-2"><i class="fas fa-user-cog mr-2"></i><strong>Email: </strong>{{ user.email }}</p>
+                  <p class="card-meta mb-2"><i class="fas fa-user-cog mr-2"></i><strong>Nombres: </strong>{{ user.adminprofile.title|default_if_none:"Complete el Formulario" }}. {{ user.first_name|default_if_none:"Complete el Formulario"|title }}</p>
+                  <p class="card-meta mb-2"><i class="fas fa-user-cog mr-2"></i><strong>Apellidos: </strong>{{ user.last_name|default_if_none:"Complete el Formulario"|title }}</p>
+                  <p class="card-meta mb-2"><i class="fas fa-user-cog mr-2"></i><strong>DNI: </strong>{{ user.adminprofile.dni|default_if_none:"Complete el Formulario" }}</p>
+                  <p class="card-meta mb-2"><i class="fas fa-user-cog mr-2"></i><strong>Codigo: </strong>{{ user.adminprofile.codigo|default_if_none:"Complete el Formulario" }}</p>
+                  <p class="card-meta mb-2"><i class="fas fa-user-cog mr-2"></i><strong>Labor: </strong>{{ user.adminprofile.staff|default_if_none:"Complete el Formulario"|title }}</p>
                 </div>
             </div>
+            <hr class="my-3">
             <div>              
                 <form method="POST" action=".">
                     {% csrf_token %}

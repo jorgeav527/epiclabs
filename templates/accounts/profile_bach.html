@@ -7,18 +7,27 @@
       <div class="col-sm-12 col-md-8 col-lg-5 mx-auto my-5">
         <div class="card shadow">
           <div class="card-body">
-            <h2 class="card-title text-center">Perfil Bachiller</h2>
+            {% if request.user.is_bach %}
+            <span class="table-add float-right">
+              <a href="{% url 'thesis:thesis_create' %}" data-toggle="tooltip" title="Crear Tesis" class="text-primary">
+                <i class="fas fa-plus fa-2x" aria-hidden="true"></i>
+              </a>
+            </span>
+            {% endif %}
+            <h2 class="h2-responsive card-title text-center">Perfil Bachiller</h2>
             <hr class="my-3">
             <div>
                 <div class="media-body">
-                    <h4 class="">{{ user.username }}</h4>
-                    <div><small class="text-secondary ">{{ user.email }}</small></div>
-                    <div><small class="text-secondary text-capitalize">{{ user.first_name }}</small></div>
-                    <div><small class="text-secondary text-capitalize">{{ user.last_name }}</small></div>
-                    <div><small class="text-secondary">{{ user.bachprofile.dni }}</small></div>
-                    <div><small class="text-secondary">{{ user.bachprofile.thesis_name }}</small></div>
+                    <p class="card-meta mb-2"><i class="fas fa-graduation-cap mr-2"></i><strong>Usuario: </strong>{{ user.username }}</p>
+                    <p class="card-meta mb-2"><i class="fas fa-graduation-cap mr-2"></i><strong>Email: </strong>{{ user.email }}</p>
+                    <p class="card-meta mb-2"><i class="fas fa-graduation-cap mr-2"></i><strong>Nombres: </strong>{{ user.first_name|default_if_none:"Complete el Formulario"|title }}</p>
+                    <p class="card-meta mb-2"><i class="fas fa-graduation-cap mr-2"></i><strong>Apellidos: </strong>{{ user.last_name|default_if_none:"Complete el Formulario"|title }}</p>
+                    <p class="card-meta mb-2"><i class="fas fa-graduation-cap mr-2"></i><strong>DNI: </strong>{{ user.bachprofile.dni }}</p>
+                    <p class="card-meta mb-2"><i class="fas fa-graduation-cap mr-2"></i><strong>Codigo: </strong>{{ user.bachprofile.codigo }}</p>
                 </div>
             </div>
+            <hr class="my-3">
+
             <div>              
                 <form method="POST" action=".">
                     {% csrf_token %}
@@ -26,10 +35,60 @@
                     {{ profile_bach|crispy }}
                     <button class="btn btn-primary btn-block mt-5" type="submit">Actualizar Perfil</button>
                 </form>
-            </div>
+          </div>
           </div>
         </div>
       </div>
+      <div class="col-sm-12 col-md-8 col-lg-5 mx-auto">
+        {% for obj in obj_list %}
+        {% if obj %}
+          <div class="card shadow primary-color-dark white-text my-5">
+            <div class="card-body">
+
+              <div>
+                  <div class="media-body">
+                      <h4 class="h4-responsive card-title">{{ obj.title }}</h4>
+                      <hr class="my-3 rgba-white-light">
+                      <p class="card-meta mb-2"><i class="fas fa-graduation-cap mr-2"></i><strong>Linea de Desarrollo: </strong>{{ obj.line }}</p>
+                      <p class="card-meta mb-2"><i class="fas fa-graduation-cap mr-2"></i><strong>Duración: </strong>{{ obj.duration }} dias</p>
+                      <p class="card-meta mb-2"><i class="fas fa-graduation-cap mr-2"></i><strong>Fecha de Inicio: </strong>{{ obj.start_day }}</p>
+                      <p class="card-meta mb-2"><i class="fas fa-graduation-cap mr-2"></i><strong>Fecha de Finalización: </strong>{{ obj.finish_day }}</p>
+                      <p class="card-meta mb-2"><strong>Cursos Afines: </strong></p>
+                      {% for course in obj.course.all %}
+                      <p class="card-meta mb-2"><i class="fas fa-graduation-cap mr-2"></i>{{ course }}</p>
+                      {% endfor %}
+                      <p class="card-meta mb-2"><strong>Acesores: </strong></p>
+                      {% for adviser in obj.adviser.all %}
+                      <p class="card-meta mb-2"><i class="fas fa-graduation-cap mr-2"></i>{{ adviser }}</p>
+                      {% endfor %}
+                  </div>
+              </div>
+              <hr class="my-3 rgba-white-light">
+              <div class="btn-group float-right" role="group" aria-label="Basic example">
+                  <a 
+                    href="{% url 'thesis:thesis_update' obj.id %}" 
+                    data-toggle="tooltip" title="Editar" role="button" class="btn btn-success btn-sm px-2 mx-1"><i class="fas fa-edit"></i>
+                  </a>
+                  <a 
+                    href="{% url 'thesis:thesis_delete' obj.id %}"
+                    data-toggle="tooltip" title="Borrar" role="button" class="btn btn-danger btn-sm px-2 mx-1"><i class="fas fa-trash"></i>
+                  </a>
+                  <a
+                    href="#"
+                    data-toggle="tooltip" title="Detalles" role="button" class="btn btn-primary btn-sm px-2 mx-1"><i class="far fa-eye"></i>
+                  </a>
+                  <a 
+                    href="#" 
+                    data-toggle="tooltip" title="Descargar PDF" role="button" class="btn btn-orange btn-sm px-2 mx-1"><i class="far fa-file-pdf"></i>
+                  </a>
+              </div>
+                            
+            </div>
+          </div>
+          {% endif %}
+          {% endfor %}
+      </div>
+
     </div>
 </div>
 {% endblock content %}

@@ -14,44 +14,45 @@ class User(AbstractUser):
     is_client   = models.BooleanField(default=False)
     is_admin    = models.BooleanField(default=False)
 
-alphanumeric = RegexValidator(r'^[0-9a-zA-Z]*$', 'Only alphanumeric characters are allowed.')
+# alphanumeric = RegexValidator(r'^[0-9a-zA-Z]*$', 'Only alphanumeric characters are allowed.')
 
 
 class StudentProfile(models.Model):
     user        = models.OneToOneField(User, on_delete=models.CASCADE)
     active      = models.BooleanField(default=True)
-    dni         = models.BigIntegerField(null=True, blank=True, validators=[alphanumeric])
-    codigo      = models.BigIntegerField(null=True, blank=True, validators=[alphanumeric])
+    dni         = models.BigIntegerField(null=True, blank=True,)
+    codigo      = models.BigIntegerField(null=True, blank=True,)
     created     = models.DateTimeField(auto_now_add=True)
     updated     = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"Student {self.user.first_name} {self.user.last_name} {self.codigo} as {self.user.username}"
+        return f"Student {self.user.first_name} {self.user.last_name}"
 
 
 class BachProfile(models.Model):
     user        = models.OneToOneField(User, on_delete=models.CASCADE)
     active      = models.BooleanField(default=True)
-    dni         = models.BigIntegerField(null=True, blank=True, validators=[alphanumeric])
-    codigo      = models.BigIntegerField(null=True, blank=True, validators=[alphanumeric])
+    dni         = models.BigIntegerField(null=True, blank=True,)
+    codigo      = models.BigIntegerField(null=True, blank=True,)
     created     = models.DateTimeField(auto_now_add=True)
     updated     = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"Bach {self.user.first_name} {self.user.last_name} {self.codigo} as {self.user.username}"
+        return f"Bach {self.user.first_name} {self.user.last_name}"
 
 
 class TeacherProfile(models.Model):
     user        = models.OneToOneField(User, on_delete=models.CASCADE)
     active      = models.BooleanField(default=True)
     course      = models.ManyToManyField(Course)
-    dni         = models.BigIntegerField(null=True, blank=True, validators=[alphanumeric])
-    codigo      = models.BigIntegerField(null=True, blank=True, validators=[alphanumeric])
+    title       = models.CharField(max_length=10, null=True, blank=True,)
+    dni         = models.BigIntegerField(null=True, blank=True,)
+    codigo      = models.BigIntegerField(null=True, blank=True,)
     created     = models.DateTimeField(auto_now_add=True)
     updated     = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"Ing. {self.user.first_name} {self.user.last_name} {self.codigo} as {self.user.username}"
+        return f"Prof. {self.user.first_name} {self.user.last_name}"
 
 
 class ClientProfile(models.Model):
@@ -59,25 +60,25 @@ class ClientProfile(models.Model):
     active      = models.BooleanField(default=True)
     long_name   = models.CharField(max_length=64, null=True, blank=True)
     direction   = models.CharField(max_length=64, null=True, blank=True)
-    reference   = models.CharField(max_length=64, null=True, blank=True)
     category    = models.ManyToManyField(Category)
-    ruc         = models.BigIntegerField(null=True, blank=True, validators=[alphanumeric])
-    phone       = models.BigIntegerField(null=True, blank=True, validators=[alphanumeric])
+    ruc         = models.BigIntegerField(null=True, blank=True,)
+    phone       = models.BigIntegerField(null=True, blank=True,)
     created     = models.DateTimeField(auto_now_add=True)
     updated     = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"Org. {self.user.username} {self.ruc}"
+        return f"Org. {self.long_name} {self.ruc}"
 
 
 class AdminProfile(models.Model):
     user        = models.OneToOneField(User, on_delete=models.CASCADE)
     active      = models.BooleanField(default=True)
-    staff       = models.CharField(max_length=5)
-    dni         = models.BigIntegerField(null=True, blank=True, validators=[alphanumeric])
-    codigo      = models.BigIntegerField(null=True, blank=True, validators=[alphanumeric])
+    staff       = models.CharField(max_length=30)
+    title       = models.CharField(max_length=10,null=True, blank=True,)
+    dni         = models.BigIntegerField(null=True, blank=True,)
+    codigo      = models.BigIntegerField(null=True, blank=True,)
     created     = models.DateTimeField(auto_now_add=True)
     updated     = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"Ing. {self.user.first_name} {self.user.last_name} {self.codigo} as {self.user.username} {self.staff}"
+        return f"Admin. {self.user.first_name} {self.user.last_name} is {self.staff}"

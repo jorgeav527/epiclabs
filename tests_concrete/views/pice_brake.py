@@ -14,11 +14,11 @@ from equipments.models import Equip
 
 @login_required
 def pice_break_list_view(request):
-    if request.user.is_bach or request.user.is_student:
+    if request.user.is_bach or request.user.is_student or request.user.is_client:
         obj_list = PiceBreak.objects.filter(user=request.user)
         context = {
             "file_name": "Testigos_de_Concreto",
-            "title": "Ensayo de Rotura de Testigos de Concreto 6\" 4\" y 2\" ",
+            "title": "Ensayos de Rotura de Testigos de Concreto 6\" 4\" y 2\" ",
             "obj_list": obj_list,
         }
         return render(request, 'tests_concrete/pice_break/pice_break_list.html', context)        
@@ -26,7 +26,7 @@ def pice_break_list_view(request):
         obj_list = PiceBreak.objects.all()
         context = {
             "file_name": "Testigos_de_Concreto",
-            "title": "Ensayo de Rotura de Testigos de Concreto 6\" 4\" y 2\" ",
+            "title": "Ensayos de Rotura de Testigos de Concreto 6\" 4\" y 2\" ",
             "obj_list": obj_list,
         }
         return render(request, 'tests_concrete/pice_break/pice_break_list.html', context)        
@@ -60,7 +60,8 @@ def pice_break_create(request):
 
 
     context = {
-        "form": form
+        "form": form,
+        "title": "Crear Ensayo de Rotura de Testigos de Concreto 6\" 4\" y 2\" ",
     }
 
     return render(request, "tests_concrete/pice_break/pice_break_form.html", context)
@@ -79,6 +80,7 @@ def pice_break_update(request, id):
     context = {
         "form": form,
         "obj": obj,
+        "title": "Actualizar Ensayo de Rotura de Testigos de Concreto 6\" 4\" y 2\" ",
     }
 
     return render(request, "tests_concrete/pice_break/pice_break_form.html", context)
@@ -90,7 +92,7 @@ def pice_break_detail(request, id):
 
     context = {
         "obj": obj,
-        "title": "Ensayo de Rotura de Testigos de Concreto",
+        "title": "Detalles del Ensayo de Rotura de Testigos de Concreto",
     }
 
     return render(request, 'tests_concrete/pice_break/pice_break_detail.html', context)
@@ -99,13 +101,17 @@ def pice_break_detail(request, id):
 @login_required
 def pice_break_delete(request, id):
     obj = get_object_or_404(PiceBreak, id=id)
+    equip = Equip.objects.get(name="Maquina Compresora")
     if request.method == "POST":
         obj.delete()
+        equip.use = F("use") - 1 # equip.use += 1
+        equip.save()
         messages.success(request, f"El ensayo a sido eliminado")
         return redirect('tests_concrete:pice_break_list')
 
     context = {
         "obj": obj,
+        "title": "Eliminar el Ensayo de Rotura de Testigos de Concreto",
     }
 
     return render(request, 'tests_concrete/pice_break/pice_break_delete_comfirm.html', context)
@@ -131,5 +137,7 @@ def pice_break_pdf(request, id):
     }
     pdf = pdfkit.from_string(html, False, options)
     response = HttpResponse(pdf, content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="filepdf.pdf"'
+    # filename = str(obj.user.username) + str(id) + '.pdf'
+    filename = f"Ensayo_{obj.user.username}_{obj.id}.pdf"
+    response['Content-Disposition'] = 'attachment; filename="{}"'.format(filename)
     return response

@@ -1,7 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 
 from .forms import *
+from thesis.models import Thesis
+from construction.models import Construction
+from reference_person.models import ReferencePerson
 
 # Create your views here.
 
@@ -61,6 +64,7 @@ def register_bach(request):
 
 
 def profile_bach(request):
+    thesis = Thesis.objects.filter(bach_profile=request.user.bachprofile)
     profile_account = AccountUpdateForm(request.POST, instance=request.user)
     profile_bach = BachUpdateForm(request.POST, instance=request.user.bachprofile)
     if profile_account.is_valid() and profile_bach.is_valid():
@@ -76,6 +80,7 @@ def profile_bach(request):
     context = {
         "profile_account": profile_account,
         "profile_bach": profile_bach,
+        "obj_list": thesis,
     }
 
     return render(request, 'accounts/profile_bach.html', context)
@@ -137,6 +142,8 @@ def register_client(request):
 
 
 def profile_client(request):
+    reference_person = ReferencePerson.objects.filter(client_profile=request.user.clientprofile)
+    construction = Construction.objects.filter(client_profile=request.user.clientprofile)
     profile_account = ClientAccountUpdatedForm(request.POST, instance=request.user)
     profile_client = ClientUpdateForm(request.POST, instance=request.user.clientprofile)
     if profile_account.is_valid() and profile_client.is_valid():
@@ -150,6 +157,8 @@ def profile_client(request):
         profile_client = ClientUpdateForm(instance=request.user.clientprofile)
 
     context = {
+        "obj_list_reference_person": reference_person, 
+        "obj_list_construction": construction,
         "profile_account": profile_account,
         "profile_client": profile_client,
     }

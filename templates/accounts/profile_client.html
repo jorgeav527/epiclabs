@@ -7,18 +7,34 @@
       <div class="col-sm-12 col-md-8 col-lg-5 mx-auto my-5">
         <div class="card shadow">
           <div class="card-body">
-            <h2 class="card-title text-center">Perfil cliente</h2>
+            {% if request.user.is_client %}
+            <span class="table-add float-right">
+              <a href="{% url 'reference_person:reference_person_create' %}" data-toggle="tooltip" title="Crear Persona de Referencia" class="text-dark">
+                <i class="fas fa-user-tie fa-2x" aria-hidden="true"></i>
+              </a>
+            </span>
+            <span class="table-add float-right">
+              <a href="{% url 'construction:construction_create' %}" data-toggle="tooltip" title="Crear Construction" class="text-primary">
+                <i class="fas fa-plus fa-2x" aria-hidden="true"></i>
+              </a>
+            </span>
+
+            {% endif %}
+            <h2 class="h2-responsive card-title text-center">Perfil Cliente</h2>
             <hr class="my-3">
             <div>
                 <div class="media-body">
-                    <h4 class="">{{ user.username }}</h4>
-                    <div><small class="text-secondary ">{{ user.email }}</small></div>
-                    <div><small class="text-secondary text-capitalize">{{ user.clientprofile.long_name }}</small></div>
-                    <div><small class="text-secondary text-capitalize">{{ user.clientprofile.direction }}</small></div>
-                    <div><small class="text-secondary text-capitalize">{{ user.clientprofile.reference }}</small></div>
-                    <div><small class="text-secondary text-capitalize">{{ user.clientprofile.ruc }}</small></div>
-                    <div><small class="text-secondary text-capitalize">{{ user.clientprofile.phone }}</small></div>
-                </div>
+                  <p class="card-meta mb-2"><i class="fas fa-user-tie mr-2"></i><strong>Usuario: </strong>{{ user.username }}</p>
+                  <p class="card-meta mb-2"><i class="fas fa-user-tie mr-2"></i><strong>Email: </strong>{{ user.email }}</p>
+                  <p class="card-meta mb-2"><i class="fas fa-user-tie mr-2"></i><strong>Nombre de la Enpresa: </strong>{{ user.clientprofile.long_name|default_if_none:"Complete el Formulario"|title }}</p>
+                  <p class="card-meta mb-2"><i class="fas fa-user-tie mr-2"></i><strong>Dirección de la Empresa: </strong>{{ user.clientprofile.direction|default_if_none:"Complete el Formulario"|title }}</p>
+                  <p class="card-meta mb-2"><i class="fas fa-user-tie mr-2"></i><strong>RUC: </strong>{{ user.clientprofile.ruc|default_if_none:"Complete el Formulario" }}</p>
+                  <p class="card-meta mb-2"><i class="fas fa-user-tie mr-2"></i><strong>Telefono o Celular: </strong>{{ user.clientprofile.phone|default_if_none:"Complete el Formulario" }}</p>
+                  <p class="card-meta mb-2"><strong>Categoria: </strong></p>
+                  {% for category in user.clientprofile.category.all %}
+                  <p class="card-meta mb-2"><i class="fas fa-user-tie mr-2"></i>{{ category }}</p>
+                  {% endfor %}  
+              </div>
             </div>
             <div>              
                 <form method="POST" action=".">
@@ -31,6 +47,86 @@
           </div>
         </div>
       </div>
+      <div class="col-sm-12 col-md-8 col-lg-5 mx-auto">
+          {% for obj_construction in obj_list_construction %}
+          {% if obj_construction %}
+          <div class="card shadow primary-color-dark white-text my-5">
+            <div class="card-body">
+
+              <div>
+                  <div class="media-body">
+                      <h4 class="h4-responsive card-title">{{ obj_construction.name|title }}</h4>
+                      <hr class="my-3 rgba-white-light">
+                      <p class="card-meta mb-2"><i class="fas fa-user-tie mr-2"></i><strong>Dirección de la Obra: </strong>{{ obj_construction.location }}</p>
+                      <p class="card-meta mb-2"><i class="fas fa-user-tie mr-2"></i><strong>Fecha de Inicio: </strong>{{ obj_construction.start_day }}</p>
+                      <p class="card-meta mb-2"><i class="fas fa-user-tie mr-2"></i><strong>Fecha de Finalización Aprox.: </strong>{{ obj_construction.finish_day }}</p>
+                      <p class="card-meta mb-2"><i class="fas fa-user-tie mr-2"></i><strong>Duración: </strong>{{ obj_construction.duration }}</p>
+                  </div>
+              </div>
+              <hr class="my-3 rgba-white-light">
+              <div class="btn-group float-right" role="group" aria-label="Basic example">
+                  <a 
+                    href="{% url 'construction:construction_update' obj_construction.id %}" 
+                    data-toggle="tooltip" title="Editar" role="button" class="btn btn-success btn-sm px-2 mx-1"><i class="fas fa-edit"></i>
+                  </a>
+                  <a 
+                    href="{% url 'construction:construction_delete' obj_construction.id %}"
+                    data-toggle="tooltip" title="Borrar" role="button" class="btn btn-danger btn-sm px-2 mx-1"><i class="fas fa-trash"></i>
+                  </a>
+                  <a
+                    href="#"
+                    data-toggle="tooltip" title="Detalles" role="button" class="btn btn-primary btn-sm px-2 mx-1"><i class="far fa-eye"></i>
+                  </a>
+                  <a 
+                    href="#" 
+                    data-toggle="tooltip" title="Descargar PDF" role="button" class="btn btn-orange btn-sm px-2 mx-1"><i class="far fa-file-pdf"></i>
+                  </a>
+              </div>
+                            
+            </div>
+          </div>
+          {% endif %}
+          {% endfor %}
+          {% for obj_reference_person in obj_list_reference_person %}
+          {% if obj_reference_person %}
+          <div class="card shadow elegant-color-dark white-text my-5">
+            <div class="card-body">
+
+              <div>
+                  <div class="media-body">
+                      <h4 class="h4-responsive card-title">{{ obj_reference_person.title }}. {{ obj_reference_person.name|title }}</h4>
+                      <hr class="my-3 rgba-white-light">
+                      <p class="card-meta mb-2"><i class="fas fa-user-tie mr-2"></i><strong>DNI: </strong>{{ obj_reference_person.dni }}</p>
+                      <p class="card-meta mb-2"><i class="fas fa-user-tie mr-2"></i><strong>Telefono: </strong>{{ obj_reference_person.phone }}</p>
+                  </div>
+              </div>
+              <hr class="my-3 rgba-white-light">
+              <div class="btn-group float-right" role="group" aria-label="Basic example">
+                  <a 
+                    href="{% url 'reference_person:reference_person_update' obj_reference_person.id %}" 
+                    data-toggle="tooltip" title="Editar" role="button" class="btn btn-success btn-sm px-2 mx-1"><i class="fas fa-edit"></i>
+                  </a>
+                  <a 
+                    href="{% url 'reference_person:reference_person_delete' obj_reference_person.id %}"
+                    data-toggle="tooltip" title="Borrar" role="button" class="btn btn-danger btn-sm px-2 mx-1"><i class="fas fa-trash"></i>
+                  </a>
+                  <a
+                    href="#"
+                    data-toggle="tooltip" title="Detalles" role="button" class="btn btn-primary btn-sm px-2 mx-1"><i class="far fa-eye"></i>
+                  </a>
+                  <a 
+                    href="#" 
+                    data-toggle="tooltip" title="Descargar PDF" role="button" class="btn btn-orange btn-sm px-2 mx-1"><i class="far fa-file-pdf"></i>
+                  </a>
+              </div>
+                            
+            </div>
+          </div>
+          {% endif %}
+          {% endfor %}
+
+      </div>
+
     </div>
 </div>
 {% endblock content %}

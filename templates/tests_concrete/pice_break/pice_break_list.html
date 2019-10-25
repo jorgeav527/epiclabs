@@ -56,11 +56,13 @@
       <h4 class="h4-responsive card-header text-center font-weight-bold text-uppercase py-4">{{ title }}</h4>
       <div class="card-body">
         <div>
+          {% if request.user.is_superuser or request.user.is_student or request.user.is_bach or request.user.is_admin %}
           <span class="table-add float-right mb-3 mr-2">
             <a href="{% url 'tests_concrete:pice_break_create' %}" class="text-primary">
               <i class="fas fa-plus fa-2x" aria-hidden="true"></i>
             </a>
           </span>
+          {% endif %}
           <table id="piceBreakTable" class="display compact table table-bordered table-responsive table-striped text-center">
             <thead class="primary-color-dark white-text">
               <tr>
@@ -71,8 +73,7 @@
                 <th colspan="2" class="text-center">Fecha</th>
                 <th rowspan="2" class="text-center">Edad (dias)</th>
                 <th colspan="3" class="text-center">Dimenciones</th>
-                <th rowspan="2" class="text-center">H (cm)</th>
-                <th rowspan="2" class="text-center">F (kgf)</th>
+                <th colspan="2" class="text-center">Esfuerzo</th>
                 <th rowspan="2" class="text-center">Opciones</th>
               </tr>
               <tr>
@@ -81,6 +82,8 @@
                 <th class="text-center">Diametro (inch)</th>
                 <th class="text-center">Diametro-1 (inch)</th>
                 <th class="text-center">Diametro-2 (inch)</th>
+                <th class="text-center">(kgf)</th>
+                <th class="text-center">(MPA)</th>
               </tr>
             </thead>
             <tbody>
@@ -90,33 +93,35 @@
                 <td class="pt-3-half">{{ obj.id }}</td>
                 <td class="pt-3-half">{{ obj.code }}</td>
                 <td class="pt-3-half">{{ obj.fc_esp }}</td>
-                <td class="pt-3-half">{{ obj.fecha_vaciado|date:"d/m/Y" }}</td>
-                <td class="pt-3-half">{{ obj.fecha_rotura|date:"d/m/Y" }}</td>
-                <td class="pt-3-half">{{ obj.edad }}</td>
+                <td class="pt-3-half">{{ obj.poured_data|date:"d/m/Y" }}</td>
+                <td class="pt-3-half">{{ obj.break_data|date:"d/m/Y" }}</td>
+                <td class="pt-3-half">{{ obj.duration }}</td>
                 <td class="pt-3-half">{{ obj.diameter_esp }}</td>
                 <td class="pt-3-half">{{ obj.diameter_1 }}</td>
                 <td class="pt-3-half">{{ obj.diameter_2 }}</td>
-                <td class="pt-3-half">{{ obj.h }}</td>
-                <td class="pt-3-half">{{ obj.F }}</td>
+                <td class="pt-3-half">{{ obj.fc }}</td>
+                <td class="pt-3-half">{{ obj.fc_MPa }}</td>
                 <td>
-                    <div class="btn-group" role="group" aria-label="Basic example">
-                        <a 
-                          href="{% url 'tests_concrete:pice_break_update' obj.id %}" 
-                          data-toggle="tooltip" title="Editar" role="button" class="btn btn-success btn-sm px-2 mx-1"><i class="fas fa-edit"></i>
-                        </a>
-                        <a 
-                          href="{% url 'tests_concrete:pice_break_delete' obj.id %}"
-                          data-toggle="tooltip" title="Borrar" role="button" class="btn btn-danger btn-sm px-2 mx-1"><i class="fas fa-trash"></i>
-                        </a>
-                        <a
-                          href="{% url 'tests_concrete:pice_break_detail' obj.id %}"
-                          data-toggle="tooltip" title="Detalles" role="button" class="btn btn-primary btn-sm px-2 mx-1"><i class="far fa-eye"></i>
-                        </a>
-                        <a 
-                          href="{% url 'tests_concrete:pice_break_pdf' obj.id %}" 
-                          data-toggle="tooltip" title="Descargar PDF" role="button" class="btn btn-orange btn-sm px-2 mx-1"><i class="far fa-file-pdf"></i>
-                        </a>
-                    </div>
+                  <div class="btn-group" role="group" aria-label="Basic example">
+                    <a
+                      href="{% url 'tests_concrete:pice_break_detail' obj.id %}"
+                      data-toggle="tooltip" title="Detalles" role="button" class="btn btn-primary btn-sm px-2 mx-1"><i class="far fa-eye"></i>
+                    </a>
+                    {% if request.user.is_superuser or request.user.is_student or request.user.is_bach or request.user.is_admin %}
+                    <a 
+                      href="{% url 'tests_concrete:pice_break_update' obj.id %}" 
+                      data-toggle="tooltip" title="Editar" role="button" class="btn btn-success btn-sm px-2 mx-1"><i class="fas fa-edit"></i>
+                    </a>
+                    <a 
+                      href="{% url 'tests_concrete:pice_break_delete' obj.id %}"
+                      data-toggle="tooltip" title="Borrar" role="button" class="btn btn-danger btn-sm px-2 mx-1"><i class="fas fa-trash"></i>
+                    </a>
+                    <a 
+                      href="{% url 'tests_concrete:pice_break_pdf' obj.id %}" 
+                      data-toggle="tooltip" title="Descargar PDF" role="button" class="btn btn-orange btn-sm px-2 mx-1"><i class="far fa-file-pdf"></i>
+                    </a>
+                    {% endif %}
+                  </div>
                 </td>
               </tr>
               {% endfor %}

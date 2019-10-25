@@ -12,8 +12,8 @@
 
 <p class="text-left w-responsive mx-auto mb-0 mt-3"><span class="font-weight-bold">Datos del Ensayo Ingresados</span></p>
 <p class="text-left w-responsive mx-auto mb-0"><span class="font-weight-bold">f'c Esp:</span> {{ obj.fc_esp }} kgf/cm²</p>
-<p class="text-left w-responsive mx-auto mb-0"><span class="font-weight-bold">Fecha de Vaciado:</span> {{ obj.fecha_vaciado|date:"d/m/Y" }}</p>
-<p class="text-left w-responsive mx-auto mb-0"><span class="font-weight-bold">Fecha de Rotura:</span> {{ obj.fecha_rotura|date:"d/m/Y" }}</p>
+<p class="text-left w-responsive mx-auto mb-0"><span class="font-weight-bold">Fecha de Vaciado:</span> {{ obj.poured_data|date:"d/m/Y" }}</p>
+<p class="text-left w-responsive mx-auto mb-0"><span class="font-weight-bold">Fecha de Rotura:</span> {{ obj.break_data|date:"d/m/Y" }}</p>
 <p class="text-left w-responsive mx-auto mb-0"><span class="font-weight-bold">Largo-1:</span> {{ obj.largo_1 }} cm</p>
 <p class="text-left w-responsive mx-auto mb-0"><span class="font-weight-bold">Largo-2:</span> {{ obj.largo_2 }} cm</p>
 <p class="text-left w-responsive mx-auto mb-0"><span class="font-weight-bold">Ancho-1:</span> {{ obj.ancho_1 }} cm</p>

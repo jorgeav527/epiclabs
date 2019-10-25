@@ -10,23 +10,17 @@ from construction.models import Construction
 
 
 class PiceBreak(models.Model):
-    DIAMETER_CHOICES = (
-        (2, "2 Inch"),
-        (4, "4 Inch"),
-        (6, "6 Inch"),
-    )
     user            = models.ForeignKey(User, on_delete=models.CASCADE)
     name            = models.CharField(max_length=50, default="Rotura de Testigo de Concreto")
     code            = models.CharField(max_length=255, unique=True, editable=False)
-    fc_esp          = models.FloatField(default=280.00)
-    fecha_vaciado   = models.DateField()
-    fecha_rotura    = models.DateField(default=datetime.datetime.now)
-    edad            = models.IntegerField(editable=False)
-    diameter_esp    = models.FloatField(choices=DIAMETER_CHOICES, null=True, blank=True)
+    fc_esp          = models.FloatField()
+    poured_data     = models.DateField()
+    break_data      = models.DateField(default=datetime.datetime.now)
+    duration        = models.IntegerField(editable=False)
+    diameter_esp    = models.FloatField(null=True, blank=True)
     diameter_1      = models.FloatField(null=True, blank=True)
     diameter_2      = models.FloatField(null=True, blank=True)
     area            = models.FloatField(editable=False)
-    h               = models.FloatField(default=15.00)
     F               = models.FloatField()
     fc              = models.FloatField(editable=False)
     fc_MPa          = models.FloatField(editable=False)
@@ -50,9 +44,9 @@ class PiceBreak(models.Model):
             letters += word[0]
         self.code = f"{letters.upper()}{date.year}{date.month}{date.day}{date.hour}{date.minute}{date.second}"
 
-        # Generate the edad from the fecha_vaciado
-        diff = self.fecha_rotura - self.fecha_vaciado
-        self.edad = diff.days
+        # Generate the duration from the poured_data
+        diff = self.break_data - self.poured_data
+        self.duration = diff.days
 
         # Generate the area from the avg largo and ancho
         if self.diameter_esp:

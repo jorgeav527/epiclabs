@@ -94,13 +94,24 @@ class TeacherRegister(UserCreationForm):
 
 
 class TeacherUpdateForm(forms.ModelForm):
+    TITLE_CHOICES = (
+        ("NINGUNA", "Ninguna"),
+        ("Ope", "Operario"),
+        ("Tec", "Técnico"),
+        ("Ing", "Ingeniero"),
+        ("Arq", "Arquitecto"),
+        ("Mg", "Magister"),
+        ("Dr", "Doctor"),
+    )
+
+    title       = forms.ChoiceField(required=True, choices=TITLE_CHOICES, label='Formación', help_text='Selecciona la Formación',)
     dni         = forms.IntegerField(required=True, label='DNI', help_text='Documento Nacional de Identidad',)
     codigo      = forms.IntegerField(required=True, label='Codigo de Colegiatura',)
     course      = forms.ModelMultipleChoiceField(queryset=Course.objects.all() ,required=True, label='Cursos Impartidos', help_text='Selecciona todas las materias que imparte.',)
 
     class Meta:
         model   = TeacherProfile
-        fields  = ("dni", "codigo", "course")
+        fields  = ("title", "dni", "codigo", "course")
 
 
 # CLIENT
@@ -127,20 +138,18 @@ class ClientAccountUpdatedForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ("username", "email",)
-        # exclude = ("first_name", "last_name",)
 
 
 class ClientUpdateForm(forms.ModelForm):
     long_name   = forms.CharField(required=True, label='Nombre de la Empresa',)
     direction   = forms.CharField(required=True, label='Dirección de la Empresa',)
-    reference   = forms.CharField(required=True, label='Referencia de la Dirección',)
     category    = forms.ModelMultipleChoiceField(queryset=Category.objects.all() ,required=True, label='Categoria', help_text='Selecciona la Categoria',)
     ruc         = forms.IntegerField(required=True, label='Registro Único de Contribuyentes',)
     phone       = forms.IntegerField(required=True, label='Telefono o Celular',)
 
     class Meta:
         model   = ClientProfile
-        fields  = ("long_name", "direction", "reference", "category", "ruc", "phone",)
+        fields  = ("long_name", "direction", "category", "ruc", "phone",)
 
 
 # ADMIN
@@ -163,15 +172,26 @@ class AdminRegister(UserCreationForm):
 
 class AdminUpdateForm(forms.ModelForm):
     STAFF_CHOICES = (
-        ("NN", "Ninguna"),
-        ("OT", "Oficina Técnica"),
-        ("S", "Secretaria"),
-        ("C", "Coordinador"),
+        ("NINGUNA", "Ninguna"),
+        ("OFICINA_TECNICA", "Oficina Técnica"),
+        ("SECRETARIA", "Secretaria"),
+        ("COORDINADOR", "Coordinador"),
     )
+    TITLE_CHOICES = (
+        ("NINGUNA", "Ninguna"),
+        ("Ope", "Operario"),
+        ("Tec", "Técnico"),
+        ("Ing", "Ingeniero"),
+        ("Arq", "Arquitecto"),
+        ("Mg", "Magister"),
+        ("Dr", "Doctor"),
+    )
+
+    title       = forms.ChoiceField(required=True, choices=TITLE_CHOICES, label='Formación', help_text='Selecciona la Formación',)
     dni         = forms.IntegerField(required=True, label='DNI', help_text='Documento Nacional de Identidad',)
     codigo      = forms.IntegerField(required=True, label='Codigo de Colegiatura',)
-    staff       = forms.ChoiceField(required=True, choices=STAFF_CHOICES, label='Personal de', help_text='Selecciona la labor',)
+    staff       = forms.ChoiceField(required=True, choices=STAFF_CHOICES, label='Labor', help_text='Selecciona la labor',)
 
     class Meta:
         model   = AdminProfile
-        fields  = ("dni", "codigo", "staff",)
+        fields  = ("title", "dni", "codigo", "staff",)

@@ -12,30 +12,30 @@ admin.site.register(User, UserAdmin)
 
 
 class StudentProfileAdmin(admin.ModelAdmin):
-    list_display = ['dni', 'codigo',]
+    list_display = ['user', 'dni', 'codigo', 'active']
 
 admin.site.register(StudentProfile, StudentProfileAdmin)
 
 
 class TeacherProfileAdmin(admin.ModelAdmin):
-    list_display = ['dni', 'codigo',]
+    list_display = ['user', 'title', 'dni', 'codigo', 'active']
 
 admin.site.register(TeacherProfile, TeacherProfileAdmin)
 
 
 class BachProfileAdmin(admin.ModelAdmin):
-    list_display = ['dni', 'codigo',]
+    list_display = ['user', 'dni', 'codigo', 'active']
 
 admin.site.register(BachProfile, StudentProfileAdmin)
 
 
 class ClientProfileAdmin(admin.ModelAdmin):
-    list_display = ['long_name', 'ruc',]
+    list_display = ['user', 'long_name', 'direction', 'ruc', 'phone', 'active']
 
 admin.site.register(ClientProfile, ClientProfileAdmin)
 
 
 class AdminProfileAdmin(admin.ModelAdmin):
-    list_display = ['staff', 'dni', 'codigo',]
+    list_display = ['user', 'title', 'staff', 'dni', 'codigo', 'active']
 
 admin.site.register(AdminProfile, AdminProfileAdmin)

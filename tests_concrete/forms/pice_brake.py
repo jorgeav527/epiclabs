@@ -27,14 +27,14 @@ class PiceBreakForm(forms.ModelForm):
             'course'
         ]
         labels = {
-            'fc_esp': 'f\'c Epecificado', 
+            'fc_esp': 'Resistencia de Diseño', 
             'element': 'Elemento',    
             'poured_data': 'Dia de Vaciado', 
             'break_data': 'Dia de Rotura', 
             'diameter_esp': 'Diametro Especifico',
             'diameter_1': 'Diametro Superior',
             'diameter_2': 'Diametro Inferior',
-            'F': 'Esfuerso Compresora',
+            'F': 'Carga Maquina',
         }
         help_texts = {
             'fc_esp': 'Unidades (kgf/cm²)', 
@@ -69,14 +69,14 @@ class PiceBreakFormClient(forms.ModelForm):
             'construction',
         ]
         labels = {
-            'fc_esp': 'f\'c Epecificado', 
+            'fc_esp': 'Resistencia de Diseño', 
             'element': 'Elemento',    
             'poured_data': 'Dia de Vaciado', 
             'break_data': 'Dia de Rotura', 
             'diameter_esp': 'Diametro Especifico',
             'diameter_1': 'Diametro Superior',
             'diameter_2': 'Diametro Inferior',
-            'F': 'Esfuerso Compresora',
+            'F': 'Carga Maquina',
             'reference_person': 'Persona de Referencia',
             'construction': 'Construcción de Referencia',
         }

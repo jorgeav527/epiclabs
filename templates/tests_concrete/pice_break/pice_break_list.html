@@ -73,34 +73,36 @@
                 <th colspan="2" class="text-center">Fecha</th>
                 <th rowspan="2" class="text-center">Edad (dias)</th>
                 <th colspan="3" class="text-center">Dimenciones</th>
-                <th colspan="2" class="text-center">Esfuerzo</th>
-                <th rowspan="2" class="text-center">Opciones</th>
+                <th rowspan="2" class="text-center">Carga (kgf)</th>
+                <th colspan="2" class="text-center">Esfuerzo de Rotura</th>
+                <th rowspan="2" class="text-center">Acciones</th>
               </tr>
               <tr>
                 <th class="text-center">Vaciado</th>
                 <th class="text-center">Rotura</th>
-                <th class="text-center">Diametro (inch)</th>
-                <th class="text-center">Diametro-1 (inch)</th>
-                <th class="text-center">Diametro-2 (inch)</th>
-                <th class="text-center">(kgf)</th>
+                <th class="text-center">Diametro Esp. (inch)</th>
+                <th class="text-center">Diametro Sup. (inch)</th>
+                <th class="text-center">Diametro Inf. (inch)</th>
+                <th class="text-center">(kgf/cm²)</th>
                 <th class="text-center">(MPA)</th>
               </tr>
             </thead>
             <tbody>
               {% for obj in obj_list %}
               <tr>
-                <td class="pt-3-half">{{ obj.user.username }}</td>
-                <td class="pt-3-half">{{ obj.id }}</td>
-                <td class="pt-3-half">{{ obj.code }}</td>
-                <td class="pt-3-half">{{ obj.fc_esp }}</td>
-                <td class="pt-3-half">{{ obj.poured_data|date:"d/m/Y" }}</td>
-                <td class="pt-3-half">{{ obj.break_data|date:"d/m/Y" }}</td>
-                <td class="pt-3-half">{{ obj.duration }}</td>
-                <td class="pt-3-half">{{ obj.diameter_esp }}</td>
-                <td class="pt-3-half">{{ obj.diameter_1 }}</td>
-                <td class="pt-3-half">{{ obj.diameter_2 }}</td>
-                <td class="pt-3-half">{{ obj.fc }}</td>
-                <td class="pt-3-half">{{ obj.fc_MPa }}</td>
+                <td class="text-center">{{ obj.user.username }}</td>
+                <td class="text-center">{{ obj.id }}</td>
+                <td class="text-center">{{ obj.code }}</td>
+                <td class="text-center">{{ obj.fc_esp }}</td>
+                <td class="text-center">{{ obj.poured_data|date:"d/m/Y" }}</td>
+                <td class="text-center">{{ obj.break_data|date:"d/m/Y" }}</td>
+                <td class="text-center">{{ obj.duration }}</td>
+                <td class="text-center">{{ obj.diameter_esp }}</td>
+                <td class="text-center">{{ obj.diameter_1 }}</td>
+                <td class="text-center">{{ obj.diameter_2 }}</td>
+                <td class="text-center">{{ obj.F }}</td>
+                <td class="text-center">{{ obj.fc }}</td>
+                <td class="text-center">{{ obj.fc_MPa }}</td>
                 <td>
                   <div class="btn-group" role="group" aria-label="Basic example">
                     <a

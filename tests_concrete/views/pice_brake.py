@@ -69,13 +69,23 @@ def pice_break_create(request):
 
 @login_required
 def pice_break_update(request, id):
-    obj = get_object_or_404(PiceBreak, id=id)
-    form = PiceBreakForm(request.POST or None, instance=obj)
-    if request.method == "POST":
-        if form.is_valid():
-            form.save()
-            messages.success(request, f"El ensayo ha sido actualizado")
-            return redirect('tests_concrete:pice_break_list')
+    if request.user.is_bach or request.user.is_student:
+        obj = get_object_or_404(PiceBreak, id=id)
+        form = PiceBreakForm(request.POST or None, instance=obj)
+        if request.method == "POST":
+            if form.is_valid():
+                form.save()
+                messages.success(request, f"El ensayo ha sido actualizado")
+                return redirect('tests_concrete:pice_break_list')
+
+    elif request.user.is_superuser or request.user.is_admin:
+        obj = get_object_or_404(PiceBreak, id=id)
+        form = PiceBreakFormClient(request.POST or None, instance=obj)
+        if request.method == "POST":
+            if form.is_valid():
+                form.save()
+                messages.success(request, f"El ensayo ha sido actualizado")
+                return redirect('tests_concrete:pice_break_list')
 
     context = {
         "form": form,
@@ -129,9 +139,9 @@ def pice_break_pdf(request, id):
     html = template.render(context)
     options = {
         'page-size': 'Letter',
-        'margin-top': '0.75in',
+        'margin-top': '0.50in',
         'margin-right': '0.50in',
-        'margin-bottom': '0.75in',
+        'margin-bottom': '0.50in',
         'margin-left': '0.50in',
         'encoding': "UTF-8",
     }

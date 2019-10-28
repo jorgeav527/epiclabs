@@ -27,3 +27,6 @@ https://www.djangorocks.com/snippets/creating-a-unique-slug.html
 
 Package models
 https://stackoverflow.com/questions/49712889/how-to-create-a-package-of-models-in-django
+
+DropDown choice field
+https://simpleisbetterthancomplex.com/tutorial/2018/01/29/how-to-implement-dependent-or-chained-dropdown-list-with-django.html

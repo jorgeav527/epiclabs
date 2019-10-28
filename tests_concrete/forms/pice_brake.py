@@ -6,67 +6,110 @@ from accounts.models import User
 from tests_concrete.models import PiceBreak
 from construction.models import Construction
 from reference_person.models import ReferencePerson
+from course.models import Course
 
 DateInput = partial(forms.DateInput, {"class": "datepicker"})
 
 class PiceBreakForm(forms.ModelForm):
-    DIAMETER_CHOICES = (
-        (0, False),
-        (2, "2 Inch"),
-        (4, "4 Inch"),
-        (6, "6 Inch"),
-    )
-    fc_esp          = forms.FloatField(required=True, initial=280.00, label="f'c epecificado", help_text="Unidades (kgf/cm²)",)
-    poured_data     = forms.DateField(required=True, widget=DateInput(), label="Dia del Vaciado")
-    break_data      = forms.DateField(required=True, initial=datetime.now(), widget=DateInput(), label="Dia de la Rotura")
-    diameter_esp    = forms.ChoiceField(required=False, choices=DIAMETER_CHOICES, label="Diametro Especifico", help_text="Unidades (inch)",)
-    diameter_1      = forms.FloatField(required=False, label="Diametro Superior", help_text="Unidades (inch)",)
-    diameter_2      = forms.FloatField(required=False, label="Diametro Inferior", help_text="Unidades (inch)",)
-    F               = forms.FloatField(required=True, label="Esfuerso Compresora", help_text="Unidades (kgf)",)
+    course = forms.ModelChoiceField(queryset=Course.objects.all(), label="Curso Especifico", required=True)
 
     class Meta:
         model = PiceBreak
         fields = [
-            "fc_esp", 
-            "poured_data", 
-            "break_data", 
-            "diameter_esp",
-            "diameter_1",
-            "diameter_2",
-            "F",
+            'fc_esp',
+            'element', 
+            'poured_data', 
+            'break_data', 
+            'diameter_esp',
+            'diameter_1',
+            'diameter_2',
+            'F',
+            'course'
         ]
+        labels = {
+            'fc_esp': 'f\'c Epecificado', 
+            'element': 'Elemento',    
+            'poured_data': 'Dia de Vaciado', 
+            'break_data': 'Dia de Rotura', 
+            'diameter_esp': 'Diametro Especifico',
+            'diameter_1': 'Diametro Superior',
+            'diameter_2': 'Diametro Inferior',
+            'F': 'Esfuerso Compresora',
+        }
+        help_texts = {
+            'fc_esp': 'Unidades (kgf/cm²)', 
+            'diameter_esp': 'Unidades (Pulgadas)',
+            'diameter_1': 'Unidades (Pulgadas)',
+            'diameter_2': 'Unidades (Pulgadas)',
+            'F': 'Unidades (kgf)',
+        }
+        widgets = {
+            'poured_data': DateInput(),
+            'break_data': DateInput(), 
+        }
+
 
 
 class PiceBreakFormClient(forms.ModelForm):
-    DIAMETER_CHOICES = (
-        (0, False),
-        (2, "2 Inch"),
-        (4, "4 Inch"),
-        (6, "6 Inch"),
-    )
-    user            = forms.ModelChoiceField(queryset=User.objects.filter(is_client=True), required=True, label="Escoje el Cliente" )
-    fc_esp          = forms.FloatField(required=True, initial=280.00, label="f'c epecificado", help_text="Unidades (kgf/cm²)",)
-    poured_data     = forms.DateField(required=True, widget=DateInput(), label="Dia del Vaciado")
-    break_data      = forms.DateField(required=True, initial=datetime.now(), widget=DateInput(), label="Dia de la Rotura")
-    diameter_esp    = forms.ChoiceField(required=False, choices=DIAMETER_CHOICES, label="Diametro Especifico", help_text="Unidades (inch)",)
-    diameter_1      = forms.FloatField(required=False, label="Diametro Superior", help_text="Unidades (inch)",)
-    diameter_2      = forms.FloatField(required=False, label="Diametro Inferior", help_text="Unidades (inch)",)
-    F               = forms.FloatField(required=True, label="Esfuerso Compresora", help_text="Unidades (kgf)",)
-    reference_person    = forms.ModelChoiceField(queryset=ReferencePerson.objects.filter(client_profile=1))
-    construction        = forms.ModelChoiceField(queryset=Construction.objects.all())
-
+    user = forms.ModelChoiceField(queryset=User.objects.filter(is_client=True), label="Escoje el Cliente", required=True)
 
     class Meta:
         model = PiceBreak
         fields = [
-            "user",
-            "fc_esp", 
-            "poured_data", 
-            "break_data", 
-            "diameter_esp",
-            "diameter_1",
-            "diameter_2",
-            "F",
-            "reference_person",
-            "construction",
+            'user',
+            'fc_esp', 
+            'element', 
+            'poured_data', 
+            'break_data', 
+            'diameter_esp',
+            'diameter_1',
+            'diameter_2',
+            'F',
+            'reference_person',
+            'construction',
         ]
+        labels = {
+            'fc_esp': 'f\'c Epecificado', 
+            'element': 'Elemento',    
+            'poured_data': 'Dia de Vaciado', 
+            'break_data': 'Dia de Rotura', 
+            'diameter_esp': 'Diametro Especifico',
+            'diameter_1': 'Diametro Superior',
+            'diameter_2': 'Diametro Inferior',
+            'F': 'Esfuerso Compresora',
+            'reference_person': 'Persona de Referencia',
+            'construction': 'Construcción de Referencia',
+        }
+        help_texts = {
+            'fc_esp': 'Unidades (kgf/cm²)', 
+            'diameter_esp': 'Unidades (Pulgadas)',
+            'diameter_1': 'Unidades (Pulgadas)',
+            'diameter_2': 'Unidades (Pulgadas)',
+            'F': 'Unidades (kgf)',
+        }
+        widgets = {
+            'poured_data': DateInput(),
+            'break_data': DateInput(), 
+        }
+
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['reference_person'].queryset = ReferencePerson.objects.none()
+        self.fields['reference_person'].required = True
+        self.fields['construction'].queryset = Construction.objects.none()
+        self.fields['construction'].required = True
+
+        if 'user' in self.data:
+            try:
+                user_id = int(self.data.get('user'))
+                self.fields['reference_person'].queryset = ReferencePerson.objects.filter(client_profile__user=user_id)
+                self.fields['construction'].queryset = Construction.objects.filter(client_profile__user=user_id)
+            except (ValueError, TypeError):
+                pass  # invalid input from the client; ignore and fallback to empty City queryset
+
+        elif self.instance.pk:
+            self.fields['reference_person'].queryset = self.instance.user.clientprofile.referenceperson_set.all()
+            self.fields['reference_person'].required = True
+            self.fields['construction'].queryset = self.instance.user.clientprofile.construction_set.all()
+            self.fields['construction'].required = True

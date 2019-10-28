@@ -1,0 +1,4 @@
+<option value="">---------</option>
+{% for obj in reference_person %}
+<option value="{{ obj.pk }}">{{ obj.title }} {{ obj.name|title }}</option>
+{% endfor %}

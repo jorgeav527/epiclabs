@@ -74,7 +74,7 @@ class AdminProfile(models.Model):
     user        = models.OneToOneField(User, on_delete=models.CASCADE)
     active      = models.BooleanField(default=True)
     staff       = models.CharField(max_length=30)
-    title       = models.CharField(max_length=10,null=True, blank=True,)
+    title       = models.CharField(max_length=10, null=True, blank=True,)
     dni         = models.BigIntegerField(null=True, blank=True,)
     codigo      = models.BigIntegerField(null=True, blank=True,)
     created     = models.DateTimeField(auto_now_add=True)

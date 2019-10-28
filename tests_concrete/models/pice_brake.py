@@ -7,17 +7,24 @@ from equipments.models import Equip
 from tools.models import Tool
 from reference_person.models import ReferencePerson
 from construction.models import Construction
+from course.models import Course
 
 
 class PiceBreak(models.Model):
+    DIAMETER_CHOICES = (
+        (2, "2 Inch"),
+        (4, "4 Inch"),
+        (6, "6 Inch"),
+    )
     user            = models.ForeignKey(User, on_delete=models.CASCADE)
     name            = models.CharField(max_length=50, default="Rotura de Testigo de Concreto")
+    element         = models.CharField(max_length=50, null=True, blank=True)
     code            = models.CharField(max_length=255, unique=True, editable=False)
-    fc_esp          = models.FloatField()
+    fc_esp          = models.FloatField(default=280)
     poured_data     = models.DateField()
     break_data      = models.DateField(default=datetime.datetime.now)
     duration        = models.IntegerField(editable=False)
-    diameter_esp    = models.FloatField(null=True, blank=True)
+    diameter_esp    = models.FloatField(choices=DIAMETER_CHOICES, null=True, blank=True)
     diameter_1      = models.FloatField(null=True, blank=True)
     diameter_2      = models.FloatField(null=True, blank=True)
     area            = models.FloatField(editable=False)
@@ -31,8 +38,9 @@ class PiceBreak(models.Model):
     updated         = models.DateTimeField(auto_now=True)
     equipment       = models.ManyToManyField(Equip)
     tool            = models.ManyToManyField(Tool)    
-    ref_person      = models.ManyToManyField(ReferencePerson, blank=True)
-    construction    = models.ManyToManyField(Construction, blank=True)
+    course          = models.ForeignKey(Course, models.SET_NULL, null=True, blank=True)
+    reference_person    = models.ForeignKey(ReferencePerson, models.SET_NULL, null=True, blank=True)
+    construction        = models.ForeignKey(Construction, models.SET_NULL, null=True, blank=True)
 
 
     def save(self, *args, **kwargs):

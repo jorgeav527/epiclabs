@@ -15,9 +15,19 @@
                     </a>
                 </span>
                 {% if obj %}
-                <form action="{% url 'tests_concrete:pice_break_update' obj.id %}" method="POST">
+                <form 
+                    id="piceBreakForm" 
+                    data-ref-per-url="{% url 'reference_person:ajax_reference_person' %}" 
+                    data-const-url="{% url 'construction:ajax_construction' %}"
+                    action="{% url 'tests_concrete:pice_break_update' obj.id %}" 
+                    method="POST">
                 {% else %}
-                <form action="{% url 'tests_concrete:pice_break_create' %}" method="POST">
+                <form 
+                    id="piceBreakForm" 
+                    data-ref-per-url="{% url 'reference_person:ajax_reference_person' %}" 
+                    data-const-url="{% url 'construction:ajax_construction' %}"
+                    action="{% url 'tests_concrete:pice_break_create' %}" 
+                    method="POST">
                 {% endif %}
                     <div>
                         {% csrf_token %}
@@ -42,5 +52,41 @@
     $( function() {
       $( ".datepicker" ).datepicker();
     } );
+</script>
+<script>
+    $("#id_user").change(function () {
+    
+      var url = $("#piceBreakForm").attr("data-ref-per-url");  // get the url of the `load_cities` view
+      var userId = $(this).val();  // get the selected country ID from the HTML input
+
+      $.ajax({                       // initialize an AJAX request
+        url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+        data: {
+          'user': userId       // add the country id to the GET parameters
+        },
+
+        success: function (data) {   // `data` is the return of the `load_cities` view function
+          $("#id_reference_person").html(data);  // replace the contents of the city input with the data that came from the server
+        }
+      });
+    });
+</script>  
+<script>
+    $("#id_user").change(function () {
+    
+      var url = $("#piceBreakForm").attr("data-const-url");  // get the url of the `load_cities` view
+      var userId = $(this).val();  // get the selected country ID from the HTML input
+
+      $.ajax({                       // initialize an AJAX request
+        url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+        data: {
+          'user': userId       // add the country id to the GET parameters
+        },
+
+        success: function (data) {   // `data` is the return of the `load_cities` view function
+          $("#id_construction").html(data);  // replace the contents of the city input with the data that came from the server
+        }
+      });
+    });
 </script>  
 {% endblock %}

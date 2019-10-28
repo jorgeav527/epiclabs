@@ -67,3 +67,13 @@ def construction_delete(request, id):
 
     return render(request, 'construction/construction_delete_comfirm.html', context)
 
+
+def load_construction(request):
+    user_id = request.GET.get('user')
+    construction = Construction.objects.filter(client_profile__user=user_id)
+
+    context ={
+        "construction": construction,
+    }
+
+    return render(request, 'construction/construction_dropdown_list_options.html', context)

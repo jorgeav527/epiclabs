@@ -12,4 +12,4 @@ class ReferencePerson(models.Model):
     client_profile = models.ForeignKey(ClientProfile, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.title}-{self.name}"
+        return f"{self.title} {self.name.title()}"

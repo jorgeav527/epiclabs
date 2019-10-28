@@ -63,3 +63,14 @@ def reference_person_delete(request, id):
     }
 
     return render(request, 'reference_person/reference_person_delete_comfirm.html', context)
+
+
+def load_reference_person(request):
+    user_id = request.GET.get('user')
+    reference_person = ReferencePerson.objects.filter(client_profile__user=user_id)
+
+    context ={
+        "reference_person": reference_person,
+    }
+
+    return render(request, 'reference_person/reference_person_dropdown_list_options.html', context)

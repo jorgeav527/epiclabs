@@ -21,4 +21,4 @@ class Construction(models.Model):
         super(Construction, self).save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.name}"
+        return f"{self.name.title()}"

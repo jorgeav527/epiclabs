@@ -2,12 +2,12 @@
 
 {% block pdffile %}
   {% if obj.user.is_client %}
-  {% include 'tests_concrete/pice_break/pdf/client.html' %}
+  {% include 'tests_concrete/paver_break/pdf/client.html' %}
   {% endif %}
   {% if obj.user.is_bach %}
-  {% include 'tests_concrete/pice_break/pdf/bach.html' %}
+  {% include 'tests_concrete/paver_break/pdf/bach.html' %}
   {% endif %}
   {% if obj.user.is_student %}
-  {% include 'tests_concrete/pice_break/pdf/student.html' %}
+  {% include 'tests_concrete/paver_break/pdf/student.html' %}
   {% endif %}
 {% endblock %}

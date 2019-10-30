@@ -9,24 +9,19 @@ from reference_person.models import ReferencePerson
 from construction.models import Construction
 from course.models import Course
 
+# Create your models here.
 
-class PiceBreak(models.Model):
-    DIAMETER_CHOICES = (
-        (2, "2 Inch"),
-        (4, "4 Inch"),
-        (6, "6 Inch"),
-    )
+class PaverBreak(models.Model):
     user            = models.ForeignKey(User, on_delete=models.CASCADE)
-    name            = models.CharField(max_length=50, default="Rotura Testigo Concreto")
+    name            = models.CharField(max_length=50, default="Rotura Adoquines Concreto")
     element         = models.CharField(max_length=50, null=True, blank=True)
     code            = models.CharField(max_length=255, unique=True, editable=False)
-    fc_esp          = models.FloatField(default=280)
+    fc_esp          = models.FloatField(default=280.00)
     poured_data     = models.DateField()
     break_data      = models.DateField(default=datetime.datetime.now)
     duration        = models.IntegerField(editable=False)
-    diameter_esp    = models.FloatField(choices=DIAMETER_CHOICES, null=True, blank=True)
-    diameter_1      = models.FloatField(null=True, blank=True)
-    diameter_2      = models.FloatField(null=True, blank=True)
+    d_1             = models.FloatField(default=24.00)
+    d_2             = models.FloatField(default=12.00)
     area            = models.FloatField(editable=False)
     F               = models.FloatField()
     fc              = models.FloatField(editable=False)
@@ -42,7 +37,6 @@ class PiceBreak(models.Model):
     reference_person    = models.ForeignKey(ReferencePerson, models.SET_NULL, null=True, blank=True)
     construction        = models.ForeignKey(Construction, models.SET_NULL, null=True, blank=True)
 
-
     def save(self, *args, **kwargs):
         # Generate the code for the barcode (e.g. RDC2009092701)
         date = datetime.datetime.today()
@@ -56,16 +50,9 @@ class PiceBreak(models.Model):
         diff = self.break_data - self.poured_data
         self.duration = diff.days
 
-        # Generate the area from the avg largo and ancho
-        if self.diameter_esp:
-            d_cm = self.diameter_esp*2.54
-            area_cm2 = ((d_cm**2)*math.pi)/4
-            self.area = round(area_cm2, 2)
-        else:
-            avg_diameter = (self.diameter_1+self.diameter_2)/2
-            d_cm = avg_diameter*2.54
-            area_cm2 = ((d_cm**2)*math.pi)/4
-            self.area = round(area_cm2, 2)
+        # Generate the area from the avg d_1, d_2
+        area_cm2 = self.d_1 * self.d_2
+        self.area = round(area_cm2, 2)
         
         # Generate the fc
         effort_fc = self.F/self.area
@@ -87,8 +74,8 @@ class PiceBreak(models.Model):
         effort_fc_280 = (self.fc/280)*100 
         self.fc_280 = round(effort_fc_280, 2)
 
-
-        super(PiceBreak, self).save(*args, **kwargs)
+        super(PaverBreak, self).save(*args, **kwargs)
 
     def __str__(self):
-        return f"Testigo de Concreto {self.id}"
+        return f"Adoquines de Concreto {self.id}"
+

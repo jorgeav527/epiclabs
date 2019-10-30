@@ -35,18 +35,18 @@
           
         </div>
         <div style="margin-left: 7rem;" class="col-xs-3 panel panel-default">
-          <p class="text-left panel-heading"><strong>Datos del Ensayo</strong></p>
-          <p class="text-left"><strong>ID:</strong> {{ obj.id }}</p>
-          <p class="text-left"><strong>Codigo:</strong> {{ obj.code }}</p>
-          <p class="text-center">{% qr_from_text obj.code size="S" %}</p>
+          <p style="margin-top: 0rem; margin-bottom: 0;" class="text-left panel-heading"><strong>Datos del Ensayo</strong></p>
+          <p style="margin-top: 0rem; margin-bottom: 0;" class="text-left"><strong>ID:</strong> {{ obj.id }}</p>
+          <p style="margin-top: 0rem; margin-bottom: 0;" class="text-left"><strong>Codigo QR:</strong></p>
+          <p style="margin-top: 0rem; margin-bottom: 0;" class="text-center">{% qr_from_text obj.code size="S" %}</p>
           {% if obj.diameter_esp %}
           <p class="text-left"><strong>Diametro Esp:</strong> {{ obj.diameter_esp }} pulgadas</p>
           {% else %}
-          <p class="text-left"><strong>Diametro Superior:</strong> {{ obj.diameter_1 }} pulgadas</p>
-          <p class="text-left"><strong>Diametro Inferior:</strong> {{ obj.diameter_2 }} pulgadas</p>
+          <p style="margin-top: 0rem; margin-bottom: 0;" class="text-left"><strong>Diametro Superior:</strong> {{ obj.diameter_1 }}"</p>
+          <p style="margin-top: 0rem; margin-bottom: 0;" class="text-left"><strong>Diametro Inferior:</strong> {{ obj.diameter_2 }}"</p>
           {% endif %}
-          <p class="text-left"><strong>f'c Esp:</strong> {{ obj.fc_esp }} kgf/cm²</p>
-          <p class="text-left"><strong>F:</strong> {{ obj.F }} kgf</p>
+          <p style="margin-top: 0rem; margin-bottom: 0;" class="text-left"><strong>f'c Esp:</strong> {{ obj.fc_esp }} kgf/cm²</p>
+          <p style="margin-top: 0rem; margin-bottom: 0;" class="text-left"><strong>F:</strong> {{ obj.F }} kgf</p>
         </div>
       </div>    
       <div class="row">

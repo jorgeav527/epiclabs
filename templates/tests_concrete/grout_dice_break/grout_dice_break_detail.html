@@ -3,17 +3,17 @@
 {% block concrete %}
 <!-- Template for a Client -->
 {% if obj.user.is_client %}
-{% include 'tests_concrete/pice_break/detail/client.html' %}
+{% include 'tests_concrete/grout_dice_break/detail/client.html' %}
 {% endif %}
 
 <!-- Template for a Bach -->
 {% if obj.user.is_bach %}
-{% include 'tests_concrete/pice_break/detail/bach.html' %}
+{% include 'tests_concrete/grout_dice_break/detail/bach.html' %}
 {% endif %}
 
 <!-- Template for a Student -->
 {% if obj.user.is_student %}
-{% include 'tests_concrete/pice_break/detail/student.html' %}
+{% include 'tests_concrete/grout_dice_break/detail/student.html' %}
 {% endif %}
                                 
 {% endblock %}

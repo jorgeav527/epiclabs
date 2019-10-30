@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import PiceBreak
+from .models import *
 
 class PiceBreakAdmin(admin.ModelAdmin):
     list_display = [
@@ -11,3 +11,23 @@ class PiceBreakAdmin(admin.ModelAdmin):
     ]
 
 admin.site.register(PiceBreak, PiceBreakAdmin)
+
+
+class GroutDiceBreakAdmin(admin.ModelAdmin):
+    list_display = [
+        "user", "element", "code", "F", "fc_MPa", "fc_esp", "fc_175", "fc_210", "fc_210", 
+        "poured_data", "break_data", "duration", "d_1", "d_2", "area", 
+        "reference_person", "construction", "created", "updated",
+    ]
+
+admin.site.register(GroutDiceBreak, GroutDiceBreakAdmin)
+
+
+class PaverBreakAdmin(admin.ModelAdmin):
+    list_display = [
+        "user", "element", "code", "F", "fc_MPa", "fc_esp", "fc_175", "fc_210", "fc_210", 
+        "poured_data", "break_data", "duration", "d_1", "d_2", "area", 
+        "reference_person", "construction", "created", "updated",
+    ]
+
+admin.site.register(PaverBreak, PaverBreakAdmin)

@@ -1,0 +1,154 @@
+{% load qr_code %}
+
+<div class="container">
+    <header>
+      <div class="row">
+        <div class="col-xs-12 panel panel-default">  
+          <div class="panel-heading"><small>Laboratorio de Ingenieria Civil, Universidad Catolica de Santa Maria, EPICLABS </small></div>
+          <div class="row">
+            <div class="col-xs-9">
+              <h4 class="text-center">
+                <strong>CONCRETO. MÉTODO DE ENSAYO NORMALIZADO PARA LA DETERMINACIÓN DE LA RESISTENCIA A LA COMPRESIÓN DE ADOQUINES DE CONCRETO EN MUESTRAS PRISMATICAS.</strong> 
+              </h4>
+            </div>
+              <div class="col-xs-3">
+                <p style="margin-top: 1rem; margin-bottom: 0;" class="text-center"><strong>NORMA ASTM C-109</strong></p>
+                <p style="margin-top: 0; margin-bottom: 1rem;" class="text-center"><strong>NTP 334.034</strong></p>
+              </div>
+          </div>
+        </div>
+      </div>   
+    </header>
+    <main>
+      <div class="row">
+        <div class="col-xs-8 panel panel-default">
+          <p class="text-left panel-heading"><strong>Datos Principales</strong></p>
+          <p class="text-left"><strong>Empresa:</strong> {{ obj.user.clientprofile.long_name|title }}</p> 
+          <p class="text-left"><strong>Dirección:</strong> {{ obj.user.clientprofile.direction|title }}</p> 
+          <p class="text-left"><strong>RUC:</strong> {{ obj.user.clientprofile.ruc }}</p> 
+          <p class="text-left"><strong>Obra:</strong> {{ obj.construction.name|title }}</p> 
+          <p class="text-left"><strong>Ubicación:</strong> {{ obj.construction.location|title }}</p> 
+          <p class="text-left"><strong>Ejecución del Ensayo:</strong> {{ obj.created|date:"d/m/Y P" }}</p>
+          <p class="text-left"><strong>Corrección del Ensayo:</strong> {{ obj.updated|default_if_none:"Ninguna Corrección"|date:"d/m/Y P" }}</p>
+          <p class="text-left"><strong>Entrega del Certificado:</strong> {% now "d/m/Y P" %}</p>
+          <p class="text-left"><strong>Persona de Referencia:</strong> {{ obj.reference_person.title }} {{ obj.reference_person.name|title }}</p>
+          
+        </div>
+        <div style="margin-left: 7rem;" class="col-xs-3 panel panel-default">
+          <p class="text-left panel-heading"><strong>Datos del Ensayo</strong></p>
+          <p style="margin-top: 0rem; margin-bottom: 0;" class="text-left"><strong>ID:</strong> {{ obj.id }}</p>
+          <p style="margin-top: 0rem; margin-bottom: 0;" class="text-left"><strong>Codigo QR:</strong></p>
+          <p style="margin-top: 0rem; margin-bottom: 0;" class="text-center">{% qr_from_text obj.code size="S" %}</p>
+          <p style="margin-top: 0rem; margin-bottom: 0;" class="text-left"><strong>Longitud:</strong> {{ obj.d_1 }} cm</p>
+          <p style="margin-top: 0rem; margin-bottom: 0;" class="text-left"><strong>Ancho:</strong> {{ obj.d_2 }} cm</p>
+          <p style="margin-top: 0rem; margin-bottom: 0;" class="text-left"><strong>f'c Esp:</strong> {{ obj.fc_esp }} kgf/cm²</p>
+          <p style="margin-top: 0rem; margin-bottom: 0;" class="text-left"><strong>F:</strong> {{ obj.F }} kgf</p>
+        </div>
+      </div>    
+      <div class="row">
+        <div class="col-xs-12">
+            <div class="panel panel-default">
+                <!-- Default panel contents -->
+                <div class="panel-heading"><strong>Resultados del Ensayo:</strong></div>
+
+                <!-- Table -->
+                <table class="table table-bordered table-sm text-center">
+                  <thead class="">
+                    <tr>
+                      <th class="text-center">Id</th>
+                      <th colspan="2" class="text-center">Item</th>
+                      <th colspan="2" class="text-center">Fecha</th>
+                      <th class="text-center">Edad</th>
+                      <th class="text-center">Area</th>
+                      <th colspan="2" class="text-center">Esfuezo de Rotua</th>
+                    </tr>
+                    <tr>
+                      <th class="text-center">Nº</th>
+                      <th class="text-center">Elemento</th>
+                      <th class="text-center">Codigo</th>
+                      <th class="text-center">Vaciado</th>
+                      <th class="text-center">Rotura</th>
+                      <th class="text-center">(dias)</th>
+                      <th class="text-center">(cm²)</th>
+                      <th class="text-center">(MPa)</th>
+                      <th class="text-center">(kgf/cm²)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="text-center">{{ obj.id }}</td>
+                      <td class="text-center">{{ obj.element|title }}</td>
+                      <td class="text-center">{{ obj.code }}</td>
+                      <td class="text-center">{{ obj.poured_data|date:"d/m/Y" }}</td>
+                      <td class="text-center">{{ obj.break_data|date:"d/m/Y" }}</td>
+                      <td class="text-center">{{ obj.duration }}</td>
+                      <td class="text-center">{{ obj.area }}</td>
+                      <td class="text-center">{{ obj.fc }}</td>
+                      <td class="text-center">{{ obj.fc_MPa }}</td>
+                    </tr>
+                    <!-- This is our clonable table line -->
+                  </tbody>
+                </table>
+            </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6">
+          <table class="table table-bordered table-sm text-center">
+            <tbody>
+              <tr>
+                <td>
+                  <p style="margin-top: 7rem; margin-bottom: 7rem;" class="text-muted text-center">UNIVERSIDAD CATÓLICA DE SANTA MARÍA</p>
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <th>
+                  <p style="margin-top: 1rem; margin-bottom: 0;" class="text-center mb-0">Ing. {{ tecnico }}</p>
+                  <p style="margin-top: 0; margin-bottom: 0;" class="text-center mb-0">LABORATORIO DE SUELOS Y CONCRETO</p>
+                  <p style="margin-top: 0; margin-bottom: 1rem;" class="text-center mb-0">EPIC – FAICA - CAMPUS PARQUE INDUSTRIAL</p>
+                </th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <div class="col-xs-6">
+            <table class="table table-bordered table-sm text-center">
+              <tbody>
+                <tr>
+                  <td>
+                    <p style="margin-top: 7rem; margin-bottom: 7rem;" class="text-muted text-center">UNIVERSIDAD CATÓLICA DE SANTA MARÍA</p>
+                  </td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>
+                    <p style="margin-top: 1rem; margin-bottom: 0;" class="text-center mb-0">Ing. {{ coordinador }}</p>
+                    <p style="margin-top: 0; margin-bottom: 0;" class="text-center mb-0">LABORATORIO DE SUELOS Y CONCRETO</p>
+                    <p style="margin-top: 0; margin-bottom: 1rem;" class="text-center mb-0">EPIC – FAICA - CAMPUS PARQUE INDUSTRIAL</p>
+                  </th>
+                </tr>
+              </tfoot>
+            </table>
+        </div>
+        </div>
+    </main>
+    <footer>
+      <div class="row" style="margin-top: 5rem;">
+        <div class="col-xs-12 panel panel-default">
+          <div class="row">
+            <div class="col-xs-6">
+              <p style="margin-top: 1rem; margin-bottom: 0;" class="text-left"><strong>Dirección:</strong> Umacollo yanahuara - 552545 58</p>
+              <p style="margin-top: 0; margin-bottom: 0;" class="text-left"><strong>Telefono:</strong> 958254689</p>
+            </div>
+            <div class="col-xs-6">
+              <p style="margin-top: 0; margin-bottom: 1rem;" class="text-left"><strong>Link: </strong><a href="http://www.google.com.pe">www.epiclabs.ucsm.com</a></p>
+            </div>
+          </div>
+          <div class="panel-footer"><small>Todos los derechos reservados &#169; 2019</small></div>
+        </div>
+      </div>   
+    </footer>
+</div>

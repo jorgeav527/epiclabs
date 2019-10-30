@@ -1,0 +1,76 @@
+<div class="row">
+    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto my-3">
+        <div class="card shadow">
+            <div class="card-body">
+                <!-- Section heading -->
+                <h4 class="h4-responsive font-weight-bold text-center mb-0">{{ title }}</h4>
+                <p class="text-center dark-grey-text w-responsive mx-auto mb-0">((NORMA ASTM C-109) / (NTP 334.051))</p>
+                <hr class="my-3">
+
+                <!-- Section description -->
+                <p class="text-left mx-auto mb-0 mt-3"><span class="font-weight-bold"><u>Datos del Usuario</u></span></p>
+                <p class="text-left mx-auto mb-0"><span class="font-weight-bold">Usuario:</span> {{ obj.user.username }}</p>
+                <p class="text-left mx-auto mb-0"><span class="font-weight-bold">Nombre:</span> {{ obj.user.first_name|title }}</p>
+                <p class="text-left mx-auto mb-0"><span class="font-weight-bold">Apellidos:</span> {{ obj.user.last_name|title }}</p>
+                <p class="text-left mx-auto mb-0"><span class="font-weight-bold">DNI:</span> {{ obj.user.bachprofile.dni }}</p>
+                <p class="text-left mx-auto mb-0"><span class="font-weight-bold">Codigo:</span> {{ obj.user.bachprofile.codigo }}</p>
+                <hr class="my-3">
+
+                <p class="text-left mx-auto mb-0 mt-3"><span class="font-weight-bold"><u>Datos de la Tesis</u></span></p>
+                {% for thesis in obj.user.bachprofile.thesis_set.all %}
+                <p class="text-left mx-auto mb-0"><span class="font-weight-bold">Titulo:</span> {{ thesis.title|title }}</p>
+                <p class="text-left mx-auto mb-0"><span class="font-weight-bold">Linea:</span> {{ thesis.line|title }}</p>
+
+                    <p class="text-left mx-auto mb-0"><span class="font-weight-bold">Cursos Afines:</span> </p>                
+                    {% for course in thesis.course.all %}
+                    <p class="text-left mx-auto mb-0">&#8594; {{ course }}</p>                
+                    {% endfor %}
+
+                    <p class="text-left mx-auto mb-0"><span class="font-weight-bold">Acesores:</span> </p>                
+                    {% for adviser in thesis.adviser.all %}
+                    <p class="text-left mx-auto mb-0">&#8594; {{ adviser }}</p>                
+                    {% endfor %}
+
+                <p class="text-left mx-auto mb-0"><span class="font-weight-bold">Comienzo de la Thesis:</span> {{ thesis.start_day|date:"d/m/Y" }}</p>
+                <p class="text-left mx-auto mb-0"><span class="font-weight-bold">Termino de la Thesis:</span> {{ thesis.finish_day|date:"d/m/Y" }}</p>
+                <p class="text-left mx-auto mb-0"><span class="font-weight-bold">Duración:</span> {{ thesis.duration }} dias</p>
+                {% endfor %}
+                <hr class="my-3">
+
+                <p class="text-left mx-auto mb-0 mt-3"><span class="font-weight-bold"><u>Datos del Ensayo Ingresados</u></span></p>
+                <p class="text-left mx-auto mb-0"><span class="font-weight-bold">Resistencia de Diseño</span> {{ obj.fc_esp }} kgf/cm²</p>
+                <p class="text-left mx-auto mb-0"><span class="font-weight-bold">Elemento:</span> {{ obj.element|title }}</p>
+                <p class="text-left mx-auto mb-0"><span class="font-weight-bold">Fecha de Vaciado:</span> {{ obj.poured_data|date:"d/m/Y" }}</p>
+                <p class="text-left mx-auto mb-0"><span class="font-weight-bold">Fecha de Rotura:</span> {{ obj.break_data|date:"d/m/Y" }}</p>
+                <p class="text-left mx-auto mb-0"><span class="font-weight-bold">Longitud:</span> {{ obj.d_1 }} cm</p>
+                <p class="text-left mx-auto mb-0"><span class="font-weight-bold">Ancho:</span> {{ obj.d_2 }} cm</p>
+                <p class="text-left mx-auto mb-0"><span class="font-weight-bold">Ejecución:</span> {{ obj.created }}</p>
+                <p class="text-left mx-auto mb-0"><span class="font-weight-bold">Edición:</span> {{ obj.updated }}</p>
+                <p class="text-left mx-auto mb-0"><span class="font-weight-bold">Carga Maquina:</span> {{ obj.F }} kgf</p>
+                <p class="text-left mx-auto mb-0"><span class="font-weight-bold">Curso Especifico:</span> {{ obj.course|title }}</p>
+                <hr class="my-3">
+
+                <p class="text-left mx-auto mb-0 mt-3"><span class="font-weight-bold"><u>Resultados del Ensayo</u></span></p>
+                <p class="text-left mx-auto mb-0"><span class="font-weight-bold">Duracion:</span> {{ obj.duration }} dias</p>
+                <p class="text-left mx-auto mb-0"><span class="font-weight-bold">Area:</span> {{ obj.area }} cm²</p>
+                <p class="text-left mx-auto mb-0"><span class="font-weight-bold">f'c:</span> {{ obj.fc }} kgf/cm²</p>
+                <p class="text-left mx-auto mb-0"><span class="font-weight-bold">f'175:</span> {{ obj.fc_175 }} kgf/cm²</p>
+                <p class="text-left mx-auto mb-0"><span class="font-weight-bold">f'210:</span> {{ obj.fc_210 }} kgf/cm²</p>
+                <p class="text-left mx-auto mb-0"><span class="font-weight-bold">f'280:</span> {{ obj.fc_280 }} kgf/cm²</p>
+                <hr class="my-3">
+                                
+                <p class="text-left mx-auto mb-0 mt-3"><span class="font-weight-bold"><u>Datos Extra</u></span></p>
+                <p class="text-left mx-auto mb-0"><span class="font-weight-bold">Id:</span> {{ obj.id }}</p>
+                <p class="text-left mx-auto mb-0"><span class="font-weight-bold">Creado:</span> {{ obj.created }}</p>
+                <p class="text-left mx-auto mb-0"><span class="font-weight-bold">Actualizado:</span> {{ obj.updated }}</p>
+                <p class="text-left mx-auto mb-0"><span class="font-weight-bold">Nombre del Ensayo:</span> {{ obj.name }}</p>
+                <hr class="my-3">
+                
+                <div class="mt-5">
+                    <a href="{% url 'tests_concrete:paver_break_update' obj.id %}" class="btn btn-primary btn-block" type="button">Editar Ensayo</a>
+                    <a href="{% url 'tests_concrete:paver_break_list' %}" class="btn btn-primary btn-block" type="button">Cancelar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -6,36 +6,36 @@ from django.template.loader import get_template
 from django.db.models import F
 from django.contrib.auth.decorators import login_required
 
-from tests_concrete.models import PiceBreak
-from tests_concrete.forms import PiceBreakForm, PiceBreakFormClient
+from tests_concrete.models import LimeDiceBreak
+from tests_concrete.forms import LimeDiceBreakForm, LimeDiceBreakFormClient
 from equipments.models import Equip
 
 # Create your views here.
 
 @login_required
-def pice_break_list_view(request):
+def lime_dice_break_list(request):
     if request.user.is_bach or request.user.is_student or request.user.is_client:
-        obj_list = PiceBreak.objects.filter(user=request.user)
+        obj_list = LimeDiceBreak.objects.filter(user=request.user)
         context = {
-            "file_name": "Testigos_de_Concreto",
-            "title": "Ensayos de Rotura de Testigos de Concreto 6\" 4\" y 2\" ",
+            "file_name": "Dados_de_Cal",
+            "title": "Ensayos de Rotura de Dados de Cal",
             "obj_list": obj_list,
         }
-        return render(request, 'tests_concrete/pice_break/pice_break_list.html', context)        
+        return render(request, 'tests_concrete/lime_dice_break/lime_dice_break_list.html', context)        
     elif request.user.is_superuser or request.user.is_admin:
-        obj_list = PiceBreak.objects.all()
+        obj_list = LimeDiceBreak.objects.all()
         context = {
-            "file_name": "Testigos_de_Concreto",
-            "title": "Ensayos de Rotura de Testigos de Concreto 6\" 4\" y 2\" ",
+            "file_name": "Dados_de_Cal",
+            "title": "Ensayos de Rotura de Dados de Cal",
             "obj_list": obj_list,
         }
-        return render(request, 'tests_concrete/pice_break/pice_break_list.html', context)        
+        return render(request, 'tests_concrete/lime_dice_break/lime_dice_break_list.html', context)        
 
 
 @login_required
-def pice_break_create(request):
+def lime_dice_break_create(request):
     if request.user.is_bach or request.user.is_student:
-        form = PiceBreakForm(request.POST or None)
+        form = LimeDiceBreakForm(request.POST or None)
         equip = Equip.objects.get(name="Maquina Compresora")
         if request.method == "POST":
             if form.is_valid():
@@ -45,9 +45,9 @@ def pice_break_create(request):
                 equip.use = F("use") + 1 # equip.use += 1
                 equip.save()
                 messages.success(request, f"El ensayo ha sido creado")
-                return redirect('tests_concrete:pice_break_list')
+                return redirect('tests_concrete:lime_dice_break_list')
     elif request.user.is_superuser or request.user.is_admin:
-        form = PiceBreakFormClient(request.POST or None)
+        form = LimeDiceBreakFormClient(request.POST or None)
         equip = Equip.objects.get(name="Maquina Compresora")
         if request.method == "POST":
             if form.is_valid():
@@ -56,86 +56,85 @@ def pice_break_create(request):
                 equip.use = F("use") + 1 # equip.use += 1
                 equip.save()
                 messages.success(request, f"El ensayo ha sido creado")
-                return redirect('tests_concrete:pice_break_list')
-
+                return redirect('tests_concrete:lime_dice_break_list')
 
     context = {
         "form": form,
-        "title": "Crear Ensayo de Rotura de Testigos de Concreto 6\" 4\" y 2\" ",
+        "title": "Crear Ensayo de Rotura de Dados de Cal",
     }
 
-    return render(request, "tests_concrete/pice_break/pice_break_form.html", context)
+    return render(request, "tests_concrete/lime_dice_break/lime_dice_break_form.html", context)
 
 
 @login_required
-def pice_break_update(request, id):
+def lime_dice_break_update(request, id):
     if request.user.is_bach or request.user.is_student:
-        obj = get_object_or_404(PiceBreak, id=id)
-        form = PiceBreakForm(request.POST or None, instance=obj)
+        obj = get_object_or_404(LimeDiceBreak, id=id)
+        form = LimeDiceBreakForm(request.POST or None, instance=obj)
         if request.method == "POST":
             if form.is_valid():
                 form.save()
                 messages.success(request, f"El ensayo ha sido actualizado")
-                return redirect('tests_concrete:pice_break_list')
+                return redirect('tests_concrete:lime_dice_break_list')
 
     elif request.user.is_superuser or request.user.is_admin:
-        obj = get_object_or_404(PiceBreak, id=id)
-        form = PiceBreakFormClient(request.POST or None, instance=obj)
+        obj = get_object_or_404(LimeDiceBreak, id=id)
+        form = LimeDiceBreakFormClient(request.POST or None, instance=obj)
         if request.method == "POST":
             if form.is_valid():
                 form.save()
                 messages.success(request, f"El ensayo ha sido actualizado")
-                return redirect('tests_concrete:pice_break_list')
+                return redirect('tests_concrete:lime_dice_break_list')
 
     context = {
         "form": form,
         "obj": obj,
-        "title": "Actualizar Ensayo de Rotura de Testigos de Concreto 6\" 4\" y 2\" ",
+        "title": "Actualizar Ensayo de Rotura de Dados de Cal",
     }
 
-    return render(request, "tests_concrete/pice_break/pice_break_form.html", context)
+    return render(request, "tests_concrete/lime_dice_break/lime_dice_break_form.html", context)
 
 
 @login_required
-def pice_break_detail(request, id):
-    obj = get_object_or_404(PiceBreak, id=id)
+def lime_dice_break_detail(request, id):
+    obj = get_object_or_404(LimeDiceBreak, id=id)
 
     context = {
         "obj": obj,
-        "title": "Detalles del Ensayo de Rotura de Testigos de Concreto",
+        "title": "Detalles del Ensayo de Rotura de Dados de Cal",
     }
 
-    return render(request, 'tests_concrete/pice_break/pice_break_detail.html', context)
+    return render(request, 'tests_concrete/lime_dice_break/lime_dice_break_detail.html', context)
 
 
 @login_required
-def pice_break_delete(request, id):
-    obj = get_object_or_404(PiceBreak, id=id)
+def lime_dice_break_delete(request, id):
+    obj = get_object_or_404(LimeDiceBreak, id=id)
     equip = Equip.objects.get(name="Maquina Compresora")
     if request.method == "POST":
         obj.delete()
         equip.use = F("use") - 1 # equip.use += 1
         equip.save()
         messages.success(request, f"El ensayo a sido eliminado")
-        return redirect('tests_concrete:pice_break_list')
+        return redirect('tests_concrete:lime_dice_break_list')
 
     context = {
         "obj": obj,
-        "title": "Eliminar el Ensayo de Rotura de Testigos de Concreto",
+        "title": "Eliminar el Ensayo de Rotura de Dados de Cal",
     }
 
-    return render(request, 'tests_concrete/pice_break/pice_break_delete_comfirm.html', context)
+    return render(request, 'tests_concrete/lime_dice_break/lime_dice_break_delete_comfirm.html', context)
 
 
 @login_required
-def pice_break_pdf(request, id):
-    obj = get_object_or_404(PiceBreak, id=id)
+def lime_dice_break_pdf(request, id):
+    obj = get_object_or_404(LimeDiceBreak, id=id)
 
     context = {
         "obj": obj,
     }
 
-    template = get_template('tests_concrete/pice_break/pice_break_pdf.html')
+    template = get_template('tests_concrete/lime_dice_break/lime_dice_break_pdf.html')
     html = template.render(context)
     options = {
         'page-size': 'Letter',
@@ -151,3 +150,4 @@ def pice_break_pdf(request, id):
     filename = f"Ensayo_{obj.user.username}_{obj.id}.pdf"
     response['Content-Disposition'] = 'attachment; filename="{}"'.format(filename)
     return response
+

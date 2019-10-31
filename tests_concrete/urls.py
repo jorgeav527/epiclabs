@@ -38,4 +38,18 @@ urlpatterns = [
     path('lime-dice-break/<int:id>/detail/', tests_concrete_views.lime_dice_break_detail, name="lime_dice_break_detail"),
     path('lime-dice-break/<int:id>/delete/', tests_concrete_views.lime_dice_break_delete , name="lime_dice_break_delete"),
     path('lime-dice-break/<int:id>/pdf/', tests_concrete_views.lime_dice_break_pdf, name="lime_dice_break_pdf"),
+    # Lime Pice Break CRUD and PDF
+    path('lime-pice-break/', tests_concrete_views.lime_pice_break_list, name="lime_pice_break_list"),
+    path('lime-pice-break/create/', tests_concrete_views.lime_pice_break_create, name="lime_pice_break_create"),
+    path('lime-pice-break/<int:id>/update/', tests_concrete_views.lime_pice_break_update, name="lime_pice_break_update"),
+    path('lime-pice-break/<int:id>/detail/', tests_concrete_views.lime_pice_break_detail, name="lime_pice_break_detail"),
+    path('lime-pice-break/<int:id>/delete/', tests_concrete_views.lime_pice_break_delete , name="lime_pice_break_delete"),
+    path('lime-pice-break/<int:id>/pdf/', tests_concrete_views.lime_pice_break_pdf, name="lime_pice_break_pdf"),
+    # Diamond Pice Break CRUD and PDF
+    path('diamond-pice-break/', tests_concrete_views.diamond_pice_break_list, name="diamond_pice_break_list"),
+    path('diamond-pice-break/create/', tests_concrete_views.diamond_pice_break_create, name="diamond_pice_break_create"),
+    path('diamond-pice-break/<int:id>/update/', tests_concrete_views.diamond_pice_break_update, name="diamond_pice_break_update"),
+    path('diamond-pice-break/<int:id>/detail/', tests_concrete_views.diamond_pice_break_detail, name="diamond_pice_break_detail"),
+    path('diamond-pice-break/<int:id>/delete/', tests_concrete_views.diamond_pice_break_delete , name="diamond_pice_break_delete"),
+    path('diamond-pice-break/<int:id>/pdf/', tests_concrete_views.diamond_pice_break_pdf, name="diamond_pice_break_pdf"),
 ]

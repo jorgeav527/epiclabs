@@ -49,13 +49,15 @@ class GroudDiceBreakForm(forms.ModelForm):
 
 class GroudDiceBreakFormClient(forms.ModelForm):
     user = forms.ModelChoiceField(queryset=User.objects.filter(is_client=True), label="Escoje el Cliente", required=True)
+    reception_data = forms.DateField(label="Recepción de la Muestra", required=True, widget=DateInput())
 
     class Meta:
         model = GroutDiceBreak
         fields = [
             'user',
             'fc_esp', 
-            'element', 
+            'element',
+            'reception_data', 
             'poured_data', 
             'break_data', 
             'd_1',

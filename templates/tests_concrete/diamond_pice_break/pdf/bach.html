@@ -4,17 +4,17 @@
     <header>
       <div class="row">
         <div class="col-xs-12 panel panel-default">  
-          <div class="panel-heading"><small>Laboratorio de Ingenieria Civil, Universidad Catolica de Santa Maria, EPICLABS </small></div>
+          
           <div class="row">
             <div class="col-xs-9">
               <h4 class="text-center">
-                <strong>CONCRETO. MÉTODO DE ENSAYO NORMALIZADO PARA LA DETERMINACIÓN DE LA RESISTENCIA A LA COMPRESIÓN DE TESTIGOS DIAMANTINOS EN MUESTRAS CILINDRICAS.</strong> 
+                <strong>{{ title }}</strong> 
               </h4>
             </div>
               <div class="col-xs-3">
-                <p style="margin-top: 1rem; margin-bottom: 0;" class="text-center"><strong>NORMA ASTM C-109</strong></p>
-                <p style="margin-top: 0; margin-bottom: 1rem;" class="text-center"><strong>NTP 334.034</strong></p>
-              </div>
+                  <p style="margin-top: 1rem; margin-bottom: 0;" class="text-center"><strong>{{ norma_ASTM }}</strong></p>
+                  <p style="margin-top: 0; margin-bottom: 1rem;" class="text-center"><strong>{{ noma_NTP }}</strong></p>
+                </div>
           </div>
         </div>
       </div>   
@@ -23,31 +23,36 @@
       <div class="row">
         <div class="col-xs-8 panel panel-default">
           <p class="text-left panel-heading"><strong>Datos Principales</strong></p>
-          <p class="text-left"><strong>Nombres:</strong> {{ obj.user.first_name|title }} {{ obj.user.last_name|title }}</p> 
-          <p class="text-left"><strong>DNI:</strong> {{ obj.user.bachprofile.dni }}</p> 
-          <p class="text-left"><strong>Codigo:</strong> {{ obj.user.bachprofile.codigo }}</p> 
-          <p class="text-left"><strong>Curso Especifico:</strong> {{ obj.course|title }}</p>
+          <p  class="text-left"><strong>Nombres:</strong> {{ obj.user.first_name|title }} {{ obj.user.last_name|title }}</p> 
+          <p  class="text-left"><strong>DNI:</strong> {{ obj.user.bachprofile.dni }}</p> 
+          <p  class="text-left"><strong>Codigo:</strong> {{ obj.user.bachprofile.codigo }}</p> 
+          <p  class="text-left"><strong>Curso Especifico:</strong> {{ obj.course|title }}</p>
           {% for thesis in obj.user.bachprofile.thesis_set.all %}
-          <p class="text-left"><strong>Titulo:</strong> {{ thesis.title|title }}</p> 
-          <p class="text-left"><strong>Linea de Desarrollo:</strong> {{ thesis.line|title }}</p> 
-          <p class="text-left"><strong>Comienzo de la Thesis:</strong> {{ thesis.start_day|date:"d/m/Y" }}</p> 
-          <p class="text-left"><strong>Termino de la Thesis:</strong> {{ thesis.finish_day|date:"d/m/Y" }}</p>
-          <p class="text-left"><strong>Duración:</strong> {{ thesis.duration }} dias</p>
-          <p class="text-left"><strong>Asesores:</strong></p>
-          {% for adviser in thesis.adviser.all %}
-            <p class="text-left">&#8594; {{ adviser }}</p>                
+          <p  class="text-left"><strong>Titulo:</strong> {{ thesis.title|title }}</p> 
+          <p  class="text-left"><strong>Linea de Desarrollo:</strong> {{ thesis.line|title }}</p> 
+          <p  class="text-left"><strong>Comienzo de la Thesis:</strong> {{ thesis.start_day|date:"d/m/Y" }}</p> 
+          <p  class="text-left"><strong>Termino de la Thesis:</strong> {{ thesis.finish_day|date:"d/m/Y" }}</p>
+          <p  class="text-left"><strong>Duración:</strong> {{ thesis.duration }} dias</p>
+          <p  class="text-left"><strong>Asesores:</strong></p>
+            {% for adviser in thesis.adviser.all %}
+            <p  class="text-left">&#8594; {{ adviser }}</p>                
             {% endfor %}
           {% endfor %}
+          <p class="text-left"><strong>Muestreo:</strong> {{ obj.created|date:"d/m/Y P" }}</p>
+          {% if obj.created|date:"d/m/Y" != obj.updated|date:"d/m/Y" %}
+          <p class="text-left"><strong>Corrección del Ensayo:</strong> {{ obj.updated|default_if_none:"Ninguna Corrección"|date:"d/m/Y P" }}</p>
+          {% endif %}
+          <p class="text-left"><strong>Emsion de Certificado:</strong> {% now "d/m/Y P" %}</p>
         </div>
-        <div style="margin-left: 7rem;" class="col-xs-3 panel panel-default">
+        <div style="margin-left: 4rem;" class="col-xs-3 panel panel-default">
           <p class="text-left panel-heading"><strong>Datos del Ensayo</strong></p>
-          <p style="margin-top: 0rem; margin-bottom: 0;" class="text-left"><strong>ID:</strong> {{ obj.id }}</p>
-          <p style="margin-top: 0rem; margin-bottom: 0;" class="text-left"><strong>Codigo QR:</strong></p>
-          <p style="margin-top: 0rem; margin-bottom: 0;" class="text-center">{% qr_from_text obj.code size="S" %}</p>
-          <p style="margin-top: 0rem; margin-bottom: 0;" class="text-left"><strong>Factor:</strong> {{ obj.factor_ld }}</p>
-          <p style="margin-top: 0rem; margin-bottom: 0;" class="text-left"><strong>Correccion:</strong> {{ obj.correction }}</p>
-          <p style="margin-top: 0rem; margin-bottom: 0;" class="text-left"><strong>f'c Esp:</strong> {{ obj.fc_esp }} kgf/cm²</p>
-          <p style="margin-top: 0rem; margin-bottom: 0;" class="text-left"><strong>F:</strong> {{ obj.F }} kgf</p>
+          <p  class="text-left"><strong>ID:</strong> {{ obj.id }}</p>
+          <p  class="text-left"><strong>Codigo QR:</strong></p>
+          <p  class="text-center">{% qr_from_text obj.code size=4 image_format="png" %}</p>
+          <p  class="text-left"><strong>Factor:</strong> {{ obj.factor_ld }}</p>
+          <p  class="text-left"><strong>Correccion:</strong> {{ obj.correction }}</p>
+          <p  class="text-left"><strong>f'c Esp:</strong> {{ obj.fc_esp }} kgf/cm²</p>
+          <p  class="text-left"><strong>F:</strong> {{ obj.F }} kgf</p>
         </div>
       </div>    
       <div class="row">
@@ -57,7 +62,7 @@
                 <div class="panel-heading"><strong>Resultados del Ensayo:</strong></div>
 
                 <!-- Table -->
-                <table class="table table-bordered table-sm text-center">
+                <table class="table-bordered">
                   <thead class="">
                     <tr>
                       <th class="text-center">Id</th>
@@ -99,7 +104,7 @@
       </div>
       <div class="row">
         <div class="col-xs-6">
-          <table class="table table-bordered table-sm text-center">
+          <table class="table-bordered">
             <tbody>
               <tr>
                 <td>
@@ -110,16 +115,16 @@
             <tfoot>
               <tr>
                 <th>
-                  <p style="margin-top: 1rem; margin-bottom: 0;" class="text-center mb-0">Ing. {{ tecnico }}</p>
-                  <p style="margin-top: 0; margin-bottom: 0;" class="text-center mb-0">LABORATORIO DE SUELOS Y CONCRETO</p>
-                  <p style="margin-top: 0; margin-bottom: 1rem;" class="text-center mb-0">EPIC – FAICA - CAMPUS PARQUE INDUSTRIAL</p>
+                  <p  class="text-center ">{{ tecnic.title }}. {{ tecnic.user.first_name }} {{ tecnic.user.last_name }}</p>
+                  <p  class="text-center ">LABORATORIO DE SUELOS Y CONCRETO</p>
+                  <p  class="text-center ">EPIC – FAICA - CAMPUS PARQUE INDUSTRIAL</p>
                 </th>
               </tr>
             </tfoot>
           </table>
         </div>
         <div class="col-xs-6">
-            <table class="table table-bordered table-sm text-center">
+            <table class="table-bordered">
               <tbody>
                 <tr>
                   <td>
@@ -130,9 +135,9 @@
               <tfoot>
                 <tr>
                   <th>
-                    <p style="margin-top: 1rem; margin-bottom: 0;" class="text-center mb-0">Ing. {{ coordinador }}</p>
-                    <p style="margin-top: 0; margin-bottom: 0;" class="text-center mb-0">LABORATORIO DE SUELOS Y CONCRETO</p>
-                    <p style="margin-top: 0; margin-bottom: 1rem;" class="text-center mb-0">EPIC – FAICA - CAMPUS PARQUE INDUSTRIAL</p>
+                    <p  class="text-center ">{{ coordinator.title }}. {{ coordinator.user.first_name }} {{ coordinator.user.last_name }}</p>
+                    <p  class="text-center ">LABORATORIO DE SUELOS Y CONCRETO</p>
+                    <p  class="text-center ">EPIC – FAICA - CAMPUS PARQUE INDUSTRIAL</p>
                   </th>
                 </tr>
               </tfoot>
@@ -145,14 +150,14 @@
         <div class="col-xs-12 panel panel-default">
           <div class="row">
             <div class="col-xs-6">
-              <p style="margin-top: 1rem; margin-bottom: 0;" class="text-left"><strong>Dirección:</strong> Umacollo yanahuara - 552545 58</p>
-              <p style="margin-top: 0; margin-bottom: 0;" class="text-left"><strong>Telefono:</strong> 958254689</p>
+              <p  class="text-left"><strong>Dirección:</strong> Umacollo yanahuara - 552545 58</p>
+              <p  class="text-left"><strong>Telefono:</strong> 958254689</p>
             </div>
             <div class="col-xs-6">
-              <p style="margin-top: 0; margin-bottom: 1rem;" class="text-left"><strong>Link: </strong><a href="http://www.google.com.pe">www.epiclabs.ucsm.com</a></p>
+              <p  class="text-left"><strong>Link: </strong><a href="http://www.google.com.pe">www.epiclabs.ucsm.com</a></p>
             </div>
           </div>
-          <div class="panel-footer"><small>Todos los derechos reservados &#169; 2019</small></div>
+          <div class="text-center panel-footer"><small>Laboratorio de Ingenieria Civil, Universidad Catolica de Santa Maria, EPICLABS &#169; 2019</small></div>
         </div>
       </div>   
     </footer>

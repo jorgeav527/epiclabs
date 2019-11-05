@@ -9,9 +9,44 @@
     <title>Document</title>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <style>
+        @page {
+            size: "A4";
+            margin: 1cm 1cm;
+            @bottom-right {
+                content: "Pag. " counter(page) " de " counter(pages); 
+            } 
+        }    
+        footer {
+            position: fixed;
+            bottom: 0cm;
+            left: 0;
+            width: 100%;
+        }
+        table {
+            font-size: 1.20rem;
+            width: 100%;
+        }
+        td, th {
+            padding: 0.25rem;
+        }
+        h4 {
+            font-size: 1.5rem;
+        }
+        p {
+            font-size: 1.20rem;
+            margin-top: 0.25rem;
+            margin-bottom: 0.25rem;
+        }
+        .panel-heading {
+            font-size: 1.25rem;
+        }  
+        .panel-footer {
+            font-size: 1.25rem;
+        }
+    </style>
 </head>
 <body>
-
     {% block pdffile %}
     {% endblock %}
 <!-- Latest compiled and minified JavaScript -->

@@ -6,7 +6,7 @@
     <div class="col-md-3 col-lg-3">
       {% include "tests_material/base_sidenav_tests_material.html" %}
     </div>
-    <div class="col-md-9 col-lg-9">
+    <div class="col-md-9 col-lg-9 mt-4">
                 <!--Grid row-->
         <div class="row">
                     
@@ -15,14 +15,11 @@
               <!-- Card -->
               <div class="card">
                     <!-- Content -->
-                    <a href="#!">
-                      <div class="text-white d-flex h-100 mask blue-gradient-rgba">
+                    <a href="{% url 'tests_material:info' %}">
+                      <div class="text-white d-flex h-100 mask success-color-dark">
                         <div class="align-self-center p-3">
-                          <h3 class="card-title">Información</h3>
-                          <p class="lead mb-0">Más detalles</p>
-                        </div>
-                        <div class="align-self-center mx-auto">
-                          <i class="far fa-money-bill-alt fa-3x"></i>
+                          <h3 class="card-title">Información General</h3>
+                          <p class="lead ">Más detalles<i class="fas fa-angle-double-right pl-2"></i></p>
                         </div>
                       </div>
                     </a>    
@@ -36,14 +33,11 @@
               <!-- Card -->
               <div class="card">
                     <!-- Content -->
-                    <a href="#!">
-                      <div class="text-white d-flex h-100 mask blue-gradient-rgba">
+                    <a href="{% url 'tests_material:equips' %}">
+                      <div class="text-white d-flex h-100 mask warning-color-dark">
                         <div class="align-self-center p-3">
-                          <h3 class="card-title">Equipos</h3>
-                          <p class="lead mb-0">Más detalles</p>
-                        </div>
-                        <div class="align-self-center mx-auto">
-                          <i class="far fa-money-bill-alt fa-3x"></i>
+                          <h3 class="card-title">Equipos Implementados</h3>
+                          <p class="lead ">Más detalles<i class="fas fa-angle-double-right pl-2"></i></p>
                         </div>
                       </div>
                     </a>    
@@ -57,14 +51,11 @@
               <!-- Card -->
               <div class="card">
                     <!-- Content -->
-                    <a href="#!">
-                      <div class="text-white d-flex h-100 mask blue-gradient-rgba">
+                    <a href="{% url 'tests_material:guides' %}">
+                      <div class="text-white d-flex h-100 mask primary-color-dark">
                         <div class="align-self-center p-3">
-                          <h3 class="card-title">Cursos</h3>
-                          <p class="lead mb-0">Más detalles</p>
-                        </div>
-                        <div class="align-self-center mx-auto">
-                          <i class="far fa-money-bill-alt fa-3x"></i>
+                          <h3 class="card-title">Guias de Ensayos</h3>
+                          <p class="lead ">Más detalles<i class="fas fa-angle-double-right pl-2"></i></p>
                         </div>
                       </div>
                     </a>    
@@ -78,14 +69,11 @@
               <!-- Card -->
               <div class="card">
                     <!-- Content -->
-                    <a href="#!">
-                      <div class="text-white d-flex h-100 mask blue-gradient-rgba">
+                    <a href="{% url 'tests_material:teachers' %}">
+                      <div class="text-white d-flex h-100 mask danger-color-dark">
                         <div class="align-self-center p-3">
                           <h3 class="card-title">Plana Docente</h3>
-                          <p class="lead mb-0">Más detalles</p>
-                        </div>
-                        <div class="align-self-center mx-auto">
-                          <i class="far fa-money-bill-alt fa-3x"></i>
+                          <p class="lead  ">Más detalles<i class="fas fa-angle-double-right pl-2"></i></p>
                         </div>
                       </div>
                     </a>    
@@ -93,7 +81,6 @@
               <!-- Card -->
             </div>
             <!--Grid column-->
-             
         </div>
         <!--Grid row-->      
     </div>

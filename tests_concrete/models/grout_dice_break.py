@@ -17,6 +17,7 @@ class GroutDiceBreak(models.Model):
     element         = models.CharField(max_length=50, null=True, blank=True)
     code            = models.CharField(max_length=255, unique=True, editable=False)
     fc_esp          = models.FloatField(default=280.00)
+    reception_data  = models.DateField(default=datetime.datetime.now, null=True, blank=True)
     poured_data     = models.DateField()
     break_data      = models.DateField(default=datetime.datetime.now)
     duration        = models.IntegerField(editable=False)

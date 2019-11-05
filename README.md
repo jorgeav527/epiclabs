@@ -30,3 +30,14 @@ https://stackoverflow.com/questions/49712889/how-to-create-a-package-of-models-i
 
 DropDown choice field
 https://simpleisbetterthancomplex.com/tutorial/2018/01/29/how-to-implement-dependent-or-chained-dropdown-list-with-django.html
+
+django = "==2.2.5" 
+python-decouple = "==3.1" # for .env files
+psycopg2-binary = "==2.8.3" # for postgres database
+django-crispy-forms = "==1.7.2" # for forms easy to show
+pdfkit = "==0.6.1" # for print pdf files for html with graphs
+django-qr-code = "==1.0.0" # for QR code
+django-extensions = "==2.2.3" # to create a map for the models
+pyparsing = "==2.4.2"  # for parse words
+pydot = "==1.4.1" # to create a dotfile for create a draw model
+numpy = "==1.17.3" # for maths in python

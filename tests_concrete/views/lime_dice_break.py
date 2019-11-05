@@ -1,7 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.http import HttpResponse
-import pdfkit
+# import pdfkit
+from django.template.loader import render_to_string
+from weasyprint import HTML
+from weasyprint.fonts import FontConfiguration
 from django.template.loader import get_template
 from django.db.models import F
 from django.contrib.auth.decorators import login_required
@@ -9,6 +12,7 @@ from django.contrib.auth.decorators import login_required
 from tests_concrete.models import LimeDiceBreak
 from tests_concrete.forms import LimeDiceBreakForm, LimeDiceBreakFormClient
 from equipments.models import Equip
+from accounts.models import AdminProfile
 
 # Create your views here.
 
@@ -126,28 +130,49 @@ def lime_dice_break_delete(request, id):
     return render(request, 'tests_concrete/lime_dice_break/lime_dice_break_delete_comfirm.html', context)
 
 
+# @login_required
+# def lime_dice_break_pdf(request, id):
+#     obj = get_object_or_404(LimeDiceBreak, id=id)
+
+#     context = {
+#         "obj": obj,
+#     }
+
+#     template = get_template('tests_concrete/lime_dice_break/lime_dice_break_pdf.html')
+#     html = template.render(context)
+#     options = {
+#         'page-size': 'Letter',
+#         'margin-top': '0.50in',
+#         'margin-right': '0.50in',
+#         'margin-bottom': '0.50in',
+#         'margin-left': '0.50in',
+#         'encoding': "UTF-8",
+#     }
+#     pdf = pdfkit.from_string(html, False, options)
+#     response = HttpResponse(pdf, content_type='application/pdf')
+#     # filename = str(obj.user.username) + str(id) + '.pdf'
+#     filename = f"Ensayo_{obj.user.username}_{obj.id}.pdf"
+#     response['Content-Disposition'] = 'attachment; filename="{}"'.format(filename)
+#     return response
+
+
 @login_required
 def lime_dice_break_pdf(request, id):
     obj = get_object_or_404(LimeDiceBreak, id=id)
+    coordinator = AdminProfile.objects.filter(staff="COORDINADOR", active=True).first() 
+    tecnic = AdminProfile.objects.filter(staff="OFICINA_TECNICA", active=True).first() 
 
-    context = {
+    html = render_to_string('tests_concrete/lime_dice_break/lime_dice_break_pdf.html', {
         "obj": obj,
-    }
-
-    template = get_template('tests_concrete/lime_dice_break/lime_dice_break_pdf.html')
-    html = template.render(context)
-    options = {
-        'page-size': 'Letter',
-        'margin-top': '0.50in',
-        'margin-right': '0.50in',
-        'margin-bottom': '0.50in',
-        'margin-left': '0.50in',
-        'encoding': "UTF-8",
-    }
-    pdf = pdfkit.from_string(html, False, options)
-    response = HttpResponse(pdf, content_type='application/pdf')
-    # filename = str(obj.user.username) + str(id) + '.pdf'
+        "title": "CONCRETO. MÉTODO DE ENSAYO NORMALIZADO PARA LA DETERMINACIÓN DE LA RESISTENCIA A LA COMPRESIÓN DE DADOS DE CAL EN MUESTRAS CUBICAS.",
+        "norma_ASTM": "NORMA ASTM C-109",
+        "noma_NTP": "NTP 334.034",
+        "coordinator": coordinator,
+        "tecnic": tecnic,
+    })
     filename = f"Ensayo_{obj.user.username}_{obj.id}.pdf"
-    response['Content-Disposition'] = 'attachment; filename="{}"'.format(filename)
-    return response
+    response = HttpResponse(content_type="application/pdf")
+    response['Content-Disposition'] = 'inline; filename="{}"'.format(filename)
 
+    HTML(string=html).write_pdf(response)
+    return response

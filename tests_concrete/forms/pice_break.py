@@ -49,16 +49,17 @@ class PiceBreakForm(forms.ModelForm):
         }
 
 
-
 class PiceBreakFormClient(forms.ModelForm):
     user = forms.ModelChoiceField(queryset=User.objects.filter(is_client=True), label="Escoje el Cliente", required=True)
+    reception_data = forms.DateField(label="Recepción de la Muestra", required=True, widget=DateInput())
 
     class Meta:
         model = PiceBreak
         fields = [
             'user',
             'fc_esp', 
-            'element', 
+            'element',
+            'reception_data',
             'poured_data', 
             'break_data', 
             'diameter_esp',
@@ -70,9 +71,9 @@ class PiceBreakFormClient(forms.ModelForm):
         ]
         labels = {
             'fc_esp': 'Resistencia de Diseño', 
-            'element': 'Elemento',    
+            'element': 'Elemento',
             'poured_data': 'Dia de Vaciado', 
-            'break_data': 'Dia de Rotura', 
+            'break_data': 'Dia de Rotura',
             'diameter_esp': 'Diametro Especifico',
             'diameter_1': 'Diametro Superior',
             'diameter_2': 'Diametro Inferior',
@@ -91,7 +92,6 @@ class PiceBreakFormClient(forms.ModelForm):
             'poured_data': DateInput(),
             'break_data': DateInput(), 
         }
-
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

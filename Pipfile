@@ -17,6 +17,9 @@ pyparsing = "==2.4.2"
 pydot = "==1.4.1"
 numpy = "==1.17.3"
 weasyprint = "==50"
+bokeh = "==1.4.0"
+pandas = "==0.25.3"
+django-pandas = "==0.6.1"
 
 [requires]
 python_version = "3.7"

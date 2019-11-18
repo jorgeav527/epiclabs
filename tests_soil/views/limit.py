@@ -171,31 +171,36 @@ def limit_detail(request, id):
     # X and Y values in a list format liquid test
     x_hit = qs_liquid.values_list("hit", flat=True).order_by('id')
     y_moisture = qs_liquid.values_list("moisture", flat=True).order_by('id')
-    # regration line
-    mean_x_hit = np.mean(x_hit)
-    mean_y_moisture = np.mean(y_moisture)
-    number = 0
-    denom = 0
-    n = len(x_hit)
-    for i in range(n):
-        number += (x_hit[i] - mean_x_hit) * (y_moisture[i] - mean_y_moisture)
-        denom += (x_hit[i] - mean_x_hit) ** 2
-    m = number / denom
-    C = mean_y_moisture - (m * mean_x_hit)
-    hit_25 = round(C + m*25, 1)
+
+    # # regration line manual
+    # mean_x_hit = np.mean(x_hit)
+    # mean_y_moisture = np.mean(y_moisture)
+    # number = 0
+    # denom = 0
+    # n = len(x_hit)
+    # for i in range(n):
+    #     number += (x_hit[i] - mean_x_hit) * (y_moisture[i] - mean_y_moisture)
+    #     denom += (x_hit[i] - mean_x_hit) ** 2
+    # m = number / denom
+    # C = mean_y_moisture - (m * mean_x_hit)
+
+    coef_x1 = np.polyfit(x_hit, y_moisture, 1)
+    m = coef_x1[0]
+    C = coef_x1[1]
+    hit_25 = round(m*25 + C, 1)
 
     # Y values in a list format plastic test
     y_moisture_plastic = qs_plastic.values_list("moisture", flat=True).order_by('id')
     mean_y_moisture_plastic = round(np.mean(y_moisture_plastic), 1)
 
     # plastic index
-    plastic_index =  round(hit_25 - mean_y_moisture_plastic, 1)   
+    plastic_index = round(hit_25 - mean_y_moisture_plastic, 1)   
 
     # ploting
     max_x = np.max(x_hit) + 5
     min_x = np.min(x_hit) - 5
-    max_y = np.max(y_moisture) + 10
-    min_y = np.min(y_moisture) - 10
+    max_y = np.max(y_moisture) + 5
+    min_y = np.min(y_moisture) - 5
     x = np.linspace(min_x, max_x, 100)
     y = C + m*x
     TOOLS="hover,crosshair,pan,wheel_zoom,reset,save,"
@@ -216,6 +221,8 @@ def limit_detail(request, id):
         "mean_y_moisture_plastic": mean_y_moisture_plastic,
         "plastic_index": plastic_index,
         "obj": obj,
+        "norma_ASTM": "ASTM C 4318",
+        "noma_NTP": "NTP 339.129",
         "title": "Detalles del Ensayo de Limite Liquido y Limite Plastico",
     }
 
@@ -299,7 +306,7 @@ def limit_pdf(request, id):
         "plastic_index": plastic_index,
         "obj": obj,
         "title": "METODO DE ENSAYO PARA DETERMINAR EL LIMITE LÍQUIDO, LIMITE PLÁSTICO E INDICE DE PLASTICIDAD DE SUELOS MTC E110 - MTC E111",
-        "norma_ASTM": "NORMA ASTM C 4318",
+        "norma_ASTM": "ASTM C 4318",
         "noma_NTP": "NTP 339.129",
         "coordinator": coordinator,
         "tecnic": tecnic,

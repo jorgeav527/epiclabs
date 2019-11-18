@@ -1,0 +1,174 @@
+<div class="row">
+    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto my-3">
+        <div class="card shadow">
+            <div class="card-body">
+                <!-- Section heading -->
+                <h4 class="h4-responsive font-weight-bold text-center ">{{ title }}</h4>
+                <p class="text-center dark-grey-text w-responsive mx-auto ">((NORMA ASTM C-109) / (NTP 334.051))</p>
+                <hr class="my-3">
+
+                <!-- Section description -->
+                <p class="text-left mt-3"><span class="font-weight-bold"><u>Datos del Usuario</u></span></p>
+                <p class="text-left"><span class="font-weight-bold">Usuario:</span> {{ obj.user.username }}</p>
+                <p class="text-left"><span class="font-weight-bold">Nombre:</span> {{ obj.user.first_name|title }}</p>
+                <p class="text-left"><span class="font-weight-bold">Apellidos:</span> {{ obj.user.last_name|title }}</p>
+                <p class="text-left"><span class="font-weight-bold">DNI:</span> {{ obj.user.studentprofile.dni }}</p>
+                <p class="text-left"><span class="font-weight-bold">Codigo:</span> {{ obj.user.studentprofile.codigo }}</p>
+                <hr class="my-3">
+
+                <p class="text-left mt-3"><span class="font-weight-bold"><u>Datos del Ensayo Ingresados</u></span></p>
+                <p class="text-left"><span class="font-weight-bold">Fecha de Muestreo:</span> {{ obj.sampling_date|date:"d/m/Y" }}</p>
+                <p class="text-left"><span class="font-weight-bold">Fecha del Ensayo:</span> {{ obj.done_date|date:"d/m/Y" }}</p>
+                <p class="text-left"><span class="font-weight-bold">Material:</span> {{ obj.material }}</p>
+                <p class="text-left"><span class="font-weight-bold">Cantera:</span> {{ obj.quarry }}</p>
+                <hr class="my-3">
+
+                <p class="text-left mt-3"><span class="font-weight-bold"><u>Resultados del Ensayo</u></span></p>
+                <p class="text-left"><span class="font-weight-bold">Compactación y Determinación de la Densidad Húmeda:</span></p>
+                <table class="table table-sm table-responsive table-bordered text-center">
+                    <thead class="primary-color-dark white-text">
+                        <tr>
+                            <th>Secuencia</th>
+                            <th>Nº De capas</th>
+                            <th>Nº de Golpes</th>
+                            <th>Peso del Suelo + Molde (gramos)</th>
+                            <th>Peso del Molde (gramos)</th>
+                            <th>Peso del Suelo Compactado (gramos)</th>
+                            <th>Volumen del Molde (cm³)</th>
+                            <th>Densidad Humeda (g/cm³)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for density in qs_density %}
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>{{ density.layers }}</td>
+                            <td>{{ density.hits }}</td>
+                            <td>{{ density.bowl_weight }}</td>
+                            <td>{{ density.material_weight_P }}</td>
+                            <td>{{ density.compacted_weight_P }}</td>
+                            <td>{{ density.bowl_volume_P }}</td>
+                            <td>{{ density.wet_density }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                
+                <p class="text-left"><span class="font-weight-bold">Determinación de la Húmedad y Densidad Seca:</span></p>
+                <table class="table table-sm table-responsive table-bordered text-center">
+                    <thead class="primary-color-dark white-text">
+                        <tr>
+                            <th>Secuencia</th>
+                            <th>Recipiente</th>
+                            <th>Peso del recipiente (gramos)</th>
+                            <th>Peso del material húmedo + recipiente (gramos)</th>
+                            <th>Peso de material seco + recipiente (gramos)</th>
+                            <th>Peso de agua (gramos)</th>
+                            <th>Peso de material seco (gramos)</th>
+                            <th>Contenido de humedad (%)</th>
+                            <th>Densidad Seca (g/cm³)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for density in qs_density %}
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>{{ density.bowl }}</td>
+                            <td>{{ density.bowl_weight }}</td>
+                            <td>{{ density.wet_weight }}</td>
+                            <td>{{ density.dry_weight }}</td>
+                            <td>{{ density.water_weight }}</td>
+                            <td>{{ density.material_weight }}</td>
+                            <td>{{ density.moisture }}</td>
+                            <td>{{ density.dry_density }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <p class="text-left"><span class="font-weight-bold">Determinación de la Curva de Saturación:</span></p>
+                <table class="table table-sm table-responsive table-bordered text-center">
+                    <thead class="primary-color-dark white-text">
+                        <tr>
+                            <th>Peso de fracción extradim (%)</th>
+                            <th>Peso de fracción gruesa (%)</th>
+                            <th>Peso de fracción fina (%)</th>
+                            <th>P.Esp. aparente de la fracción extrad. a 20°c</th>
+                            <th>P.Esp. aparente de la fracción gruesa a 20°c</th>
+                            <th>G.Esp. específica de la fracción fina a 20°c</th>
+                            <th>G. Esp. frac. Fina+gruesa a 20°c (Gmfg)</th>
+                            <th>Gravedad específica global a 20°c (Gmg)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for saturation in qs_saturation %}
+                        <tr>
+                            <td>{{ saturation.frac_extrad_weight }}</td>
+                            <td>{{ saturation.frac_gruesa_weight }}</td>
+                            <td>{{ saturation.frac_fina_weight }}</td>
+                            <td>{{ saturation.p_sp_frac_extrad }}</td>
+                            <td>{{ saturation.p_sp_frac_gruesa }}</td>
+                            <td>{{ saturation.g_sp_frac_fina }}</td>
+                            <td>{{ saturation.g_frac_fina_gruesa }}</td>
+                            <td>{{ saturation.g_sp_global }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <p class="text-left"><span class="font-weight-bold">Determinación de la Correccion:</span></p>
+                <table class="table table-sm table-responsive table-bordered text-center">
+                    <thead class="primary-color-dark white-text">
+                        <tr>
+                            <th>Peso del recipiente (g)</th>
+                            <th>Peso de fracción extrad. húmeda + recipiente (g)</th>
+                            <th>Peso de fracción extrad. seca + recipiente (g)</th>
+                            <th>Peso del agua (g)</th>
+                            <th>Peso de fracción extrad. seca (g)</th>
+                            <th>Humedad de la fracción extradim. "wc" (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for correction in qs_correction %}
+                        <tr>
+                            <td>{{ correction.bowl_weight }}</td>
+                            <td>{{ correction.wet_weight }}</td>
+                            <td>{{ correction.dry_weight }}</td>
+                            <td>{{ correction.water_weight }}</td>
+                            <td>{{ correction.material_weight }}</td>
+                            <td>{{ correction.moisture }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <p class="text-left"><span class="font-weight-bold">Peso unitario seco maximo:</span> {{ max_y_dry_density }} g/cm³</p>
+                <p class="text-left"><span class="font-weight-bold">Optimo Contenido de humedad:</span> {{ max_x_moisture }} %</p>
+                <p class="text-left"><span class="font-weight-bold">Peso de la fracción extradim. "Pc":</span> {{ pfe }} %</p>
+                <p class="text-left"><span class="font-weight-bold">Humedad de la fracción fina+gruesa "wf":</span> {{ max_x_moisture }} %</p>
+                <p class="text-left"><span class="font-weight-bold">Peso de la fracción fina+gruesa "Pf":</span> {{ pf_f_g }} %</p>
+                <p class="text-left"><span class="font-weight-bold">Opt. Cont. de humedad corregido "Cw":</span> {{ correction_moisture }} %</p>
+                <p class="text-left"><span class="font-weight-bold">Peso unitario seco corregido máximo global "CδD":</span> {{ correction_dry_density }} g/cm³</p>
+                <hr class="my-3">
+                                
+                <p class="text-left mt-3"><span class="font-weight-bold"><u>Datos Extra</u></span></p>
+                <p class="text-left"><span class="font-weight-bold">Id:</span> {{ obj.id }}</p>
+                <p class="text-left"><span class="font-weight-bold">Creado:</span> {{ obj.created }}</p>
+                <p class="text-left"><span class="font-weight-bold">Actualizado:</span> {{ obj.updated }}</p>
+                <p class="text-left"><span class="font-weight-bold">Nombre del Ensayo:</span> {{ obj.name }}</p>
+                <hr class="my-3">
+                
+                <div class="mt-5">
+                    <a href="{% url 'tests_concrete:diamond_pice_break_update' obj.id %}" class="btn btn-primary btn-block" type="button">Editar Ensayo</a>
+                    <a href="{% url 'tests_concrete:diamond_pice_break_list' %}" class="btn btn-primary btn-block" type="button">Cancelar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if div and script %}
+    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto my-3">
+        <div class="card shadow">
+            {{ div | safe }}
+            {{ script | safe }}
+        </div>
+    </div>
+    {% endif %}
+</div>

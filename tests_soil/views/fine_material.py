@@ -7,9 +7,6 @@ from weasyprint import HTML
 from django.template.loader import get_template
 from django.db.models import F
 from django.contrib.auth.decorators import login_required
-from bokeh.plotting import figure
-from bokeh.embed import components
-from bokeh.io.export import get_screenshot_as_png
 import numpy as np
 
 from tests_soil.models import FineMaterial

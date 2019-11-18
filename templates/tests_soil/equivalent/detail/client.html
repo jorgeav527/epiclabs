@@ -23,77 +23,46 @@
                 <hr class="my-3">
                 
                 <p class="text-left mt-3"><span class="font-weight-bold"><u>Datos del Ensayo Ingresados</u></span></p>
-                <p class="text-left"><span class="font-weight-bold">Fecha de Extracción:</span> {{ obj.extraction_data|date:"d/m/Y" }}</p>
-                <p class="text-left"><span class="font-weight-bold">Fecha del Ensayo:</span> {{ obj.done_data|date:"d/m/Y" }}</p>
+                <p class="text-left"><span class="font-weight-bold">Fecha de Muestreo:</span> {{ obj.sampling_date|date:"d/m/Y" }}</p>
+                <p class="text-left"><span class="font-weight-bold">Fecha del Ensayo:</span> {{ obj.done_date|date:"d/m/Y" }}</p>
                 <p class="text-left"><span class="font-weight-bold">Calicata:</span> {{ obj.pit }}</p>
                 <p class="text-left"><span class="font-weight-bold">Estrato:</span> {{ obj.layer }}</p>
                 <hr class="my-3">
                 
                 <p class="text-left mt-3"><span class="font-weight-bold"><u>Resultados del Ensayo</u></span></p>
-                <p class="text-left"><span class="font-weight-bold">Ensayos de Limite Liquido:</span></p>
+                <p class="text-left"><span class="font-weight-bold">Lecturas:</span></p>
                 <table class="table table-sm table-responsive table-bordered text-center">
                     <thead class="primary-color-dark white-text">
                         <tr>
                             <th>Secuencia</th>
-                            <th>Recipiente</th>
-                            <th>Nº de Golpes</th>
-                            <th>Peso del Recipiente (gramos)</th>
-                            <th>Peso Humedo (gramos)</th>
-                            <th>Peso Seco (gramos)</th>
-                            <th>Peso Agua (gramos)</th>
-                            <th>Peso Material (gramos)</th>
-                            <th>Humedad %</th>
+                            <th>Tamaño Maximo</th>
+                            <th>Entrada a Saturación (hh:mm)</th>
+                            <th>Salida de Saturación (hh:mm)</th>
+                            <th>Entrada a Decantación (hh:mm)</th>
+                            <th>Salida de Decantación (hh:mm)</th>
+                            <th>Altura Máxima del Material Fino (mm)</th>
+                            <th>Altura Máxima de la Arena (mm)</th>
+                            <th>Equivalente Arena (%)</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for liquid in qs_liquid %}
+                        {% for equiv in qs_equiv %}
                         <tr>
-                            <th scope="row">{{ forloop.counter }}</th>
-                            <td>{{ liquid.bowl }}</td>
-                            <td>{{ liquid.hit }}</td>
-                            <td>{{ liquid.bowl_weight }}</td>
-                            <td>{{ liquid.wet_weight }}</td>
-                            <td>{{ liquid.dry_weight }}</td>
-                            <td>{{ liquid.water_weight }}</td>
-                            <td>{{ liquid.material_weight }}</td>
-                            <td>{{ liquid.moisture }}</td>
+                            <th scope="row">Lectura {{ forloop.counter }}</th>
+                            <td>{{ equiv.max_size }}</td>
+                            <td>{{ equiv.start_sat_time }}</td>
+                            <td>{{ equiv.out_sat_time }}</td>
+                            <td>{{ equiv.start_dec_time }}</td>
+                            <td>{{ equiv.out_dec_time }}</td>
+                            <td>{{ equiv.max_high_fine }}</td>
+                            <td>{{ equiv.max_high_sand }}</td>
+                            <td>{{ equiv.equiv_sand }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
                 
-                <p class="text-left"><span class="font-weight-bold">Ensayos de Limite Plastico:</span></p>
-                <table class="table table-sm table-responsive table-bordered text-center">
-                    <thead class="primary-color-dark white-text">
-                        <tr>
-                            <th>Secuencia</th>
-                            <th>Recipiente</th>
-                            <th>Peso del Recipiente (gramos)</th>
-                            <th>Peso Humedo (gramos)</th>
-                            <th>Peso Seco (gramos)</th>
-                            <th>Peso Agua (gramos)</th>
-                            <th>Peso Material (gramos)</th>
-                            <th>Humedad %</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for plastic in qs_plastic %}
-                        <tr>
-                            <th scope="row">{{ forloop.counter }}</th>
-                            <td>{{ plastic.bowl }}</td>
-                            <td>{{ plastic.bowl_weight }}</td>
-                            <td>{{ plastic.wet_weight }}</td>
-                            <td>{{ plastic.dry_weight }}</td>
-                            <td>{{ plastic.water_weight }}</td>
-                            <td>{{ plastic.material_weight }}</td>
-                            <td>{{ plastic.moisture }}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-                <p class="text-left"><span class="font-weight-bold">Limite Liquido a 25 Golpes:</span> {{ hit_25 }}%</p>
-                <p class="text-left"><span class="font-weight-bold">Limite Platico Promedio:</span> {{ mean_y_moisture_plastic }}%</p>
-                <p class="text-left"><span class="font-weight-bold">Indice de Plasticidad:</span> {{ plastic_index }}</p>
+                <p class="text-left"><span class="font-weight-bold">Promedio de Equivalente de Arenas:</span> {{ mean_equiv_sand }}</p>
                 <hr class="my-3">
                 
                 <p class="text-left mt-3"><span class="font-weight-bold"><u>Contacto de Referencia</u></span></p>
@@ -110,18 +79,10 @@
                 <hr class="my-3">
                 
                 <div class="mt-5">
-                    <a href="{% url 'tests_soil:limit_update' obj.id %}" class="btn btn-primary btn-block" type="button">Editar Ensayo</a>
-                    <a href="{% url 'tests_soil:limit_list' %}" class="btn btn-primary btn-block" type="button">Cancelar</a>
+                    <a href="{% url 'tests_soil:equivalent_update' obj.id %}" class="btn btn-primary btn-block" type="button">Editar Ensayo</a>
+                    <a href="{% url 'tests_soil:equivalent_list' %}" class="btn btn-primary btn-block" type="button">Cancelar</a>
                 </div>
             </div>
         </div>
     </div>
-    {% if div and script %}
-    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto my-3">
-        <div class="card shadow">
-            {{ div | safe }}
-            {{ script | safe }}
-        </div>
-    </div>
-    {% endif %}
 </div>

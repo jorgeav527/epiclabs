@@ -47,4 +47,23 @@ urlpatterns = [
     path('density/save/<int:id>/', tests_soil_views.density_save, name="density_save"),
     path('saturation/save/<int:id>/', tests_soil_views.saturation_save, name="saturation_save"),
     path('correction/save/<int:id>/', tests_soil_views.correction_save, name="correction_save"),
+    # Moisture Content CRUD and PDF
+    path('moisture-content/', tests_soil_views.moisture_content_list, name="moisture_content_list"),
+    path('moisture-content/create/', tests_soil_views.moisture_content_create, name="moisture_content_create"),
+    path('moisture-content/<int:id>/update/', tests_soil_views.moisture_content_update, name="moisture_content_update"),
+    path('moisture-content/<int:id>/detail/', tests_soil_views.moisture_content_detail, name="moisture_content_detail"),
+    path('moisture-content/<int:id>/delete/', tests_soil_views.moisture_content_delete, name="moisture_content_delete"),
+    path('moisture-content/<int:id>/pdf/', tests_soil_views.moisture_content_pdf, name="moisture_content_pdf"),
+    # Moisture Material CRUD
+    path('moisture-material/save/<int:id>/', tests_soil_views.moisture_material_save, name="moisture_material_save"),
+    # Specific Gravity CRUD and PDF
+    path('specific-gravity/', tests_soil_views.specific_gravity_list, name="specific_gravity_list"),
+    path('specific-gravity/create/', tests_soil_views.specific_gravity_create, name="specific_gravity_create"),
+    path('specific-gravity/<int:id>/update/', tests_soil_views.specific_gravity_update, name="specific_gravity_update"),
+    path('specific-gravity/<int:id>/detail/', tests_soil_views.specific_gravity_detail, name="specific_gravity_detail"),
+    path('specific-gravity/<int:id>/delete/', tests_soil_views.specific_gravity_delete, name="specific_gravity_delete"),
+    path('specific-gravity/<int:id>/pdf/', tests_soil_views.specific_gravity_pdf, name="specific_gravity_pdf"),
+    # Fraction Pass and Retained CRUD
+    path('fraction-pass/save/<int:id>/', tests_soil_views.fraction_pass_save, name="fraction_pass_save"),
+    path('fraction-retained/save/<int:id>/', tests_soil_views.fraction_retained_save, name="fraction_retained_save"),
 ]

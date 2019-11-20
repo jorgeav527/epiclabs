@@ -1,0 +1,245 @@
+{% load qr_code %}
+
+<div class="container">
+    <header>
+      <div class="row">
+        <div class="col-xs-12 panel panel-default">  
+          
+          <div class="row">
+            <div class="col-xs-9">
+              <h4 class="text-center">
+                <strong>{{ title }}</strong> 
+              </h4>
+            </div>
+              <div class="col-xs-3">
+                <p style="margin-top: 1rem; margin-bottom: 0;" class="text-center"><strong>{{ norma_ASTM }}</strong></p>
+                <p style="margin-top: 0; margin-bottom: 1rem;" class="text-center"><strong>{{ noma_NTP }}</strong></p>
+              </div>
+          </div>
+        </div>
+      </div>   
+    </header>
+    <main>
+      <div class="row">
+        <div class="col-xs-8 panel panel-default">
+          <p class="text-left panel-heading"><strong>Datos Principales</strong></p>
+          <p  class="text-left"><strong>Empresa:</strong> {{ obj.user.clientprofile.long_name|title }}</p> 
+          <p  class="text-left"><strong>Dirección:</strong> {{ obj.user.clientprofile.direction|title }}</p> 
+          <p  class="text-left"><strong>RUC:</strong> {{ obj.user.clientprofile.ruc }}</p> 
+          <p  class="text-left"><strong>Obra:</strong> {{ obj.construction.name|title }}</p> 
+          <p  class="text-left"><strong>Ubicación:</strong> {{ obj.construction.location|title }}</p> 
+          <p class="text-left"><strong>Muestreo:</strong> {{ obj.created|date:"d/m/Y P" }}</p>
+          {% if obj.created|date:"d/m/Y" != obj.updated|date:"d/m/Y" %}
+          <p class="text-left"><strong>Corrección del Ensayo:</strong> {{ obj.updated|default_if_none:"Ninguna Corrección"|date:"d/m/Y P" }}</p>
+          {% endif %}
+          <p class="text-left"><strong>Emsion de Certificado:</strong> {% now "d/m/Y P" %}</p>
+          <p class="text-left"><strong>Persona de Referencia:</strong> {{ obj.reference_person.title }} {{ obj.reference_person.name|title }}</p>          
+          {% if qs_gravas %}
+          <p class="text-left"><strong>Promedio de Humedad en Gravas:</strong> {{ mean_gravas }}%</p>
+          {% endif %}
+          {% if qs_finos %}
+          <p class="text-left"><strong>Promedio de Humedad en Finos:</strong> {{ mean_finos }}%</p>
+          {% endif %}
+          {% if qs_arenas %}
+          <p class="text-left"><strong>Promedio de Humedad en Arenas:</strong> {{ mean_arenas }}%</p>
+          {% endif %}
+          {% if qs_suelos %}
+          <p class="text-left"><strong>Promedio de Humedad en Suelos:</strong> {{ mean_suelos }}%</p>
+          {% endif %}
+  </div>
+        <div style="margin-left: 4rem;" class="col-xs-3 panel panel-default">
+          <p class="text-left panel-heading"><strong>Datos del Ensayo</strong></p>
+          <p class="text-left"><strong>ID:</strong> {{ obj.id }}</p>
+          <p class="text-left"><strong>Codigo QR:</strong></p>
+          <p class="text-center">{% qr_from_text obj.code size=4 image_format="png" %}</p>
+          <p class="text-left"><strong>Material:</strong> {{ obj.material }}</p>
+          <p class="text-left"><strong>Cantera:</strong> {{ obj.quarry }}</p>
+        </div>
+      </div>    
+      <div class="row">
+        <div class="col-xs-12">
+            <div class="panel panel-default">
+                <!-- Default panel contents -->
+                
+              {% if qs_gravas %}
+              <div class="panel-heading"><strong>Resultados del Ensayo:</strong> Gravas</div>
+              <table class="table-bordered">
+                  <thead class="">
+                      <tr>
+                          <th class="text-center">Secuencia</th>
+                          <th class="text-center">Peso del recipiente (g)</th>
+                          <th class="text-center">Peso del Material húmeda + recipiente (g)</th>
+                          <th class="text-center">Peso del Material seca + recipiente (g)</th>
+                          <th class="text-center">Peso del agua (g)</th>
+                          <th class="text-center">Peso de Material (g)</th>
+                          <th class="text-center">Humedad Natural(%)</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      {% for gravas in qs_gravas %}
+                      <tr>
+                          <th class="text-center" scope="row">{{ forloop.counter }}</th>
+                          <td class="text-center">{{ gravas.bowl_weight }}</td>
+                          <td class="text-center">{{ gravas.wet_weight }}</td>
+                          <td class="text-center">{{ gravas.dry_weight }}</td>
+                          <td class="text-center">{{ gravas.water_weight }}</td>
+                          <td class="text-center">{{ gravas.material_weight }}</td>
+                          <td class="text-center">{{ gravas.moisture }}</td>
+                      </tr>
+                      {% endfor %}
+                  </tbody>
+              </table>
+              {% endif %}
+              <br>
+              {% if qs_finos %}
+              <div class="panel-heading"><strong>Resultados del Ensayo:</strong> Finos</div>
+              <table class="table-bordered">
+                  <thead class="">
+                      <tr>
+                          <th class="text-center">Secuencia</th>
+                          <th class="text-center">Peso del recipiente (g)</th>
+                          <th class="text-center">Peso del Material húmeda + recipiente (g)</th>
+                          <th class="text-center">Peso del Material seca + recipiente (g)</th>
+                          <th class="text-center">Peso del agua (g)</th>
+                          <th class="text-center">Peso de Material (g)</th>
+                          <th class="text-center">Humedad Natural(%)</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      {% for finos in qs_finos %}
+                      <tr>
+                          <th class="text-center" scope="row">{{ forloop.counter }}</th>
+                          <td class="text-center">{{ finos.bowl_weight }}</td>
+                          <td class="text-center">{{ finos.wet_weight }}</td>
+                          <td class="text-center">{{ finos.dry_weight }}</td>
+                          <td class="text-center">{{ finos.water_weight }}</td>
+                          <td class="text-center">{{ finos.material_weight }}</td>
+                          <td class="text-center">{{ finos.moisture }}</td>
+                      </tr>
+                      {% endfor %}
+                  </tbody>
+              </table>
+              {% endif %}
+              <br>              
+              {% if qs_arenas %}
+              <div class="panel-heading"><strong>Resultados del Ensayo:</strong> Arenas</div>
+              <table class="table-bordered">
+                  <thead class="">
+                      <tr>
+                          <th class="text-center">Secuencia</th>
+                          <th class="text-center">Peso del recipiente (g)</th>
+                          <th class="text-center">Peso del Material húmeda + recipiente (g)</th>
+                          <th class="text-center">Peso del Material seca + recipiente (g)</th>
+                          <th class="text-center">Peso del agua (g)</th>
+                          <th class="text-center">Peso de Material (g)</th>
+                          <th class="text-center">Humedad Natural(%)</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      {% for arenas in qs_arenas %}
+                      <tr>
+                          <th class="text-center" scope="row">{{ forloop.counter }}</th>
+                          <td class="text-center">{{ arenas.bowl_weight }}</td>
+                          <td class="text-center">{{ arenas.wet_weight }}</td>
+                          <td class="text-center">{{ arenas.dry_weight }}</td>
+                          <td class="text-center">{{ arenas.water_weight }}</td>
+                          <td class="text-center">{{ arenas.material_weight }}</td>
+                          <td class="text-center">{{ arenas.moisture }}</td>
+                      </tr>
+                      {% endfor %}
+                  </tbody>
+              </table>
+              {% endif %}
+              <br>              
+              {% if qs_suelos %}
+              <div class="panel-heading"><strong>Resultados del Ensayo:</strong> Suelos</div>
+              <table class="table-bordered">
+                  <thead class="">
+                      <tr>
+                          <th class="text-center">Secuencia</th>
+                          <th class="text-center">Peso del recipiente (g)</th>
+                          <th class="text-center">Peso del Material húmeda + recipiente (g)</th>
+                          <th class="text-center">Peso del Material seca + recipiente (g)</th>
+                          <th class="text-center">Peso del agua (g)</th>
+                          <th class="text-center">Peso de Material (g)</th>
+                          <th class="text-center">Humedad Natural(%)</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      {% for suelos in qs_suelos %}
+                      <tr>
+                          <th class="text-center" scope="row">{{ forloop.counter }}</th>
+                          <td class="text-center">{{ suelos.bowl_weight }}</td>
+                          <td class="text-center">{{ suelos.wet_weight }}</td>
+                          <td class="text-center">{{ suelos.dry_weight }}</td>
+                          <td class="text-center">{{ suelos.water_weight }}</td>
+                          <td class="text-center">{{ suelos.material_weight }}</td>
+                          <td class="text-center">{{ suelos.moisture }}</td>
+                      </tr>
+                      {% endfor %}
+                  </tbody>
+              </table>
+              {% endif %}
+            </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6">
+          <table class="table-bordered">
+            <tbody>
+              <tr>
+                <td>
+                  <p style="margin-top: 7rem; margin-bottom: 7rem;" class="text-muted text-center">UNIVERSIDAD CATÓLICA DE SANTA MARÍA</p>
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <th>
+                  <p  class="text-center ">{{ tecnic.title }}. {{ tecnic.user.first_name }} {{ tecnic.user.last_name }}</p>
+                  <p  class="text-center ">LABORATORIO DE SUELOS Y CONCRETO</p>
+                  <p  class="text-center ">EPIC – FAICA - CAMPUS PARQUE INDUSTRIAL</p>
+                </th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <div class="col-xs-6">
+            <table class="table-bordered">
+              <tbody>
+                <tr>
+                  <td>
+                    <p style="margin-top: 7rem; margin-bottom: 7rem;" class="text-muted text-center">UNIVERSIDAD CATÓLICA DE SANTA MARÍA</p>
+                  </td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>
+                    <p  class="text-center ">{{ coordinator.title }}. {{ coordinator.user.first_name }} {{ coordinator.user.last_name }}</p>
+                    <p  class="text-center ">LABORATORIO DE SUELOS Y CONCRETO</p>
+                    <p  class="text-center ">EPIC – FAICA - CAMPUS PARQUE INDUSTRIAL</p>
+                  </th>
+                </tr>
+              </tfoot>
+            </table>
+        </div>
+        </div>
+    </main>
+    <footer>
+      <div class="row" style="margin-top: 5rem;">
+        <div class="col-xs-12 panel panel-default">
+          <div class="row">
+            <div class="col-xs-6">
+              <p  class="text-left"><strong>Dirección:</strong> Umacollo yanahuara - 552545 58</p>
+              <p  class="text-left"><strong>Telefono:</strong> 958254689</p>
+            </div>
+            <div class="col-xs-6">
+              <p  class="text-left"><strong>Link: </strong><a href="http://www.google.com.pe">www.epiclabs.ucsm.com</a></p>
+            </div>
+          </div>
+          <div class="text-center panel-footer"><small>Laboratorio de Ingenieria Civil, Universidad Catolica de Santa Maria, EPICLABS &#169; 2019</small></div>
+        </div>
+      </div>   
+    </footer>
+</div>

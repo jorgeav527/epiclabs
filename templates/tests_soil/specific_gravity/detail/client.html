@@ -1,0 +1,157 @@
+<div class="row">
+    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto my-3">
+        <div class="card shadow">
+            <div class="card-body">
+                <!-- Section heading -->
+                <h4 class="h4-responsive font-weight-bold text-center ">{{ title }}</h4>
+                <p class="dark-grey-text w-responsive text-center mx-auto">{{ norma_ASTM }} / {{ noma_NTP }}</p>
+                <hr class="my-3">
+
+                <!-- Section description -->
+                <p class="text-left mt-3"><span class="font-weight-bold"><u>Datos del Usuario</u></span></p>
+                <p class="text-left"><span class="font-weight-bold">Usuario:</span> {{ obj.user.username }}</p>
+                <p class="text-left"><span class="font-weight-bold">Empresa:</span> {{ obj.user.clientprofile.long_name|title }}</p>
+                <p class="text-left"><span class="font-weight-bold">Dirección de la Empresa:</span> {{ obj.user.clientprofile.direction|title }}</p>
+                <p class="text-left"><span class="font-weight-bold">RUC:</span> {{ obj.user.clientprofile.ruc }}</p>
+                <p class="text-left"><span class="font-weight-bold">Telefono:</span> {{ obj.user.clientprofile.phone }}</p>
+                <hr class="my-3">
+                
+                <p class="text-left mt-3"><span class="font-weight-bold"><u>Datos de la Obra</u></span></p>
+                <p class="text-left"><span class="font-weight-bold">Obra:</span> {{ obj.construction.name|title }}</p>
+                <p class="text-left"><span class="font-weight-bold">Ubicación:</span> {{ obj.construction.location|title }}</p>
+                <p class="text-left"><span class="font-weight-bold">Comienzo de la Obra:</span> {{ obj.construction.start_day }}</p>
+                <hr class="my-3">
+                
+                <p class="text-left mt-3"><span class="font-weight-bold"><u>Datos del Ensayo Ingresados</u></span></p>
+                <p class="text-left"><span class="font-weight-bold">Fecha de Muestreo:</span> {{ obj.sampling_date|date:"d/m/Y" }}</p>
+                <p class="text-left"><span class="font-weight-bold">Fecha del Ensayo:</span> {{ obj.done_date|date:"d/m/Y" }}</p>
+                <p class="text-left"><span class="font-weight-bold">Material:</span> {{ obj.material }}</p>
+                <p class="text-left"><span class="font-weight-bold">Cantera:</span> {{ obj.quarry }}</p>
+                <hr class="my-3">
+                
+                <p class="text-left mt-3"><span class="font-weight-bold"><u>Resultados del Ensayo</u></span></p>
+                <p class="text-left"><span class="font-weight-bold">Fracción Pasante de Tamiz Nº 4:</span></p>
+                <table class="table table-sm table-responsive table-bordered text-center">
+                    <thead class="primary-color-dark white-text">
+                        <tr>
+                            <th>Secuencia</th>
+                            <th>Temperatura de ensayo (°c)</th>
+                            <th>Densidad del agua a la temperatura de ensayo (g/mL)</th>
+                            <th>Volumen promedio calibrado del picnómetro seco (mL)</th>
+                            <th>Masa promedio calibrada del picnómetro seco (g)</th>
+                            <th>Masa del picnómetro y agua a la temperatura de ensayo (g)</th>
+                            <th>Masa de la muestra de sólidos del suelo a la temperatura de ensayo (g)</th>
+                            <th>Masa del picnómetro, agua y sólidos a la temperatura de ensayo (g)</th>
+                            <th>Masa del recipiente para secado (g)</th>
+                            <th>Masa del recipiente para secado + suelo seco (g)</th>
+                            <th>Masa de los solidos secados al horno </th>
+                            <th>Gravedad específica de los sólidos de suelo a temperatura de ensayo </th>
+                            <th>Coeficiente de temperatura del agua a 20°c </th>
+                            <th>Gravedad específica de los sólidos de suelo a 20°c </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for fraction_pass in qs_fraction_pass %}
+                        <tr>                                         
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>{{ fraction_pass.temperature }}</td>
+                            <td>{{ fraction_pass.water_density }}</td>
+                            <td>{{ fraction_pass.pycnometer_volume }}</td>
+                            <td>{{ fraction_pass.pycnometer_mass }}</td>
+                            <td>{{ fraction_pass.mass_pycnometer_water }}</td>
+                            <td>{{ fraction_pass.sample_mass }}</td>
+                            <td>{{ fraction_pass.mass_pyc_w_sample }}</td>
+                            <td>{{ fraction_pass.mass_bowl }}</td>
+                            <td>{{ fraction_pass.mass_bowl_sample }}</td>
+                            <td>{{ fraction_pass.mass_dry_sample }}</td>
+                            <td>{{ fraction_pass.gravity_specific }}</td>
+                            <td>{{ fraction_pass.coefficient_water }}</td>
+                            <td>{{ fraction_pass.gravity_specific_real }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <p class="text-left"><span class="font-weight-bold">Fracción Retenido en el Tamiz Nº 4:</span></p>
+                <table class="table table-sm table-responsive table-bordered text-center">
+                    <thead class="primary-color-dark white-text">
+                        <tr>
+                            <th>Secuencia</th>
+                            <th>Temperatura de ensayo entre 23±1.7 (°c)</th>
+                            <th>Peso de la muestra saturada con superficie seca en el aire (g/mL)</th>
+                            <th>Peso de la canastilla dentro del agua  (mL)</th>
+                            <th>Peso de la muestra saturada superficialmente seca + peso canastilla en agua (g)</th>
+                            <th>Peso del recipiente para secado (g)</th>
+                            <th>Peso del recipiente + muestra seca al horno (g)</th>
+                            <th>Peso de la muestra seca al horno (g)</th>
+                            <th>Peso de la muestra saturada dentro del agua (g)</th>
+                            <th>Gravedad específica de masa (g)</th>
+                            <th>Gravedad específica de masa SSS </th>
+                            <th>Gravedad específica aparente </th>
+                            <th>Coeficiente de temperatura del agua a 20°c </th>
+                            <th>Peso específico de masa </th>
+                            <th>Peso específico de masa SSS </th>
+                            <th>Peso específico aparente </th>
+                            <th>Absorción </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for fraction_retained in qs_fraction_retained %}
+                        <tr>                                         
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>{{ fraction_retained.temperature_23 }}</td>
+                            <td>{{ fraction_retained.saturated_sample }}</td>
+                            <td>{{ fraction_retained.w_basket_water }}</td>
+                            <td>{{ fraction_retained.w_basket_water_sample }}</td>
+                            <td>{{ fraction_retained.w_bowl }}</td>
+                            <td>{{ fraction_retained.w_bowl_sample }}</td>
+                            <td>{{ fraction_retained.w_sample_dry }}</td>
+                            <td>{{ fraction_retained.w_sample_sat_water }}</td>
+                            <td>{{ fraction_retained.specific_grav_mass }}</td>
+                            <td>{{ fraction_retained.specific_grav_mass_sss }}</td>
+                            <td>{{ fraction_retained.apparent_spe_gravity }}</td>
+                            <td>{{ fraction_retained.coefficient_water }}</td>
+                            <td>{{ fraction_retained.specific_mass_weight }}</td>
+                            <td>{{ fraction_retained.specific_mass_weight_sss }}</td>
+                            <td>{{ fraction_retained.specific_mass_weight_app }}</td>
+                            <td>{{ fraction_retained.absorption }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <p class="text-left"><span class="font-weight-bold">Promedio de fracción de suelo pasante en malla Nro. 4:</span> {{ mean_material_pass }}%</p>
+                <p class="text-left"><span class="font-weight-bold">Gravedad específica de solidos de suelo de fracción que pasa malla Nro. 4:</span> {{ mean_grav_sp }}</p>
+                <p class="text-left"><span class="font-weight-bold">Promedio de fracción de suelo retenida en malla Nro. 4:</span> {{ mean_material_retained }}%</p>
+                <p class="text-left"><span class="font-weight-bold">Peso específico aparente de fracción retenida en malla Nro. 4:</span> {{ mean_spe_mass_wei_app }}</p>
+                <p class="text-left"><span class="font-weight-bold">Peso específico promedio total del suelo:</span> {{ total_average_specific_gravity }}</p>
+                <hr class="my-3">
+                
+                <p class="text-left mt-3"><span class="font-weight-bold"><u>Contacto de Referencia</u></span></p>
+                <p class="text-left"><span class="font-weight-bold">Referencia:</span> {{ obj.reference_person.title }} {{ obj.reference_person.name|title }}</p>
+                <p class="text-left"><span class="font-weight-bold">Telefono:</span> {{ obj.reference_person.dni }}</p>
+                <p class="text-left"><span class="font-weight-bold">DNI:</span> {{ obj.reference_person.phone }}</p>
+                <hr class="my-3">
+                
+                <p class="text-left mt-3"><span class="font-weight-bold"><u>Datos Extra</u></span></p>
+                <p class="text-left"><span class="font-weight-bold">Id:</span> {{ obj.id }}</p>
+                <p class="text-left"><span class="font-weight-bold">Creado:</span> {{ obj.created }}</p>
+                <p class="text-left"><span class="font-weight-bold">Actualizado:</span> {{ obj.updated }}</p>
+                <p class="text-left"><span class="font-weight-bold">Nombre del Ensayo:</span> {{ obj.name }}</p>
+                <hr class="my-3">
+                
+                <div class="mt-5">
+                    <a href="{% url 'tests_soil:proctor_m_update' obj.id %}" class="btn btn-primary btn-block" type="button">Editar Ensayo</a>
+                    <a href="{% url 'tests_soil:proctor_m_list' %}" class="btn btn-primary btn-block" type="button">Cancelar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if div and script %}
+    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto my-3">
+        <div class="card shadow">
+            {{ div | safe }}
+            {{ script | safe }}
+        </div>
+    </div>
+    {% endif %}
+</div>

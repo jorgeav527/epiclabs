@@ -1,0 +1,13 @@
+{% extends "base_pdf_file.html" %}
+
+{% block pdffile %}
+  {% if obj.user.is_client %}
+  {% include 'tests_soil/moisture_content/pdf/client.html' %}
+  {% endif %}
+  {% if obj.user.is_bach %}
+  {% include 'tests_soil/moisture_content/pdf/bach.html' %}
+  {% endif %}
+  {% if obj.user.is_student %}
+  {% include 'tests_soil/moisture_content/pdf/student.html' %}
+  {% endif %}
+{% endblock %}

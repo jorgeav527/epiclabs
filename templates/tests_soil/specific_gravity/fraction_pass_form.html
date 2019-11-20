@@ -8,14 +8,14 @@
             <div class="card-body">
                 <h4 class="h4-responsive font-weight-bold text-center ">{{ title }}</h4>
                 <hr class="my-3">
+                
                 <span class="table-add float-right">
-                    <a href="{% url 'tests_soil:proctor_m_list' %}" class="text-primary">
+                    <a href="{% url 'tests_soil:specific_gravity_list' %}" class="text-primary">
                         <i class="fas fa-times fa-1x" aria-hidden="true"></i>
                     </a>
                 </span>
-
                 <form 
-                    action="{% url 'tests_soil:density_save' obj.id %}" 
+                    action="{% url 'tests_soil:fraction_pass_save' obj.id %}" 
                     method="POST">
                     <div>
                         <div class="row">
@@ -27,11 +27,11 @@
                                 {{ form|crispy }}
                                 <hr class="my-3">
                             </div>
-                            {% endfor %}
+                        {% endfor %}
                         </div>
                         <div class="mt-5">
-                            <button class="btn btn-primary btn-block" name="submit" type="submit">Crear Ensayos</button>
-                            <a href="{% url 'tests_soil:proctor_m_list' %}" class="btn btn-primary btn-block" type="button">Cancelar</a>
+                            <button class="btn btn-primary btn-block" name="submit" type="submit">Crear o Editar Ensayos</button>
+                            <a href="{% url 'tests_soil:specific_gravity_list' %}" class="btn btn-primary btn-block" type="button">Cancelar</a>
                         </div>
                     </div>
                 </form>

@@ -1,0 +1,207 @@
+{% load qr_code %}
+
+<div class="container">
+    <header>
+      <div class="row">
+        <div class="col-xs-12 panel panel-default">  
+          
+          <div class="row">
+            <div class="col-xs-9">
+              <h4 class="text-center">
+                <strong>{{ title }}</strong> 
+              </h4>
+            </div>
+              <div class="col-xs-3">
+                <p style="margin-top: 1rem; margin-bottom: 0;" class="text-center"><strong>{{ norma_ASTM }}</strong></p>
+                <p style="margin-top: 0; margin-bottom: 1rem;" class="text-center"><strong>{{ noma_NTP }}</strong></p>
+              </div>
+          </div>
+        </div>
+      </div>   
+    </header>
+    <main>
+      <div class="row">
+        <div class="col-xs-8 panel panel-default">
+          <p class="text-left panel-heading"><strong>Datos Principales</strong></p>
+          <p  class="text-left"><strong>Empresa:</strong> {{ obj.user.clientprofile.long_name|title }}</p> 
+          <p  class="text-left"><strong>Dirección:</strong> {{ obj.user.clientprofile.direction|title }}</p> 
+          <p  class="text-left"><strong>RUC:</strong> {{ obj.user.clientprofile.ruc }}</p> 
+          <p  class="text-left"><strong>Obra:</strong> {{ obj.construction.name|title }}</p> 
+          <p  class="text-left"><strong>Ubicación:</strong> {{ obj.construction.location|title }}</p> 
+          <p class="text-left"><strong>Muestreo:</strong> {{ obj.created|date:"d/m/Y P" }}</p>
+          {% if obj.created|date:"d/m/Y" != obj.updated|date:"d/m/Y" %}
+          <p class="text-left"><strong>Corrección del Ensayo:</strong> {{ obj.updated|default_if_none:"Ninguna Corrección"|date:"d/m/Y P" }}</p>
+          {% endif %}
+          <p class="text-left"><strong>Emsion de Certificado:</strong> {% now "d/m/Y P" %}</p>
+          <p class="text-left"><strong>Persona de Referencia:</strong> {{ obj.reference_person.title }} {{ obj.reference_person.name|title }}</p>          
+          <p class="text-left"><strong>Promedio de fracción de suelo pasante en malla Nro. 4:</strong> {{ mean_material_pass }}%</p>
+          <p class="text-left"><strong>Gravedad específica de solidos de suelo de fracción que pasa malla Nro. 4:</strong> {{ mean_grav_sp }}</p>
+          <p class="text-left"><strong>Promedio de fracción de suelo retenida en malla Nro. 4:</strong> {{ mean_material_retained }}%</p>
+          <p class="text-left"><strong>Peso específico aparente de fracción retenida en malla Nro. 4:</strong> {{ mean_spe_mass_wei_app }}</p>
+          <p class="text-left"><strong>Peso específico promedio total del suelo:</strong> {{ total_average_specific_gravity }}</p>
+        </div>
+        <div style="margin-left: 4rem;" class="col-xs-3 panel panel-default">
+          <p class="text-left panel-heading"><strong>Datos del Ensayo</strong></p>
+          <p class="text-left"><strong>ID:</strong> {{ obj.id }}</p>
+          <p class="text-left"><strong>Codigo QR:</strong></p>
+          <p class="text-center">{% qr_from_text obj.code size=4 image_format="png" %}</p>
+          <p class="text-left"><strong>Material:</strong> {{ obj.material }}</p>
+          <p class="text-left"><strong>Cantera:</strong> {{ obj.quarry }}</p>
+        </div>
+      </div>    
+      <div class="row">
+        <div class="col-xs-12">
+            <div class="panel panel-default">
+                <!-- Default panel contents -->
+                <div class="panel-heading"><strong>Resultados del Ensayo:</strong> Fracción de suelo pasante en malla Nro. 4:</div>
+                <table class="table--flip table-bordered">
+                  <thead class="">
+                      <tr>
+                          <th class="text-center">Secuencia</th>
+                          <th class="text-center">Temperatura de ensayo (°c)</th>
+                          <th class="text-center">Densidad del agua a la temperatura de ensayo (g/mL)</th>
+                          <th class="text-center">Volumen promedio calibrado del picnómetro seco (mL)</th>
+                          <th class="text-center">Masa promedio calibrada del picnómetro seco (g)</th>
+                          <th class="text-center">Masa del picnómetro y agua a la temperatura de ensayo (g)</th>
+                          <th class="text-center">Masa de la muestra de sólidos del suelo a la temperatura de ensayo (g)</th>
+                          <th class="text-center">Masa del picnómetro, agua y sólidos a la temperatura de ensayo (g)</th>
+                          <th class="text-center">Masa del recipiente para secado (g)</th>
+                          <th class="text-center">Masa del recipiente para secado + suelo seco (g)</th>
+                          <th class="text-center">Masa de los solidos secados al horno </th>
+                          <th class="text-center">Gravedad específica de los sólidos de suelo a temperatura de ensayo </th>
+                          <th class="text-center">Coeficiente de temperatura del agua a 20°c </th>
+                          <th class="text-center">Gravedad específica de los sólidos de suelo a 20°c </th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      {% for fraction_pass in qs_fraction_pass %}
+                      <tr>                                         
+                          <th class="text-center" scope="row">{{ forloop.counter }}</th>
+                          <td class="text-center">{{ fraction_pass.temperature }}</td>
+                          <td class="text-center">{{ fraction_pass.water_density }}</td>
+                          <td class="text-center">{{ fraction_pass.pycnometer_volume }}</td>
+                          <td class="text-center">{{ fraction_pass.pycnometer_mass }}</td>
+                          <td class="text-center">{{ fraction_pass.mass_pycnometer_water }}</td>
+                          <td class="text-center">{{ fraction_pass.sample_mass }}</td>
+                          <td class="text-center">{{ fraction_pass.mass_pyc_w_sample }}</td>
+                          <td class="text-center">{{ fraction_pass.mass_bowl }}</td>
+                          <td class="text-center">{{ fraction_pass.mass_bowl_sample }}</td>
+                          <td class="text-center">{{ fraction_pass.mass_dry_sample }}</td>
+                          <td class="text-center">{{ fraction_pass.gravity_specific }}</td>
+                          <td class="text-center">{{ fraction_pass.coefficient_water }}</td>
+                          <td class="text-center">{{ fraction_pass.gravity_specific_real }}</td>
+                      </tr>
+                      {% endfor %}
+                  </tbody>
+              </table>
+              <div class="panel-heading"><strong>Resultados del Ensayo:</strong> Fracción de suelo retenida en malla Nro. 4:</div>
+              <table class="table--flip table-bordered">
+                  <thead class="">
+                      <tr>
+                          <th class="text-center">Secuencia</th>
+                          <th class="text-center">Temperatura de ensayo entre 23±1.7 (°c)</th>
+                          <th class="text-center">Peso de la muestra saturada con superficie seca en el aire (g/mL)</th>
+                          <th class="text-center">Peso de la canastilla dentro del agua  (mL)</th>
+                          <th class="text-center">Peso de la muestra saturada superficialmente seca + peso canastilla en agua (g)</th>
+                          <th class="text-center">Peso del recipiente para secado (g)</th>
+                          <th class="text-center">Peso del recipiente + muestra seca al horno (g)</th>
+                          <th class="text-center">Peso de la muestra seca al horno (g)</th>
+                          <th class="text-center">Peso de la muestra saturada dentro del agua (g)</th>
+                          <th class="text-center">Gravedad específica de masa (g)</th>
+                          <th class="text-center">Gravedad específica de masa SSS </th>
+                          <th class="text-center">Gravedad específica aparente </th>
+                          <th class="text-center">Coeficiente de temperatura del agua a 20°c </th>
+                          <th class="text-center">Peso específico de masa </th>
+                          <th class="text-center">Peso específico de masa SSS </th>
+                          <th class="text-center">Peso específico aparente </th>
+                          <th class="text-center">Absorción </th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      {% for fraction_retained in qs_fraction_retained %}
+                      <tr>                                         
+                          <th class="text-center" scope="row">{{ forloop.counter }}</th>
+                          <td class="text-center">{{ fraction_retained.temperature_23 }}</td>
+                          <td class="text-center">{{ fraction_retained.saturated_sample }}</td>
+                          <td class="text-center">{{ fraction_retained.w_basket_water }}</td>
+                          <td class="text-center">{{ fraction_retained.w_basket_water_sample }}</td>
+                          <td class="text-center">{{ fraction_retained.w_bowl }}</td>
+                          <td class="text-center">{{ fraction_retained.w_bowl_sample }}</td>
+                          <td class="text-center">{{ fraction_retained.w_sample_dry }}</td>
+                          <td class="text-center">{{ fraction_retained.w_sample_sat_water }}</td>
+                          <td class="text-center">{{ fraction_retained.specific_grav_mass }}</td>
+                          <td class="text-center">{{ fraction_retained.specific_grav_mass_sss }}</td>
+                          <td class="text-center">{{ fraction_retained.apparent_spe_gravity }}</td>
+                          <td class="text-center">{{ fraction_retained.coefficient_water }}</td>
+                          <td class="text-center">{{ fraction_retained.specific_mass_weight }}</td>
+                          <td class="text-center">{{ fraction_retained.specific_mass_weight_sss }}</td>
+                          <td class="text-center">{{ fraction_retained.specific_mass_weight_app }}</td>
+                          <td class="text-center">{{ fraction_retained.absorption }}</td>
+                      </tr>
+                      {% endfor %}
+                  </tbody>
+              </table>
+ 
+            </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6">
+          <table class="table-bordered">
+            <tbody>
+              <tr>
+                <td>
+                  <p style="margin-top: 7rem; margin-bottom: 7rem;" class="text-muted text-center">UNIVERSIDAD CATÓLICA DE SANTA MARÍA</p>
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <th>
+                  <p  class="text-center ">{{ tecnic.title }}. {{ tecnic.user.first_name }} {{ tecnic.user.last_name }}</p>
+                  <p  class="text-center ">LABORATORIO DE SUELOS Y CONCRETO</p>
+                  <p  class="text-center ">EPIC – FAICA - CAMPUS PARQUE INDUSTRIAL</p>
+                </th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <div class="col-xs-6">
+            <table class="table-bordered">
+              <tbody>
+                <tr>
+                  <td>
+                    <p style="margin-top: 7rem; margin-bottom: 7rem;" class="text-muted text-center">UNIVERSIDAD CATÓLICA DE SANTA MARÍA</p>
+                  </td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>
+                    <p  class="text-center ">{{ coordinator.title }}. {{ coordinator.user.first_name }} {{ coordinator.user.last_name }}</p>
+                    <p  class="text-center ">LABORATORIO DE SUELOS Y CONCRETO</p>
+                    <p  class="text-center ">EPIC – FAICA - CAMPUS PARQUE INDUSTRIAL</p>
+                  </th>
+                </tr>
+              </tfoot>
+            </table>
+        </div>
+        </div>
+    </main>
+    <footer>
+      <div class="row" style="margin-top: 5rem;">
+        <div class="col-xs-12 panel panel-default">
+          <div class="row">
+            <div class="col-xs-6">
+              <p  class="text-left"><strong>Dirección:</strong> Umacollo yanahuara - 552545 58</p>
+              <p  class="text-left"><strong>Telefono:</strong> 958254689</p>
+            </div>
+            <div class="col-xs-6">
+              <p  class="text-left"><strong>Link: </strong><a href="http://www.google.com.pe">www.epiclabs.ucsm.com</a></p>
+            </div>
+          </div>
+          <div class="text-center panel-footer"><small>Laboratorio de Ingenieria Civil, Universidad Catolica de Santa Maria, EPICLABS &#169; 2019</small></div>
+        </div>
+      </div>   
+    </footer>
+</div>

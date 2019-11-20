@@ -14,6 +14,7 @@ class LiquidAdmin(admin.TabularInline):
         "water_weight", "material_weight", "moisture",
     )
     extra = 0
+    can_delete = False
 
 
 class PlasticAdmin(admin.TabularInline):
@@ -27,6 +28,7 @@ class PlasticAdmin(admin.TabularInline):
         "water_weight", "material_weight", "moisture",
     )
     extra = 0
+    can_delete = False
 
 
 class LimitAdmin(admin.ModelAdmin):
@@ -60,6 +62,7 @@ class EquivAdmin(admin.TabularInline):
         "max_high_fine", "max_high_sand", "equiv_sand", "equivalent",
     )
     extra = 0
+    can_delete = False
 
 
 class EquivalentAdmin(admin.ModelAdmin):
@@ -83,6 +86,7 @@ class DensityAdmin(admin.TabularInline):
         "bowl", "bowl_weight", "wet_weight", "dry_weight", "water_weight", "material_weight", "moisture", "dry_density",
     )
     extra = 0
+    can_delete = False
 
 
 class SaturationAdmin(admin.TabularInline):
@@ -96,6 +100,7 @@ class SaturationAdmin(admin.TabularInline):
         "g_frac_fina_gruesa", "g_sp_global",
     )
     extra = 0
+    can_delete = False
 
 
 class CorrectionAdmin(admin.TabularInline):
@@ -109,6 +114,7 @@ class CorrectionAdmin(admin.TabularInline):
         "water_weight", "material_weight", "moisture",
     )
     extra = 0
+    can_delete = False
 
 
 class ProctorMAdmin(admin.ModelAdmin):
@@ -120,3 +126,72 @@ class ProctorMAdmin(admin.ModelAdmin):
 
 admin.site.register(ProctorM, ProctorMAdmin)
 
+
+class MoistureMaterialAdmin(admin.TabularInline):
+    model = MoistureMaterial
+    fields = (
+        "material", "bowl_weight", "wet_weight", "dry_weight", 
+        "water_weight", "material_weight", "moisture",
+    )
+    readonly_fields = (
+        "material", "bowl_weight", "wet_weight", "dry_weight", 
+        "water_weight", "material_weight", "moisture",
+    )
+    extra = 0
+    can_delete = False
+
+
+class MoistureContentAdmin(admin.ModelAdmin):
+    list_display = [
+        "user", "material", "quarry", "code", "sampling_date", "done_date", "dilate", 
+        "reference_person", "construction", "created", "updated",
+    ]
+    inlines = [MoistureMaterialAdmin,]
+
+admin.site.register(MoistureContent, MoistureContentAdmin)
+
+
+class FractionPassAddmin(admin.TabularInline):
+    model = FractionPass
+    fields = (
+        "material_pass", "temperature", "water_density", "pycnometer_volume",  
+        "pycnometer_mass", "mass_pycnometer_water", "sample_mass", "mass_pyc_w_sample",
+        "mass_bowl", "mass_bowl_sample", "mass_dry_sample", "gravity_specific",
+        "coefficient_water", "gravity_specific_real",
+    )
+    readonly_fields = (
+        "material_pass", "temperature", "water_density", "pycnometer_volume",  
+        "pycnometer_mass", "mass_pycnometer_water", "sample_mass", "mass_pyc_w_sample",
+        "mass_bowl", "mass_bowl_sample", "mass_dry_sample", "gravity_specific",
+        "coefficient_water", "gravity_specific_real",
+    )
+    extra = 0
+    can_delete = False
+
+
+class FractionRetainedAddmin(admin.TabularInline):
+    model = FractionRetained
+    fields = (
+        "material_retained", "temperature_23", "saturated_sample", "w_basket_water",  
+        "w_basket_water_sample", "w_bowl", "w_bowl_sample", "w_sample_dry",
+        "w_sample_sat_water", "specific_grav_mass", "specific_grav_mass_sss", "apparent_spe_gravity",
+        "coefficient_water", "specific_mass_weight", "specific_mass_weight_sss", "specific_mass_weight_app", "absorption",
+    )
+    readonly_fields = (
+        "material_retained", "temperature_23", "saturated_sample", "w_basket_water",  
+        "w_basket_water_sample", "w_bowl", "w_bowl_sample", "w_sample_dry",
+        "w_sample_sat_water", "specific_grav_mass", "specific_grav_mass_sss", "apparent_spe_gravity",
+        "coefficient_water", "specific_mass_weight", "specific_mass_weight_sss", "specific_mass_weight_app", "absorption",
+    )
+    extra = 0
+    can_delete = False
+
+
+class SpecificGravityAdmin(admin.ModelAdmin):
+    list_display = [
+        "user", "material", "quarry", "code", "sampling_date", "done_date", "dilate", 
+        "reference_person", "construction", "created", "updated",
+    ]
+    inlines = [FractionPassAddmin, FractionRetainedAddmin]
+
+admin.site.register(SpecificGravity, SpecificGravityAdmin)

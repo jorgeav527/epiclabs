@@ -31,6 +31,11 @@ https://stackoverflow.com/questions/49712889/how-to-create-a-package-of-models-i
 DropDown choice field
 https://simpleisbetterthancomplex.com/tutorial/2018/01/29/how-to-implement-dependent-or-chained-dropdown-list-with-django.html
 
+
+make tabular data responsive
+https://dbushell.com/2016/03/04/css-only-responsive-tables/
+https://speckyboy.com/responsive-html-table-techniques/
+
 django = "==2.2.5" 
 python-decouple = "==3.1" # for .env files
 psycopg2-binary = "==2.8.3" # for postgres database

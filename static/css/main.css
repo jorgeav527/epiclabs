@@ -10,3 +10,33 @@ body {
   color: #4CAF50;
   float: right;
 }
+
+.table--flip {
+  display: flex;
+  overflow: auto;
+}
+
+.table--flip thead {
+  display: flex;
+  flex-shrink: 0;
+  min-width: min-content;
+}
+
+.table--flip tbody {
+  display: flex;
+  position: relative;
+}
+
+.table--flip tr {
+  display: flex;
+  flex-direction: column;
+  min-width: min-content;
+  flex-shrink: 0;
+}
+
+.table--flip td,
+.table--flip th {
+  display: block;
+}
+
+

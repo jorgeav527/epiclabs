@@ -66,4 +66,11 @@ urlpatterns = [
     # Fraction Pass and Retained CRUD
     path('fraction-pass/save/<int:id>/', tests_soil_views.fraction_pass_save, name="fraction_pass_save"),
     path('fraction-retained/save/<int:id>/', tests_soil_views.fraction_retained_save, name="fraction_retained_save"),
+    # Granulometric Global CRUD and PDF
+    path('granulometric-global/', tests_soil_views.granulometric_global_list, name="granulometric_global_list"),
+    path('granulometric-global/create/', tests_soil_views.granulometric_global_create, name="granulometric_global_create"),
+    path('granulometric-global/<int:id>/update/', tests_soil_views.granulometric_global_update, name="granulometric_global_update"),
+    path('granulometric-global/<int:id>/detail/', tests_soil_views.granulometric_global_detail, name="granulometric_global_detail"),
+    path('granulometric-global/<int:id>/delete/', tests_soil_views.granulometric_global_delete, name="granulometric_global_delete"),
+    path('granulometric-global/<int:id>/pdf/', tests_soil_views.granulometric_global_pdf, name="granulometric_global_pdf"),
 ]

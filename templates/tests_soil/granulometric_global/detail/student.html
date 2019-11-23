@@ -1,0 +1,137 @@
+<div class="row">
+    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto my-3">
+        <div class="card shadow">
+            <div class="card-body">
+                <!-- Section heading -->
+                <h4 class="h4-responsive font-weight-bold text-center ">{{ title }}</h4>
+                <p class="dark-grey-text w-responsive text-center mx-auto">{{ norma_ASTM }} / {{ noma_NTP }}</p>
+                <hr class="my-3">
+
+                <!-- Section description -->
+                <p class="text-left mt-3"><span class="font-weight-bold"><u>Datos del Usuario</u></span></p>
+                <p class="text-left"><span class="font-weight-bold">Usuario:</span> {{ obj.user.username }}</p>
+                <p class="text-left"><span class="font-weight-bold">Nombre:</span> {{ obj.user.first_name|title }}</p>
+                <p class="text-left"><span class="font-weight-bold">Apellidos:</span> {{ obj.user.last_name|title }}</p>
+                <p class="text-left"><span class="font-weight-bold">DNI:</span> {{ obj.user.studentprofile.dni }}</p>
+                <p class="text-left"><span class="font-weight-bold">Codigo:</span> {{ obj.user.studentprofile.codigo }}</p>
+                <hr class="my-3">
+
+                <p class="text-left mt-3"><span class="font-weight-bold"><u>Datos del Ensayo Ingresados</u></span></p>
+                <p class="text-left"><span class="font-weight-bold">Fecha de Extracción:</span> {{ obj.extraction_data|date:"d/m/Y" }}</p>
+                <p class="text-left"><span class="font-weight-bold">Fecha del Ensayo:</span> {{ obj.done_data|date:"d/m/Y" }}</p>
+                <p class="text-left"><span class="font-weight-bold">Calicata:</span> {{ obj.pit }}</p>
+                <p class="text-left"><span class="font-weight-bold">Estrato:</span> {{ obj.layer }}</p>
+                <p class="text-left"><span class="font-weight-bold">Peso Retenido en las Mallas:</span></p>
+                <table class="table table-sm table-responsive table-bordered text-center">
+                    <thead class="primary-color-dark white-text">
+                        <tr>
+                            <th>Tamizes</th>
+                            <th>Tamiz 1 1/2"</th>
+                            <th>Tamiz 1"</th>
+                            <th>Tamiz 3/4"</th>
+                            <th>Tamiz 1/2"</th>
+                            <th>Tamiz 3/8"</th>
+                            <th>Tamiz Nº 4</th>
+                            <th>Tamiz Nº 10</th>
+                            <th>Tamiz Nº 20</th>
+                            <th>Tamiz Nº 40</th>
+                            <th>Tamiz Nº 60</th>
+                            <th>Tamiz Nº 100</th>
+                            <th>Tamiz Nº 200</th>
+                            <th>Tamiz de Fondo</th>
+                            <th>Suma (gramos)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">Peso Retenido</th>
+                            {% for retained in retained_weight %}
+                            <td>{{ retained }}</td>
+                            {% endfor %}
+                            <td>{{ total_amount }}</td>
+                        </tr>
+                    </tbody>
+                </table>                
+                <hr class="my-3">
+
+                <p class="text-left mt-3"><span class="font-weight-bold"><u>Resultados del Ensayo</u></span></p>
+                <table class="table--flip table table-sm table-responsive table-bordered text-center">
+                    <thead class="primary-color-dark white-text">
+                        <tr>
+                            <th>Tamizes</th>
+                            <th>Tamiz 1 1/2"</th>
+                            <th>Tamiz 1"</th>
+                            <th>Tamiz 3/4"</th>
+                            <th>Tamiz 1/2"</th>
+                            <th>Tamiz 3/8"</th>
+                            <th>Tamiz Nº 4</th>
+                            <th>Tamiz Nº 10</th>
+                            <th>Tamiz Nº 20</th>
+                            <th>Tamiz Nº 40</th>
+                            <th>Tamiz Nº 60</th>
+                            <th>Tamiz Nº 100</th>
+                            <th>Tamiz Nº 200</th>
+                            <th>Tamiz de Fondo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">Peso Retenido (g)</th>
+                            {% for retained in retained_weight %}
+                            <td>{{ retained }}</td>
+                            {% endfor %}
+                        </tr>
+                        <tr>
+                            <th scope="row">Porcentaje Retenido (%)</th>
+                            {% for per_ret in percentage_retained %}
+                            <td>{{ per_ret }}</td>
+                            {% endfor %}
+                        </tr>
+                        <tr>
+                            <th scope="row">Retenido Acumulado (%)</th>
+                            {% for ret_acc in retained_accumulated %}
+                            <td>{{ ret_acc }}</td>
+                            {% endfor %}
+                        </tr>
+                        <tr>
+                            <th scope="row">Porcentaje Pasante (%)</th>
+                            {% for pass_per in passing_percentage %}
+                            <td>{{ pass_per }}</td>
+                            {% endfor %}
+                        </tr>
+                    </tbody>
+                </table>                
+                <p class="text-left"><span class="font-weight-bold">D60:</span> {{ decil_60 }}mm</p>
+                <p class="text-left"><span class="font-weight-bold">D30:</span> {{ decil_30 }}mm</p>
+                <p class="text-left"><span class="font-weight-bold">D10:</span> {{ decil_10 }}mm</p>
+                <p class="text-left"><span class="font-weight-bold">CU:</span> {{ CU }}</p>
+                <p class="text-left"><span class="font-weight-bold">CC:</span> {{ CC }}</p>
+                <p class="text-left"><span class="font-weight-bold">Gravas:</span> {{ gravas }}%</p>
+                <p class="text-left"><span class="font-weight-bold">Finos:</span> {{ finos }}%</p>
+                <p class="text-left"><span class="font-weight-bold">Arenas:</span> {{ arenas }}%</p>
+                <p class="text-left"><span class="font-weight-bold">Total:</span> {{ total_amount }} g</p>
+                <hr class="my-3">
+                                
+                <p class="text-left mt-3"><span class="font-weight-bold"><u>Datos Extra</u></span></p>
+                <p class="text-left"><span class="font-weight-bold">Id:</span> {{ obj.id }}</p>
+                <p class="text-left"><span class="font-weight-bold">Creado:</span> {{ obj.created }}</p>
+                <p class="text-left"><span class="font-weight-bold">Actualizado:</span> {{ obj.updated }}</p>
+                <p class="text-left"><span class="font-weight-bold">Nombre del Ensayo:</span> {{ obj.name }}</p>
+                <hr class="my-3">
+                
+                <div class="mt-5">
+                    <a href="{% url 'tests_concrete:fine_material_update' obj.id %}" class="btn btn-primary btn-block" type="button">Editar Ensayo</a>
+                    <a href="{% url 'tests_concrete:fine_material_list' %}" class="btn btn-primary btn-block" type="button">Cancelar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if div and script %}
+    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto my-3">
+        <div class="card shadow">
+            {{ div | safe }}
+            {{ script | safe }}
+        </div>
+    </div>
+    {% endif %}
+</div>

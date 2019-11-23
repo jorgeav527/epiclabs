@@ -195,3 +195,14 @@ class SpecificGravityAdmin(admin.ModelAdmin):
     inlines = [FractionPassAddmin, FractionRetainedAddmin]
 
 admin.site.register(SpecificGravity, SpecificGravityAdmin)
+
+
+class GranulometricGlobalAdmin(admin.ModelAdmin):
+    list_display = [
+        "user", "quarry", "layer", "code", "sampling_date", "done_date", "dilate", 
+        "tamiz_1_1o2", "tamiz_1", "tamiz_3o4", "tamiz_1o2", "tamiz_3o8", "tamiz_4", "tamiz_10", "tamiz_20", "tamiz_40", "tamiz_60", "tamiz_100", "tamiz_200", "tamiz_fondo",
+        "reference_person", "construction", "created", "updated",
+    ]
+    # inlines = []
+
+admin.site.register(GranulometricGlobal, GranulometricGlobalAdmin)

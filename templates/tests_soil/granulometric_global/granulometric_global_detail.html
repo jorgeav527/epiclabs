@@ -1,0 +1,19 @@
+{% extends 'tests_soil/base_tests_soil.html' %}
+
+{% block soil %}
+<!-- Template for a Client -->
+{% if obj.user.is_client %}
+{% include 'tests_soil/granulometric_global/detail/client.html' %}
+{% endif %}
+
+<!-- Template for a Bach -->
+{% if obj.user.is_bach %}
+{% include 'tests_soil/granulometric_global/detail/bach.html' %}
+{% endif %}
+
+<!-- Template for a Student -->
+{% if obj.user.is_student %}
+{% include 'tests_soil/granulometric_global/detail/student.html' %}
+{% endif %}
+                                
+{% endblock %}

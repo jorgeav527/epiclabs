@@ -374,5 +374,3 @@ def proctor_m_pdf(request, id):
 
     HTML(string=html).write_pdf(response)
     return response
-
-

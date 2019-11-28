@@ -1,0 +1,97 @@
+<div class="row">
+    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto my-3">
+        <div class="card shadow">
+            <div class="card-body">
+                <!-- Section heading -->
+                <h4 class="h4-responsive font-weight-bold text-center ">{{ title }}</h4>
+                <p class="dark-grey-text w-responsive text-center mx-auto">{{ norma_ASTM }} / {{ noma_NTP }}</p>
+                <hr class="my-3">
+
+                <!-- Section description -->
+                <p class="text-left mt-3"><span class="font-weight-bold"><u>Datos del Usuario</u></span></p>
+                <p class="text-left"><span class="font-weight-bold">Usuario:</span> {{ obj.user.username }}</p>
+                <p class="text-left"><span class="font-weight-bold">Empresa:</span> {{ obj.user.clientprofile.long_name|title }}</p>
+                <p class="text-left"><span class="font-weight-bold">Dirección de la Empresa:</span> {{ obj.user.clientprofile.direction|title }}</p>
+                <p class="text-left"><span class="font-weight-bold">RUC:</span> {{ obj.user.clientprofile.ruc }}</p>
+                <p class="text-left"><span class="font-weight-bold">Telefono:</span> {{ obj.user.clientprofile.phone }}</p>
+                <hr class="my-3">
+                
+                <p class="text-left mt-3"><span class="font-weight-bold"><u>Datos de la Obra</u></span></p>
+                <p class="text-left"><span class="font-weight-bold">Obra:</span> {{ obj.construction.name|title }}</p>
+                <p class="text-left"><span class="font-weight-bold">Ubicación:</span> {{ obj.construction.location|title }}</p>
+                <p class="text-left"><span class="font-weight-bold">Comienzo de la Obra:</span> {{ obj.construction.start_day }}</p>
+                <hr class="my-3">
+                
+                <p class="text-left mt-3"><span class="font-weight-bold"><u>Datos del Ensayo Ingresados</u></span></p>
+                <p class="text-left"><span class="font-weight-bold">Fecha de Muestreo:</span> {{ obj.sampling_date|date:"d/m/Y" }}</p>
+                <p class="text-left"><span class="font-weight-bold">Fecha del Ensayo:</span> {{ obj.done_date|date:"d/m/Y" }}</p>
+                <p class="text-left"><span class="font-weight-bold">Muestra:</span> {{ obj.sampling_name }}</p>
+                <p class="text-left"><span class="font-weight-bold">Sector o Progresiva:</span> {{ obj.progressive_sector }}</p>
+                <p class="text-left"><span class="font-weight-bold">Tramo o Nivel:</span> {{ obj.section_level }}</p>
+                <p class="text-left"><span class="font-weight-bold">Elemento o Lado:</span> {{ obj.element_side }}</p>
+                <p class="text-left"><span class="font-weight-bold">Capa:</span> {{ obj.layer }}</p>
+                <p class="text-left"><span class="font-weight-bold">Peso unit. Seco máx.:</span> {{ obj.weight_dry_max }}</p>
+                <p class="text-left"><span class="font-weight-bold">Ópt. Cont. de humedad:</span> {{ obj.opt_moisture }}</p>
+                <hr class="my-3">
+                
+                <p class="text-left mt-3"><span class="font-weight-bold"><u>Resultados del Ensayo</u></span></p>
+                <p class="text-left"><span class="font-weight-bold">Densidad Humeda:</span></p>
+                <p class="text-left"><span class="font-weight-bold">Peso del frasco + arena:</span> {{ humid.bowl_weight_sand }} g</p>
+                <p class="text-left"><span class="font-weight-bold">Peso del frasco + arena que queda:</span> {{ humid.bowl_weight_remaining_sand }} g</p>
+                <p class="text-left"><span class="font-weight-bold">Peso de arena empleada:</span> {{ humid.weight_sand }} g</p>
+                <p class="text-left"><span class="font-weight-bold">Peso de arena en el cono y placa:</span> {{ humid.weight_sand_cone_plate }} g</p>
+                <p class="text-left"><span class="font-weight-bold">Peso de arena en la excavación:</span> {{ humid.weight_sand_excavation }} g</p>
+                <p class="text-left"><span class="font-weight-bold">Densidad de la arena:</span> {{ humid.sand_density }} g/cm³</p>
+                <p class="text-left"><span class="font-weight-bold">Volumen del material extraído:</span> {{ humid.volume_material_extracted }} cm³</p>
+                <p class="text-left"><span class="font-weight-bold">Peso muestra total + recipiente:</span> {{ humid.sample_weight_container }} g</p>
+                <p class="text-left"><span class="font-weight-bold">Peso de recipiente:</span> {{ humid.container_weight }} g</p>
+                <p class="text-left"><span class="font-weight-bold">Peso del muestra total húmeda:</span> {{ humid.wet_sample_weight }} g</p>
+                <p class="text-left"><span class="font-weight-bold">Densidad de la muestra total húmeda:</span> {{ humid.density_wet_sample }} g/cm³</p>
+                <p class="text-left"><span class="font-weight-bold">Contenido de Humedad:</span></p>
+                <p class="text-left"><span class="font-weight-bold">Fracción de muestra:</span> {{ moisture.sample_fraction_pass }}</p>
+                <p class="text-left"><span class="font-weight-bold">Peso de recipiente:</span> {{ moisture.bowl_weight }} g</p>
+                <p class="text-left"><span class="font-weight-bold">Peso de muestra húmeda + recipiente:</span> {{ moisture.wet_sample_weight_bowl }} g</p>
+                <p class="text-left"><span class="font-weight-bold">Peso de muestra seca + recipiente:</span> {{ moisture.dry_sample_weight_bowl }} g</p>
+                <p class="text-left"><span class="font-weight-bold">Peso de agua:</span> {{ moisture.weight_water }} g</p>
+                <p class="text-left"><span class="font-weight-bold">Peso de la muestra seca:</span> {{ moisture.dry_sample_weight }} g</p>
+                <p class="text-left"><span class="font-weight-bold">Contenido de humedad de la muestra:</span> {{ moisture.sample_moisture }} %</p>
+                <p class="text-left"><span class="font-weight-bold">Contenido de Humedad - Carbono 14:</span></p>
+                <p class="text-left"><span class="font-weight-bold">Contenido de humedad de fracción gruesa+fina (% del peso húmedo):</span> {{ carbure.wet_weight_percentage }} %</p>
+                <p class="text-left"><span class="font-weight-bold">Contenido de humedad de fracción gruesa+fina (% del peso seco):</span> {{ carbure.dry_weight_percentage }} %</p>
+                <p class="text-left"><span class="font-weight-bold">Correctión del Peso Unitario y Contenido de Agua:</span></p>
+                <p class="text-left"><span class="font-weight-bold">Peso de fracción extradimensionada húmeda:</span> {{ correction.wet_fraction_weight }} g</p>
+                <p class="text-left"><span class="font-weight-bold">P.E Ap. Frac. Extrad. A 20°c:</span> {{ correction.p_e_ap_frac_extrad }} g/cm³</p>
+                <p class="text-left"><span class="font-weight-bold">% Abs. Frac. Extrad.:</span> {{ correction.per_abs_tails_extrad }} %</p>
+                <p class="text-left"><span class="font-weight-bold">Peso de la fracción extrad. seca:</span> {{ correction.weight_fraction_extrad }} g</p>
+                <p class="text-left"><span class="font-weight-bold">Peso de la fracción gruesa+fina seca:</span> {{ ans_01 }} g</p>
+                <p class="text-left"><span class="font-weight-bold">% de fracción extradimensionada:</span> {{ ans_02 }} %</p>
+                <p class="text-left"><span class="font-weight-bold">% de fracción gruesa+fina:</span> {{ ans_03 }} %</p>
+                <p class="text-left"><span class="font-weight-bold">% total de fracción gruesa + fina + fracción extra dim.:</span> {{ ans_04 }}%</p>
+                <p class="text-left"><span class="font-weight-bold">Contenido de humedad de muestra total:</span> {{ ans_05 }}%</p>
+                <p class="text-left"><span class="font-weight-bold">Densidad seca de la fracción gruesa+fina+extrad.:</span> {{ ans_06 }} g/cm³</p>
+                <p class="text-left"><span class="font-weight-bold">Peso de la muestra total seca:</span> {{ ans_07 }} g</p>
+                <p class="text-left"><span class="font-weight-bold">Densidad seca de la fracción gruesa+fina:</span> {{ ans_08 }} g/cm³</p>
+                <p class="text-left"><span class="font-weight-bold">Porcentaje de compactación:</span> {{ ans_09 }} %</p>
+                <hr class="my-3">
+                
+                <p class="text-left mt-3"><span class="font-weight-bold"><u>Contacto de Referencia</u></span></p>
+                <p class="text-left"><span class="font-weight-bold">Referencia:</span> {{ obj.reference_person.title }} {{ obj.reference_person.name|title }}</p>
+                <p class="text-left"><span class="font-weight-bold">Telefono:</span> {{ obj.reference_person.dni }}</p>
+                <p class="text-left"><span class="font-weight-bold">DNI:</span> {{ obj.reference_person.phone }}</p>
+                <hr class="my-3">
+                
+                <p class="text-left mt-3"><span class="font-weight-bold"><u>Datos Extra</u></span></p>
+                <p class="text-left"><span class="font-weight-bold">Id:</span> {{ obj.id }}</p>
+                <p class="text-left"><span class="font-weight-bold">Creado:</span> {{ obj.created }}</p>
+                <p class="text-left"><span class="font-weight-bold">Actualizado:</span> {{ obj.updated }}</p>
+                <p class="text-left"><span class="font-weight-bold">Nombre del Ensayo:</span> {{ obj.name }}</p>
+                <hr class="my-3">
+                
+                <div class="mt-5">
+                    <a href="{% url 'tests_soil:sand_cone_update' obj.id %}" class="btn btn-primary btn-block" type="button">Editar Ensayo</a>
+                    <a href="{% url 'tests_soil:sand_cone_list' %}" class="btn btn-primary btn-block" type="button">Cancelar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

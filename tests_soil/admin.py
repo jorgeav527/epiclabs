@@ -203,6 +203,68 @@ class GranulometricGlobalAdmin(admin.ModelAdmin):
         "tamiz_1_1o2", "tamiz_1", "tamiz_3o4", "tamiz_1o2", "tamiz_3o8", "tamiz_4", "tamiz_10", "tamiz_20", "tamiz_40", "tamiz_60", "tamiz_100", "tamiz_200", "tamiz_fondo",
         "reference_person", "construction", "created", "updated",
     ]
-    # inlines = []
 
 admin.site.register(GranulometricGlobal, GranulometricGlobalAdmin)
+
+
+class HumidDensityAdmin(admin.TabularInline):
+    model = HumidDensity
+    fields = (
+        'bowl_weight_sand', 'bowl_weight_remaining_sand', 'weight_sand', 'weight_sand_cone_plate', 'weight_sand_excavation',
+        'sand_density', 'volume_material_extracted', 'sample_weight_container', 'container_weight', 'wet_sample_weight', 'density_wet_sample',
+    )
+    readonly_fields = (
+        'bowl_weight_sand', 'bowl_weight_remaining_sand', 'weight_sand', 'weight_sand_cone_plate', 'weight_sand_excavation',
+        'sand_density', 'volume_material_extracted', 'sample_weight_container', 'container_weight', 'wet_sample_weight', 'density_wet_sample',
+    )
+    extra = 0
+    can_delete = False
+
+
+class ContentMoistureAdmin(admin.TabularInline):
+    model = ContentMoisture
+    fields = (
+        'sample_fraction_pass', 'bowl_weight', 'wet_sample_weight_bowl', 'dry_sample_weight_bowl',
+        'weight_water','dry_sample_weight', 'sample_moisture',
+    )
+    readonly_fields = (
+        'sample_fraction_pass', 'bowl_weight', 'wet_sample_weight_bowl', 'dry_sample_weight_bowl',
+        'weight_water','dry_sample_weight', 'sample_moisture',
+    )
+    extra = 0
+    can_delete = False
+
+
+class ContentMoistureCarbureAdmin(admin.TabularInline):
+    model = ContentMoistureCarbure
+    fields = (
+        'wet_weight_percentage', 'dry_weight_percentage',
+    )
+    readonly_fields = (
+        'wet_weight_percentage', 'dry_weight_percentage',
+    )
+    extra = 0
+    can_delete = False
+
+
+class CorrectionSandConeAdmin(admin.TabularInline):
+    model = CorrectionSandCone
+    fields = (
+        'wet_fraction_weight', 'p_e_ap_frac_extrad', 'per_abs_tails_extrad', 'weight_fraction_extrad',
+    )
+    readonly_fields = (
+        'wet_fraction_weight', 'p_e_ap_frac_extrad', 'per_abs_tails_extrad', 'weight_fraction_extrad',
+    )
+    extra = 0
+    can_delete = False
+
+
+class SandConeAdmin(admin.ModelAdmin):
+    list_display = [
+        'user', 'sampling_name', 'progressive_sector', 'section_level', 'element_side', 'layer',
+        'weight_dry_max', 'opt_moisture', 'moisture', 'code', 'sampling_date', 'done_date', 'dilate',
+        'course', 'reference_person', 'construction', 'created', 'updated',
+    ]
+    inlines = [HumidDensityAdmin, ContentMoistureAdmin, ContentMoistureCarbureAdmin, CorrectionSandConeAdmin]
+
+admin.site.register(SandCone, SandConeAdmin)

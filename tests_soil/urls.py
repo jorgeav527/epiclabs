@@ -73,4 +73,16 @@ urlpatterns = [
     path('granulometric-global/<int:id>/detail/', tests_soil_views.granulometric_global_detail, name="granulometric_global_detail"),
     path('granulometric-global/<int:id>/delete/', tests_soil_views.granulometric_global_delete, name="granulometric_global_delete"),
     path('granulometric-global/<int:id>/pdf/', tests_soil_views.granulometric_global_pdf, name="granulometric_global_pdf"),
+    # Sand Cone CRUD and PDF
+    path('saned-cone/', tests_soil_views.sand_cone_list, name="sand_cone_list"),
+    path('saned-cone/create/', tests_soil_views.sand_cone_create, name="sand_cone_create"),
+    path('saned-cone/<int:id>/update/', tests_soil_views.sand_cone_update, name="sand_cone_update"),
+    path('saned-cone/<int:id>/detail/', tests_soil_views.sand_cone_detail, name="sand_cone_detail"),
+    path('saned-cone/<int:id>/delete/', tests_soil_views.sand_cone_delete, name="sand_cone_delete"),
+    path('saned-cone/<int:id>/pdf/', tests_soil_views.sand_cone_pdf, name="sand_cone_pdf"),
+    # humid-density, content-moisture, moisture-carbure, correction-sandcone  CRUD
+    path('humid-density/save/<int:id>/', tests_soil_views.humid_density_save, name="humid_density_save"),
+    path('content-moisture/save/<int:id>/', tests_soil_views.content_moisture_save, name="content_moisture_save"),
+    path('moisture-carbure/save/<int:id>/', tests_soil_views.moisture_carbure_save, name="moisture_carbure_save"),
+    path('correction-sandcone/save/<int:id>/', tests_soil_views.correction_sandcone_save, name="correction_sandcone_save"),
 ]

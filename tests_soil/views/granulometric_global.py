@@ -1,21 +1,29 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.http import HttpResponse
+
+import numpy as np
+
 # import pdfkit
 from django.template.loader import render_to_string
 from weasyprint import HTML
 from django.template.loader import get_template
 from django.db.models import F
 from django.contrib.auth.decorators import login_required
+
 from bokeh.plotting import figure
 from bokeh.embed import components
 from bokeh.io.export import get_screenshot_as_png
-import numpy as np
+
+from io import BytesIO
+import base64
+import matplotlib.pyplot as plt
 
 from tests_soil.models import GranulometricGlobal
 from tests_soil.forms import GranulometricGlobalForm, GranulometricGlobalFormClient
 from equipments.models import Equip
 from accounts.models import AdminProfile
+
 
 # Create your views here.
 
@@ -176,7 +184,7 @@ def granulometric_global_detail(request, id):
     min_y = np.min(passing_percentage)
 
     TOOLS="hover,crosshair,pan,wheel_zoom,reset,save,"
-    plot = figure(x_axis_type="log", x_range=(min_x, max_x), y_range=(min_y, max_y), tools=TOOLS, 
+    plot = figure(x_axis_type="log", x_range=(max_x, min_x), y_range=(min_y, max_y), tools=TOOLS, 
         title="Curva Granulometrica", x_axis_label= 'Diametro de la Malla (mm)', y_axis_label= 'Porcentaje Pasante (%)',
         sizing_mode="scale_width",)
     plot.circle(diameter_mesh, passing_percentage, size=8, legend_label="Resultados")
@@ -291,8 +299,30 @@ def granulometric_global_pdf(request, id):
         decil_30 = d_x[1]
         decil_10 = d_x[2]
         CU = round(decil_60  / decil_10, 2)
-        CC = round((decil_30 ** 2) / (decil_10 * decil_60 ), 2) 
+        CC = round((decil_30 ** 2) / (decil_10 * decil_60 ), 2)
 
+    # Mathplotlib
+    x = np.linspace(0, 2, 100)
+
+    plt.plot(x, x)
+    plt.plot(x, x**2)
+    plt.plot(x, x**3)
+
+    plt.xlabel('x label')
+    plt.ylabel('y label')
+
+    plt.title("Simple Plot")
+
+    plt.tight_layout()
+
+    buffer = BytesIO()
+    plt.savefig(buffer, format='png')
+    buffer.seek(0)
+    image_png = buffer.getvalue()
+    buffer.close()
+
+    graphic = base64.b64encode(image_png)
+    graphic = graphic.decode('utf-8')
 
     html = render_to_string('tests_soil/granulometric_global/granulometric_global_pdf.html', {
         "obj": obj,
@@ -311,6 +341,7 @@ def granulometric_global_pdf(request, id):
         "decil_10": decil_10,
         "CU": CU,
         "CC": CC,
+        "graphic": graphic,
         "title": "CLASIFICACIÓN DE SUELOS PARA FINES DE INGENIERÍA Y CONSTRUCCIÓN DE CARRETERAS",
         "norma_ASTM": "ASTM D2487",
         "noma_NTP": "ASTM D3282",

@@ -1,0 +1,121 @@
+{% extends "base_normal.html" %}
+
+{% block content %}
+<div class="my-5">
+  <div class="row">
+    <div class="col-md-3 col-lg-3">
+      {% include "labs/sectors/client/sidenav_client.html" %}
+    </div>
+    <div class="col-md-9 col-lg-9 mt-4">
+                <!--Grid row-->
+        <div class="row">
+            <!--Grid column-->
+            <div class="col-md-12 mb-4">  
+                <!-- Card -->
+                <div class="card">
+                  <div class="p-3">
+                    <h3 class="card-title">Información de los Equipos</h3>
+                    <table id="infoEquips" class="display compact table table-bordered table-responsive table-striped text-center">
+                      <thead class="warning-color-dark white-text">
+                        <tr>
+                          <th>Nombre del Equipo</th>
+                          <th>Fecha de Compra</th>
+                          <th>Fecha Ultima de Mantenimiento</th>
+                          <th>Fecha Próxima de Mantenimiento</th>
+                          <th>Mantenimiento</th>
+                          <th>Uso</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for equip in qs_equips %}
+                        <tr>
+                          <td>{{ equip.name }}</td>
+                          <td>{{ equip.shop_day }}</td>
+                          <td>{{ equip.last_maintenance_day }}</td>
+                          <td>{{ equip.next_maintenance_day }}</td>
+                          <td>{{ equip.maintenance_done }}</td>
+                          <td>{{ equip.use }}</td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <!-- Card -->
+            </div>
+            <!--Grid column-->
+
+            <!--Grid column-->
+            <div class="col-md-6 mb-4">  
+                <!-- Card -->
+                <div class="card">
+                  <div class="p-3">
+                    <h3 class="card-title">Estadisticas</h3>
+                    <table class="table--flip display table table-sm table-bordered table-responsive table-striped text-center">
+                      <thead class="warning-color-dark white-text">
+                        <tr>
+                          <th>Numero de Equipos</th>
+                          <th>Empresas Activas</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>{{ qs_equips.count }}</td>
+                          <td>Falta</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <!-- Card -->
+            </div>
+            <!--Grid column-->
+
+            <!--Grid column-->
+            <div class="col-md-6 mb-4">  
+                <!-- Card -->
+                <div class="card">
+                  <div class="p-3">
+                    <h3 class="card-title">Grafica 1</h3>
+                  </div>
+                </div>
+                <!-- Card -->
+            </div>
+            <!--Grid column-->
+
+            <!--Grid column-->
+            <div class="col-md-12 mb-4">  
+                <!-- Card -->
+                <div class="card">
+                  <div class="p-3">
+                    <h3 class="card-title">Grafica 2</h3>
+                  </div>
+                </div>
+                <!-- Card -->            
+            </div>
+            <!--Grid column-->
+        </div>
+        <!--Grid row-->      
+    </div>
+  </div>
+</div>
+{% endblock content %}
+{% block js %}
+<script>
+  $(document).ready( function () {
+    $('#infoEquips').DataTable({
+      "scrollX": true,
+      dom: 'B<"clear">lfrtip',
+      buttons: [
+          'csv', 'excel',
+          {
+            extend: 'pdfHtml5',
+            orientation: 'landscape',
+            pageSize: 'LEGAL',
+            filename: 'equipos_{{ qs_equips.count }}'
+          }
+      ]
+    });
+  } );
+</script>
+{% endblock %}

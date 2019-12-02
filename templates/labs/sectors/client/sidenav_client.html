@@ -1,0 +1,20 @@
+<div id="menu">
+    <div class="list-group">
+      <a href="#" class="list-group-item unique-color white-text" data-toggle="collapse" data-target="#list-one" data-parent="#menu"><i class="fas fa-laptop pr-2"></i>Estadisticas Generales</a>
+      <div class="list-group collapse" id="list-one">
+        <a class="list-group-item" href="{% url 'labs:client_info' %}"><i class="fas fa-angle-double-right pr-2"></i>Información Clientes</a>
+        <a class="list-group-item" href="{% url 'labs:client_equips' %}"><i class="fas fa-angle-double-right pr-2"></i>Equipos Utilizados</a>
+        <a class="list-group-item" href="{% url 'labs:client_personal' %}"><i class="fas fa-angle-double-right pr-2"></i>Personal Administrativo</a>
+        <a class="list-group-item" href="{% url 'labs:client_laboratories' %}"><i class="fas fa-angle-double-right pr-2"></i>Laboratorios</a>
+      </div>
+      <a href="#" class="list-group-item unique-color white-text" data-toggle="collapse" data-target="#list-two" data-parent="#menu"><i class="fas fa-vials  pr-2"></i>Ensayos</a>
+      <div class="list-group collapse" id="list-two">
+        <a class="list-group-item" href="#" ><i class="fas fa-angle-double-right pr-2"></i>uno</a>
+        <a class="list-group-item" href="#" ><i class="fas fa-angle-double-right pr-2"></i>dos</a>
+        <a class="list-group-item" href="#" ><i class="fas fa-angle-double-right pr-2"></i>tres</a>
+        <a class="list-group-item" href="#" ><i class="fas fa-angle-double-right pr-2"></i>cuatro</a>
+        <a class="list-group-item" href="#" ><i class="fas fa-angle-double-right pr-2"></i>cinco</a>
+        <a class="list-group-item" href="#" ><i class="fas fa-angle-double-right pr-2"></i>sexto</a>
+      </div>
+    </div>
+</div>

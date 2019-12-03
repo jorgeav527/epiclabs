@@ -1,0 +1,98 @@
+{% extends "base_normal.html" %}
+
+{% block content %}
+<div class="my-5">
+  <div class="row">
+    <div class="col-md-3 col-lg-3">
+      {% include "labs/sectors/client/sidenav_client.html" %}
+    </div>
+    <div class="col-md-9 col-lg-9 mt-4">
+        <!--Grid row-->
+        <div class="row">
+
+            <!--Grid column-->
+            <div class="col-md-12 mb-4">  
+                <!-- Card -->
+                <div class="card">
+                  <div class="p-3">
+                    <h3 class="card-title">Laboratorio de Materiales</h3>
+                    <table id="" class="table--flip table table-sm table-responsive table-bordered">
+                      <thead class="success-color-dark white-text">
+                        <tr>
+                          <th>Ensayos</th>
+                          <th>Ensayo</th>
+                          <th>Ensayo</th>
+                          <th>Ensayo</th>
+                          <th>Ensayo</th>
+                          <th>Ensayo</th>
+                          <th>Ensayo</th>
+                          <th>Ensayo</th>
+                          <th>Ensayo</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr class="text-center">
+                          <th scope="row">Cantidad</th>
+                          <td>#</td>
+                          <td>#</td>
+                          <td>#</td>
+                          <td>#</td>
+                          <td>#</td>
+                          <td>#</td>
+                          <td>#</td>
+                          <td>#</td>
+                        </tr>
+                      </tbody>
+                    </table>                   
+                  </div>
+                </div>
+                <!-- Card -->            
+            </div>
+            <!--Grid column-->
+
+            <!--Grid column-->
+            <div class="col-md-6 mb-4">  
+                <!-- Card -->
+                <div class="card">
+                  <div class="p-3">
+                    <h3 class="card-title">Estadisticas Materiales</h3>
+                    <table class="table--flip display table table-sm table-bordered table-responsive table-striped text-center">
+                      <thead class="success-color-dark white-text">
+                        <tr>
+                          <th>Numero Total de Ensayos</th>
+                          <th>Empresas Activas</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Falta</td>
+                          <td>Falta</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <!-- Card -->
+            </div>
+            <!--Grid column-->
+
+            <!--Grid column-->
+            <div class="col-md-6 mb-4">  
+                <!-- Card -->
+                <div class="card">
+                  <div class="p-3">
+                    <h3 class="card-title">Grafica 2</h3>
+                  </div>
+                </div>
+                <!-- Card -->
+            </div>
+            <!--Grid column-->
+
+        </div>
+        <!--Grid row-->      
+    </div>
+  </div>
+</div>
+{% endblock content %}
+{% block js %}
+{% endblock %}

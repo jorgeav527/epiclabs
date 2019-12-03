@@ -16,10 +16,15 @@ urlpatterns = [
     # Sectors Views
         # Client Sector 
     path('sectors-client/', labs_views.sector_client_view, name="client"),
-    path('sectors-client-info/', labs_views.client_info_view, name="client_info"),
-    path('sectors-client-equips/', labs_views.client_equips_view, name="client_equips"),
-    path('sectors-client-personal/', labs_views.client_personal_view, name="client_personal"),
-    path('sectors-client-laboratorios/', labs_views.client_laboratories_view, name="client_laboratories"),
+    path('sectors-client-info-clients/', labs_views.client_info_clients_view, name="client_info_clients"),
+    path('sectors-client-info-ref-per/', labs_views.client_info_ref_per_view, name="client_info_ref_per"),
+    path('sectors-client-info-construction/', labs_views.client_info_construction_view, name="client_info_construction"),
+    path('sectors-client-equips-concrete/', labs_views.client_equips_concrete_view, name="client_equips_concrete"),
+    # path('sectors-client-equips/', labs_views.client_equips_view, name="client_equips"),
+    path('sectors-client-equips-soil/', labs_views.client_equips_soil_view, name="client_equips_soil"),
+    path('sectors-client-tests-concrete/', labs_views.client_tests_concrete_view, name="client_tests_concrete"),
+    # path('sectors-client-tests-material/', labs_views.client_laboratories_view, name="client_laboratories"),
+    path('sectors-client-tests-soil/', labs_views.client_tests_soil_view, name="client_tests_soil"),
         # Bach Sector
     path('sectors-bach/', labs_views.sector_bach_view, name="bach"),
     path('sectors-bach-info/', labs_views.bach_info_view, name="bach_info"),
@@ -32,5 +37,9 @@ urlpatterns = [
     path('sectors-student-equips/', labs_views.student_equips_view, name="student_equips"),
     path('sectors-student-personal/', labs_views.student_personal_view, name="student_personal"),
     path('sectors-student-laboratorios/', labs_views.student_laboratories_view, name="student_laboratories"),
+        # General Sector
+    path('general/', labs_views.general_view, name="general"),
+    path('general-personal/', labs_views.general_personal_view, name="general_personal"),
+    path('general-equips/', labs_views.general_equips_view, name="general_equips"),
 ]
 

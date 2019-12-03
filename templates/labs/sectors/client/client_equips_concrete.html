@@ -14,29 +14,53 @@
                 <!-- Card -->
                 <div class="card">
                   <div class="p-3">
-                    <h3 class="card-title">Información de los Equipos</h3>
-                    <table id="infoEquips" class="display compact table table-bordered table-responsive table-striped text-center">
+                    <h3 class="card-title">Información de los Equipos en el Laboratorio de Concreto</h3>
+                    <table id="clientsEquipsConcrete" class="display compact table table-bordered table-responsive table-striped text-center">
                       <thead class="warning-color-dark white-text">
                         <tr>
-                          <th>Nombre del Equipo</th>
-                          <th>Fecha de Compra</th>
-                          <th>Fecha Ultima de Mantenimiento</th>
-                          <th>Fecha Próxima de Mantenimiento</th>
-                          <th>Mantenimiento</th>
-                          <th>Uso</th>
+                          <th>Ensayo/Maquina</th>
+                          {% for name in qs_equips_names %}
+                          <th>{{ name }}</th>
+                          {% endfor %}
                         </tr>
                       </thead>
                       <tbody>
-                        {% for equip in qs_equips %}
                         <tr>
-                          <td>{{ equip.name }}</td>
-                          <td>{{ equip.shop_day }}</td>
-                          <td>{{ equip.last_maintenance_day }}</td>
-                          <td>{{ equip.next_maintenance_day }}</td>
-                          <td>{{ equip.maintenance_done }}</td>
-                          <td>{{ equip.use }}</td>
+                          <td scope="row">DiamondPiceBreak</td>
+                          {% for a in qs_DiamondPiceBreak_equips %}
+                          <td>{{ a }}</td>
+                          {% endfor %}
                         </tr>
-                        {% endfor %}
+                        <tr>
+                          <td scope="row">GroutDiceBreak</td>
+                          {% for b in qs_GroutDiceBreak_equips %}
+                          <td>{{ b }}</td>
+                          {% endfor %}
+                        </tr>  
+                        <tr>
+                          <td scope="row">LimeDiceBreak</td>
+                          {% for c in qs_LimeDiceBreak_equips %}
+                          <td>{{ c }}</td>
+                          {% endfor %}
+                        </tr>
+                        <tr>
+                          <td scope="row">LimePiceBreak</td>
+                          {% for d in qs_LimePiceBreak_equips %}
+                          <td>{{ d }}</td>
+                          {% endfor %}
+                        </tr>
+                        <tr>
+                          <td scope="row">PaverBreak</td>
+                          {% for e in qs_PaverBreak_equips %}
+                          <td>{{ e }}</td>
+                          {% endfor %}
+                        </tr>
+                        <tr>
+                          <td scope="row">PiceBreak</td>
+                          {% for f in qs_PiceBreak_equips %}
+                          <td>{{ f }}</td>
+                          {% endfor %}
+                        </tr>
                       </tbody>
                     </table>
                   </div>
@@ -50,18 +74,16 @@
                 <!-- Card -->
                 <div class="card">
                   <div class="p-3">
-                    <h3 class="card-title">Estadisticas</h3>
+                    <h3 class="card-title">Laboratorio de Concreto</h3>
                     <table class="table--flip display table table-sm table-bordered table-responsive table-striped text-center">
                       <thead class="warning-color-dark white-text">
                         <tr>
-                          <th>Numero de Equipos</th>
-                          <th>Empresas Activas</th>
+                          <th>Ensayos</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
-                          <td>{{ qs_equips.count }}</td>
-                          <td>Falta</td>
+                          <td>Proctor</td>
                         </tr>
                       </tbody>
                     </table>
@@ -94,6 +116,7 @@
                 <!-- Card -->            
             </div>
             <!--Grid column-->
+            
         </div>
         <!--Grid row-->      
     </div>
@@ -103,7 +126,7 @@
 {% block js %}
 <script>
   $(document).ready( function () {
-    $('#infoEquips').DataTable({
+    $('#clientsEquipsConcrete').DataTable({
       "scrollX": true,
       dom: 'B<"clear">lfrtip',
       buttons: [

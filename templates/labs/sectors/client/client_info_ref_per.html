@@ -1,0 +1,85 @@
+{% extends "base_normal.html" %}
+
+{% block content %}
+<div class="my-5">
+  <div class="row">
+    <div class="col-md-3 col-lg-3">
+      {% include "labs/sectors/client/sidenav_client.html" %}
+    </div>
+    <div class="col-md-9 col-lg-9 mt-4">
+                <!--Grid row-->
+        <div class="row">
+
+            <!--Grid column-->
+            <div class="col-md-11 mb-4">  
+                <!-- Card -->
+                <div class="card">
+                  <div class="p-3">
+                    <h3 class="card-title">Personas de Referencia</h3>
+                    <table id="clientRefPer" class="display compact table table-bordered table-striped text-center">
+                        <thead class="primary-color-dark white-text">
+                          <tr>
+                            <th>Titulo</th>
+                            <th>Nombre y Apellidos</th>
+                            <th>DNI</th>
+                            <th>Telefono de Contacto</th>
+                            <th>Cliente</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for ref_person in qs_ref_persons %}
+                          <tr>
+                            <td>{{ ref_person.title }}</td>
+                            <td>{{ ref_person.name }}</td>
+                            <td>{{ ref_person.dni }}</td>
+                            <td>{{ ref_person.phone }}</td>
+                            <td>{{ ref_person.client_profile }}</td>
+                          </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                </div>
+                <!-- Card -->
+            </div>
+            <!--Grid column-->
+
+            <!--Grid column-->
+            <div class="col-md-12 mb-4">  
+                <!-- Card -->
+                <div class="card">
+                  <div class="p-3">
+                    <h3 class="card-title">Grafica 3</h3>
+                   
+                  </div>
+                </div>
+                <!-- Card -->            
+            </div>
+            <!--Grid column-->
+            
+
+        </div>
+        <!--Grid row-->      
+    </div>
+  </div>
+</div>
+{% endblock content %}
+{% block js %}
+<script>
+  $(document).ready( function () {
+    $('#clientRefPer').DataTable({
+      "scrollX": true,
+      dom: 'B<"clear">lfrtip',
+      buttons: [
+          'csv', 'excel',
+          {
+            extend: 'pdfHtml5',
+            orientation: 'landscape',
+            pageSize: 'LEGAL',
+            filename: 'ref_per_{{ qs_users.count }}'
+          }
+      ]
+    });
+  } );
+</script>
+{% endblock %}

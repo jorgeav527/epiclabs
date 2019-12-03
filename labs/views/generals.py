@@ -1,5 +1,7 @@
 from django.shortcuts import render
 
+from accounts.models import *
+
 # Create your views here.
 
 def home_view(request):
@@ -12,3 +14,6 @@ def pricing_view(request):
 
 def contact_view(request):
     return render(request, 'labs/generals/contact.html')
+
+
+

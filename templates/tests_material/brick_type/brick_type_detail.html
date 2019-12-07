@@ -1,0 +1,19 @@
+{% extends 'tests_material/base_tests_material.html' %}
+
+{% block material %}
+<!-- Template for a Client -->
+{% if obj.user.is_client %}
+{% include 'tests_material/brick_type/detail/client.html' %}
+{% endif %}
+
+<!-- Template for a Bach -->
+{% if obj.user.is_bach %}
+{% include 'tests_material/brick_type/detail/bach.html' %}
+{% endif %}
+
+<!-- Template for a Student -->
+{% if obj.user.is_student %}
+{% include 'tests_material/brick_type/detail/student.html' %}
+{% endif %}
+                                
+{% endblock %}

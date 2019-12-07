@@ -19,8 +19,11 @@
                 <p class="text-left mt-3"><span class="font-weight-bold"><u>Datos del Ensayo Ingresados</u></span></p>
                 <p class="text-left"><span class="font-weight-bold">Fecha de Muestreo:</span> {{ obj.sampling_date|date:"d/m/Y" }}</p>
                 <p class="text-left"><span class="font-weight-bold">Fecha del Ensayo:</span> {{ obj.done_date|date:"d/m/Y" }}</p>
-                <p class="text-left"><span class="font-weight-bold">Material:</span> {{ obj.material }}</p>
-                <p class="text-left"><span class="font-weight-bold">Cantera:</span> {{ obj.quarry }}</p>
+                <p class="text-left"><span class="font-weight-bold">Nombre del Elemento:</span> {{ obj.name_element }}</p>
+                <p class="text-left"><span class="font-weight-bold">Ladrillera:</span> {{ obj.brick_company }}</p>
+                <p class="text-left"><span class="font-weight-bold">Largo Nominal:</span> {{ obj.n_d_length }}</p>
+                <p class="text-left"><span class="font-weight-bold">Ancho Nominal:</span> {{ obj.n_d_width }}</p>
+                <p class="text-left"><span class="font-weight-bold">Alto Nominal:</span> {{ obj.n_d_high }}</p>
                 <hr class="my-3">
 
                 <p class="text-left mt-3"><span class="font-weight-bold"><u>Resultados del Ensayo</u></span></p>
@@ -157,18 +160,10 @@
                 <hr class="my-3">
                 
                 <div class="mt-5">
-                    <a href="{% url 'tests_soil:proctor_m_update' obj.id %}" class="btn btn-primary btn-block" type="button">Editar Ensayo</a>
-                    <a href="{% url 'tests_soil:proctor_m_list' %}" class="btn btn-primary btn-block" type="button">Cancelar</a>
+                    <a href="{% url 'tests_material:brick_type_update' obj.id %}" class="btn btn-primary btn-block" type="button">Editar Ensayo</a>
+                    <a href="{% url 'tests_material:brick_type_list' %}" class="btn btn-primary btn-block" type="button">Cancelar</a>
                 </div>
             </div>
         </div>
     </div>
-    {% if div and script %}
-    <div class="col-md-6 mx-auto my-3">
-        <div class="card shadow">
-            {{ div | safe }}
-            {{ script | safe }}
-        </div>
-    </div>
-    {% endif %}
 </div>

@@ -1,0 +1,321 @@
+<div class="row">
+    <div class="col-md-6 mx-auto my-3">
+        <div class="card shadow">
+            <div class="card-body">
+                <!-- Section heading -->
+                <h4 class="h4-responsive font-weight-bold text-center ">{{ title }}</h4>
+                <p class="text-center dark-grey-text w-responsive mx-auto ">((NORMA ASTM C-109) / (NTP 334.051))</p>
+                <hr class="my-3">
+
+                <!-- Section description -->
+                <p class="text-left mt-3"><span class="font-weight-bold"><u>Datos del Usuario</u></span></p>
+                <p class="text-left"><span class="font-weight-bold">Usuario:</span> {{ obj.user.username }}</p>
+                <p class="text-left"><span class="font-weight-bold">Nombre:</span> {{ obj.user.first_name|title }}</p>
+                <p class="text-left"><span class="font-weight-bold">Apellidos:</span> {{ obj.user.last_name|title }}</p>
+                <p class="text-left"><span class="font-weight-bold">DNI:</span> {{ obj.user.bachprofile.dni }}</p>
+                <p class="text-left"><span class="font-weight-bold">Codigo:</span> {{ obj.user.bachprofile.codigo }}</p>
+                <hr class="my-3">
+
+                <p class="text-left mt-3"><span class="font-weight-bold"><u>Datos de la Tesis</u></span></p>
+                {% for thesis in obj.user.bachprofile.thesis_set.all %}
+                <p class="text-left"><span class="font-weight-bold">Titulo:</span> {{ thesis.title|title }}</p>
+                <p class="text-left"><span class="font-weight-bold">Linea:</span> {{ thesis.line|title }}</p>
+
+                    <p class="text-left"><span class="font-weight-bold">Cursos Afines:</span> </p>                
+                    {% for course in thesis.course.all %}
+                    <p class="text-left">&#8594; {{ course }}</p>                
+                    {% endfor %}
+
+                    <p class="text-left"><span class="font-weight-bold">Acesores:</span> </p>                
+                    {% for adviser in thesis.adviser.all %}
+                    <p class="text-left">&#8594; {{ adviser }}</p>                
+                    {% endfor %}
+
+                <p class="text-left"><span class="font-weight-bold">Comienzo de la Thesis:</span> {{ thesis.start_day|date:"d/m/Y" }}</p>
+                <p class="text-left"><span class="font-weight-bold">Termino de la Thesis:</span> {{ thesis.finish_day|date:"d/m/Y" }}</p>
+                <p class="text-left"><span class="font-weight-bold">Duración:</span> {{ thesis.duration }} dias</p>
+                {% endfor %}
+                <hr class="my-3">
+
+                <p class="text-left mt-3"><span class="font-weight-bold"><u>Datos del Ensayo Ingresados</u></span></p>
+                <p class="text-left"><span class="font-weight-bold">Fecha de Muestreo:</span> {{ obj.sampling_date|date:"d/m/Y" }}</p>
+                <p class="text-left"><span class="font-weight-bold">Fecha del Ensayo:</span> {{ obj.done_date|date:"d/m/Y" }}</p>
+                <p class="text-left"><span class="font-weight-bold">Nombre del Elemento:</span> {{ obj.name_element }}</p>
+                <p class="text-left"><span class="font-weight-bold">Ladrillera:</span> {{ obj.brick_company }}</p>
+                <p class="text-left"><span class="font-weight-bold">Largo Nominal:</span> {{ obj.n_d_length }}</p>
+                <p class="text-left"><span class="font-weight-bold">Ancho Nominal:</span> {{ obj.n_d_width }}</p>
+                <p class="text-left"><span class="font-weight-bold">Alto Nominal:</span> {{ obj.n_d_high }}</p>
+                <hr class="my-3">
+                
+                <p class="text-left mt-3"><span class="font-weight-bold"><u>Resultados del Ensayo</u></span></p>
+                <p class="text-left"><span class="font-weight-bold">Determinación de la Variación de Dimenciones:</span></p>
+                <table class="table table-sm table-responsive table-bordered text-center">
+                    <thead class="primary-color-dark white-text">
+                        <tr>
+                            <th>Secuencia</th>
+                            <th>Largo Superior (mm)</th>
+                            <th>Largo Inferior (mm)</th>
+                            <th>Promedio Largo (mm)</th>
+                            <th>Ancho Superior (mm)</th>
+                            <th>Ancho Inferior (mm)</th>
+                            <th>Promedio Ancho (mm)</th>
+                            <th>Alto Posterior (mm)</th>
+                            <th>Alto Derecho (mm)</th>
+                            <th>Alto Frente (mm)</th>
+                            <th>Alto Izquierdo (mm)</th>
+                            <th>Promedio Alto (mm)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for variation_dimentions in qs_variation_dimentions %}
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>{{ variation_dimentions.upface_length }}</td>
+                            <td>{{ variation_dimentions.downface_length }}</td>
+                            <td>{{ variation_dimentions.average_length }}</td>
+                            <td>{{ variation_dimentions.upface_width }}</td>
+                            <td>{{ variation_dimentions.downface_width }}</td>
+                            <td>{{ variation_dimentions.average_width }}</td>
+                            <td>{{ variation_dimentions.high_backside }}</td>
+                            <td>{{ variation_dimentions.high_rightside }}</td>
+                            <td>{{ variation_dimentions.high_frontside }}</td>
+                            <td>{{ variation_dimentions.high_lefside }}</td>
+                            <td>{{ variation_dimentions.average_high }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                
+                <p class="text-left"><span class="font-weight-bold">Determinación del Alabeo:</span></p>
+                <table class="table table-sm table-responsive table-bordered text-center">
+                    <thead class="primary-color-dark white-text">
+                        <tr>
+                            <th>Secuencia</th>
+                            <th>Cara Superior Concavo (mm)</th>
+                            <th>Cara Superior Convexo (mm)</th>
+                            <th>Cara Inferior Concavo (mm)</th>
+                            <th>Cara Inferior Convexo (mm)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for warping in qs_warping %}
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>{{ warping.upface_concave }}</td>
+                            <td>{{ warping.upface_convex }}</td>
+                            <td>{{ warping.downface_concave }}</td>
+                            <td>{{ warping.downface_convex }}</td>
+                        {% endfor %}
+                        </tr>
+                            <th scope="row">Promedio</th>
+                            <td>{{ avg_upface_concave }}</td>
+                            <td>{{ avg_upface_convex }}</td>
+                            <td>{{ avg_downface_concave }}</td>
+                            <td>{{ avg_downface_convex }}</td>
+                    </tbody>
+                </table>
+
+                <p class="text-left"><span class="font-weight-bold">Determinación del % de Vacios y la Densidad:</span></p>
+                <table class="table table-sm table-responsive table-bordered text-center">
+                    <thead class="primary-color-dark white-text">
+                        <tr>
+                            <th>Secuencia</th>
+                            <th>Largo (cm)</th>
+                            <th>Ancho (cm)</th>
+                            <th>Alto (cm)</th>
+                            <th>Volumen Vm (cm³)</th>
+                            <th>Sc (gr)</th>
+                            <th>Su (gr)</th>
+                            <th>Volimen de la Arena Vs (cm³)</th>
+                            <th>Volumen Real (cm³)</th>
+                            <th>Porcentaje de Vacios (%)</th>
+                            <th>Peso de la Unidad (gr)</th>
+                            <th>Densidad (g/cm³)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for density_voids in qs_density_voids %}
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>{{ density_voids.length }}</td>
+                            <td>{{ density_voids.width }}</td>
+                            <td>{{ density_voids.high }}</td>
+                            <td>{{ density_voids.volume_brick }}</td>
+                            <td>{{ density_voids.sc }}</td>
+                            <td>{{ density_voids.su }}</td>
+                            <td>{{ density_voids.volume_void }}</td>
+                            <td>{{ density_voids.volume_real }}</td>
+                            <td>{{ density_voids.void_percentage }}</td>
+                            <td>{{ density_voids.weight }}</td>
+                            <td>{{ density_voids.density }}</td>
+                        </tr>
+                        {% endfor %}
+                            <th scope="row">Promedio</th>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>{{ avg_void_percentage }}</td>
+                            <td></td>
+                            <td>{{ avg_density }}</td>
+                    </tbody>
+                </table>
+
+                <p class="text-left"><span class="font-weight-bold">Determinación de la Succión:</span></p>
+                <table class="table table-sm table-responsive table-bordered text-center">
+                    <thead class="primary-color-dark white-text">
+                        <tr>
+                            <th>Secuencia</th>
+                            <th>Peso Inicil (gr)</th>
+                            <th>Peso Final (gr)</th>
+                            <th>Diferencia de Peso (gr)</th>
+                            <th>Largo (cm)</th>
+                            <th>Ancho (cm)</th>
+                            <th>Area de Contacto (cm²)</th>
+                            <th>Variable 200cm²</th>
+                            <th>Peso Mojado (gr)</th>
+                            <th>Peso Corregido (gr)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for suction in qs_suction %}
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>{{ suction.nomal_weight }}</td>
+                            <td>{{ suction.dry_weight }}</td>
+                            <td>{{ suction.diff_weight }}</td>
+                            <td>{{ suction.length }}</td>
+                            <td>{{ suction.width }}</td>
+                            <td>{{ suction.face_area }}</td>
+                            <td>{{ suction.bar_200 }}</td>
+                            <td>{{ suction.face_wet_weight }}</td>
+                            <td>{{ suction.face_wet_weight_correction }}</td>
+                        </tr>
+                        {% endfor %}
+                            <th scope="row">Promedio</th>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>{{ avg_face_wet_weight_correction }}</td>
+                    </tbody>
+                </table>
+
+                <p class="text-left"><span class="font-weight-bold">Determinación de la Absorción y el Coeficiente de Saturación:</span></p>
+                <table class="table table-sm table-responsive table-bordered text-center">
+                    <thead class="primary-color-dark white-text">
+                        <tr>
+                            <th>Secuencia</th>
+                            <th>Peso Seco (gr)</th>
+                            <th>Peso Saturado en Agua Fria (gr)</th>
+                            <th>Peso Saturado en Agua Caliente (gr)</th>
+                            <th>Peso Satura despues de 5 horas en Agua Caliente (gr)</th>
+                            <th>Porcentaje de Absorcion (%)</th>
+                            <th>Porcentaje de Absorcion Máxima (%)</th>
+                            <th>Coeficiente de Saturación</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for abs_sat_coff in qs_abs_sat_coff %}
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>{{ abs_sat_coff.dry_weight }}</td>
+                            <td>{{ abs_sat_coff.wet_weight_cool_24 }}</td>
+                            <td>{{ abs_sat_coff.wet_weight_hot_24 }}</td>
+                            <td>{{ abs_sat_coff.wet_weight_hot_5 }}</td>
+                            <td>{{ abs_sat_coff.abs_brick }}</td>
+                            <td>{{ abs_sat_coff.abs_max_brick }}</td>
+                            <td>{{ abs_sat_coff.coeff_sat }}</td>
+                        </tr>
+                        {% endfor %}
+                            <th scope="row">Promedio</th>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>{{ avg_abs_brick }}</td>
+                            <td>{{ avg_abs_max_brick }}</td>
+                            <td>{{ avg_coeff_sat }}</td>
+                    </tbody>
+                </table>
+
+                <p class="text-left"><span class="font-weight-bold">Determinación de la Compresión:</span></p>
+                <table class="table table-sm table-responsive table-bordered text-center">
+                    <thead class="primary-color-dark white-text">
+                        <tr>
+                            <th>Secuencia</th>
+                            <th>Largo Superior (cm)</th>
+                            <th>Ancho Superior (cm)</th>
+                            <th>Largo Inferior (cm)</th>
+                            <th>Ancho Inferior (cm)</th>
+                            <th>Area Superior (cm²)</th>
+                            <th>Area Inferior (cm²)</th>
+                            <th>Promedio de Areas (cm²)</th>
+                            <th>Carga (kgf)</th>
+                            <th>Resistencia a la Compresión (MPa (kg/cm²))</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for compretion_brick in qs_compretion_brick %}
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>{{ compretion_brick.upface_length }}</td>
+                            <td>{{ compretion_brick.upface_width }}</td>
+                            <td>{{ compretion_brick.downface_length }}</td>
+                            <td>{{ compretion_brick.downface_width }}</td>
+                            <td>{{ compretion_brick.upface_area }}</td>
+                            <td>{{ compretion_brick.downface_area }}</td>
+                            <td>{{ compretion_brick.average_area }}</td>
+                            <td>{{ compretion_brick.load }}</td>
+                            <td>{{ compretion_brick.fc_MPa }} ({{ compretion_brick.fc }})</td>
+                        </tr>
+                        {% endfor %}
+                            <th scope="row">Promedio</th>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>{{ avg_fc_MPA }} ({{ avg_fc }})</td>
+                    </tbody>
+                </table>
+
+                <p class="text-left"><span class="font-weight-bold">Variación de Dimenciones Largo:</span> {{ vd_lengt }} %</p>
+                <p class="text-left"><span class="font-weight-bold">Variación de Dimenciones Ancho:</span> {{ vd_width }} %</p>
+                <p class="text-left"><span class="font-weight-bold">Variación de Dimenciones Alto:</span> {{ vd_high }} %</p>
+                <p class="text-left"><span class="font-weight-bold">Tipo de Ladrillo segun la Variación Dimencional:</span> esta falta</p>
+                <p class="text-left"><span class="font-weight-bold">Alabeo Máximo:</span> {{ max_avg_warping }}</p>
+                <p class="text-left"><span class="font-weight-bold">Tipo de Ladrillo segun el Alabeo:</span> {{ type_warping }}</p>
+                <p class="text-left"><span class="font-weight-bold">Tipo de Ladrillo segun la Densidad:</span> {{ type_density }}</p>
+                <p class="text-left"><span class="font-weight-bold">Tipo de Ladrillo segun la Succión:</span></p>
+                <p class="text-left"><span class="font-weight-bold">Tipo de Ladrillo segun la Absorcion:</span> {{ type_abs }}</p>
+                <p class="text-left"><span class="font-weight-bold">Tipo de Ladrillo segun el Coeficiente de Absorción:</span> {{ type_coeff_sat }}</p>
+                <p class="text-left"><span class="font-weight-bold">Tipo de Ladrillo segun el Compresión:</span> {{ type_compretion }}</p>
+                <hr class="my-3">
+                
+                <p class="text-left mt-3"><span class="font-weight-bold"><u>Datos Extra</u></span></p>
+                <p class="text-left"><span class="font-weight-bold">Id:</span> {{ obj.id }}</p>
+                <p class="text-left"><span class="font-weight-bold">Creado:</span> {{ obj.created }}</p>
+                <p class="text-left"><span class="font-weight-bold">Actualizado:</span> {{ obj.updated }}</p>
+                <p class="text-left"><span class="font-weight-bold">Nombre del Ensayo:</span> {{ obj.name }}</p>
+                <hr class="my-3">
+                
+                <div class="mt-5">
+                    <a href="{% url 'tests_material:brick_type_update' obj.id %}" class="btn btn-primary btn-block" type="button">Editar Ensayo</a>
+                    <a href="{% url 'tests_material:brick_type_list' %}" class="btn btn-primary btn-block" type="button">Cancelar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

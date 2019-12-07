@@ -1,0 +1,1 @@
+from .brick_type import *

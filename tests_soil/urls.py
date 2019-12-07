@@ -17,7 +17,7 @@ urlpatterns = [
     path('limit/<int:id>/detail/', tests_soil_views.limit_detail, name="limit_detail"),
     path('limit/<int:id>/delete/', tests_soil_views.limit_delete, name="limit_delete"),
     path('limit/<int:id>/pdf/', tests_soil_views.limit_pdf, name="limit_pdf"),
-    # Liquid and Plastic CRUD
+        # Liquid and Plastic CRUD
     path('liquid/save/<int:id>/', tests_soil_views.liquid_save, name="liquid_save"),
     path('plastic/save/<int:id>/', tests_soil_views.plastic_save, name="plastic_save"),
     # Fine Material CRUD and PDF
@@ -34,7 +34,7 @@ urlpatterns = [
     path('equivalent/<int:id>/detail/', tests_soil_views.equivalent_detail, name="equivalent_detail"),
     path('equivalent/<int:id>/delete/', tests_soil_views.equivalent_delete, name="equivalent_delete"),
     path('equivalent/<int:id>/pdf/', tests_soil_views.equivalent_pdf, name="equivalent_pdf"),
-    # Equiv CRUD
+        # Equiv CRUD
     path('equiv/save/<int:id>/', tests_soil_views.equiv_save, name="equiv_save"),
     # Proctor M CRUD and PDF
     path('proctor-m/', tests_soil_views.proctor_m_list, name="proctor_m_list"),
@@ -43,7 +43,7 @@ urlpatterns = [
     path('proctor-m/<int:id>/detail/', tests_soil_views.proctor_m_detail, name="proctor_m_detail"),
     path('proctor-m/<int:id>/delete/', tests_soil_views.proctor_m_delete, name="proctor_m_delete"),
     path('proctor-m/<int:id>/pdf/', tests_soil_views.proctor_m_pdf, name="proctor_m_pdf"),
-    # Density CRUD
+        # Density CRUD
     path('density/save/<int:id>/', tests_soil_views.density_save, name="density_save"),
     path('saturation/save/<int:id>/', tests_soil_views.saturation_save, name="saturation_save"),
     path('correction/save/<int:id>/', tests_soil_views.correction_save, name="correction_save"),
@@ -54,7 +54,7 @@ urlpatterns = [
     path('moisture-content/<int:id>/detail/', tests_soil_views.moisture_content_detail, name="moisture_content_detail"),
     path('moisture-content/<int:id>/delete/', tests_soil_views.moisture_content_delete, name="moisture_content_delete"),
     path('moisture-content/<int:id>/pdf/', tests_soil_views.moisture_content_pdf, name="moisture_content_pdf"),
-    # Moisture Material CRUD
+        # Moisture Material CRUD
     path('moisture-material/save/<int:id>/', tests_soil_views.moisture_material_save, name="moisture_material_save"),
     # Specific Gravity CRUD and PDF
     path('specific-gravity/', tests_soil_views.specific_gravity_list, name="specific_gravity_list"),
@@ -63,7 +63,7 @@ urlpatterns = [
     path('specific-gravity/<int:id>/detail/', tests_soil_views.specific_gravity_detail, name="specific_gravity_detail"),
     path('specific-gravity/<int:id>/delete/', tests_soil_views.specific_gravity_delete, name="specific_gravity_delete"),
     path('specific-gravity/<int:id>/pdf/', tests_soil_views.specific_gravity_pdf, name="specific_gravity_pdf"),
-    # Fraction Pass and Retained CRUD
+        # Fraction Pass and Retained CRUD
     path('fraction-pass/save/<int:id>/', tests_soil_views.fraction_pass_save, name="fraction_pass_save"),
     path('fraction-retained/save/<int:id>/', tests_soil_views.fraction_retained_save, name="fraction_retained_save"),
     # Granulometric Global CRUD and PDF
@@ -80,7 +80,7 @@ urlpatterns = [
     path('saned-cone/<int:id>/detail/', tests_soil_views.sand_cone_detail, name="sand_cone_detail"),
     path('saned-cone/<int:id>/delete/', tests_soil_views.sand_cone_delete, name="sand_cone_delete"),
     path('saned-cone/<int:id>/pdf/', tests_soil_views.sand_cone_pdf, name="sand_cone_pdf"),
-    # humid-density, content-moisture, moisture-carbure, correction-sandcone  CRUD
+        # humid-density, content-moisture, moisture-carbure, correction-sandcone  CRUD
     path('humid-density/save/<int:id>/', tests_soil_views.humid_density_save, name="humid_density_save"),
     path('content-moisture/save/<int:id>/', tests_soil_views.content_moisture_save, name="content_moisture_save"),
     path('moisture-carbure/save/<int:id>/', tests_soil_views.moisture_carbure_save, name="moisture_carbure_save"),

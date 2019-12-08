@@ -95,3 +95,27 @@ class BrickTypeAdmin(admin.ModelAdmin):
     inlines = [VariationDimensionsAdmin, WarpingAdmin, DensityVoidsAdmin, SuctionAdmin, AbsSatuCoeffAdmin, CompretionBrickAdmin]
 
 admin.site.register(BrickType, BrickTypeAdmin)
+
+
+class ParallelPerpendicularAdmin(admin.TabularInline):
+    model = ParallelPerpendicular
+    fields = ( 
+        "type_compression", "length_1", "width_1", "area_1", "length_2", "width_2", "area_2", 
+        "average_area", "load", "fc", "fc_MPa",
+    )
+    readonly_fields = (
+        "type_compression", "length_1", "width_1", "area_1", "length_2", "width_2", "area_2", 
+        "average_area", "load", "fc", "fc_MPa",
+    )
+    extra = 0
+    can_delete = False
+
+
+class WoodCompressionAdmin(admin.ModelAdmin):
+    list_display = [ 
+        "user", "name", "name_element", "wood_name", "code", "sampling_date", "done_date", "dilate", 
+        "reference_person", "construction", "created", "updated",
+    ]
+    inlines = [ParallelPerpendicularAdmin]
+
+admin.site.register(WoodCompression, WoodCompressionAdmin)

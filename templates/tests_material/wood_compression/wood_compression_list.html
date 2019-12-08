@@ -58,12 +58,12 @@
         <div>
           {% if request.user.is_superuser or request.user.is_student or request.user.is_bach or request.user.is_admin %}
           <span class="table-add float-right mb-3 mr-2">
-            <a href="{% url 'tests_material:brick_type_create' %}" class="text-primary">
+            <a href="{% url 'tests_material:wood_compression_create' %}" class="text-primary">
               <i class="fas fa-plus fa-2x" aria-hidden="true"></i>
             </a>
           </span>
           {% endif %}
-          <table id="brickType" class="display compact table table-bordered table-responsive table-striped text-center">
+          <table id="woodCompression" class="display compact table table-bordered table-responsive table-striped text-center">
             <thead class="primary-color-dark white-text">
               <tr>
                 <th rowspan="2">Usuario</th>
@@ -75,7 +75,7 @@
               </tr>
               <tr>
                 <th>Elemento</th>
-                <th>Ladrillera</th>
+                <th>Nombre de la Madera</th>
                 <th>Codigo</th>
                 <th>Muestreo</th>
                 <th>Ensayo</th>
@@ -87,7 +87,7 @@
                 <td>{{ obj.user.username }}</td>
                 <td>{{ obj.id }}</td>
                 <td>{{ obj.name_element }}</td>
-                <td>{{ obj.brick_company }}</td>
+                <td>{{ obj.wood_name }}</td>
                 <td>{{ obj.code }}</td>
                 <td>{{ obj.sampling_date|date:"d/m/Y" }}</td>
                 <td>{{ obj.done_date|date:"d/m/Y" }}</td>
@@ -95,52 +95,32 @@
                 <td>
                   {% if user.is_authenticated %}
                   <div class="btn-group" role="group" aria-label="Basic example">
-                    {% if user.is_superuser or user.is_student or user.is_bach or user.is_admin %}
+                    {% if obj.user.is_superuser == user.is_superuser or obj.user.is_student == user.is_student or obj.user.is_bach == user.is_bach or obj.user.is_admin == user.is_admin %}
                     <a
-                      href="{% url 'tests_material:variation_dimensions_save' obj.id %}"
-                      data-toggle="tooltip" title="Editar o Crear Variación de Dimenciones" role="button" class="btn btn-dark btn-sm px-2 mx-1"><i class="fas fa-plus"></i>
-                    </a>
-                    <a
-                      href="{% url 'tests_material:warping_save' obj.id %}"
-                      data-toggle="tooltip" title="Editar o Crear Alabeo" role="button" class="btn btn-dark btn-sm px-2 mx-1"><i class="fas fa-plus"></i>
-                    </a>
-                    <a
-                      href="{% url 'tests_material:density_voids_save' obj.id %}"
-                      data-toggle="tooltip" title="Editar o Crear Densidad y % de Vacios" role="button" class="btn btn-dark btn-sm px-2 mx-1"><i class="fas fa-plus"></i>
-                    </a>
-                    <a
-                      href="{% url 'tests_material:suction_save' obj.id %}"
-                      data-toggle="tooltip" title="Editar o Crear Succión" role="button" class="btn btn-dark btn-sm px-2 mx-1"><i class="fas fa-plus"></i>
-                    </a>
-                    <a
-                      href="{% url 'tests_material:abs_satu_coeff_save' obj.id %}"
-                      data-toggle="tooltip" title="Editar o Crear % Absorción y Coefficiente de Saturación" role="button" class="btn btn-dark btn-sm px-2 mx-1"><i class="fas fa-plus"></i>
-                    </a>
-                    <a
-                      href="{% url 'tests_material:compretion_brick_save' obj.id %}"
+                      href="{% url 'tests_material:parallel_perpendicular_save' obj.id %}"
                       data-toggle="tooltip" title="Editar o Crear Compresión de Ladrillos" role="button" class="btn btn-dark btn-sm px-2 mx-1"><i class="fas fa-plus"></i>
                     </a>
                     {% endif %}
                     <a
-                      href="{% url 'tests_material:brick_type_detail' obj.id %}"
+                      href="{% url 'tests_material:wood_compression_detail' obj.id %}"
                       data-toggle="tooltip" title="Detalles" role="button" class="btn btn-primary btn-sm px-2 mx-1"><i class="far fa-eye"></i>
                     </a>
                     {% if user.is_superuser or user.is_student or user.is_bach or user.is_admin %}
                     <a 
-                      href="{% url 'tests_material:brick_type_update' obj.id %}" 
+                      href="{% url 'tests_material:wood_compression_update' obj.id %}" 
                       data-toggle="tooltip" title="Editar" role="button" class="btn btn-success btn-sm px-2 mx-1"><i class="fas fa-edit"></i>
                     </a>
                     <a 
-                      href="{% url 'tests_material:brick_type_delete' obj.id %}"
+                      href="{% url 'tests_material:wood_compression_delete' obj.id %}"
                       data-toggle="tooltip" title="Borrar" role="button" class="btn btn-danger btn-sm px-2 mx-1"><i class="fas fa-trash"></i>
                     </a>
                     <a 
-                      href="{% url 'tests_material:brick_type_pdf' obj.id %}" 
+                      href="{% url 'tests_material:wood_compression_pdf' obj.id %}" 
                       data-toggle="tooltip" title="Descargar PDF" role="button" class="btn btn-orange btn-sm px-2 mx-1"><i class="far fa-file-pdf"></i>
                     </a>
                     {% endif %}
                   </div>
-                  {% endif %}                  
+                  {% endif %}
                 </td>
               </tr>
               {% endfor %}
@@ -157,7 +137,7 @@
 {% block js %}
 <script>
   $(document).ready( function () {
-    $('#brickType').DataTable({
+    $('#woodCompression').DataTable({
       "scrollX": true,
       dom: 'B<"clear">lfrtip',
       buttons: [

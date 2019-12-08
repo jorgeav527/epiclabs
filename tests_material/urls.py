@@ -24,4 +24,13 @@ urlpatterns = [
     path('suction/save/<int:id>/', tests_material_views.suction_save , name="suction_save"),
     path('abs-satu-coeff/save/<int:id>/', tests_material_views.abs_satu_coeff_save , name="abs_satu_coeff_save"),
     path('compretion-brick/save/<int:id>/', tests_material_views.compretion_brick_save , name="compretion_brick_save"),
+    # Wood Compression CRUD and PDF
+    path('wood-compression/', tests_material_views.wood_compression_list, name="wood_compression_list"),
+    path('wood-compression/create/', tests_material_views.wood_compression_create, name="wood_compression_create"),
+    path('wood-compression/<int:id>/update/', tests_material_views.wood_compression_update, name="wood_compression_update"),
+    path('wood-compression/<int:id>/detail/', tests_material_views.wood_compression_detail, name="wood_compression_detail"),
+    path('wood-compression/<int:id>/delete/', tests_material_views.wood_compression_delete, name="wood_compression_delete"),
+    path('wood-compression/<int:id>/pdf/', tests_material_views.wood_compression_pdf, name="wood_compression_pdf"),
+        #  CRUD
+    path('parallel-perpendicular/save/<int:id>/', tests_material_views.parallel_perpendicular_save , name="parallel_perpendicular_save"),
 ]

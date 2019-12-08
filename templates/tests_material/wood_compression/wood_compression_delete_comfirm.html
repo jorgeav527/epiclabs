@@ -1,0 +1,23 @@
+{% extends 'tests_material/base_tests_material.html' %}
+
+{% block material %}
+<div class="row">
+    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto my-5">
+        <div class="card shadow">
+            <div class="card-body">
+                <form role="form" action="{% url 'tests_material:wood_compression_delete' obj.id %}" method="POST">
+                    {% csrf_token %}
+                    <h4 class="h4-responsive font-weight-bold text-center">{{ title }}</h4>
+                    <hr class="my-3">
+                    
+                    <h4>Esta seguro de borrar el ensayo: <small class="text-muted">{{ obj.id }}</small></h4>
+                    <div class="btn-group mt-2" role="group" aria-label="Basic example">
+                        <button class="btn btn-danger btn-md" name="submit" type="submit">Remover</button>
+                        <a href="{% url 'tests_material:wood_compression_list' %}" class="btn btn-primary btn-md mx-1" type="button">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

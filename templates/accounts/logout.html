@@ -1,10 +1,10 @@
 {% extends "base_normal.html" %}
 
 {% block content %}
-<div class="container">
+<div class="container my-5">
     <div class="row">
       <div class="col-sm-12 col-md-8 col-lg-5 mx-auto my-5">
-        <div class="card shadow">
+        <div class="card shadow my-5">
           <div class="card-body">
             <h2 class="card-title text-center">Salir</h2>
             <hr class="my-3">
@@ -12,6 +12,9 @@
                 <p>
                   A serrado satisfactoriamente su sesión. 
                   <a href="{% url 'accounts:login' %}">Entrar de Nuevo</a>.
+                  <br>
+                  Gracias por usar la Plataforma
+                  <hr>
                 </p>
             </div>
           </div>

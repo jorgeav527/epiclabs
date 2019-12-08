@@ -68,7 +68,19 @@
                             <td>{{ variation_dimentions.average_high }}</td>
                         </tr>
                         {% endfor %}
-                    </tbody>
+                            <th scope="row">VD (%)</th>
+                            <td></td>
+                            <td></td>
+                            <td>{{ vd_lengt }}</td>
+                            <td></td>
+                            <td></td>
+                            <td>{{ vd_width }}</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>{{ vd_high }}</td>
+                </tbody>
                 </table>
                 
                 <p class="text-left"><span class="font-weight-bold">Determinación del Alabeo:</span></p>
@@ -276,11 +288,7 @@
                     </tbody>
                 </table>
 
-                <p class="text-left"><span class="font-weight-bold">Variación de Dimenciones Largo:</span> {{ vd_lengt }} %</p>
-                <p class="text-left"><span class="font-weight-bold">Variación de Dimenciones Ancho:</span> {{ vd_width }} %</p>
-                <p class="text-left"><span class="font-weight-bold">Variación de Dimenciones Alto:</span> {{ vd_high }} %</p>
                 <p class="text-left"><span class="font-weight-bold">Tipo de Ladrillo segun la Variación Dimencional:</span> esta falta</p>
-                <p class="text-left"><span class="font-weight-bold">Alabeo Máximo:</span> {{ max_avg_warping }}</p>
                 <p class="text-left"><span class="font-weight-bold">Tipo de Ladrillo segun el Alabeo:</span> {{ type_warping }}</p>
                 <p class="text-left"><span class="font-weight-bold">Tipo de Ladrillo segun la Densidad:</span> {{ type_density }}</p>
                 <p class="text-left"><span class="font-weight-bold">Tipo de Ladrillo segun la Succión:</span></p>

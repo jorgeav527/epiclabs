@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.http import HttpResponse
-# import pdfkit
-from django.template.loader import render_to_string
-from weasyprint import HTML
-from django.template.loader import get_template
-from django.db.models import F
 from django.contrib.auth.decorators import login_required
+
+from django.conf import settings
+from django.template.loader import render_to_string
+from weasyprint import HTML, CSS
+
+from django.db.models import F
 import numpy as np
 
 from tests_soil.models import Equivalent, Equiv
@@ -87,6 +88,7 @@ def equiv_save(request, id):
                         instance.equipment.add(equip)
                         equip.use = F("use") + 1
                         equip.save()
+                formset.save()                
                 messages.success(request, f"Los ensayos han sido creados")
                 return redirect('tests_soil:equiv_save', id=obj.id)
     
@@ -182,7 +184,7 @@ def equivalent_pdf(request, id):
     equiv_sand = qs_equiv.values_list("equiv_sand", flat=True).order_by("id")
     mean_equiv_sand = np.mean(equiv_sand)
 
-    html = render_to_string('tests_soil/equivalent/equivalent_pdf.html', {
+    context = {
         "obj": obj,
         "qs_equiv": qs_equiv,
         "mean_equiv_sand": mean_equiv_sand,
@@ -191,12 +193,17 @@ def equivalent_pdf(request, id):
         "noma_NTP": "NTP 339.146",
         "coordinator": coordinator,
         "tecnic": tecnic,
-    })
+    }
+    html = render_to_string('tests_soil/equivalent/equivalent_pdf.html', context)
+    css_bootstrap = CSS(settings.STATIC_ROOT +  '/css/bootstrap.min.css')
+    css_pdf = CSS(settings.STATIC_ROOT +  '/css/pdf_file.css')
     filename = f"Ensayo_{obj.user.username}_{obj.id}.pdf"
     response = HttpResponse(content_type="application/pdf")
+    # Display in browser
     response['Content-Disposition'] = 'inline; filename="{}"'.format(filename)
-
-    HTML(string=html).write_pdf(response)
+    # Download as attachment
+    # response['Content-Disposition'] = 'attachment; filename="{}"'.format(filename)
+    HTML(string=html, base_url=request.build_absolute_uri()).write_pdf(response, stylesheets=[css_bootstrap, css_pdf])
     return response
 
 

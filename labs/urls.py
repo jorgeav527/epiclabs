@@ -20,10 +20,10 @@ urlpatterns = [
     path('sectors-client-info-ref-per/', labs_views.client_info_ref_per_view, name="client_info_ref_per"),
     path('sectors-client-info-construction/', labs_views.client_info_construction_view, name="client_info_construction"),
     path('sectors-client-equips-concrete/', labs_views.client_equips_concrete_view, name="client_equips_concrete"),
-    # path('sectors-client-equips/', labs_views.client_equips_view, name="client_equips"),
+    path('sectors-client-equips-material/', labs_views.client_equips_material_view, name="client_equips_material"),
     path('sectors-client-equips-soil/', labs_views.client_equips_soil_view, name="client_equips_soil"),
     path('sectors-client-tests-concrete/', labs_views.client_tests_concrete_view, name="client_tests_concrete"),
-    # path('sectors-client-tests-material/', labs_views.client_laboratories_view, name="client_laboratories"),
+    path('sectors-client-tests-material/', labs_views.client_tests_material_view, name="client_tests_material"),
     path('sectors-client-tests-soil/', labs_views.client_tests_soil_view, name="client_tests_soil"),
         # Bach Sector
     path('sectors-bach/', labs_views.sector_bach_view, name="bach"),

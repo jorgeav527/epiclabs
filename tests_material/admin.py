@@ -33,11 +33,11 @@ class WarpingAdmin(admin.TabularInline):
 class DensityVoidsAdmin(admin.TabularInline):
     model = DensityVoids
     fields = ( 
-         "length", "width", "high", "volume_brick", "bar_500", "sc", "su", "bar", 
+         "length", "width", "high", "volume_brick", "sc", "su", 
          "volume_void", "volume_real", "void_percentage", "weight", "density",
     )
     readonly_fields = (
-         "length", "width", "high", "volume_brick", "bar_500", "sc", "su", "bar", 
+         "length", "width", "high", "volume_brick", "sc", "su", 
          "volume_void", "volume_real", "void_percentage", "weight", "density",
     )
     extra = 0
@@ -47,11 +47,11 @@ class DensityVoidsAdmin(admin.TabularInline):
 class SuctionAdmin(admin.TabularInline):
     model = Suction
     fields = (
-        "nomal_weight", "dry_weight", "diff_weight", "length", "width", "face_area", "bar_200", 
+        "nomal_weight", "dry_weight", "diff_weight", "length", "width", "face_area", 
         "face_wet_weight", "face_wet_weight_correction",
     )
     readonly_fields = (
-        "nomal_weight", "dry_weight", "diff_weight", "length", "width", "face_area", "bar_200", 
+        "nomal_weight", "dry_weight", "diff_weight", "length", "width", "face_area", 
         "face_wet_weight", "face_wet_weight_correction",
     )
     extra = 0
@@ -61,11 +61,11 @@ class SuctionAdmin(admin.TabularInline):
 class AbsSatuCoeffAdmin(admin.TabularInline):
     model = AbsSatuCoeff
     fields = (
-        "dry_weight", "wet_weight_cool_24", "wet_weight_hot_24", "wet_weight_hot_5", 
+        "dry_weight", "wet_weight_cool_24", "wet_weight_hot_5", 
         "abs_brick", "abs_max_brick", "coeff_sat",
     )
     readonly_fields = (
-        "dry_weight", "wet_weight_cool_24", "wet_weight_hot_24", "wet_weight_hot_5", 
+        "dry_weight", "wet_weight_cool_24", "wet_weight_hot_5", 
         "abs_brick", "abs_max_brick", "coeff_sat",
     )
     extra = 0

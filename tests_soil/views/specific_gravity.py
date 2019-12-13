@@ -1,16 +1,17 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.http import HttpResponse
-# import pdfkit
-from django.template.loader import render_to_string
-from weasyprint import HTML
-from django.template.loader import get_template
-from django.db.models import F
 from django.contrib.auth.decorators import login_required
+
+from django.conf import settings
+from django.template.loader import render_to_string
+from weasyprint import HTML, CSS
+
+from django.db.models import F
+import numpy as np
+
 from bokeh.plotting import figure
 from bokeh.embed import components
-from bokeh.io.export import get_screenshot_as_png
-import numpy as np
 
 from tests_soil.models import SpecificGravity, FractionPass, FractionRetained
 from tests_soil.forms import SpecificGravityForm, SpecificGravityFormClient, FractionPassFormSet, FractionRetainedFormSet
@@ -93,6 +94,7 @@ def fraction_pass_save(request, id):
                         instance.equipment.add(equip)
                         equip.use = F("use") + 1
                         equip.save()
+                formset.save()                
                 messages.success(request, f"Los ensayos han sido creados")
                 return redirect('tests_soil:fraction_pass_save', id=obj.id)
     
@@ -123,6 +125,7 @@ def fraction_retained_save(request, id):
                         instance.equipment.add(equip)
                         equip.use = F("use") + 1
                         equip.save()
+                formset.save()                
                 messages.success(request, f"Los ensayos han sido creados")
                 return redirect('tests_soil:fraction_retained_save', id=obj.id)
     
@@ -254,7 +257,7 @@ def specific_gravity_pdf(request, id):
     total_ave_spe_grav = 1/(((mean_material_retained/100)/mean_spe_mass_wei_app)+((mean_material_pass/100)/mean_grav_sp))
     total_average_specific_gravity = round(total_ave_spe_grav, 3)
 
-    html = render_to_string('tests_soil/specific_gravity/specific_gravity_pdf.html', {
+    context = {
         "obj": obj,
         "mean_grav_sp": mean_grav_sp,
         "mean_spe_mass_wei": mean_spe_mass_wei,
@@ -271,12 +274,17 @@ def specific_gravity_pdf(request, id):
         "noma_NTP": "NTP 339.127",
         "coordinator": coordinator,
         "tecnic": tecnic,
-    })
+    }
+    html = render_to_string('tests_soil/specific_gravity/specific_gravity_pdf.html', context)
+    css_bootstrap = CSS(settings.STATIC_ROOT +  '/css/bootstrap.min.css')
+    css_pdf = CSS(settings.STATIC_ROOT +  '/css/pdf_file.css')
     filename = f"Ensayo_{obj.user.username}_{obj.id}.pdf"
     response = HttpResponse(content_type="application/pdf")
+    # Display in browser
     response['Content-Disposition'] = 'inline; filename="{}"'.format(filename)
-
-    HTML(string=html).write_pdf(response)
+    # Download as attachment
+    # response['Content-Disposition'] = 'attachment; filename="{}"'.format(filename)
+    HTML(string=html, base_url=request.build_absolute_uri()).write_pdf(response, stylesheets=[css_bootstrap, css_pdf])
     return response
 
 

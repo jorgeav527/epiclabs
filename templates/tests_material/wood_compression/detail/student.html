@@ -23,6 +23,8 @@
                 <p class="text-left"><span class="font-weight-bold">Nombre de la Madera:</span> {{ obj.wood_name }}</p>
                 <hr class="my-3">
 
+                <p class="text-left mt-3"><span class="font-weight-bold"><u>Resultados del Ensayo</u></span></p>    
+                {% if qs_parallel %}
                 <p class="text-left"><span class="font-weight-bold">Compresión Paralela a la fibra:</span></p>
                 <table class="table table-sm table-responsive table-bordered text-center">
                     <thead class="primary-color-dark white-text">
@@ -69,7 +71,9 @@
                             <td>{{ avg_fc_MPA_parallel }} ({{ avg_fc_parallel }})</td>
                     </tbody>
                 </table>
+                {% endif %}
 
+                {% if qs_perpendicular %}
                 <p class="text-left"><span class="font-weight-bold">Compresión Perpendicular a la fibra:</span></p>
                 <table class="table table-sm table-responsive table-bordered text-center">
                     <thead class="primary-color-dark white-text">
@@ -116,9 +120,14 @@
                             <td>{{ avg_fc_MPA_perpendicular }} ({{ avg_fc_perpendicular }})</td>
                     </tbody>
                 </table>
+                {% endif %}
 
+                {% if qs_parallel %}
                 <p class="text-left"><span class="font-weight-bold">Grupo segun Esfuerzos Admisibles (Paralela):</span> {{ type_parallel }}</p>
+                {% endif %}
+                {% if qs_perpendicular %}
                 <p class="text-left"><span class="font-weight-bold">Grupo segun Esfuerzos Admisibles (Perpendicular):</span> {{ type_perpendicular }}</p>
+                {% endif %}
                 <hr class="my-3">
                                 
                 <p class="text-left mt-3"><span class="font-weight-bold"><u>Datos Extra</u></span></p>

@@ -1,16 +1,17 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.http import HttpResponse
-# import pdfkit
-from django.template.loader import render_to_string
-from weasyprint import HTML
-from django.template.loader import get_template
-from django.db.models import F
 from django.contrib.auth.decorators import login_required
+
+from django.conf import settings
+from django.template.loader import render_to_string
+from weasyprint import HTML, CSS
+
+from django.db.models import F
+import numpy as np
+
 from bokeh.plotting import figure
 from bokeh.embed import components
-from bokeh.io.export import get_screenshot_as_png
-import numpy as np
 
 from tests_soil.models import ProctorM, DensityWetDry, Saturation, Correction
 from tests_soil.forms import ProctorMForm, ProctorMFormClient, DensityWetDryFormSet, SaturationFormSet, CorrectionFormSet
@@ -92,6 +93,7 @@ def density_save(request, id):
                         instance.equipment.add(equip)
                         equip.use = F("use") + 1
                         equip.save()
+                formset.save()                
                 messages.success(request, f"Los ensayos han sido creados")
                 return redirect('tests_soil:density_save', id=obj.id)
     
@@ -121,6 +123,7 @@ def saturation_save(request, id):
                         instance.equipment.add(equip)
                         equip.use = F("use") + 1
                         equip.save()
+                formset.save()                
                 messages.success(request, f"Los ensayos han sido creados")
                 return redirect('tests_soil:saturation_save', id=obj.id)
     
@@ -150,6 +153,7 @@ def correction_save(request, id):
                         instance.equipment.add(equip)
                         equip.use = F("use") + 1
                         equip.save()
+                formset.save()                
                 messages.success(request, f"Los ensayos han sido creados")
                 return redirect('tests_soil:correction_save', id=obj.id)
     
@@ -248,12 +252,12 @@ def proctor_m_detail(request, id):
     plot = figure(x_range=(min_x-1, max_x+5), y_range=(min_y-0.05, max_y+0.1), tools=TOOLS, 
         title="Curva Humedad - Densidad Seca", x_axis_label= 'Porcentaje de Humedad (%)', y_axis_label= 'Densidad Seca (g/cm³)',
         sizing_mode="scale_width",)
-    plot.circle(x_moisture, y_dry_density, size=8, legend_label="Resultados")
+    plot.circle(x_moisture, y_dry_density, size=8, legend="Resultados")
     plot.line(x, y, line_width=2, line_dash='dashed')
     plot.line([max_w_100, min_w_100], [min_y, max_y], line_width=1, line_dash='dashed', color="red")
     plot.line([max_w_80, min_w_80], [min_y, max_y], line_width=1, line_dash='dashed', color="red")
     plot.line([max_w_60, min_w_60], [min_y, max_y], line_width=1, line_dash='dashed', color="red")
-    plot.circle(max_x_moisture, max_y_dry_density, size=8, color="red", legend_label="Maximo Punto")
+    plot.circle(max_x_moisture, max_y_dry_density, size=8, color="red", legend="Maximo Punto")
     script, div = components(plot)
 
     context = {
@@ -350,8 +354,7 @@ def proctor_m_pdf(request, id):
     correction_moisture = round(max_x_moisture*pf_f_g/100+moisture_correction*pfe/100, 1) 
     correction_dry_density = round(100*max_y_dry_density*pefe*0.99821/(max_y_dry_density*pfe+pefe*0.99821*pf_f_g), 2) 
 
-
-    html = render_to_string('tests_soil/proctor_m/proctor_m_pdf.html', {
+    context = {
         "qs_density": qs_density,
         "max_y_dry_density": max_y_dry_density,
         "max_x_moisture": max_x_moisture,
@@ -367,10 +370,15 @@ def proctor_m_pdf(request, id):
         "noma_NTP": "NTP 339.141",
         "coordinator": coordinator,
         "tecnic": tecnic,
-    })
+    }
+    html = render_to_string('tests_soil/proctor_m/proctor_m_pdf.html', context)
+    css_bootstrap = CSS(settings.STATIC_ROOT +  '/css/bootstrap.min.css')
+    css_pdf = CSS(settings.STATIC_ROOT +  '/css/pdf_file.css')
     filename = f"Ensayo_{obj.user.username}_{obj.id}.pdf"
     response = HttpResponse(content_type="application/pdf")
+    # Display in browser
     response['Content-Disposition'] = 'inline; filename="{}"'.format(filename)
-
-    HTML(string=html).write_pdf(response)
+    # Download as attachment
+    # response['Content-Disposition'] = 'attachment; filename="{}"'.format(filename)
+    HTML(string=html, base_url=request.build_absolute_uri()).write_pdf(response, stylesheets=[css_bootstrap, css_pdf])
     return response

@@ -15,11 +15,11 @@
                 <!-- Card -->
                 <div class="card">
                   <div class="p-3">
-                    <h3 class="card-title">Información de los Equipos en el Laboratorio de Materiales</h3>
+                    <h3 class="card-title">{{ title }}</h3>
                     <table id="clientEquipsMaterial" class="display compact table table-bordered table-responsive table-striped text-center">
                       <thead class="warning-color-dark white-text">
                         <tr>
-                          <th>Ensayo/Maquina</th>
+                          <th>Ensayo/Equipo</th>
                           {% for name in qs_equips_names %}
                           <th>{{ name }}</th>
                           {% endfor %}
@@ -27,41 +27,17 @@
                       </thead>
                       <tbody>
                         <tr>
-                          <td scope="row">DiamondPiceBreak</td>
-                          {% for a in qs_DiamondPiceBreak_equips %}
+                          <td scope="row">Ensayo de Clasificación del Ladrillo</td>
+                          {% for a in qs_AbsSatuCoeff_CompretionBrick %}
                           <td>{{ a }}</td>
                           {% endfor %}
                         </tr>
                         <tr>
-                          <td scope="row">GroutDiceBreak</td>
-                          {% for b in qs_GroutDiceBreak_equips %}
+                          <td scope="row">Ensayo de Compresión Simple en Madera</td>
+                          {% for b in qs_WoodCompression_ParallelPerpendicular %}
                           <td>{{ b }}</td>
                           {% endfor %}
                         </tr>  
-                        <tr>
-                          <td scope="row">LimeDiceBreak</td>
-                          {% for c in qs_LimeDiceBreak_equips %}
-                          <td>{{ c }}</td>
-                          {% endfor %}
-                        </tr>
-                        <tr>
-                          <td scope="row">LimePiceBreak</td>
-                          {% for d in qs_LimePiceBreak_equips %}
-                          <td>{{ d }}</td>
-                          {% endfor %}
-                        </tr>
-                        <tr>
-                          <td scope="row">PaverBreak</td>
-                          {% for e in qs_PaverBreak_equips %}
-                          <td>{{ e }}</td>
-                          {% endfor %}
-                        </tr>
-                        <tr>
-                          <td scope="row">PiceBreak</td>
-                          {% for f in qs_PiceBreak_equips %}
-                          <td>{{ f }}</td>
-                          {% endfor %}
-                        </tr>
                       </tbody>
                     </table>
                   </div>
@@ -111,7 +87,9 @@
                 <!-- Card -->
                 <div class="card">
                   <div class="p-3">
-                    <h3 class="card-title">Grafica 2</h3>
+                    <h3 class="card-title">{{ title_g2 }}</h3>
+                      {{ div | safe }}
+                      {{ script | safe }}
                   </div>
                 </div>
                 <!-- Card -->            

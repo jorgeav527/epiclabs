@@ -1,11 +1,15 @@
 from django.shortcuts import render
 import numpy as np
 
+from bokeh.plotting import figure
+from bokeh.embed import components
+
 from accounts.models import *
 from equipments.models import *
 from reference_person.models import *
 from construction.models import *
 from tests_concrete.models import *
+from tests_material.models import *
 from tests_soil.models import *
 
 # Create your views here.
@@ -21,7 +25,7 @@ def client_info_clients_view(request):
         qs_users = User.objects.filter(is_client=True)
 
         context = {
-            "title": "Informacion",
+            "title": "Informacion de Clientes",
             "qs_users": qs_users,
         }
         return render(request, 'labs/sectors/client/client_info_clients.html', context)
@@ -34,7 +38,7 @@ def client_info_ref_per_view(request):
         qs_ref_persons = ReferencePerson.objects.all()
 
         context = {
-            "title": "Informacion",
+            "title": "Informacion de Personas de Referencia",
             "qs_ref_persons": qs_ref_persons,
         }
         return render(request, 'labs/sectors/client/client_info_ref_per.html', context)
@@ -47,7 +51,7 @@ def client_info_construction_view(request):
         qs_constructions = Construction.objects.all()
 
         context = {
-            "title": "Informacion",
+            "title": "Informacion de Construcciónes",
             "qs_constructions": qs_constructions,
         }
         return render(request, 'labs/sectors/client/client_info_construction.html', context)
@@ -83,7 +87,7 @@ def client_equips_concrete_view(request):
             qs_PiceBreak_equips.append(qs_PiceBreak)
 
         context = {
-            "title": "Equipos",
+            "title": "Equipos Usados en el Laboratorio de Concreto",
             "qs_equips_names": qs_equips_names,
             "qs_DiamondPiceBreak_equips": qs_DiamondPiceBreak_equips,
             "qs_GroutDiceBreak_equips": qs_GroutDiceBreak_equips,
@@ -93,6 +97,88 @@ def client_equips_concrete_view(request):
             "qs_PiceBreak_equips": qs_PiceBreak_equips,
         }
         return render(request, 'labs/sectors/client/client_equips_concrete.html', context)
+
+
+def client_equips_material_view(request):
+
+    if request.user.is_superuser or request.user.is_admin:
+
+        qs_equips = Equip.objects.all()
+        qs_equips_names = qs_equips.values_list("name", flat=True)
+        qs_BrickType_equips = []
+        qs_VariationDimensions_equips = []
+        qs_Warping_equips = []
+        qs_DensityVoids_equips = []
+        qs_Suction_equips = []
+        qs_AbsSatuCoeff_equips = []
+        qs_CompretionBrick_equips = []
+        qs_WoodCompression_equips = []
+        qs_ParallelPerpendicular_equips = []
+        
+        for name in qs_equips_names:
+
+            qs_BrickType = Equip.objects.get(name=name).bricktype_set.filter(user__is_client=True).count()
+            qs_VariationDimensions =Equip.objects.get(name=name).variationdimensions_set.filter(brick_type__user__is_client=True).count()
+            qs_Warping =Equip.objects.get(name=name).warping_set.filter(brick_type__user__is_client=True).count()
+            qs_DensityVoids =Equip.objects.get(name=name).densityvoids_set.filter(brick_type__user__is_client=True).count()
+            qs_Suction =Equip.objects.get(name=name).suction_set.filter(brick_type__user__is_client=True).count()
+            qs_AbsSatuCoeff =Equip.objects.get(name=name).abssatucoeff_set.filter(brick_type__user__is_client=True).count()
+            qs_CompretionBrick =Equip.objects.get(name=name).compretionbrick_set.filter(brick_type__user__is_client=True).count()
+            qs_WoodCompression = Equip.objects.get(name=name).woodcompression_set.filter(user__is_client=True).count() 
+            qs_ParallelPerpendicular =Equip.objects.get(name=name).parallelperpendicular_set.filter(wood_compression__user__is_client=True).count()
+
+            qs_BrickType_equips.append(qs_BrickType)
+            qs_VariationDimensions_equips.append(qs_VariationDimensions)
+            qs_Warping_equips.append(qs_Warping)
+            qs_DensityVoids_equips.append(qs_DensityVoids)
+            qs_Suction_equips.append(qs_Suction)
+            qs_AbsSatuCoeff_equips.append(qs_AbsSatuCoeff)
+            qs_CompretionBrick_equips.append(qs_CompretionBrick)
+            qs_WoodCompression_equips.append(qs_WoodCompression)
+            qs_ParallelPerpendicular_equips.append(qs_ParallelPerpendicular)
+
+        qs_BrickType_VariationDimensions = np.add(qs_BrickType_equips, qs_VariationDimensions_equips)
+        qs_VariationDimensionsqs_Warping = np.add(qs_BrickType_VariationDimensions, qs_Warping_equips)
+        qs_Warping_DensityVoids = np.add(qs_VariationDimensionsqs_Warping, qs_DensityVoids_equips)
+        qs_DensityVoids_Suction = np.add(qs_Warping_DensityVoids, qs_Suction_equips)
+        qs_Suction_AbsSatuCoeff = np.add(qs_DensityVoids_Suction, qs_AbsSatuCoeff_equips)
+        qs_AbsSatuCoeff_CompretionBrick = np.add(qs_Suction_AbsSatuCoeff, qs_CompretionBrick_equips)
+        qs_WoodCompression_ParallelPerpendicular = np.add(qs_WoodCompression_equips, qs_ParallelPerpendicular_equips)
+
+        print( list(qs_AbsSatuCoeff_CompretionBrick))
+        print(list(qs_WoodCompression_ParallelPerpendicular))
+
+        equips = list(qs_equips_names)
+        tests = ["Ensayo de Clasificación del Ladrillo", "Ensayo de Compresión Simple en Madera",]
+        colors = ["#718dbf", "#e84d60",]
+
+        data = {'equips' : equips,
+                'Ensayo de Clasificación del Ladrillo'   : qs_AbsSatuCoeff_CompretionBrick,
+                'Ensayo de Compresión Simple en Madera'   : qs_WoodCompression_ParallelPerpendicular,}
+
+        TOOLS="hover,pan,wheel_zoom,reset,save"
+        plot = figure(x_range=equips, plot_height=300, tools=TOOLS, y_axis_label= 'Numero de Usos',
+            tooltips="$name @equips: @$name",
+            sizing_mode="scale_width",)
+
+        plot.vbar_stack(tests, x='equips', width=0.5, color=colors, source=data,)
+
+        plot.y_range.start = 0
+        plot.legend.location = "top_left"
+        plot.xaxis.major_label_orientation = 1
+        script, div = components(plot)
+
+        context = {
+            "script": script,
+            "div": div,
+            "title": "Equipos Usados en el Laboratorio de Materiales",
+            "title_g2": "Uso vs Equipos",
+            "qs_equips_names": qs_equips_names,
+            "qs_AbsSatuCoeff_CompretionBrick": qs_AbsSatuCoeff_CompretionBrick,
+            "qs_WoodCompression_ParallelPerpendicular": qs_WoodCompression_ParallelPerpendicular,
+        }
+        return render(request, 'labs/sectors/client/client_equips_material.html', context)
+
 
 
 def client_equips_soil_view(request):
@@ -184,7 +270,7 @@ def client_equips_soil_view(request):
         qs_FractionPass_FractionRetained = np.add(qs_SpecificGravity_FractionPass, qs_FractionRetained_equips)
         
         context = {
-            "title": "Equipos",
+            "title": "Equipos Usados en el Laboratorio de Suelos",
             "qs_equips_names": qs_equips_names,
             "qs_Equivalent_Equiv": qs_Equivalent_Equiv,
             "qs_FineMaterial_equips": qs_FineMaterial_equips,
@@ -211,7 +297,7 @@ def client_tests_concrete_view(request):
         qs_PiceBreak        = PiceBreak.objects.filter(user__is_client=True)
 
         context = {
-            "title": "Laboratorios",
+            "title": "Ensayos del Laboratorio de Concreto",
             "qs_DiamondPiceBreak": qs_DiamondPiceBreak,
             "qs_GroutDiceBreak": qs_GroutDiceBreak,
             "qs_LimeDiceBreak": qs_LimeDiceBreak,
@@ -220,6 +306,22 @@ def client_tests_concrete_view(request):
             "qs_PiceBreak": qs_PiceBreak,
         }
         return render(request, 'labs/sectors/client/client_tests_concrete.html', context)
+
+
+def client_tests_material_view(request):
+
+    if request.user.is_superuser or request.user.is_admin:
+
+        qs_BrickType                = BrickType.objects.filter(user__is_client=True)
+        qs_WoodCompression          = WoodCompression.objects.filter(user__is_client=True)
+
+        context = {
+
+            "title": "Ensayos del Laboratorio de Materiales",
+            "qs_BrickType": qs_BrickType,
+            "qs_WoodCompression": qs_WoodCompression,
+        }
+        return render(request, 'labs/sectors/client/client_tests_material.html', context)
 
 
 def client_tests_soil_view(request):
@@ -236,7 +338,7 @@ def client_tests_soil_view(request):
         qs_SpecificGravity      = SpecificGravity.objects.filter(user__is_client=True)
 
         context = {
-            "title": "Laboratorios",
+            "title": "Ensayos del Laboratorio de Suelos",
             "qs_Equivalent": qs_Equivalent,
             "qs_FineMaterial": qs_FineMaterial,
             "qs_GranulometricGlobal": qs_GranulometricGlobal,

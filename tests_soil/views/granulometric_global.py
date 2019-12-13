@@ -1,19 +1,17 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.http import HttpResponse
-
-import numpy as np
-
-# import pdfkit
-from django.template.loader import render_to_string
-from weasyprint import HTML
-from django.template.loader import get_template
-from django.db.models import F
 from django.contrib.auth.decorators import login_required
+
+from django.conf import settings
+from django.template.loader import render_to_string
+from weasyprint import HTML, CSS
+
+from django.db.models import F
+import numpy as np
 
 from bokeh.plotting import figure
 from bokeh.embed import components
-from bokeh.io.export import get_screenshot_as_png
 
 from io import BytesIO
 import base64
@@ -187,9 +185,9 @@ def granulometric_global_detail(request, id):
     plot = figure(x_axis_type="log", x_range=(max_x, min_x), y_range=(min_y, max_y), tools=TOOLS, 
         title="Curva Granulometrica", x_axis_label= 'Diametro de la Malla (mm)', y_axis_label= 'Porcentaje Pasante (%)',
         sizing_mode="scale_width",)
-    plot.circle(diameter_mesh, passing_percentage, size=8, legend_label="Resultados")
+    plot.circle(diameter_mesh, passing_percentage, size=8, legend="Resultados")
     plot.line(diameter_mesh, passing_percentage, line_width=2, line_dash='dashed')
-    plot.circle(d_x, decil, size=8, color="red", legend_label="Deciles")
+    plot.circle(d_x, decil, size=8, color="red", legend="Deciles")
     script, div = components(plot)
 
     context = {
@@ -324,7 +322,7 @@ def granulometric_global_pdf(request, id):
     graphic = base64.b64encode(image_png)
     graphic = graphic.decode('utf-8')
 
-    html = render_to_string('tests_soil/granulometric_global/granulometric_global_pdf.html', {
+    context = {
         "obj": obj,
         "retained_weight": retained_weight,
         "name_mesh": name_mesh,
@@ -347,10 +345,15 @@ def granulometric_global_pdf(request, id):
         "noma_NTP": "ASTM D3282",
         "coordinator": coordinator,
         "tecnic": tecnic,
-    })
+    }
+    html = render_to_string('tests_soil/granulometric_global/granulometric_global_pdf.html', context)
+    css_bootstrap = CSS(settings.STATIC_ROOT +  '/css/bootstrap.min.css')
+    css_pdf = CSS(settings.STATIC_ROOT +  '/css/pdf_file.css')
     filename = f"Ensayo_{obj.user.username}_{obj.id}.pdf"
     response = HttpResponse(content_type="application/pdf")
+    # Display in browser
     response['Content-Disposition'] = 'inline; filename="{}"'.format(filename)
-
-    HTML(string=html).write_pdf(response)
+    # Download as attachment
+    # response['Content-Disposition'] = 'attachment; filename="{}"'.format(filename)
+    HTML(string=html, base_url=request.build_absolute_uri()).write_pdf(response, stylesheets=[css_bootstrap, css_pdf])
     return response

@@ -4,7 +4,7 @@
             <div class="card-body">
                 <!-- Section heading -->
                 <h4 class="h4-responsive font-weight-bold text-center ">{{ title }}</h4>
-                <p class="dark-grey-text w-responsive text-center mx-auto">{{ norma_ASTM }} / {{ noma_NTP }}</p>
+                <p class="dark-grey-text w-responsive text-center mx-auto">{{ norma_NTP_variation_dimentions }} / {{ norma_NTP_qs_warping }} / {{ norma_NTP_density_voids }} / {{ norma_NTP_abs_sat_coff }} / {{ norma_NTP_compretion_brick }}</p>
                 <hr class="my-3">
 
                 <!-- Section description -->
@@ -33,6 +33,7 @@
                 <hr class="my-3">
                 
                 <p class="text-left mt-3"><span class="font-weight-bold"><u>Resultados del Ensayo</u></span></p>
+                {% if qs_variation_dimentions %}
                 <p class="text-left"><span class="font-weight-bold">Determinación de la Variación de Dimenciones:</span></p>
                 <table class="table table-sm table-responsive table-bordered text-center">
                     <thead class="primary-color-dark white-text">
@@ -82,7 +83,9 @@
                             <td>{{ vd_high }}</td>
                 </tbody>
                 </table>
+                {% endif %}
                 
+                {% if qs_warping %}
                 <p class="text-left"><span class="font-weight-bold">Determinación del Alabeo:</span></p>
                 <table class="table table-sm table-responsive table-bordered text-center">
                     <thead class="primary-color-dark white-text">
@@ -111,7 +114,9 @@
                             <td>{{ avg_downface_convex }}</td>
                     </tbody>
                 </table>
+                {% endif %}
 
+                {% if qs_density_voids %}
                 <p class="text-left"><span class="font-weight-bold">Determinación del % de Vacios y la Densidad:</span></p>
                 <table class="table table-sm table-responsive table-bordered text-center">
                     <thead class="primary-color-dark white-text">
@@ -161,7 +166,9 @@
                             <td>{{ avg_density }}</td>
                     </tbody>
                 </table>
+                {% endif %}
 
+                {% if qs_suction %}
                 <p class="text-left"><span class="font-weight-bold">Determinación de la Succión:</span></p>
                 <table class="table table-sm table-responsive table-bordered text-center">
                     <thead class="primary-color-dark white-text">
@@ -205,7 +212,9 @@
                             <td>{{ avg_face_wet_weight_correction }}</td>
                     </tbody>
                 </table>
-
+                {% endif %}
+                
+                {% if qs_abs_sat_coff %}
                 <p class="text-left"><span class="font-weight-bold">Determinación de la Absorción y el Coeficiente de Saturación:</span></p>
                 <table class="table table-sm table-responsive table-bordered text-center">
                     <thead class="primary-color-dark white-text">
@@ -243,7 +252,9 @@
                             <td>{{ avg_coeff_sat }}</td>
                     </tbody>
                 </table>
+                {% endif %}
 
+                {% if qs_compretion_brick %}
                 <p class="text-left"><span class="font-weight-bold">Determinación de la Compresión:</span></p>
                 <table class="table table-sm table-responsive table-bordered text-center">
                     <thead class="primary-color-dark white-text">
@@ -287,14 +298,30 @@
                             <td>{{ avg_fc_MPA }} ({{ avg_fc }})</td>
                     </tbody>
                 </table>
-
-                <p class="text-left"><span class="font-weight-bold">Tipo de Ladrillo segun la Variación Dimencional:</span> esta falta</p>
+                {% endif %}
+                
+                {% if qs_variation_dimentions %}
+                <p class="text-left"><span class="font-weight-bold">Tipo de Ladrillo segun la Variación Dimencional:</span></p>
+                <p class="text-left"><span class="font-weight-bold">Segun la Altura:</span> {{ type_high }}</p>
+                <p class="text-left"><span class="font-weight-bold">Segun el Ancho:</span> {{ type_width }}</p>
+                <p class="text-left"><span class="font-weight-bold">Segun el Largo:</span> {{ type_lengt }}</p>
+                {% endif %}
+                {% if qs_warping %}
                 <p class="text-left"><span class="font-weight-bold">Tipo de Ladrillo segun el Alabeo:</span> {{ type_warping }}</p>
+                {% endif %}
+                {% if qs_density_voids %}
                 <p class="text-left"><span class="font-weight-bold">Tipo de Ladrillo segun la Densidad:</span> {{ type_density }}</p>
-                <p class="text-left"><span class="font-weight-bold">Tipo de Ladrillo segun la Succión:</span></p>
+                {% endif %}
+                {% if qs_suctidon %}
+                <p class="text-left"><span class="font-weight-bold">Tipo de Ladrillo segun la Succión:</span> {{ type_face_wet_weight_correction }}</p>
+                {% endif %}
+                {% if qs_abs_sat_coff %}
                 <p class="text-left"><span class="font-weight-bold">Tipo de Ladrillo segun la Absorcion:</span> {{ type_abs }}</p>
                 <p class="text-left"><span class="font-weight-bold">Tipo de Ladrillo segun el Coeficiente de Absorción:</span> {{ type_coeff_sat }}</p>
+                {% endif %}
+                {% if qs_compretion_brick %}
                 <p class="text-left"><span class="font-weight-bold">Tipo de Ladrillo segun el Compresión:</span> {{ type_compretion }}</p>
+                {% endif %}
                 <hr class="my-3">
                 
                 <p class="text-left mt-3"><span class="font-weight-bold"><u>Contacto de Referencia</u></span></p>

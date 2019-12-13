@@ -1,0 +1,68 @@
+@page {
+    size: "A4";
+    margin: 1cm 1cm;
+    @bottom-right {
+        content: "Pag. " counter(page) " de " counter(pages); 
+    } 
+}    
+footer {
+    position: fixed;
+    bottom: -1.35cm;
+    left: 0;
+    width: 100%;
+}
+table {
+    font-size: 1.20rem;
+    width: 100%;
+}
+td, th {
+    padding: 0.25rem;
+}
+h4 {
+    font-size: 1.5rem;
+}
+p {
+    font-size: 1.20rem;
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
+}
+span {
+    font-size: 1.10rem;
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
+}
+.panel-heading {
+    font-size: 1.25rem;
+}  
+.panel-footer {
+    font-size: 1.25rem;
+}
+.table--flip {
+    display: flex;
+    overflow: auto;
+    width: auto;
+}
+.table--flip thead {
+    display: flex;
+    flex-shrink: 0;
+    min-width: min-content;
+}
+.table--flip tbody {
+    display: flex;
+    position: relative;
+}
+.table--flip tr {
+    display: flex;
+    flex-direction: column;
+    min-width: min-content;
+    flex-shrink: 0;
+}
+.table--flip td,
+.table--flip th {
+    display: block;
+}
+.signature {
+    position: absolute;
+    bottom: 1.5cm;
+    width: 100%;
+}

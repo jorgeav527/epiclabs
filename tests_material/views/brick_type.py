@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.http import HttpResponse
-# import pdfkit
-from django.template.loader import render_to_string
-from weasyprint import HTML
-from django.template.loader import get_template
-from django.db.models import F
 from django.contrib.auth.decorators import login_required
+
+from django.conf import settings
+from django.template.loader import render_to_string
+from weasyprint import HTML, CSS
+
+from django.db.models import F
 import numpy as np
 
 from tests_material.models import BrickType, VariationDimensions, Warping, DensityVoids, Suction, AbsSatuCoeff, CompretionBrick
@@ -90,6 +91,7 @@ def variation_dimensions_save(request, id):
                         instance.equipment.add(equip)
                         equip.use = F("use") + 1
                         equip.save()
+                formset.save()                
                 messages.success(request, f"Los ensayos han sido creados")
                 return redirect('tests_material:variation_dimensions_save', id=obj.id)
     
@@ -120,6 +122,7 @@ def warping_save(request, id):
                         instance.equipment.add(equip)
                         equip.use = F("use") + 1
                         equip.save()
+                formset.save()                
                 messages.success(request, f"Los ensayos han sido creados")
                 return redirect('tests_material:warping_save', id=obj.id)
     
@@ -150,6 +153,7 @@ def density_voids_save(request, id):
                         instance.equipment.add(equip)
                         equip.use = F("use") + 1
                         equip.save()
+                formset.save()                
                 messages.success(request, f"Los ensayos han sido creados")
                 return redirect('tests_material:density_voids_save', id=obj.id)
     
@@ -180,6 +184,7 @@ def suction_save(request, id):
                         instance.equipment.add(equip)
                         equip.use = F("use") + 1
                         equip.save()
+                formset.save()                
                 messages.success(request, f"Los ensayos han sido creados")
                 return redirect('tests_material:suction_save', id=obj.id)
     
@@ -210,6 +215,7 @@ def abs_satu_coeff_save(request, id):
                         instance.equipment.add(equip)
                         equip.use = F("use") + 1
                         equip.save()
+                formset.save()                
                 messages.success(request, f"Los ensayos han sido creados")
                 return redirect('tests_material:abs_satu_coeff_save', id=obj.id)
     
@@ -240,6 +246,7 @@ def compretion_brick_save(request, id):
                         instance.equipment.add(equip)
                         equip.use = F("use") + 1
                         equip.save()
+                formset.save()                
                 messages.success(request, f"Los ensayos han sido creados")
                 return redirect('tests_material:compretion_brick_save', id=obj.id)
     
@@ -291,17 +298,54 @@ def brick_type_detail(request, id):
     # Variation dimentions
     qs_variation_dimentions = VariationDimensions.objects.filter(brick_type=obj.id)
 
-    qs_avg_length_vd_list = qs_variation_dimentions.values_list('average_length', flat=True) 
-    avg_length_vd = round(np.mean(qs_avg_length_vd_list), 2)
-    vd_lengt = round(((obj.n_d_length - avg_length_vd) / avg_length_vd) * 100, 2)
+    qs_avg_high_vd_list = qs_variation_dimentions.values_list('average_high', flat=True) 
+    avg_high_vd = round(np.mean(qs_avg_high_vd_list), 2)
+    vd_high = round((abs(obj.n_d_high - avg_high_vd) / avg_high_vd) * 100, 0)
 
     qs_avg_width_vd_list = qs_variation_dimentions.values_list('average_width', flat=True) 
     avg_width_vd = round(np.mean(qs_avg_width_vd_list), 2)
-    vd_width = round(((obj.n_d_width - avg_width_vd) / avg_width_vd) * 100, 2)
+    vd_width = round((abs(obj.n_d_width - avg_width_vd) / avg_width_vd) * 100, 0)
 
-    qs_avg_high_vd_list = qs_variation_dimentions.values_list('average_high', flat=True) 
-    avg_high_vd = round(np.mean(qs_avg_high_vd_list), 2)
-    vd_high = round(((obj.n_d_high - avg_high_vd) / avg_high_vd) * 100, 2)
+    qs_avg_length_vd_list = qs_variation_dimentions.values_list('average_length', flat=True) 
+    avg_length_vd = round(np.mean(qs_avg_length_vd_list), 2)
+    vd_lengt = round((abs(obj.n_d_length - avg_length_vd) / avg_length_vd) * 100, 0)
+
+    if vd_high <= 3 and vd_high > 0:
+        type_high = "Ladrillo Tipo V"
+    elif vd_high <= 4 and vd_high > 3:
+        type_high = "Ladrillo Tipo IV"
+    elif vd_high <= 5 and vd_high > 4:
+        type_high = "Ladrillo Tipo III"
+    elif vd_high <= 7 and vd_high > 5:
+        type_high = "Ladrillo Tipo II"
+    elif vd_high <= 8 and vd_high > 7:
+        type_high = "Ladrillo Tipo I"
+    else:
+        type_high = "No Corresponde"
+
+    print(type_high)
+
+    if vd_width <= 2 and vd_width > 0:
+        type_width = "Ladrillo Tipo V"
+    elif vd_width <= 3 and vd_width > 2:
+        type_width = "Ladrillo Tipo IV"
+    elif vd_width <= 4 and vd_width > 3:
+        type_width = "Ladrillo Tipo III"
+    elif vd_width <= 6 and vd_width > 4:
+        type_width = "Ladrillo Tipo II"
+    else:
+        type_width = "No Corresponde"
+
+    if vd_lengt <= 1 and vd_lengt > 0:
+        type_lengt = "Ladrillo Tipo V"
+    elif vd_lengt <= 2 and vd_lengt > 1:
+        type_lengt = "Ladrillo Tipo IV"
+    elif vd_lengt <= 3 and vd_lengt > 2:
+        type_lengt = "Ladrillo Tipo III"
+    elif vd_lengt <= 4 and vd_lengt > 3:
+        type_lengt = "Ladrillo Tipo II"
+    else:
+        type_lengt = "No Corresponde"
 
     # Warping
     qs_warping = Warping.objects.filter(brick_type=obj.id)
@@ -311,47 +355,46 @@ def brick_type_detail(request, id):
     qs_downface_concave_list = qs_warping.values_list('downface_concave', flat=True) 
     qs_downface_convex_list = qs_warping.values_list('downface_convex', flat=True) 
 
-
     avg_upface_concave = round(np.mean(qs_upface_concave_list), 2)
     avg_upface_convex = round(np.mean(qs_upface_convex_list), 2)
     avg_downface_concave = round(np.mean(qs_downface_concave_list), 2)
     avg_downface_convex = round(np.mean(qs_downface_convex_list), 2)
     max_avg_warping = max(avg_upface_concave, avg_upface_convex, avg_downface_concave, avg_downface_convex,)
 
-    if max_avg_warping <= 2:
-        type_warping = "Ladrillo V"
-    elif max_avg_warping <= 4:
-        type_warping = "Ladrillo IV"
-    elif max_avg_warping <= 6:
-        type_warping = "Ladrillo III"
-    elif max_avg_warping <= 8:
-        type_warping = "Ladrillo II"
-    elif max_avg_warping <= 10:
-        type_warping = "Ladrillo I"
+    if max_avg_warping <= 2 and max_avg_warping > 0:
+        type_warping = "Ladrillo Tipo V"
+    elif max_avg_warping <= 4 and max_avg_warping > 2:
+        type_warping = "Ladrillo Tipo IV"
+    elif max_avg_warping <= 6 and max_avg_warping > 4:
+        type_warping = "Ladrillo Tipo III"
+    elif max_avg_warping <= 8 and max_avg_warping > 6:
+        type_warping = "Ladrillo Tipo II"
+    elif max_avg_warping <= 10 and max_avg_warping > 8:
+        type_warping = "Ladrillo Tipo I"
     else:
-        type_warping = "Ladrillo Desconocido"
+        type_warping = "No Corresponde"
 
     # Density Voids
     qs_density_voids = DensityVoids.objects.filter(brick_type=obj.id)
 
     qs_void_percentage_list = qs_density_voids.values_list('void_percentage', flat=True)
-    qs_density_list = qs_density_voids.values_list('density', flat=True)
-
     avg_void_percentage = round(np.mean(qs_void_percentage_list), 0)
+
+    qs_density_list = qs_density_voids.values_list('density', flat=True)
     avg_density = round(np.mean(qs_density_list), 2)
 
-    if avg_density >= 1.70:
-        type_density = "Ladrillo V"
-    elif avg_density >= 1.65:
-        type_density = "Ladrillo IV"
-    elif avg_density >= 1.60:
-        type_density = "Ladrillo III"
-    elif avg_density >= 1.55:
-        type_density = "Ladrillo II"
-    elif avg_density >= 1.50:
-        type_density = "Ladrillo I"
+    if avg_density <= 1.70 and avg_density > 1.65:
+        type_density = "Ladrillo Tipo V"
+    elif avg_density <= 1.65 and avg_density > 1.60:
+        type_density = "Ladrillo Tipo IV"
+    elif avg_density <= 1.60 and avg_density > 1.55:
+        type_density = "Ladrillo Tipo III"
+    elif avg_density <= 1.55 and avg_density > 1.50:
+        type_density = "Ladrillo Tipo II"
+    elif avg_density <= 1.50 and avg_density > 1.45:
+        type_density = "Ladrillo Tipo I"
     else:
-        type_density = "Ladrillo Desconocido"
+        type_density = "No Corresponde"
 
     # Suction
     qs_suction = Suction.objects.filter(brick_type=obj.id)
@@ -359,40 +402,53 @@ def brick_type_detail(request, id):
     qs_face_wet_weight_correction_list = qs_suction.values_list('face_wet_weight_correction', flat=True)
     avg_face_wet_weight_correction = round(np.mean(qs_face_wet_weight_correction_list), 2)
 
+    if avg_face_wet_weight_correction < 38:
+        type_face_wet_weight_correction = "Ladrillo Tipo V"
+    if avg_face_wet_weight_correction < 45 and avg_face_wet_weight_correction >= 38:
+        type_face_wet_weight_correction = "Ladrillo Tipo IV"
+    if avg_face_wet_weight_correction < 53 and avg_face_wet_weight_correction >= 45:
+        type_face_wet_weight_correction = "Ladrillo Tipo III"
+    if avg_face_wet_weight_correction < 66 and avg_face_wet_weight_correction >= 53:
+        type_face_wet_weight_correction = "Ladrillo Tipo II"
+    if avg_face_wet_weight_correction < 61 and avg_face_wet_weight_correction >= 66:
+        type_face_wet_weight_correction = "Ladrillo Tipo I"
+    else:
+        type_face_wet_weight_correction = "No Corresponde"
+
     # Absortion and Coeff of Sat 
     qs_abs_sat_coff = AbsSatuCoeff.objects.filter(brick_type=obj.id)
     qs_abs_brick_list = qs_abs_sat_coff.values_list('abs_brick', flat=True)
     qs_abs_max_brick_list = qs_abs_sat_coff.values_list('abs_max_brick', flat=True)
     qs_coeff_sat_list = qs_abs_sat_coff.values_list('coeff_sat', flat=True)
-    avg_abs_brick = round(np.mean(qs_abs_brick_list), 2)
-    avg_abs_max_brick = round(np.mean(qs_abs_max_brick_list), 2)
-    avg_coeff_sat = round(np.mean(qs_coeff_sat_list), 2)
+    avg_abs_brick = round(np.mean(qs_abs_brick_list), 1)
+    avg_abs_max_brick = round(np.mean(qs_abs_max_brick_list), 1)
+    avg_coeff_sat = round(np.mean(qs_coeff_sat_list), 3)
 
-    if avg_abs_brick <= 22:
-        type_abs = "Ladrillo V"
-    elif avg_abs_brick <= 23:
-        type_abs = "Ladrillo IV"
-    elif avg_abs_brick <= 25:
-        type_abs = "Ladrillo III"
-    elif avg_abs_brick <= 27:
-        type_abs = "Ladrillo II"
-    elif avg_abs_brick <= 30:
-        type_abs = "Ladrillo I"
+    if avg_abs_brick < 22:
+        type_abs = "Ladrillo Tipo V"
+    elif avg_abs_brick < 23 and avg_abs_brick >= 22:
+        type_abs = "Ladrillo Tipo IV"
+    elif avg_abs_brick < 25 and avg_abs_brick >= 23:
+        type_abs = "Ladrillo Tipo III"
+    elif avg_abs_brick < 27 and avg_abs_brick >= 25:
+        type_abs = "Ladrillo Tipo II"
+    elif avg_abs_brick < 30 and avg_abs_brick >= 25:
+        type_abs = "Ladrillo Tipo I"
     else:
-        type_abs = "Ladrillo Desconocido"
+        type_abs = "No Corresponde"
 
-    if avg_coeff_sat <= 0.88:
-        type_coeff_sat = "Ladrillo V"
-    elif avg_coeff_sat <= 0.89:
-        type_coeff_sat = "Ladrillo IV"
-    elif avg_coeff_sat <= 0.90:
-        type_coeff_sat = "Ladrillo III"
-    elif avg_coeff_sat <= 0.91:
-        type_coeff_sat = "Ladrillo II"
-    elif avg_coeff_sat >= 0.92:
-        type_coeff_sat = "Ladrillo I"
+    if avg_coeff_sat < 0.88:
+        type_coeff_sat = "Ladrillo Tipo V"
+    elif avg_coeff_sat < 0.89 and avg_coeff_sat >= 0.88:
+        type_coeff_sat = "Ladrillo Tipo IV"
+    elif avg_coeff_sat < 0.90 and avg_coeff_sat >= 0.89:
+        type_coeff_sat = "Ladrillo Tipo III"
+    elif avg_coeff_sat < 0.91 and avg_coeff_sat >= 0.90:
+        type_coeff_sat = "Ladrillo Tipo II"
+    elif avg_coeff_sat < 0.92 and avg_coeff_sat >= 0.91:
+        type_coeff_sat = "Ladrillo Tipo I"
     else:
-        type_coeff_sat = "Ladrillo Desconocido"
+        type_coeff_sat = "No Corresponde"
 
     # Compretion Brick
     qs_compretion_brick = CompretionBrick.objects.filter(brick_type=obj.id)
@@ -402,25 +458,28 @@ def brick_type_detail(request, id):
     avg_fc_MPA = round(np.mean(qs_fc_MPA), 2)
 
     if avg_fc_MPA <= 17.6 and avg_fc_MPA > 12.7:
-        type_compretion = "Ladrillo V"
+        type_compretion = "Ladrillo Tipo V"
     elif avg_fc_MPA <= 12.7 and avg_fc_MPA > 9.3:
-        type_compretion = "Ladrillo IV"
+        type_compretion = "Ladrillo Tipo IV"
     elif avg_fc_MPA <= 9.3 and avg_fc_MPA > 6.9:
-        type_compretion = "Ladrillo III"
+        type_compretion = "Ladrillo Tipo III"
     elif avg_fc_MPA <= 6.9 and avg_fc_MPA > 4.9:
-        type_compretion = "Ladrillo II"
+        type_compretion = "Ladrillo Tipo II"
     elif avg_fc_MPA <= 4.9:
-        type_compretion = "Ladrillo I"
+        type_compretion = "Ladrillo Tipo I"
     else:
-        type_compretion = "Ladrillo Desconosido"
+        type_compretion = "No Corresponde"
 
     context = {
         "obj": obj,
         # Variation dimentions
         "qs_variation_dimentions": qs_variation_dimentions,
-        "vd_lengt": vd_lengt,
-        "vd_width": vd_width,
         "vd_high": vd_high,
+        "vd_width": vd_width,
+        "vd_lengt": vd_lengt,
+        "type_high": type_high,
+        "type_width": type_width,
+        "type_lengt": type_lengt,
         "norma_NTP_variation_dimentions": "NTP 339.613",
         # Warping
         "qs_warping": qs_warping,
@@ -430,7 +489,7 @@ def brick_type_detail(request, id):
         "avg_downface_convex": avg_downface_convex,
         "type_warping": type_warping,
         "max_avg_warping": max_avg_warping,
-        "norma_NTP_qs_warping": "NTP 339.613",
+        "norma_NTP_qs_warping": "NTP E-070",
         # Density Voids        
         "qs_density_voids": qs_density_voids,
         "avg_void_percentage": avg_void_percentage,
@@ -438,8 +497,9 @@ def brick_type_detail(request, id):
         "type_density": type_density,
         "norma_NTP_density_voids": "NTP 331.017",
         # Suction
-        "qs_suction": qs_suction,
+        "qs_suctidon": qs_suction,
         "avg_face_wet_weight_correction": avg_face_wet_weight_correction,
+        "type_face_wet_weight_correction": type_face_wet_weight_correction,
         "norma_NTP_suction": "NTP 339.613",
         # Abs_sat_coff
         "qs_abs_sat_coff": qs_abs_sat_coff,
@@ -456,7 +516,7 @@ def brick_type_detail(request, id):
         "type_compretion": type_compretion,
         "norma_NTP_compretion_brick": "NTP 339.604",
 
-        "title": "Detalles del EnPropiedades en Unidades de Albañileria Calcinada para la Construcción",
+        "title": "Detalles del En Propiedades en Unidades de Albañileria Calcinada para la Construcción",
     }
 
     return render(request, 'tests_material/brick_type/brick_type_detail.html', context)
@@ -489,20 +549,59 @@ def brick_type_pdf(request, id):
     coordinator = AdminProfile.objects.filter(staff="COORDINADOR", active=True).first() 
     tecnic = AdminProfile.objects.filter(staff="OFICINA_TECNICA", active=True).first()
 
-        # Variation dimentions
+    # Variation dimentions
     qs_variation_dimentions = VariationDimensions.objects.filter(brick_type=obj.id)
-
-    qs_avg_length_vd_list = qs_variation_dimentions.values_list('average_length', flat=True) 
-    avg_length_vd = round(np.mean(qs_avg_length_vd_list), 2)
-    vd_lengt = round(((obj.n_d_length - avg_length_vd) / avg_length_vd) * 100, 2)
-
-    qs_avg_width_vd_list = qs_variation_dimentions.values_list('average_width', flat=True) 
-    avg_width_vd = round(np.mean(qs_avg_width_vd_list), 2)
-    vd_width = round(((obj.n_d_width - avg_width_vd) / avg_width_vd) * 100, 2)
 
     qs_avg_high_vd_list = qs_variation_dimentions.values_list('average_high', flat=True) 
     avg_high_vd = round(np.mean(qs_avg_high_vd_list), 2)
-    vd_high = round(((obj.n_d_high - avg_high_vd) / avg_high_vd) * 100, 2)
+    vd_high = round((abs(obj.n_d_high - avg_high_vd) / avg_high_vd) * 100, 0)
+
+    qs_avg_width_vd_list = qs_variation_dimentions.values_list('average_width', flat=True) 
+    avg_width_vd = round(np.mean(qs_avg_width_vd_list), 2)
+    vd_width = round((abs(obj.n_d_width - avg_width_vd) / avg_width_vd) * 100, 0)
+
+    qs_avg_length_vd_list = qs_variation_dimentions.values_list('average_length', flat=True) 
+    avg_length_vd = round(np.mean(qs_avg_length_vd_list), 2)
+    vd_lengt = round((abs(obj.n_d_length - avg_length_vd) / avg_length_vd) * 100, 0)
+
+    print(vd_high, vd_width, vd_lengt)
+
+    if vd_high <= 3 and vd_high > 0:
+        type_high = "Ladrillo Tipo V"
+    elif vd_high <= 4 and vd_high > 3:
+        type_high = "Ladrillo Tipo IV"
+    elif vd_high <= 5 and vd_high > 4:
+        type_high = "Ladrillo Tipo III"
+    elif vd_high <= 7 and vd_high > 5:
+        type_high = "Ladrillo Tipo II"
+    elif vd_high <= 8 and vd_high > 7:
+        type_high = "Ladrillo Tipo I"
+    else:
+        type_high = "No Corresponde"
+
+    print(type_high)
+
+    if vd_width <= 2 and vd_width > 0:
+        type_width = "Ladrillo Tipo V"
+    elif vd_width <= 3 and vd_width > 2:
+        type_width = "Ladrillo Tipo IV"
+    elif vd_width <= 4 and vd_width > 3:
+        type_width = "Ladrillo Tipo III"
+    elif vd_width <= 6 and vd_width > 4:
+        type_width = "Ladrillo Tipo II"
+    else:
+        type_width = "No Corresponde"
+
+    if vd_lengt <= 1 and vd_lengt > 0:
+        type_lengt = "Ladrillo Tipo V"
+    elif vd_lengt <= 2 and vd_lengt > 1:
+        type_lengt = "Ladrillo Tipo IV"
+    elif vd_lengt <= 3 and vd_lengt > 2:
+        type_lengt = "Ladrillo Tipo III"
+    elif vd_lengt <= 4 and vd_lengt > 3:
+        type_lengt = "Ladrillo Tipo II"
+    else:
+        type_lengt = "No Corresponde"
 
     # Warping
     qs_warping = Warping.objects.filter(brick_type=obj.id)
@@ -512,47 +611,46 @@ def brick_type_pdf(request, id):
     qs_downface_concave_list = qs_warping.values_list('downface_concave', flat=True) 
     qs_downface_convex_list = qs_warping.values_list('downface_convex', flat=True) 
 
-
     avg_upface_concave = round(np.mean(qs_upface_concave_list), 2)
     avg_upface_convex = round(np.mean(qs_upface_convex_list), 2)
     avg_downface_concave = round(np.mean(qs_downface_concave_list), 2)
     avg_downface_convex = round(np.mean(qs_downface_convex_list), 2)
     max_avg_warping = max(avg_upface_concave, avg_upface_convex, avg_downface_concave, avg_downface_convex,)
 
-    if max_avg_warping <= 2:
-        type_warping = "Ladrillo V"
-    elif max_avg_warping <= 4:
-        type_warping = "Ladrillo IV"
-    elif max_avg_warping <= 6:
-        type_warping = "Ladrillo III"
-    elif max_avg_warping <= 8:
-        type_warping = "Ladrillo II"
-    elif max_avg_warping <= 10:
-        type_warping = "Ladrillo I"
+    if max_avg_warping <= 2 and max_avg_warping > 0:
+        type_warping = "Ladrillo Tipo V"
+    elif max_avg_warping <= 4 and max_avg_warping > 2:
+        type_warping = "Ladrillo Tipo IV"
+    elif max_avg_warping <= 6 and max_avg_warping > 4:
+        type_warping = "Ladrillo Tipo III"
+    elif max_avg_warping <= 8 and max_avg_warping > 6:
+        type_warping = "Ladrillo Tipo II"
+    elif max_avg_warping <= 10 and max_avg_warping > 8:
+        type_warping = "Ladrillo Tipo I"
     else:
-        type_warping = "Ladrillo Desconocido"
+        type_warping = "No Corresponde"
 
     # Density Voids
     qs_density_voids = DensityVoids.objects.filter(brick_type=obj.id)
 
     qs_void_percentage_list = qs_density_voids.values_list('void_percentage', flat=True)
-    qs_density_list = qs_density_voids.values_list('density', flat=True)
-
     avg_void_percentage = round(np.mean(qs_void_percentage_list), 0)
+
+    qs_density_list = qs_density_voids.values_list('density', flat=True)
     avg_density = round(np.mean(qs_density_list), 2)
 
-    if avg_density >= 1.70:
-        type_density = "Ladrillo V"
-    elif avg_density >= 1.65:
-        type_density = "Ladrillo IV"
-    elif avg_density >= 1.60:
-        type_density = "Ladrillo III"
-    elif avg_density >= 1.55:
-        type_density = "Ladrillo II"
-    elif avg_density >= 1.50:
-        type_density = "Ladrillo I"
+    if avg_density <= 1.70 and avg_density > 1.65:
+        type_density = "Ladrillo Tipo V"
+    elif avg_density <= 1.65 and avg_density > 1.60:
+        type_density = "Ladrillo Tipo IV"
+    elif avg_density <= 1.60 and avg_density > 1.55:
+        type_density = "Ladrillo Tipo III"
+    elif avg_density <= 1.55 and avg_density > 1.50:
+        type_density = "Ladrillo Tipo II"
+    elif avg_density <= 1.50 and avg_density > 1.45:
+        type_density = "Ladrillo Tipo I"
     else:
-        type_density = "Ladrillo Desconocido"
+        type_density = "No Corresponde"
 
     # Suction
     qs_suction = Suction.objects.filter(brick_type=obj.id)
@@ -560,40 +658,54 @@ def brick_type_pdf(request, id):
     qs_face_wet_weight_correction_list = qs_suction.values_list('face_wet_weight_correction', flat=True)
     avg_face_wet_weight_correction = round(np.mean(qs_face_wet_weight_correction_list), 2)
 
+    if avg_face_wet_weight_correction < 38:
+        type_face_wet_weight_correction = "Ladrillo Tipo V"
+    if avg_face_wet_weight_correction < 45 and avg_face_wet_weight_correction >= 38:
+        type_face_wet_weight_correction = "Ladrillo Tipo IV"
+    if avg_face_wet_weight_correction < 53 and avg_face_wet_weight_correction >= 45:
+        type_face_wet_weight_correction = "Ladrillo Tipo III"
+    if avg_face_wet_weight_correction < 66 and avg_face_wet_weight_correction >= 53:
+        type_face_wet_weight_correction = "Ladrillo Tipo II"
+    if avg_face_wet_weight_correction < 61 and avg_face_wet_weight_correction >= 66:
+        type_face_wet_weight_correction = "Ladrillo Tipo I"
+    else:
+        type_face_wet_weight_correction = "No Corresponde"
+
+
     # Absortion and Coeff of Sat 
     qs_abs_sat_coff = AbsSatuCoeff.objects.filter(brick_type=obj.id)
     qs_abs_brick_list = qs_abs_sat_coff.values_list('abs_brick', flat=True)
     qs_abs_max_brick_list = qs_abs_sat_coff.values_list('abs_max_brick', flat=True)
     qs_coeff_sat_list = qs_abs_sat_coff.values_list('coeff_sat', flat=True)
-    avg_abs_brick = round(np.mean(qs_abs_brick_list), 2)
-    avg_abs_max_brick = round(np.mean(qs_abs_max_brick_list), 2)
-    avg_coeff_sat = round(np.mean(qs_coeff_sat_list), 2)
+    avg_abs_brick = round(np.mean(qs_abs_brick_list), 1)
+    avg_abs_max_brick = round(np.mean(qs_abs_max_brick_list), 1)
+    avg_coeff_sat = round(np.mean(qs_coeff_sat_list), 3)
 
-    if avg_abs_brick <= 22:
-        type_abs = "Ladrillo V"
-    elif avg_abs_brick <= 23:
-        type_abs = "Ladrillo IV"
-    elif avg_abs_brick <= 25:
-        type_abs = "Ladrillo III"
-    elif avg_abs_brick <= 27:
-        type_abs = "Ladrillo II"
-    elif avg_abs_brick <= 30:
-        type_abs = "Ladrillo I"
+    if avg_abs_brick < 22:
+        type_abs = "Ladrillo Tipo V"
+    elif avg_abs_brick < 23 and avg_abs_brick >= 22:
+        type_abs = "Ladrillo Tipo IV"
+    elif avg_abs_brick < 25 and avg_abs_brick >= 23:
+        type_abs = "Ladrillo Tipo III"
+    elif avg_abs_brick < 27 and avg_abs_brick >= 25:
+        type_abs = "Ladrillo Tipo II"
+    elif avg_abs_brick < 30 and avg_abs_brick >= 25:
+        type_abs = "Ladrillo Tipo I"
     else:
-        type_abs = "Ladrillo Desconocido"
+        type_abs = "No Corresponde"
 
-    if avg_coeff_sat <= 0.88:
-        type_coeff_sat = "Ladrillo V"
-    elif avg_coeff_sat <= 0.89:
-        type_coeff_sat = "Ladrillo IV"
-    elif avg_coeff_sat <= 0.90:
-        type_coeff_sat = "Ladrillo III"
-    elif avg_coeff_sat <= 0.91:
-        type_coeff_sat = "Ladrillo II"
-    elif avg_coeff_sat >= 0.92:
-        type_coeff_sat = "Ladrillo I"
+    if avg_coeff_sat < 0.88:
+        type_coeff_sat = "Ladrillo Tipo V"
+    elif avg_coeff_sat < 0.89 and avg_coeff_sat >= 0.88:
+        type_coeff_sat = "Ladrillo Tipo IV"
+    elif avg_coeff_sat < 0.90 and avg_coeff_sat >= 0.89:
+        type_coeff_sat = "Ladrillo Tipo III"
+    elif avg_coeff_sat < 0.91 and avg_coeff_sat >= 0.90:
+        type_coeff_sat = "Ladrillo Tipo II"
+    elif avg_coeff_sat < 0.92 and avg_coeff_sat >= 0.91:
+        type_coeff_sat = "Ladrillo Tipo I"
     else:
-        type_coeff_sat = "Ladrillo Desconocido"
+        type_coeff_sat = "No Corresponde"
 
     # Compretion Brick
     qs_compretion_brick = CompretionBrick.objects.filter(brick_type=obj.id)
@@ -603,25 +715,28 @@ def brick_type_pdf(request, id):
     avg_fc_MPA = round(np.mean(qs_fc_MPA), 2)
 
     if avg_fc_MPA <= 17.6 and avg_fc_MPA > 12.7:
-        type_compretion = "Ladrillo V"
+        type_compretion = "Ladrillo Tipo V"
     elif avg_fc_MPA <= 12.7 and avg_fc_MPA > 9.3:
-        type_compretion = "Ladrillo IV"
+        type_compretion = "Ladrillo Tipo IV"
     elif avg_fc_MPA <= 9.3 and avg_fc_MPA > 6.9:
-        type_compretion = "Ladrillo III"
+        type_compretion = "Ladrillo Tipo III"
     elif avg_fc_MPA <= 6.9 and avg_fc_MPA > 4.9:
-        type_compretion = "Ladrillo II"
+        type_compretion = "Ladrillo Tipo II"
     elif avg_fc_MPA <= 4.9:
-        type_compretion = "Ladrillo I"
+        type_compretion = "Ladrillo Tipo I"
     else:
-        type_compretion = "Ladrillo Desconosido"
+        type_compretion = "No Corresponde"
 
-    html = render_to_string('tests_material/brick_type/brick_type_pdf.html', {
+    context = {
         "obj": obj,
         # Variation dimentions
         "qs_variation_dimentions": qs_variation_dimentions,
-        "vd_lengt": vd_lengt,
-        "vd_width": vd_width,
         "vd_high": vd_high,
+        "vd_width": vd_width,
+        "vd_lengt": vd_lengt,
+        "type_high": type_high,
+        "type_width": type_width,
+        "type_lengt": type_lengt,
         "norma_NTP_variation_dimentions": "NTP 339.613",
         # Warping
         "qs_warping": qs_warping,
@@ -641,6 +756,7 @@ def brick_type_pdf(request, id):
         # Suction
         "qs_suction": qs_suction,
         "avg_face_wet_weight_correction": avg_face_wet_weight_correction,
+        "type_face_wet_weight_correction": type_face_wet_weight_correction,
         "norma_NTP_suction": "NTP 339.613",
         # Abs_sat_coff
         "qs_abs_sat_coff": qs_abs_sat_coff,
@@ -658,16 +774,19 @@ def brick_type_pdf(request, id):
         "norma_NTP_compretion_brick": "NTP 339.604",
 
         "title": "DETERMINAR LAS PROPIEDADES EN UNIDADES DE ALBAÑILERIA CALCINADA PARA LA CONSTRUCCIÓN",
-        "norma_ASTM": "ASTM C2216",
-        "noma_NTP": "NTP 339.127",
         "coordinator": coordinator,
         "tecnic": tecnic,
-    })
+    }
+    html = render_to_string('tests_material/brick_type/brick_type_pdf.html', context)
+    css_bootstrap = CSS(settings.STATIC_ROOT +  '/css/bootstrap.min.css')
+    css_pdf = CSS(settings.STATIC_ROOT +  '/css/pdf_file.css')
     filename = f"Ensayo_{obj.user.username}_{obj.id}.pdf"
     response = HttpResponse(content_type="application/pdf")
+    # Display in browser
     response['Content-Disposition'] = 'inline; filename="{}"'.format(filename)
-
-    HTML(string=html).write_pdf(response)
+    # Download as attachment
+    # response['Content-Disposition'] = 'attachment; filename="{}"'.format(filename)
+    HTML(string=html, base_url=request.build_absolute_uri()).write_pdf(response, stylesheets=[css_bootstrap, css_pdf])
     return response
 
 

@@ -1,0 +1,42 @@
+body {
+  background-color: #f4f4f4;
+}
+
+.username {
+  font-family: monospace;
+  font-size: 1rem;
+  margin-right: 1rem;
+  margin-top: 0.5rem;
+  color: #4CAF50;
+  float: right;
+}
+
+.table--flip {
+  display: flex;
+  overflow: auto;
+}
+
+.table--flip thead {
+  display: flex;
+  flex-shrink: 0;
+  min-width: min-content;
+}
+
+.table--flip tbody {
+  display: flex;
+  position: relative;
+}
+
+.table--flip tr {
+  display: flex;
+  flex-direction: column;
+  min-width: min-content;
+  flex-shrink: 0;
+}
+
+.table--flip td,
+.table--flip th {
+  display: block;
+}
+
+

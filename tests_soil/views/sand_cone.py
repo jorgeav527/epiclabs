@@ -1,16 +1,17 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.http import HttpResponse
-# import pdfkit
-from django.template.loader import render_to_string
-from weasyprint import HTML
-from django.template.loader import get_template
-from django.db.models import F
 from django.contrib.auth.decorators import login_required
+
+from django.conf import settings
+from django.template.loader import render_to_string
+from weasyprint import HTML, CSS
+
+from django.db.models import F
+import numpy as np
+
 from bokeh.plotting import figure
 from bokeh.embed import components
-from bokeh.io.export import get_screenshot_as_png
-import numpy as np
 
 from tests_soil.models import SandCone, HumidDensity, ContentMoisture, ContentMoistureCarbure, CorrectionSandCone
 from tests_soil.forms import SandConeForm, SandConeFormClient, HumidDensityFormSet, ContentMoistureFormSet, ContentMoistureCarbureFormSet, CorrectionSandConeFormSet
@@ -94,6 +95,7 @@ def humid_density_save(request, id):
                         instance.equipment.add(equip)
                         equip.use = F("use") + 1
                         equip.save()
+                formset.save()                
                 messages.success(request, f"Los ensayos han sido creados")
                 return redirect('tests_soil:humid_density_save', id=obj.id)
     
@@ -123,6 +125,7 @@ def content_moisture_save(request, id):
                         instance.equipment.add(equip)
                         equip.use = F("use") + 1
                         equip.save()
+                formset.save()                
                 messages.success(request, f"Los ensayos han sido creados")
                 return redirect('tests_soil:content_moisture_save', id=obj.id)
     
@@ -152,6 +155,7 @@ def moisture_carbure_save(request, id):
                         instance.equipment.add(equip)
                         equip.use = F("use") + 1
                         equip.save()
+                formset.save()                
                 messages.success(request, f"Los ensayos han sido creados")
                 return redirect('tests_soil:moisture_carbure_save', id=obj.id)
     
@@ -181,6 +185,7 @@ def correction_sandcone_save(request, id):
                         instance.equipment.add(equip)
                         equip.use = F("use") + 1
                         equip.save()
+                formset.save()                
                 messages.success(request, f"Los ensayos han sido creados")
                 return redirect('tests_soil:correction_sandcone_save', id=obj.id)
     
@@ -346,8 +351,7 @@ def sand_cone_pdf(request, id):
         ans_08 = round((ans_06 * P_E_Ap_Frac_Extrad * ans_03) / (100 * P_E_Ap_Frac_Extrad - ans_06 * ans_05), 2) 
         ans_09 = round(ans_08 / obj.weight_dry_max * 100, 1)
 
-
-    html = render_to_string('tests_soil/sand_cone/sand_cone_pdf.html', {
+    context = {
         "obj": obj,
         "title": "ENSAYO PARA DETERMINAR LA DENSIDAD Y PESO UNITARIO DEL SUELO IN SITU MEDIANTE EL MÉTODO DEL CONO DE ARENA - MTC E117",
         "humid": humid,
@@ -367,12 +371,17 @@ def sand_cone_pdf(request, id):
         "noma_NTP": "NTP 339.143",
         "coordinator": coordinator,
         "tecnic": tecnic,
-    })
+    }
+    html = render_to_string('tests_soil/sand_cone/sand_cone_pdf.html', context)
+    css_bootstrap = CSS(settings.STATIC_ROOT +  '/css/bootstrap.min.css')
+    css_pdf = CSS(settings.STATIC_ROOT +  '/css/pdf_file.css')
     filename = f"Ensayo_{obj.user.username}_{obj.id}.pdf"
     response = HttpResponse(content_type="application/pdf")
+    # Display in browser
     response['Content-Disposition'] = 'inline; filename="{}"'.format(filename)
-
-    HTML(string=html).write_pdf(response)
+    # Download as attachment
+    # response['Content-Disposition'] = 'attachment; filename="{}"'.format(filename)
+    HTML(string=html, base_url=request.build_absolute_uri()).write_pdf(response, stylesheets=[css_bootstrap, css_pdf])
     return response
 
 

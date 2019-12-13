@@ -95,17 +95,15 @@
                 <td>
                   {% if user.is_authenticated %}
                   <div class="btn-group" role="group" aria-label="Basic example">
-                    {% if obj.user.is_superuser == user.is_superuser or obj.user.is_student == user.is_student or obj.user.is_bach == user.is_bach or obj.user.is_admin == user.is_admin %}
+                    <a
+                    href="{% url 'tests_material:wood_compression_detail' obj.id %}"
+                    data-toggle="tooltip" title="Detalles" role="button" class="btn btn-primary btn-sm px-2 mx-1"><i class="far fa-eye"></i>
+                  </a>
+                  {% if user.is_superuser or user.is_student or user.is_bach or user.is_admin %}
                     <a
                       href="{% url 'tests_material:parallel_perpendicular_save' obj.id %}"
                       data-toggle="tooltip" title="Editar o Crear Compresión de Ladrillos" role="button" class="btn btn-dark btn-sm px-2 mx-1"><i class="fas fa-plus"></i>
                     </a>
-                    {% endif %}
-                    <a
-                      href="{% url 'tests_material:wood_compression_detail' obj.id %}"
-                      data-toggle="tooltip" title="Detalles" role="button" class="btn btn-primary btn-sm px-2 mx-1"><i class="far fa-eye"></i>
-                    </a>
-                    {% if user.is_superuser or user.is_student or user.is_bach or user.is_admin %}
                     <a 
                       href="{% url 'tests_material:wood_compression_update' obj.id %}" 
                       data-toggle="tooltip" title="Editar" role="button" class="btn btn-success btn-sm px-2 mx-1"><i class="fas fa-edit"></i>

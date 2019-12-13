@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.http import HttpResponse
-# import pdfkit
-from django.template.loader import render_to_string
-from weasyprint import HTML
-from django.template.loader import get_template
-from django.db.models import F
 from django.contrib.auth.decorators import login_required
+
+from django.conf import settings
+from django.template.loader import render_to_string
+from weasyprint import HTML, CSS
+
+from django.db.models import F
 import numpy as np
 
 from tests_material.models import WoodCompression, ParallelPerpendicular
@@ -90,6 +91,7 @@ def parallel_perpendicular_save(request, id):
                         instance.equipment.add(equip)
                         equip.use = F("use") + 1
                         equip.save()
+                formset.save()                
                 messages.success(request, f"Los ensayos han sido creados")
                 return redirect('tests_material:parallel_perpendicular_save', id=obj.id)
     
@@ -154,6 +156,8 @@ def wood_compression_detail(request, id):
         type_parallel = "Grupo B"
     elif avg_fc_MPA_parallel >= 14.2:
         type_parallel = "Grupo A"
+    else:
+        type_parallel = "No Evalua para un Grupo"
 
     # Perpendicular
     qs_perpendicular = qs_parallel_perpendicular.filter(type_compression="PERPENDICULAR")
@@ -168,6 +172,8 @@ def wood_compression_detail(request, id):
         type_perpendicular = "Grupo B"
     elif avg_fc_MPA_perpendicular >= 3.9:
         type_perpendicular = "Grupo A"
+    else:
+        type_perpendicular = "No Evalua para un Grupo"
 
     context = {
         "obj": obj,
@@ -233,6 +239,8 @@ def wood_compression_pdf(request, id):
         type_parallel = "Grupo B"
     elif avg_fc_MPA_parallel >= 14.2:
         type_parallel = "Grupo A"
+    else:
+        type_parallel = "No Evalua para un Grupo"
 
     # Perpendicular
     qs_perpendicular = qs_parallel_perpendicular.filter(type_compression="PERPENDICULAR")
@@ -247,8 +255,10 @@ def wood_compression_pdf(request, id):
         type_perpendicular = "Grupo B"
     elif avg_fc_MPA_perpendicular >= 3.9:
         type_perpendicular = "Grupo A"
+    else:
+        type_perpendicular = "No Evalua para un Grupo"
 
-    html = render_to_string('tests_material/wood_compression/wood_compression_pdf.html', {
+    context = {
         "obj": obj,
         # Parallel
         "qs_parallel": qs_parallel,
@@ -266,12 +276,17 @@ def wood_compression_pdf(request, id):
         "title": "DETERMINAR LAS Compresión Simple Perpendicular o Paralela en Madera",
         "coordinator": coordinator,
         "tecnic": tecnic,
-    })
+    }
+    html = render_to_string('tests_material/wood_compression/wood_compression_pdf.html', context)
+    css_bootstrap = CSS(settings.STATIC_ROOT +  '/css/bootstrap.min.css')
+    css_pdf = CSS(settings.STATIC_ROOT +  '/css/pdf_file.css')
     filename = f"Ensayo_{obj.user.username}_{obj.id}.pdf"
     response = HttpResponse(content_type="application/pdf")
+    # Display in browser
     response['Content-Disposition'] = 'inline; filename="{}"'.format(filename)
-
-    HTML(string=html).write_pdf(response)
+    # Download as attachment
+    # response['Content-Disposition'] = 'attachment; filename="{}"'.format(filename)
+    HTML(string=html, base_url=request.build_absolute_uri()).write_pdf(response, stylesheets=[css_bootstrap, css_pdf])
     return response
 
 

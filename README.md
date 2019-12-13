@@ -46,3 +46,6 @@ django-extensions = "==2.2.3" # to create a map for the models
 pyparsing = "==2.4.2"  # for parse words
 pydot = "==1.4.1" # to create a dotfile for create a draw model
 numpy = "==1.17.3" # for maths in python
+
+https://www.supinfo.com/articles/single/379-generate-pdf-files-out-of-html-templates-with-django
+https://stackoverflow.com/questions/32798998/weasyprint-and-bootstrap

@@ -43,8 +43,12 @@
           <p class="text-left"><strong>Corrección del Ensayo:</strong> {{ obj.updated|default_if_none:"Ninguna Corrección"|date:"d/m/Y P" }}</p>
           {% endif %}
           <p class="text-left"><strong>Emsion de Certificado:</strong> {% now "d/m/Y P" %}</p>
+          {% if qs_parallel %}
           <p class="text-left"><strong>Grupo segun Esfuerzos Admisibles (Paralela):</strong> {{ type_parallel }}</p>
+          {% endif %}
+          {% if qs_perpendicular %}
           <p class="text-left"><strong>Grupo segun Esfuerzos Admisibles (Perpendicular):</strong> {{ type_perpendicular }}</p>
+          {% endif %}
         </div>
         <div style="margin-left: 4rem;" class="col-xs-3 panel panel-default">
           <p class="text-left panel-heading"><strong>Datos del Ensayo</strong></p>

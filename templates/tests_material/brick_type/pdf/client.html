@@ -50,13 +50,28 @@
           {% endif %}
           <p class="text-left"><strong>Emsion de Certificado:</strong> {% now "d/m/Y P" %}</p>
           <p class="text-left"><strong>Persona de Referencia:</strong> {{ obj.reference_person.title }} {{ obj.reference_person.name|title }}</p>          
-          <p class="text-left"><strong>Tipo de Ladrillo segun la Variación Dimencional:</strong> esta falta</p>
+          {% if qs_variation_dimentions %}
+          <p class="text-left"><strong>Tipo de Ladrillo segun la Variación Dimencional:</strong></p>
+          <p class="text-left"><strong>Segun la Altura:</strong> {{ type_high }}</p>
+          <p class="text-left"><strong>Segun el Ancho:</strong> {{ type_width }}</p>
+          <p class="text-left"><strong>Segun el Largo:</strong> {{ type_lengt }}</p>
+          {% endif %}
+          {% if qs_warping %}
           <p class="text-left"><strong>Tipo de Ladrillo segun el Alabeo:</strong> {{ type_warping }}</p>
+          {% endif %}
+          {% if qs_density_voids %}
           <p class="text-left"><strong>Tipo de Ladrillo segun la Densidad:</strong> {{ type_density }}</p>
-          <p class="text-left"><strong>Tipo de Ladrillo segun la Succión:</strong> esta tbm falta</p>
+          {% endif %}
+          {% if qs_suctidon %}
+          <p class="text-left"><strong>Tipo de Ladrillo segun la Succión:</strong> {{ type_face_wet_weight_correction }}</p>
+          {% endif %}
+          {% if qs_abs_sat_coff %}
           <p class="text-left"><strong>Tipo de Ladrillo segun la Absorcion:</strong> {{ type_abs }}</p>
           <p class="text-left"><strong>Tipo de Ladrillo segun el Coeficiente de Absorción:</strong> {{ type_coeff_sat }}</p>
+          {% endif %}
+          {% if qs_compretion_brick %}
           <p class="text-left"><strong>Tipo de Ladrillo segun el Compresión:</strong> {{ type_compretion }}</p>
+          {% endif %}
         </div>
         <div style="margin-left: 4rem;" class="col-xs-3 panel panel-default">
           <p class="text-left panel-heading"><strong>Datos del Ensayo</strong></p>

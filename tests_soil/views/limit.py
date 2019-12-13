@@ -1,16 +1,17 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.http import HttpResponse
-# import pdfkit
-from django.template.loader import render_to_string
-from weasyprint import HTML
-from django.template.loader import get_template
-from django.db.models import F
 from django.contrib.auth.decorators import login_required
+
+from django.conf import settings
+from django.template.loader import render_to_string
+from weasyprint import HTML, CSS
+
+from django.db.models import F
+import numpy as np
+
 from bokeh.plotting import figure
 from bokeh.embed import components
-from bokeh.io.export import get_screenshot_as_png
-import numpy as np
 
 from tests_soil.models import Limit, Liquid, Platic
 from tests_soil.forms import LimitForm, LimitFormClient, LiquidFormSet, PlasticFormSet
@@ -90,6 +91,7 @@ def liquid_save(request, id):
                         instance.equipment.add(equip)
                         equip.use = F("use") + 1
                         equip.save()
+                formset.save()
                 messages.success(request, f"Los ensayos han sido creados")
                 return redirect('tests_soil:liquid_save', id=obj.id)
     
@@ -119,6 +121,7 @@ def plastic_save(request, id):
                         instance.equipment.add(equip)
                         equip.use = F("use") + 1
                         equip.save()
+                formset.save()
                 messages.success(request, f"Los ensayos han sido creados")
                 return redirect('tests_soil:plastic_save', id=obj.id)
     
@@ -207,9 +210,9 @@ def limit_detail(request, id):
     plot = figure(x_axis_type="log", x_range=(min_x, max_x), y_range=(min_y, max_y), tools=TOOLS, 
         title="Limite Liquido", x_axis_label= 'Numero de Golpes', y_axis_label= 'Porcentaje de Humedad (%)',
         sizing_mode="scale_width",)
-    plot.circle(x_hit, y_moisture, size=8, legend_label="Resultados")
-    plot.line(x, y, line_width=2, legend_label="Linea de Tendencia", line_dash='dashed')
-    plot.circle(25, hit_25, size=8, color="red", legend_label="25 Golpes")
+    plot.circle(x_hit, y_moisture, size=8, legend="Resultados")
+    plot.line(x, y, line_width=2, legend="Linea de Tendencia", line_dash='dashed')
+    plot.circle(25, hit_25, size=8, color="red", legend="25 Golpes")
     script, div = components(plot)
 
     context = {
@@ -291,14 +294,12 @@ def limit_pdf(request, id):
     plot = figure(x_axis_type="log", x_range=(min_x, max_x), y_range=(min_y, max_y), tools=TOOLS, 
         title="Limite Liquido", x_axis_label= 'Numero de Golpes', y_axis_label= 'Porcentaje de Humedad (%)',
         sizing_mode="scale_width",)
-    plot.circle(x_hit, y_moisture, size=8, legend_label="Resultados")
-    plot.line(x, y, line_width=2, legend_label="Linea de Tendencia", line_dash='dashed')
-    plot.circle(25, hit_25, size=8, color="red", legend_label="25 Golpes")
+    plot.circle(x_hit, y_moisture, size=8, legend="Resultados")
+    plot.line(x, y, line_width=2, legend="Linea de Tendencia", line_dash='dashed')
+    plot.circle(25, hit_25, size=8, color="red", legend="25 Golpes")
     script, div = components(plot)
 
-    html = render_to_string('tests_soil/limit/limit_pdf.html', {
-        "script": script,
-        "div": div,
+    context = {
         "qs_liquid": qs_liquid,
         "qs_plastic": qs_plastic,
         "hit_25": hit_25,
@@ -310,12 +311,17 @@ def limit_pdf(request, id):
         "noma_NTP": "NTP 339.129",
         "coordinator": coordinator,
         "tecnic": tecnic,
-    })
+    }
+    html = render_to_string('tests_soil/limit/limit_pdf.html', context)
+    css_bootstrap = CSS(settings.STATIC_ROOT +  '/css/bootstrap.min.css')
+    css_pdf = CSS(settings.STATIC_ROOT +  '/css/pdf_file.css')
     filename = f"Ensayo_{obj.user.username}_{obj.id}.pdf"
     response = HttpResponse(content_type="application/pdf")
+    # Display in browser
     response['Content-Disposition'] = 'inline; filename="{}"'.format(filename)
-
-    HTML(string=html).write_pdf(response)
+    # Download as attachment
+    # response['Content-Disposition'] = 'attachment; filename="{}"'.format(filename)
+    HTML(string=html, base_url=request.build_absolute_uri()).write_pdf(response, stylesheets=[css_bootstrap, css_pdf])
     return response
 
 

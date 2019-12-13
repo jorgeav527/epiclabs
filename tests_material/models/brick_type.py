@@ -87,10 +87,10 @@ class VariationDimensions(models.Model):
 
 
 class Warping(models.Model):
-    upface_concave      = models.FloatField()
-    upface_convex       = models.FloatField()
-    downface_concave    = models.FloatField()
-    downface_convex     = models.FloatField()
+    upface_concave      = models.FloatField(default=0)
+    upface_convex       = models.FloatField(default=0)
+    downface_concave    = models.FloatField(default=0)
+    downface_convex     = models.FloatField(default=0)
     brick_type  = models.ForeignKey(BrickType, on_delete=models.CASCADE)
     equipment   = models.ManyToManyField(Equip)
     tool        = models.ManyToManyField(Tool)    
@@ -104,10 +104,8 @@ class DensityVoids(models.Model):
     width           = models.FloatField()
     high            = models.FloatField()
     volume_brick    = models.FloatField(editable=False)
-    bar_500         = models.FloatField(default=500.0)
     sc              = models.FloatField()
     su              = models.FloatField()
-    bar             = models.FloatField(default=1.64)
     volume_void     = models.FloatField(editable=False)
     volume_real     = models.FloatField(editable=False)
     void_percentage = models.FloatField(editable=False)
@@ -124,7 +122,7 @@ class DensityVoids(models.Model):
         self.volume_brick = round(volume, 2)
 
         # Generate volume_void
-        vv = ( self.bar_500 / self.sc ) * self.su
+        vv = ( 500 / self.sc ) * self.su
         self.volume_void = round(vv, 2)
 
         # Generate volume_real
@@ -132,8 +130,8 @@ class DensityVoids(models.Model):
         self.volume_real = round(vr, 2)
 
         # Generate void_percentage
-        vp = (self.volume_void / self.volume_brick) * (1/self.bar) * 100
-        self.void_percentage = round(vp, 2)
+        vp = (self.volume_void / self.volume_brick) * (1/1.64) * 100
+        self.void_percentage = round(vp, 0)
 
         # Generate density
         d = self.weight / self.volume_real
@@ -152,7 +150,6 @@ class Suction(models.Model):
     length          = models.FloatField()
     width           = models.FloatField()
     face_area       = models.FloatField(editable=False)
-    bar_200         = models.FloatField(default=200.0)
     face_wet_weight = models.FloatField()
     face_wet_weight_correction = models.FloatField(editable=False)
     brick_type  = models.ForeignKey(BrickType, on_delete=models.CASCADE)
@@ -170,8 +167,8 @@ class Suction(models.Model):
         self.face_area = round(fa, 2)
 
         # Generate face_wet_weight_correction
-        if self.face_area > self.bar_200 + (self.bar_200 * 2.5 / 100) or self.face_area < self.bar_200 + (self.bar_200 * 2.5 / 100):
-            fwwc = (self.bar_200 * self.face_wet_weight) / (self.length * self.width)
+        if self.face_area > (200 + (200 * 2.5 / 100)) or self.face_area < (200 - (200 * 2.5 / 100)):
+            fwwc = (200 * self.face_wet_weight) / (self.length * self.width)
             self.face_wet_weight_correction = round(fwwc, 2)
         else:
             self.face_wet_weight_correction = round(self.face_wet_weight, 2) 
@@ -185,7 +182,6 @@ class Suction(models.Model):
 class AbsSatuCoeff(models.Model):
     dry_weight          = models.FloatField()
     wet_weight_cool_24  = models.FloatField()
-    wet_weight_hot_24   = models.FloatField()
     wet_weight_hot_5    = models.FloatField()
     abs_brick           = models.FloatField(editable=False)
     abs_max_brick       = models.FloatField(editable=False)
@@ -198,15 +194,15 @@ class AbsSatuCoeff(models.Model):
 
         # Generate abs_brick
         ab = 100 * (self.wet_weight_cool_24 - self.dry_weight) / self.dry_weight
-        self.abs_brick = round(ab, 2)
+        self.abs_brick = round(ab, 1)
 
         # Generate abs_max_brick
-        amb = 100 * (self.wet_weight_hot_24 - self.dry_weight) / self.dry_weight
-        self.abs_max_brick = round(amb, 2)
+        amb = 100 * (self.wet_weight_hot_5 - self.dry_weight) / self.dry_weight
+        self.abs_max_brick = round(amb, 1)
         
         # Generate coeff_sat
         cs = (self.wet_weight_cool_24 - self.dry_weight) / (self.wet_weight_hot_5 - self.dry_weight)
-        self.coeff_sat = round(cs, 2)
+        self.coeff_sat = round(cs, 3)
 
         super(AbsSatuCoeff, self).save(*args, **kwargs)
 

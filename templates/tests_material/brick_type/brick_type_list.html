@@ -95,6 +95,10 @@
                 <td>
                   {% if user.is_authenticated %}
                   <div class="btn-group" role="group" aria-label="Basic example">
+                    <a
+                    href="{% url 'tests_material:brick_type_detail' obj.id %}"
+                    data-toggle="tooltip" title="Detalles" role="button" class="btn btn-primary btn-sm px-2 mx-1"><i class="far fa-eye"></i>
+                  </a>
                     {% if user.is_superuser or user.is_student or user.is_bach or user.is_admin %}
                     <a
                       href="{% url 'tests_material:variation_dimensions_save' obj.id %}"
@@ -120,12 +124,6 @@
                       href="{% url 'tests_material:compretion_brick_save' obj.id %}"
                       data-toggle="tooltip" title="Editar o Crear Compresión de Ladrillos" role="button" class="btn btn-dark btn-sm px-2 mx-1"><i class="fas fa-plus"></i>
                     </a>
-                    {% endif %}
-                    <a
-                      href="{% url 'tests_material:brick_type_detail' obj.id %}"
-                      data-toggle="tooltip" title="Detalles" role="button" class="btn btn-primary btn-sm px-2 mx-1"><i class="far fa-eye"></i>
-                    </a>
-                    {% if user.is_superuser or user.is_student or user.is_bach or user.is_admin %}
                     <a 
                       href="{% url 'tests_material:brick_type_update' obj.id %}" 
                       data-toggle="tooltip" title="Editar" role="button" class="btn btn-success btn-sm px-2 mx-1"><i class="fas fa-edit"></i>

@@ -143,7 +143,7 @@ class VadriationDimensionsForm(forms.ModelForm):
             'high_lefside': 'Unidades (mm)',
         }
 
-VadriationDimensionsFormSet = inlineformset_factory(BrickType, VariationDimensions, form=VadriationDimensionsForm, extra=5, max_num=5,)
+VadriationDimensionsFormSet = inlineformset_factory(BrickType, VariationDimensions, form=VadriationDimensionsForm, extra=5, max_num=5, can_delete=True)
 
 
 class WarpingForm(forms.ModelForm):
@@ -169,7 +169,7 @@ class WarpingForm(forms.ModelForm):
             'downface_convex': 'Unidades (mm)',
         }
 
-WarpingFormSet = inlineformset_factory(BrickType, Warping, form=WarpingForm, extra=5, max_num=5,)
+WarpingFormSet = inlineformset_factory(BrickType, Warping, form=WarpingForm, extra=5, max_num=5, can_delete=True)
 
 
 class DensityVoidsForm(forms.ModelForm):
@@ -180,34 +180,28 @@ class DensityVoidsForm(forms.ModelForm):
             'length',
             'width',
             'high',
-            'bar_500',
             'sc',
             'su',
-            'bar',
             'weight',
         ]
         labels = {
             'length': 'Largo',
             'width': 'Ancho',
             'high': 'Alto',
-            'bar_500': 'Peso de la Arena',
             'sc': 'Peso de 500ml de arena contenida en el cilindro graduado (Sc)',
             'su': 'Peso de la arena contenido en el espécimen de ensayo (Su)',
-            'bar': 'Variable Comun',
             'weight': 'Peso del Especimen',
         }
         help_texts = {
             'length': 'Unidades (cm)',
             'width': 'Unidades (cm)',
             'high': 'Unidades (cm)',
-            'bar_500': 'Unidades (ml)',
             'sc': 'Unidades (gr)',
             'su': 'Unidades (gr)',
-            'bar': 'Adimncional',
             'weight': 'Unidades (gr)',
         }
 
-DensityVoidsFormSet = inlineformset_factory(BrickType, DensityVoids, form=DensityVoidsForm, extra=5 ,max_num=5)
+DensityVoidsFormSet = inlineformset_factory(BrickType, DensityVoids, form=DensityVoidsForm, extra=5 ,max_num=5, can_delete=True)
 
 
 class SuctionForm(forms.ModelForm):
@@ -219,7 +213,6 @@ class SuctionForm(forms.ModelForm):
             'dry_weight', 
             'length', 
             'width', 
-            'bar_200', 
             'face_wet_weight', 
         ]
         labels = {
@@ -227,7 +220,6 @@ class SuctionForm(forms.ModelForm):
             'dry_weight': 'Peso Seco', 
             'length': 'Largo', 
             'width': 'Ancho', 
-            'bar_200': 'Variable 200cm', 
             'face_wet_weight': 'Peso con la Cara Inferior Mojada', 
         }
         help_texts = {
@@ -235,11 +227,10 @@ class SuctionForm(forms.ModelForm):
             'dry_weight': 'Unidades (gr)', 
             'length': 'Unidades (cm)', 
             'width': 'Unidades (cm)', 
-            'bar_200': 'Unidades (cm)', 
             'face_wet_weight': 'Unidades (gr/min)', 
         }
 
-SuctionFormSet = inlineformset_factory(BrickType, Suction, form=SuctionForm, extra=5, max_num=5)
+SuctionFormSet = inlineformset_factory(BrickType, Suction, form=SuctionForm, extra=5, max_num=5, can_delete=True)
 
 
 class AbsSatuCoeffForm(forms.ModelForm):
@@ -249,23 +240,20 @@ class AbsSatuCoeffForm(forms.ModelForm):
         fields = [
             'dry_weight',
             'wet_weight_cool_24',
-            'wet_weight_hot_24',
             'wet_weight_hot_5',
         ]
         labels = {
             'dry_weight': 'Peso Seco del Especímen',
             'wet_weight_cool_24': 'Peso del Especimen Saturado en Agua Fria a 24 Horas',
-            'wet_weight_hot_24': 'Peso del Especimen Saturado en Agua Caliente a 24 Horas',
             'wet_weight_hot_5': 'Peso del Especimen Saturado en Agua Caliente a 5 Horas',
         }
         help_texts = {
             'dry_weight': 'Unidades (gr)',
             'wet_weight_cool_24': 'Unidades (gr)',
-            'wet_weight_hot_24': 'Unidades (gr)',
             'wet_weight_hot_5': 'Unidades (gr)',
         }
 
-AbsSatuCoeffFormSet = inlineformset_factory(BrickType, AbsSatuCoeff, form=AbsSatuCoeffForm, extra=5, max_num=5)
+AbsSatuCoeffFormSet = inlineformset_factory(BrickType, AbsSatuCoeff, form=AbsSatuCoeffForm, extra=5, max_num=5, can_delete=True)
 
 
 class CompretionBrickForm(forms.ModelForm):
@@ -294,4 +282,4 @@ class CompretionBrickForm(forms.ModelForm):
             'load': 'Unidades (kgf)',
         }
 
-CompretionBrickFormSet = inlineformset_factory(BrickType, CompretionBrick, form=CompretionBrickForm, max_num=3)
+CompretionBrickFormSet = inlineformset_factory(BrickType, CompretionBrick, form=CompretionBrickForm, max_num=3, can_delete=True)

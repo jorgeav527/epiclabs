@@ -15,32 +15,34 @@
                 <!-- Card -->
                 <div class="card">
                   <div class="p-3">
-                    <h3 class="card-title">Laboratorio de Materiales</h3>
+                    <h3 class="card-title">{{ title }}</h3>
                     <table id="" class="table--flip table table-sm table-responsive table-bordered">
                       <thead class="success-color-dark white-text">
                         <tr>
                           <th>Ensayos</th>
-                          <th>Ensayo</th>
-                          <th>Ensayo</th>
-                          <th>Ensayo</th>
-                          <th>Ensayo</th>
-                          <th>Ensayo</th>
-                          <th>Ensayo</th>
-                          <th>Ensayo</th>
-                          <th>Ensayo</th>
+                          <th>qs_BrickType</th>
+                          <!-- <th>qs_VariationDimensions</th> -->
+                          <!-- <th>qs_Warping</th> -->
+                          <!-- <th>qs_DensityVoids</th> -->
+                          <!-- <th>qs_Suction</th> -->
+                          <!-- <th>qs_AbsSatuCoeff</th> -->
+                          <!-- <th>qs_CompretionBrick</th> -->
+                          <th>qs_WoodCompression</th>
+                          <!-- <th>qs_ParallelPerpendicular</th> -->
                         </tr>
                       </thead>
                       <tbody>
                         <tr class="text-center">
                           <th scope="row">Cantidad</th>
-                          <td>#</td>
-                          <td>#</td>
-                          <td>#</td>
-                          <td>#</td>
-                          <td>#</td>
-                          <td>#</td>
-                          <td>#</td>
-                          <td>#</td>
+                          <td>{{ qs_BrickType.count }}</td>
+                          <!-- <td>{{ qs_VariationDimensions.count }}</td> -->
+                          <!-- <td>{{ qs_Warping.count }}</td> -->
+                          <!-- <td>{{ qs_DensityVoids.count }}</td> -->
+                          <!-- <td>{{ qs_Suction.count }}</td> -->
+                          <!-- <td>{{ qs_AbsSatuCoeff.count }}</td> -->
+                          <!-- <td>{{ qs_CompretionBrick.count }}</td> -->
+                          <td>{{ qs_WoodCompression.count }}</td>
+                          <!-- <td>{{ qs_ParallelPerpendicular.count }}</td> -->
                         </tr>
                       </tbody>
                     </table>                   

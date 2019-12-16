@@ -56,7 +56,7 @@
       <h4 class="h4-responsive card-header text-center font-weight-bold text-uppercase py-4">{{ title }}</h4>
       <div class="card-body">
         <div>
-          {% if request.user.is_superuser or request.user.is_student or request.user.is_bach or request.user.is_admin %}
+          {% if request.user.is_superuser or request.user.is_group or request.user.is_bach or request.user.is_admin %}
           <span class="table-add float-right mb-3 mr-2">
             <a href="{% url 'tests_soil:sand_cone_create' %}" class="text-primary">
               <i class="fas fa-plus fa-2x" aria-hidden="true"></i>
@@ -125,7 +125,7 @@
                       href="{% url 'tests_soil:sand_cone_detail' obj.id %}"
                       data-toggle="tooltip" title="Detalles" role="button" class="btn btn-primary btn-sm px-2 mx-1"><i class="far fa-eye"></i>
                     </a>
-                    {% if request.user.is_superuser or request.user.is_student or request.user.is_bach or request.user.is_admin %}
+                    {% if request.user.is_superuser or request.user.is_group or request.user.is_bach or request.user.is_admin %}
                     <a 
                       href="{% url 'tests_soil:sand_cone_update' obj.id %}" 
                       data-toggle="tooltip" title="Editar" role="button" class="btn btn-success btn-sm px-2 mx-1"><i class="fas fa-edit"></i>

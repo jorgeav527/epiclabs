@@ -7,7 +7,7 @@
   {% if obj.user.is_bach %}
   {% include 'tests_concrete/paver_break/pdf/bach.html' %}
   {% endif %}
-  {% if obj.user.is_student %}
+  {% if obj.user.is_group %}
   {% include 'tests_concrete/paver_break/pdf/student.html' %}
   {% endif %}
 {% endblock %}

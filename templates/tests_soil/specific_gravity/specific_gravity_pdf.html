@@ -7,7 +7,7 @@
   {% if obj.user.is_bach %}
   {% include 'tests_soil/specific_gravity/pdf/bach.html' %}
   {% endif %}
-  {% if obj.user.is_student %}
+  {% if obj.user.is_group %}
   {% include 'tests_soil/specific_gravity/pdf/student.html' %}
   {% endif %}
 {% endblock %}

@@ -5,6 +5,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('labs.urls', namespace="labs")),
     path('accounts/', include('accounts.urls', namespace="accounts")),
+    path('students/', include('students.urls', namespace="students")),
     path('thesis/', include('thesis.urls', namespace="thesis")),
     path('construction/', include('construction.urls', namespace="construction")),
     path('reference-person/', include('reference_person.urls', namespace="reference_person")),

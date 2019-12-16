@@ -7,7 +7,7 @@
   {% if obj.user.is_bach %}
   {% include 'tests_soil/granulometric_global/pdf/bach.html' %}
   {% endif %}
-  {% if obj.user.is_student %}
+  {% if obj.user.is_group %}
   {% include 'tests_soil/granulometric_global/pdf/student.html' %}
   {% endif %}
 {% endblock %}

@@ -35,7 +35,7 @@
                 <a class="dropdown-item" href="{% url 'labs:student' %}">Estudiantes Académico</a>
               </div>
           </li>
-          {% elif user.is_student or user.is_bach or user.is_client %}
+          {% elif user.is_group or user.is_bach or user.is_client %}
           <li class="nav-item">
             <a class="nav-link" href="#">Resumen</a>
           </li>  
@@ -48,8 +48,8 @@
       <ul class="navbar-nav">
         {% if user.is_authenticated %}
         <li class="nav-item">
-          {% if user.is_student %}
-          <a class="nav-link" href="{% url 'accounts:profile_student'%}">Perfil Estudiante</a>
+          {% if user.is_group %}
+          <a class="nav-link" href="{% url 'accounts:profile_group'%}">Perfil del Grupo</a>
           {% elif user.is_bach %}
           <a class="nav-link" href="{% url 'accounts:profile_bach'%}">Perfil Bachiller</a>
           {% elif user.is_teacher %}
@@ -72,7 +72,7 @@
           aria-haspopup="true" aria-expanded="false">
           <i class="fas fa-user"></i> Registrate </a>
           <div class="dropdown-menu dropdown-default" aria-labelledby="navbarDropdownMenuLink-4">
-            <a class="dropdown-item" href="{% url 'accounts:register_student' %}">Estudiantes</a>
+            <a class="dropdown-item" href="{% url 'accounts:register_group' %}">Grupo de Estudiantes</a>
           </div>
         </li>
         {% endif %}
@@ -83,7 +83,6 @@
           aria-haspopup="true" aria-expanded="false">
           <i class="fas fa-user"></i> Registrate </a>
           <div class="dropdown-menu dropdown-default" aria-labelledby="navbarDropdownMenuLink-4">
-            <a class="dropdown-item" href="{% url 'accounts:register_student' %}">Estudiantes</a>
             <a class="dropdown-item" href="{% url 'accounts:register_bach' %}">Bachiller</a>
             <a class="dropdown-item" href="{% url 'accounts:register_teacher' %}">Profesores</a>
             <a class="dropdown-item" href="{% url 'accounts:register_client' %}">Terceros</a>

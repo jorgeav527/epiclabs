@@ -22,7 +22,7 @@ from accounts.models import AdminProfile
 
 @login_required
 def proctor_m_list(request):
-    if request.user.is_bach or request.user.is_student or request.user.is_client:
+    if request.user.is_bach or request.user.is_group or request.user.is_client:
         obj_list = ProctorM.objects.filter(user=request.user)
         context = {
             "file_name": "Compactación_de_Suelos_Utilizando_una_Energia_Modificada",
@@ -43,7 +43,7 @@ def proctor_m_list(request):
 @login_required
 def proctor_m_create(request):
 
-    if request.user.is_bach or request.user.is_student:
+    if request.user.is_bach or request.user.is_group:
         form = ProctorMForm(request.POST or None)
         equips = Equip.objects.filter(name__in=("Balanza",))
         if request.method == "POST":
@@ -82,7 +82,7 @@ def proctor_m_create(request):
 def density_save(request, id):
     obj = get_object_or_404(ProctorM, id=id)
     equips = Equip.objects.filter(name__in=("Horno Eléctrico", "Balanza", "Proctor", "Pison"))
-    if request.user.is_bach or request.user.is_student or request.user.is_superuser or request.user.is_admin:
+    if request.user.is_bach or request.user.is_group or request.user.is_superuser or request.user.is_admin:
         if request.method == "POST":
             formset = DensityWetDryFormSet(request.POST, instance=obj)
             if formset.is_valid():
@@ -112,7 +112,7 @@ def density_save(request, id):
 def saturation_save(request, id):
     obj = get_object_or_404(ProctorM, id=id)
     equips = Equip.objects.filter(name__in=("Maquinas Varias", "Balanza"))
-    if request.user.is_bach or request.user.is_student or request.user.is_superuser or request.user.is_admin:
+    if request.user.is_bach or request.user.is_group or request.user.is_superuser or request.user.is_admin:
         if request.method == "POST":
             formset = SaturationFormSet(request.POST, instance=obj)
             if formset.is_valid():
@@ -142,7 +142,7 @@ def saturation_save(request, id):
 def correction_save(request, id):
     obj = get_object_or_404(ProctorM, id=id)
     equips = Equip.objects.filter(name__in=("Maquinas Varias", "Balanza"))
-    if request.user.is_bach or request.user.is_student or request.user.is_superuser or request.user.is_admin:
+    if request.user.is_bach or request.user.is_group or request.user.is_superuser or request.user.is_admin:
         if request.method == "POST":
             formset = CorrectionFormSet(request.POST, instance=obj)
             if formset.is_valid():
@@ -170,7 +170,7 @@ def correction_save(request, id):
 
 @login_required
 def proctor_m_update(request, id):
-    if request.user.is_bach or request.user.is_student:
+    if request.user.is_bach or request.user.is_group:
         obj = get_object_or_404(ProctorM, id=id)
         form = ProctorMForm(request.POST or None, instance=obj)
         if request.method == "POST":

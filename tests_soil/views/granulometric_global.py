@@ -28,7 +28,7 @@ from accounts.models import AdminProfile
 @login_required
 def granulometric_global_list(request):
 
-    if request.user.is_bach or request.user.is_student or request.user.is_client:
+    if request.user.is_bach or request.user.is_group or request.user.is_client:
         obj_list = GranulometricGlobal.objects.filter(user=request.user)
         context = {
             "file_name": "Granulometria_Gloval",
@@ -50,7 +50,7 @@ def granulometric_global_list(request):
 @login_required
 def granulometric_global_create(request):
 
-    if request.user.is_bach or request.user.is_student:
+    if request.user.is_bach or request.user.is_group:
         form = GranulometricGlobalForm(request.POST or None)
         equips = Equip.objects.filter(name__in=("Tamizadora", "Balanza"))
         if request.method == "POST":
@@ -88,7 +88,7 @@ def granulometric_global_create(request):
 @login_required
 def granulometric_global_update(request, id):
 
-    if request.user.is_bach or request.user.is_student:
+    if request.user.is_bach or request.user.is_group:
         obj = get_object_or_404(GranulometricGlobal, id=id)
         form = GranulometricGlobalForm(request.POST or None, instance=obj)
         if request.method == "POST":

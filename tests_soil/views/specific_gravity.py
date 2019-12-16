@@ -21,7 +21,7 @@ from accounts.models import AdminProfile
 @login_required
 def specific_gravity_list(request):
 
-    if request.user.is_bach or request.user.is_student or request.user.is_client:
+    if request.user.is_bach or request.user.is_group or request.user.is_client:
         obj_list = SpecificGravity.objects.filter(user=request.user)
         context = {
             "file_name": "Gravedad_Especifica_de_los_Solidos",
@@ -43,7 +43,7 @@ def specific_gravity_list(request):
 @login_required
 def specific_gravity_create(request):
 
-    if request.user.is_bach or request.user.is_student:
+    if request.user.is_bach or request.user.is_group:
         form = SpecificGravityForm(request.POST or None)
         equips = Equip.objects.filter(name__in=("Balanza", "Maquinas Varias",))
         if request.method == "POST":
@@ -83,7 +83,7 @@ def fraction_pass_save(request, id):
     obj = get_object_or_404(SpecificGravity, id=id)
     equips = Equip.objects.filter(name__in=("Horno Eléctrico", "Balanza", "Fiola",))
 
-    if request.user.is_bach or request.user.is_student or request.user.is_superuser or request.user.is_admin:
+    if request.user.is_bach or request.user.is_group or request.user.is_superuser or request.user.is_admin:
         if request.method == "POST":
             formset = FractionPassFormSet(request.POST, instance=obj)
             if formset.is_valid():
@@ -114,7 +114,7 @@ def fraction_retained_save(request, id):
     obj = get_object_or_404(SpecificGravity, id=id)
     equips = Equip.objects.filter(name__in=("Horno Eléctrico", "Balanza", "Fiola",))
 
-    if request.user.is_bach or request.user.is_student or request.user.is_superuser or request.user.is_admin:
+    if request.user.is_bach or request.user.is_group or request.user.is_superuser or request.user.is_admin:
         if request.method == "POST":
             formset = FractionRetainedFormSet(request.POST, instance=obj)
             if formset.is_valid():
@@ -143,7 +143,7 @@ def fraction_retained_save(request, id):
 @login_required
 def specific_gravity_update(request, id):
 
-    if request.user.is_bach or request.user.is_student:
+    if request.user.is_bach or request.user.is_group:
         obj = get_object_or_404(SpecificGravity, id=id)
         form = SpecificGravityForm(request.POST or None, instance=obj)
         if request.method == "POST":

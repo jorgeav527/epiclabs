@@ -23,7 +23,7 @@ from accounts.models import AdminProfile
 @login_required
 def sand_cone_list(request):
 
-    if request.user.is_bach or request.user.is_student or request.user.is_client:
+    if request.user.is_bach or request.user.is_group or request.user.is_client:
         obj_list = SandCone.objects.filter(user=request.user)
         context = {
             "file_name": "Densidad_Peso_Unitario_Suelo_In_Situ_Método_Cono_Arena",
@@ -45,7 +45,7 @@ def sand_cone_list(request):
 @login_required
 def sand_cone_create(request):
 
-    if request.user.is_bach or request.user.is_student:
+    if request.user.is_bach or request.user.is_group:
         form = SandConeForm(request.POST or None)
         equips = Equip.objects.filter(name__in=("Balanza", "Maquinas Varias",))
         if request.method == "POST":
@@ -84,7 +84,7 @@ def sand_cone_create(request):
 def humid_density_save(request, id):
     obj = get_object_or_404(SandCone, id=id)
     equips = Equip.objects.filter(name__in=("Cono de Arena", "Balanza", "Horno Eléctrico",))
-    if request.user.is_bach or request.user.is_student or request.user.is_superuser or request.user.is_admin:
+    if request.user.is_bach or request.user.is_group or request.user.is_superuser or request.user.is_admin:
         if request.method == "POST":
             formset = HumidDensityFormSet(request.POST, instance=obj)
             if formset.is_valid():
@@ -114,7 +114,7 @@ def humid_density_save(request, id):
 def content_moisture_save(request, id):
     obj = get_object_or_404(SandCone, id=id)
     equips = Equip.objects.filter(name__in=("Maquinas Varias", "Balanza", "Horno Eléctrico",))
-    if request.user.is_bach or request.user.is_student or request.user.is_superuser or request.user.is_admin:
+    if request.user.is_bach or request.user.is_group or request.user.is_superuser or request.user.is_admin:
         if request.method == "POST":
             formset = ContentMoistureFormSet(request.POST, instance=obj)
             if formset.is_valid():
@@ -144,7 +144,7 @@ def content_moisture_save(request, id):
 def moisture_carbure_save(request, id):
     obj = get_object_or_404(SandCone, id=id)
     equips = Equip.objects.filter(name__in=("Maquinas Varias", "Balanza", "Speedy"))
-    if request.user.is_bach or request.user.is_student or request.user.is_superuser or request.user.is_admin:
+    if request.user.is_bach or request.user.is_group or request.user.is_superuser or request.user.is_admin:
         if request.method == "POST":
             formset = ContentMoistureCarbureFormSet(request.POST, instance=obj)
             if formset.is_valid():
@@ -174,7 +174,7 @@ def moisture_carbure_save(request, id):
 def correction_sandcone_save(request, id):
     obj = get_object_or_404(SandCone, id=id)
     equips = Equip.objects.filter(name__in=("Maquinas Varias", "Balanza"))
-    if request.user.is_bach or request.user.is_student or request.user.is_superuser or request.user.is_admin:
+    if request.user.is_bach or request.user.is_group or request.user.is_superuser or request.user.is_admin:
         if request.method == "POST":
             formset = CorrectionSandConeFormSet(request.POST, instance=obj)
             if formset.is_valid():
@@ -203,7 +203,7 @@ def correction_sandcone_save(request, id):
 @login_required
 def sand_cone_update(request, id):
 
-    if request.user.is_bach or request.user.is_student:
+    if request.user.is_bach or request.user.is_group:
         obj = get_object_or_404(SandCone, id=id)
         form = SandConeForm(request.POST or None, instance=obj)
         if request.method == "POST":

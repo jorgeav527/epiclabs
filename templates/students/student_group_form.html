@@ -1,0 +1,45 @@
+{% extends "base_normal.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<section class="my-5">
+
+    <div class="row">
+      <div class="col-sm-12 mx-auto">
+        <div class="card shadow">
+          <div class="card-body">
+            <h2 class="card-title text-center">{{ title }}</h2>
+            <hr class="my-3">
+            <span class="table-add float-right">
+              <a href="{% url 'accounts:profile_group' %}" class="text-primary">
+                  <i class="fas fa-times fa-1x" aria-hidden="true"></i>
+              </a>
+            </span>
+            <form 
+                action="{% url 'students:student_group_save' obj.id %}" 
+                method="POST">
+                <div>
+                    <div class="row">
+                        {% csrf_token %}
+                        {{ formset.management_form }}
+                        {% for form in formset %}
+                            <div class="col-md-6 col-lg-4">
+                                <h6 class="h6-responsive font-weight-bold text-left ">Alumno {{ forloop.counter }}</h6>
+                                {{ form|crispy }}
+                                <hr class="my-3">
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="mt-5">
+                        <button class="btn btn-primary btn-block" name="submit" type="submit">Crear o Editar Alumnos</button>
+                        <a href="{% url 'accounts:profile_group' %}" class="btn btn-primary btn-block" type="button">Cancelar</a>
+                    </div>
+                </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+</section>
+{% endblock %}

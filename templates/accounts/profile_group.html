@@ -1,0 +1,65 @@
+{% extends "base_normal.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+      <div class="col-sm-12 col-md-8 col-lg-5 mx-auto my-5">
+        <div class="card shadow">
+          <div class="card-body">
+            {% if request.user.is_group %}
+            <span class="table-add float-right">
+              <a href="{% url 'students:student_group_save' obj.id %}" data-toggle="tooltip" title="Crear Alumno del Grupo" class="text-default">
+                <i class="fas fa-user-tie fa-2x" aria-hidden="true"></i>
+              </a>
+            </span>
+            {% endif %}
+  
+            <h2 class="h2-responsive card-title text-center">Perfil del Grupo</h2>
+            <hr class="my-3">
+            <div>
+              <div class="media-body">
+                <p class="card-meta mb-2"><i class="fas fa-user-edit mr-2"></i><strong>Usuario: </strong>{{ user.username }}</p>
+                <p class="card-meta mb-2"><i class="fas fa-user-edit mr-2"></i><strong>Email: </strong>{{ user.email }}</p>
+                <p class="card-meta mb-2"><i class="fas fa-user-edit mr-2"></i><strong>Nombre del Grupo: </strong>{{ user.groupprofile.group_name|default_if_none:"Complete el Formulario"|title }}</p>
+              </div>
+            </div>
+            <hr class="my-3">
+            <div>              
+                <form method="POST" action=".">
+                    {% csrf_token %}
+                    {{ profile_account|crispy }}
+                    {{ profile_group|crispy }}
+                    <button class="btn btn-primary btn-block mt-5" type="submit">Actualizar Perfil</button>
+                </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-8 col-lg-5 mx-auto">
+
+          {% for student in student_group %}
+          {% if student %}
+          <div class="card shadow default-color-dark white-text my-5">
+            <div class="card-body">
+
+              <div>
+                  <div class="media-body">
+                      <h4 class="h4-responsive card-title">{{ student.full_name|title }}</h4>
+                      <hr class="my-3 rgba-white-light">
+                      <p class="card-meta mb-2"><i class="fas fa-user-tie mr-2"></i><strong>Codigo: </strong>{{ student.codigo }}</p>
+                      <p class="card-meta mb-2"><i class="fas fa-user-tie mr-2"></i><strong>Email: </strong>{{ student.email }}</p>
+                      <p class="card-meta mb-2"><i class="fas fa-user-tie mr-2"></i><strong>Telefono: </strong>{{ student.phone }}</p>
+                  </div>
+              </div>
+              <hr class="my-3 rgba-white-light">
+                            
+            </div>
+          </div>
+          {% endif %}
+          {% endfor %}
+
+      </div>
+    </div>
+</div>
+{% endblock content %}

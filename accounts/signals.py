@@ -4,7 +4,7 @@ from django.dispatch import receiver
 
 from .models import (
     User,
-    StudentProfile,
+    GroupProfile,
     BachProfile,
     TeacherProfile,
     ClientProfile,
@@ -15,11 +15,11 @@ from .models import (
 
 @receiver(post_save, sender=User)
 def create_profile(sender, instance, created, **kwargs):
-    if instance.is_student:
+    if instance.is_group:
         if created:
-            StudentProfile.objects.create(user=instance)
+            GroupProfile.objects.create(user=instance)
         else:
-            instance.studentprofile.save()
+            instance.groupprofile.save()
     elif instance.is_bach:
         if created:
             BachProfile.objects.create(user=instance)

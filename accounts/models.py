@@ -8,7 +8,7 @@ from category.models import Category
 # Create your models here.
 
 class User(AbstractUser):
-    is_student  = models.BooleanField(default=False)
+    is_group    = models.BooleanField(default=False)
     is_bach     = models.BooleanField(default=False)
     is_teacher  = models.BooleanField(default=False)
     is_client   = models.BooleanField(default=False)
@@ -16,17 +16,15 @@ class User(AbstractUser):
 
 # alphanumeric = RegexValidator(r'^[0-9a-zA-Z]*$', 'Only alphanumeric characters are allowed.')
 
-
-class StudentProfile(models.Model):
+class GroupProfile(models.Model):
     user        = models.OneToOneField(User, on_delete=models.CASCADE)
     active      = models.BooleanField(default=True)
-    dni         = models.BigIntegerField(null=True, blank=True,)
-    codigo      = models.BigIntegerField(null=True, blank=True,)
+    group_name  = models.CharField(max_length=64, unique=True)
     created     = models.DateTimeField(auto_now_add=True)
     updated     = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"Student {self.user.first_name} {self.user.last_name}"
+        return f"Group {self.group_name}"
 
 
 class BachProfile(models.Model):

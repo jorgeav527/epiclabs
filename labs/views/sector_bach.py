@@ -14,7 +14,7 @@ def sector_bach_view(request):
 
 def bach_info_view(request):
 
-    if request.user.is_bach or request.user.is_student or request.user.is_client:
+    if request.user.is_bach or request.user.is_group or request.user.is_client:
         qs_users = User.objects.filter(user=request.user)
         context = {
             "title": "Informacion",
@@ -36,7 +36,7 @@ def bach_info_view(request):
 
 def bach_equips_view(request):
 
-    if request.user.is_bach or request.user.is_student or request.user.is_client:
+    if request.user.is_bach or request.user.is_group or request.user.is_client:
         qs_equips = Equip.objects.all()
         context = {
             "title": "Equipos",
@@ -55,7 +55,7 @@ def bach_equips_view(request):
 
 def bach_personal_view(request):
 
-    if request.user.is_bach or request.user.is_student or request.user.is_client:
+    if request.user.is_bach or request.user.is_group or request.user.is_client:
         qs_teachers = User.objects.filter(is_teacher=True)
 
         context = {
@@ -76,7 +76,7 @@ def bach_personal_view(request):
 
 def bach_laboratories_view(request):
 
-    if request.user.is_bach or request.user.is_student or request.user.is_client:
+    if request.user.is_bach or request.user.is_group or request.user.is_client:
         context = {
             "title": "Laboratorios",
         }

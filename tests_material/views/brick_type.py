@@ -18,7 +18,7 @@ from accounts.models import AdminProfile
 @login_required
 def brick_type_list(request):
 
-    if request.user.is_bach or request.user.is_student or request.user.is_client:
+    if request.user.is_bach or request.user.is_group or request.user.is_client:
         obj_list = BrickType.objects.filter(user=request.user)
         context = {
             "file_name": "Propiedades_Tipo_del_Ladrillo",
@@ -40,7 +40,7 @@ def brick_type_list(request):
 @login_required
 def brick_type_create(request):
 
-    if request.user.is_bach or request.user.is_student:
+    if request.user.is_bach or request.user.is_group:
         form = BrickTypeForm(request.POST or None)
         equips = Equip.objects.filter(name__in=("Balanza", "Maquinas Varias",))
         if request.method == "POST":
@@ -80,7 +80,7 @@ def variation_dimensions_save(request, id):
     obj = get_object_or_404(BrickType, id=id)
     equips = Equip.objects.filter(name__in=("Regla Graduada", "Cuñas de medición",))
 
-    if request.user.is_bach or request.user.is_student or request.user.is_superuser or request.user.is_admin:
+    if request.user.is_bach or request.user.is_group or request.user.is_superuser or request.user.is_admin:
         if request.method == "POST":
             formset = VadriationDimensionsFormSet(request.POST, instance=obj)
             if formset.is_valid():
@@ -111,7 +111,7 @@ def warping_save(request, id):
     obj = get_object_or_404(BrickType, id=id)
     equips = Equip.objects.filter(name__in=("Regla Graduada", "Cuñas de medición",))
 
-    if request.user.is_bach or request.user.is_student or request.user.is_superuser or request.user.is_admin:
+    if request.user.is_bach or request.user.is_group or request.user.is_superuser or request.user.is_admin:
         if request.method == "POST":
             formset = WarpingFormSet(request.POST, instance=obj)
             if formset.is_valid():
@@ -142,7 +142,7 @@ def density_voids_save(request, id):
     obj = get_object_or_404(BrickType, id=id)
     equips = Equip.objects.filter(name__in=("Regla Graduada", "Balanza",))
 
-    if request.user.is_bach or request.user.is_student or request.user.is_superuser or request.user.is_admin:
+    if request.user.is_bach or request.user.is_group or request.user.is_superuser or request.user.is_admin:
         if request.method == "POST":
             formset = DensityVoidsFormSet(request.POST, instance=obj)
             if formset.is_valid():
@@ -173,7 +173,7 @@ def suction_save(request, id):
     obj = get_object_or_404(BrickType, id=id)
     equips = Equip.objects.filter(name__in=("Horno Eléctrico", "Balanza", "Cronómetro",))
 
-    if request.user.is_bach or request.user.is_student or request.user.is_superuser or request.user.is_admin:
+    if request.user.is_bach or request.user.is_group or request.user.is_superuser or request.user.is_admin:
         if request.method == "POST":
             formset = SuctionFormSet(request.POST, instance=obj)
             if formset.is_valid():
@@ -204,7 +204,7 @@ def abs_satu_coeff_save(request, id):
     obj = get_object_or_404(BrickType, id=id)
     equips = Equip.objects.filter(name__in=("Horno Eléctrico", "Balanza", "Cocina",))
 
-    if request.user.is_bach or request.user.is_student or request.user.is_superuser or request.user.is_admin:
+    if request.user.is_bach or request.user.is_group or request.user.is_superuser or request.user.is_admin:
         if request.method == "POST":
             formset = AbsSatuCoeffFormSet(request.POST, instance=obj)
             if formset.is_valid():
@@ -235,7 +235,7 @@ def compretion_brick_save(request, id):
     obj = get_object_or_404(BrickType, id=id)
     equips = Equip.objects.filter(name__in=("Horno Eléctrico", "Maquina Compresora",))
 
-    if request.user.is_bach or request.user.is_student or request.user.is_superuser or request.user.is_admin:
+    if request.user.is_bach or request.user.is_group or request.user.is_superuser or request.user.is_admin:
         if request.method == "POST":
             formset = CompretionBrickFormSet(request.POST, instance=obj)
             if formset.is_valid():
@@ -264,7 +264,7 @@ def compretion_brick_save(request, id):
 @login_required
 def brick_type_update(request, id):
 
-    if request.user.is_bach or request.user.is_student:
+    if request.user.is_bach or request.user.is_group:
         obj = get_object_or_404(BrickType, id=id)
         form = BrickTypeForm(request.POST or None, instance=obj)
         if request.method == "POST":

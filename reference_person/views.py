@@ -17,7 +17,7 @@ def reference_person_create(request):
                 return redirect('accounts:profile_client')
     
     else:
-        form = ConstructionForm(instance=request.user.clientprofile)
+        form = ReferencePersonForm(instance=request.user.clientprofile)
 
     context = {
         "form": form,

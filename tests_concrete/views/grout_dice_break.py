@@ -18,7 +18,7 @@ from accounts.models import AdminProfile
 
 @login_required
 def grout_dice_break_list(request):
-    if request.user.is_bach or request.user.is_student or request.user.is_client:
+    if request.user.is_bach or request.user.is_group or request.user.is_client:
         obj_list = GroutDiceBreak.objects.filter(user=request.user)
         context = {
             "file_name": "Dados_de_Concreto",
@@ -38,7 +38,7 @@ def grout_dice_break_list(request):
 
 @login_required
 def grout_dice_break_create(request):
-    if request.user.is_bach or request.user.is_student:
+    if request.user.is_bach or request.user.is_group:
         form = GroudDiceBreakForm(request.POST or None)
         equip = Equip.objects.get(name="Maquina Compresora")
         if request.method == "POST":
@@ -72,7 +72,7 @@ def grout_dice_break_create(request):
 
 @login_required
 def grout_dice_break_update(request, id):
-    if request.user.is_bach or request.user.is_student:
+    if request.user.is_bach or request.user.is_group:
         obj = get_object_or_404(GroutDiceBreak, id=id)
         form = GroudDiceBreakForm(request.POST or None, instance=obj)
         if request.method == "POST":

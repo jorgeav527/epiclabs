@@ -2,19 +2,33 @@ from django.contrib import admin
 
 # Register your models here.
 from .models import *
+from students.models import StudentGroup
 
 # Register your models here.
 
 class UserAdmin(admin.ModelAdmin):
-    list_display = ['username', 'first_name', 'last_name', 'email', 'is_student', 'is_teacher', 'is_client', 'is_bach', 'is_admin', 'is_staff']
+    list_display = ['username', 'first_name', 'last_name', 'email', 'is_group', 'is_teacher', 'is_client', 'is_bach', 'is_admin', 'is_staff']
     
 admin.site.register(User, UserAdmin)
 
 
-class StudentProfileAdmin(admin.ModelAdmin):
-    list_display = ['user', 'dni', 'codigo', 'active']
+class StudentGroupAdmin(admin.TabularInline):
+    model = StudentGroup
+    fields = ( 
+        'full_name', 'codigo', 'email', 'phone', 'group_profile'
+    )
+    readonly_fields = (
+        'full_name', 'codigo', 'email', 'phone', 'group_profile'
+    )
+    extra = 0
+    can_delete = False
 
-admin.site.register(StudentProfile, StudentProfileAdmin)
+
+class GroupProfileAdmin(admin.ModelAdmin):
+    list_display = ['user', 'active', 'group_name', 'created', 'updated',]
+    inlines = [StudentGroupAdmin,]
+
+admin.site.register(GroupProfile, GroupProfileAdmin)
 
 
 class TeacherProfileAdmin(admin.ModelAdmin):
@@ -26,7 +40,7 @@ admin.site.register(TeacherProfile, TeacherProfileAdmin)
 class BachProfileAdmin(admin.ModelAdmin):
     list_display = ['user', 'dni', 'codigo', 'active']
 
-admin.site.register(BachProfile, StudentProfileAdmin)
+admin.site.register(BachProfile, BachProfileAdmin)
 
 
 class ClientProfileAdmin(admin.ModelAdmin):

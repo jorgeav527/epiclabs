@@ -5,45 +5,52 @@ from .forms import *
 from thesis.models import Thesis
 from construction.models import Construction
 from reference_person.models import ReferencePerson
+from students.models import StudentGroup
+from accounts.models import GroupProfile
 
 # Create your views here.
 
-# STUDENT
+# GROUP
 #========
 
-def register_student(request):
+def register_group(request):
     if request.method == "POST":
-        form = StudentRegister(request.POST)
+        form = GroupRegister(request.POST)
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get("username")
             messages.success(request, f"Cuenta creada para el estudiante { username }")
             return redirect('accounts:login')
     else:
-        form = StudentRegister()
+        form = GroupRegister()
     context = { "form": form }
-    return render(request, 'accounts/register_student.html', context)
+    return render(request, 'accounts/register_group.html', context)
 
 
-def profile_student(request):
-    profile_account = AccountUpdateForm(request.POST, instance=request.user)
-    profile_student = StudentUpdateForm(request.POST, instance=request.user.studentprofile)
-    if profile_account.is_valid() and profile_student.is_valid():
+def profile_group(request):
+    student_group = StudentGroup.objects.filter(group_profile=request.user.groupprofile)
+    obj = get_object_or_404(GroupProfile, id=request.user.groupprofile.id) # !! to dont colapce the db
+    profile_account = GroupAccountUpdatedForm(request.POST, instance=request.user)
+    profile_group = GroupUpdateForm(request.POST, instance=request.user.groupprofile)
+
+    if profile_account.is_valid() and profile_group.is_valid():
         profile_account.save()
-        profile_student.save()
+        profile_group.save()
         messages.success(request, f"La cuenta ha sido actualizada")
-        return redirect('accounts:profile_student')
+        return redirect('accounts:profile_group')
 
     else:
-        profile_account = AccountUpdateForm(instance=request.user)
-        profile_student = StudentUpdateForm(instance=request.user.studentprofile)
+        profile_account = GroupAccountUpdatedForm(instance=request.user)
+        profile_group = GroupUpdateForm(instance=request.user.groupprofile)
 
     context = {
+        "obj": obj,
+        "student_group": student_group,
         "profile_account": profile_account,
-        "profile_student": profile_student,
+        "profile_group": profile_group,
     }
 
-    return render(request, 'accounts/profile_student.html', context)
+    return render(request, 'accounts/profile_group.html', context)
 
 
 # BACH

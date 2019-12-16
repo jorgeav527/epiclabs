@@ -21,7 +21,7 @@ from accounts.models import AdminProfile
 @login_required
 def moisture_content_list(request):
 
-    if request.user.is_bach or request.user.is_student or request.user.is_client:
+    if request.user.is_bach or request.user.is_group or request.user.is_client:
         obj_list = MoistureContent.objects.filter(user=request.user)
         context = {
             "file_name": "Contenido_de_Humedad_de_Suelos",
@@ -43,7 +43,7 @@ def moisture_content_list(request):
 @login_required
 def moisture_content_create(request):
 
-    if request.user.is_bach or request.user.is_student:
+    if request.user.is_bach or request.user.is_group:
         form = MoistureContentForm(request.POST or None)
         equips = Equip.objects.filter(name__in=("Balanza", "Maquinas Varias",))
         if request.method == "POST":
@@ -83,7 +83,7 @@ def moisture_material_save(request, id):
     obj = get_object_or_404(MoistureContent, id=id)
     equips = Equip.objects.filter(name__in=("Horno Eléctrico", "Balanza",))
 
-    if request.user.is_bach or request.user.is_student or request.user.is_superuser or request.user.is_admin:
+    if request.user.is_bach or request.user.is_group or request.user.is_superuser or request.user.is_admin:
         if request.method == "POST":
             formset = MoistureMaterialFormSet(request.POST, instance=obj)
             if formset.is_valid():
@@ -112,7 +112,7 @@ def moisture_material_save(request, id):
 @login_required
 def moisture_content_update(request, id):
 
-    if request.user.is_bach or request.user.is_student:
+    if request.user.is_bach or request.user.is_group:
         obj = get_object_or_404(MoistureContent, id=id)
         form = MoistureContentForm(request.POST or None, instance=obj)
         if request.method == "POST":

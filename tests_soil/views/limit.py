@@ -22,7 +22,7 @@ from accounts.models import AdminProfile
 
 @login_required
 def limit_list(request):
-    if request.user.is_bach or request.user.is_student or request.user.is_client:
+    if request.user.is_bach or request.user.is_group or request.user.is_client:
         obj_list = Limit.objects.filter(user=request.user)
         context = {
             "file_name": "Limite_Liquido_Limite_Plastico",
@@ -42,7 +42,7 @@ def limit_list(request):
 
 @login_required
 def limit_create(request):
-    if request.user.is_bach or request.user.is_student:
+    if request.user.is_bach or request.user.is_group:
         form = LimitForm(request.POST or None)
         equips = Equip.objects.filter(name__in=("Balanza"))
         if request.method == "POST":
@@ -80,7 +80,7 @@ def limit_create(request):
 def liquid_save(request, id):
     obj = get_object_or_404(Limit, id=id)
     equips = Equip.objects.filter(name__in=("Horno Eléctrico", "Balanza"))
-    if request.user.is_bach or request.user.is_student or request.user.is_superuser or request.user.is_admin:
+    if request.user.is_bach or request.user.is_group or request.user.is_superuser or request.user.is_admin:
         if request.method == "POST":
             formset = LiquidFormSet(request.POST, instance=obj)
             if formset.is_valid():
@@ -110,7 +110,7 @@ def liquid_save(request, id):
 def plastic_save(request, id):
     obj = get_object_or_404(Limit, id=id)
     equips = Equip.objects.filter(name__in=("Horno Eléctrico", "Balanza"))
-    if request.user.is_bach or request.user.is_student or request.user.is_superuser or request.user.is_admin:
+    if request.user.is_bach or request.user.is_group or request.user.is_superuser or request.user.is_admin:
         if request.method == "POST":
             formset = PlasticFormSet(request.POST, instance=obj)
             if formset.is_valid():
@@ -138,7 +138,7 @@ def plastic_save(request, id):
 
 @login_required
 def limit_update(request, id):
-    if request.user.is_bach or request.user.is_student:
+    if request.user.is_bach or request.user.is_group:
         obj = get_object_or_404(Limit, id=id)
         form = LimitForm(request.POST or None, instance=obj)
         if request.method == "POST":

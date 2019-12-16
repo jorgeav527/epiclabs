@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 
 from .models import (
     User,
-    StudentProfile,
+    GroupProfile,
     BachProfile,
     TeacherProfile,
     ClientProfile,
@@ -22,10 +22,10 @@ class AccountUpdateForm(forms.ModelForm):
         model = User
         fields = ("username", "first_name", "last_name", "email",)
 
-# STUDENT
+# GROUP
 #========
 
-class StudentRegister(UserCreationForm):
+class GroupRegister(UserCreationForm):
     email = forms.EmailField(required=True, help_text='Solo @gmail',)
 
     class Meta:
@@ -33,20 +33,27 @@ class StudentRegister(UserCreationForm):
         fields = ("username", "email", "password1", "password2",)
 
     def save(self, commit=True):
-        student = super().save(commit=False)
-        student.is_student = True
+        group = super().save(commit=False)
+        group.is_group = True
         if commit:
-            student.save()
-        return student
+            group.save()
+        return group
 
 
-class StudentUpdateForm(forms.ModelForm):
-    dni = forms.IntegerField(required=True, label='DNI', help_text='Documento Nacional de Identidad',)
-    codigo = forms.IntegerField(required=True, label='Codigo de Matricula', help_text='2008702131',)
+class GroupAccountUpdatedForm(forms.ModelForm):
+    email = forms.EmailField(max_length=30, required=True, help_text='Solo @gmail',)
 
     class Meta:
-        model = StudentProfile
-        fields = ("dni", "codigo",)
+        model = User
+        fields = ("username", "email",)
+
+
+class GroupUpdateForm(forms.ModelForm):
+    group_name = forms.CharField(required=True, label='Nombre del Grupo', help_text='G-C-2019-() <br> G-S-2019-() <br> G-M-2019-()',)
+
+    class Meta:
+        model = GroupProfile
+        fields = ("group_name",)
 
 
 # BACH

@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     'equipments.apps.EquipmentsConfig',
     'labs.apps.LabsConfig',
     'reference_person.apps.ReferencePersonConfig',
+    'students.apps.StudentsConfig',
     'tests_concrete.apps.TestsConcreteConfig',
     'tests_material.apps.TestsMaterialConfig',
     'tests_soil.apps.TestsSoilConfig',
@@ -30,6 +31,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'crispy_forms',
     'qr_code',
+    'import_export',
     # Django Apps Default
     'django.contrib.admin',
     'django.contrib.auth',

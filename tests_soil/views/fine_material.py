@@ -20,7 +20,7 @@ from accounts.models import AdminProfile
 @login_required
 def fine_material_list(request):
 
-    if request.user.is_bach or request.user.is_student or request.user.is_client:
+    if request.user.is_bach or request.user.is_group or request.user.is_client:
         obj_list = FineMaterial.objects.filter(user=request.user)
         context = {
             "file_name": "Determinación_Material_Mas_Fino",
@@ -42,7 +42,7 @@ def fine_material_list(request):
 @login_required
 def fine_material_create(request):
 
-    if request.user.is_bach or request.user.is_student:
+    if request.user.is_bach or request.user.is_group:
         form = FineMaterialForm(request.POST or None)
         equips = Equip.objects.filter(name__in=("Horno Eléctrico", "Balanza"))
         if request.method == "POST":
@@ -80,7 +80,7 @@ def fine_material_create(request):
 @login_required
 def fine_material_update(request, id):
 
-    if request.user.is_bach or request.user.is_student:
+    if request.user.is_bach or request.user.is_group:
         obj = get_object_or_404(FineMaterial, id=id)
         form = FineMaterialForm(request.POST or None, instance=obj)
         if request.method == "POST":

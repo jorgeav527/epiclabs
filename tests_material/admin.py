@@ -119,3 +119,27 @@ class WoodCompressionAdmin(admin.ModelAdmin):
     inlines = [ParallelPerpendicularAdmin]
 
 admin.site.register(WoodCompression, WoodCompressionAdmin)
+
+
+class MasonryAdmin(admin.TabularInline):
+    model = Masonry
+    fields = ( 
+        "poured_date", "break_date", "dilate", "L", "A", "hp", "tp", 
+        "hp_tp", "correction", "area", "load", "fc", "fc_MPa",
+    )
+    readonly_fields = (
+        "poured_date", "break_date", "dilate", "L", "A", "hp", "tp", 
+        "hp_tp", "correction", "area", "load", "fc", "fc_MPa",
+    )
+    extra = 0
+    can_delete = False
+
+
+class MasonryCompressionAdmin(admin.ModelAdmin):
+    list_display = [ 
+        "brick_type", "user", "name", "element_name", "code", "sampling_date",
+        "reference_person", "construction", "created", "updated",
+    ]
+    inlines = [MasonryAdmin,]
+
+admin.site.register(MasonryCompression, MasonryCompressionAdmin)

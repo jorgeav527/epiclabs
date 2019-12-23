@@ -1,0 +1,129 @@
+<div class="row">
+    <div class="col-md-6 mx-auto my-3">
+        <div class="card shadow">
+            <div class="card-body">
+                <!-- Section heading -->
+                <h4 class="h4-responsive font-weight-bold text-center ">{{ title }}</h4>
+                <p class="dark-grey-text w-responsive text-center mx-auto">{{ norma_ASTM }} / {{ noma_NTP }}</p>
+                <hr class="my-3">
+
+                <!-- Section description -->
+                <p class="text-left mt-3"><span class="font-weight-bold"><u>Datos del Usuario</u></span></p>
+                <p class="text-left"><span class="font-weight-bold">Usuario:</span> {{ obj.user.username }}</p>
+                <p class="text-left"><span class="font-weight-bold">Empresa:</span> {{ obj.user.clientprofile.long_name|title }}</p>
+                <p class="text-left"><span class="font-weight-bold">Dirección de la Empresa:</span> {{ obj.user.clientprofile.direction|title }}</p>
+                <p class="text-left"><span class="font-weight-bold">RUC:</span> {{ obj.user.clientprofile.ruc }}</p>
+                <p class="text-left"><span class="font-weight-bold">Telefono:</span> {{ obj.user.clientprofile.phone }}</p>
+                <hr class="my-3">
+
+                <p class="text-left mt-3"><span class="font-weight-bold"><u>Datos de la Obra</u></span></p>
+                <p class="text-left"><span class="font-weight-bold">Obra:</span> {{ obj.construction.name|title }}</p>
+                <p class="text-left"><span class="font-weight-bold">Ubicación:</span> {{ obj.construction.location|title }}</p>
+                <p class="text-left"><span class="font-weight-bold">Comienzo de la Obra:</span> {{ obj.construction.start_day }}</p>
+                <hr class="my-3">
+
+                <p class="text-left mt-3"><span class="font-weight-bold"><u>Datos del Ensayo Ingresados</u></span></p>
+                <p class="text-left"><span class="font-weight-bold">Fecha de Muestreo:</span> {{ obj.sampling_date|date:"d/m/Y" }}</p>
+                <p class="text-left"><span class="font-weight-bold">Fecha del Ensayo:</span> {{ obj.created|date:"d/m/Y" }}</p>
+                <p class="text-left"><span class="font-weight-bold">Tipo de Prisma:</span> {{ obj.prism_type|title }}</p>
+                <p class="text-left"><span class="font-weight-bold">Resistencia de Diseño:</span> {{ obj.fc_esp }} kgf/cm²</p>
+                <hr class="my-3">
+
+                <p class="text-left mt-3"><span class="font-weight-bold"><u>Resultados del Ensayo</u></span></p>
+                <p class="text-left"><span class="font-weight-bold">Determinación del Esfuerzo:</span></p>
+                <table class="table table-sm table-responsive table-bordered text-center">
+                    <thead class="primary-color-dark white-text">
+                        <tr>
+                            <th>Secuencia</th>
+                            <th>Elemento</th>
+                            <th>Fecha de Vaciado</th>
+                            <th>Fecha de Rotura</th>
+                            <th>Edad (dias)</th>
+                            <th>Largo (cm)</th>
+                            <th>Ancho (cm)</th>
+                            <th>Area (cm²)</th>
+                            <th>Carga (kgf)</th>
+                            <th>Esfuerzo (kgf/cm²)</th>
+                            <th>Esfuerzo (MPa)</th>
+                            <th>Esfuerzo a 175 (kgf/cm²)</th>
+                            <th>Esfuerzo a 210 (kgf/cm²)</th>
+                            <th>Esfuerzo a 280 (kgf/cm²)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for prism in qs_prism %}
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>{{ prism.element_name }}</td>
+                            <td>{{ prism.poured_date }}</td>
+                            <td>{{ prism.break_date }}</td>
+                            <td>{{ prism.dilate }}</td>
+                            <td>{{ prism.D_1 }}</td>
+                            <td>{{ prism.D_2 }}</td>
+                            <td>{{ prism.area }}</td>
+                            <td>{{ prism.load }}</td>
+                            <td>{{ prism.fc }}</td>
+                            <td>{{ prism.fc_MPa }}</td>
+                            <td>{{ prism.fc_175 }}</td>
+                            <td>{{ prism.fc_210 }}</td>
+                            <td>{{ prism.fc_280 }}</td>
+                        </tr>
+                        {% endfor %}
+                        <tr>
+                            <th scope="row"> Promedio</th>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>{{ mean_prism_fc }}</td>
+                            <td>{{ mean_prism_fc_MPa }}</td>  
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"> SD</th>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>{{ std_prism_fc }}</td>
+                            <td>{{ std_prism_fc_MPa }}</td>  
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="text-left"><span class="font-weight-bold">Resistencia Caracteristica:</span> {{ fc_caracteristic }} kgf/cm² - {{ fc_MPa_caracteristic }} MPa</p>
+                <hr class="my-3">
+                
+                <p class="text-left mt-3"><span class="font-weight-bold"><u>Contacto de Referencia</u></span></p>
+                <p class="text-left"><span class="font-weight-bold">Referencia:</span> {{ obj.reference_person.title }} {{ obj.reference_person.name|title }}</p>
+                <p class="text-left"><span class="font-weight-bold">Telefono:</span> {{ obj.reference_person.dni }}</p>
+                <p class="text-left"><span class="font-weight-bold">DNI:</span> {{ obj.reference_person.phone }}</p>
+                <hr class="my-3">
+                
+                <p class="text-left mt-3"><span class="font-weight-bold"><u>Datos Extra</u></span></p>
+                <p class="text-left"><span class="font-weight-bold">Id:</span> {{ obj.id }}</p>
+                <p class="text-left"><span class="font-weight-bold">Creado:</span> {{ obj.created }}</p>
+                <p class="text-left"><span class="font-weight-bold">Actualizado:</span> {{ obj.updated }}</p>
+                <p class="text-left"><span class="font-weight-bold">Nombre del Ensayo:</span> {{ obj.name }}</p>
+                <hr class="my-3">
+                
+                <div class="mt-5">
+                    <a href="{% url 'tests_concrete:prism_break_update' obj.id %}" class="btn btn-primary btn-block" type="button">Editar Ensayo</a>
+                    <a href="{% url 'tests_concrete:prism_break_list' %}" class="btn btn-primary btn-block" type="button">Cancelar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

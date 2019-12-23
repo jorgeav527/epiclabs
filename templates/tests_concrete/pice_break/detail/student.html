@@ -4,7 +4,7 @@
             <div class="card-body">
                 <!-- Section heading -->
                 <h4 class="h4-responsive font-weight-bold text-center ">{{ title }}</h4>
-                <p class="text-center dark-grey-text w-responsive mx-auto ">((NORMA ASTM C-109) / (NTP 334.051))</p>
+                <p class="dark-grey-text w-responsive text-center mx-auto">{{ norma_ASTM }} / {{ noma_NTP }}</p>
                 <hr class="my-3">
 
                 <!-- Section description -->
@@ -17,29 +17,87 @@
                 <hr class="my-3">
 
                 <p class="text-left mx-auto  mt-3"><span class="font-weight-bold"><u>Datos del Ensayo Ingresados</u></span></p>
-                <p class="text-left mx-auto "><span class="font-weight-bold">Resistencia de Diseño::</span> {{ obj.fc_esp }} kgf/cm²</p>
-                <p class="text-left mx-auto "><span class="font-weight-bold">Elemento:</span> {{ obj.element|title }}</p>
-                <p class="text-left mx-auto "><span class="font-weight-bold">Fecha de Vaciado:</span> {{ obj.poured_data|date:"d/m/Y" }}</p>
-                <p class="text-left mx-auto "><span class="font-weight-bold">Fecha de Rotura:</span> {{ obj.break_data|date:"d/m/Y" }}</p>
-                {% if obj.diameter_esp %}
-                <p class="text-left mx-auto "><span class="font-weight-bold">Diametro Esp:</span> {{ obj.diameter_esp }} pulgadas</p>
-                {% else %}
-                <p class="text-left mx-auto "><span class="font-weight-bold">Diametro Superior:</span> {{ obj.diameter_1 }} pulgadas</p>
-                <p class="text-left mx-auto "><span class="font-weight-bold">Diametro Inferior:</span> {{ obj.diameter_2 }} pulgadas</p>
-                {% endif %}
-                <p class="text-left mx-auto "><span class="font-weight-bold">Ejecución:</span> {{ obj.created }}</p>
-                <p class="text-left mx-auto "><span class="font-weight-bold">Corrección:</span> {{ obj.updated }}</p>
-                <p class="text-left mx-auto "><span class="font-weight-bold">Carga Maquina:</span> {{ obj.F }} kgf</p>
-                <p class="text-left mx-auto "><span class="font-weight-bold">Curso Especifico:</span> {{ obj.course|title }} </p>
+                <p class="text-left"><span class="font-weight-bold">Fecha de Muestreo:</span> {{ obj.sampling_date|date:"d/m/Y" }}</p>
+                <p class="text-left"><span class="font-weight-bold">Fecha del Ensayo:</span> {{ obj.created|date:"d/m/Y" }}</p>
+                <p class="text-left"><span class="font-weight-bold">Tipo de Probeta:</span> {{ obj.pice_type|title }}</p>
+                <p class="text-left"><span class="font-weight-bold">Resistencia de Diseño:</span> {{ obj.fc_esp }} kgf/cm²</p>
                 <hr class="my-3">
 
                 <p class="text-left mx-auto  mt-3"><span class="font-weight-bold"><u>Resultados del Ensayo</u></span></p>
-                <p class="text-left mx-auto "><span class="font-weight-bold">Duracion:</span> {{ obj.duration }} dias</p>
-                <p class="text-left mx-auto "><span class="font-weight-bold">Area:</span> {{ obj.area }} cm²</p>
-                <p class="text-left mx-auto "><span class="font-weight-bold">f'c:</span> {{ obj.fc }} kgf/cm²</p>
-                <p class="text-left mx-auto "><span class="font-weight-bold">f'175:</span> {{ obj.fc_175 }} kgf/cm²</p>
-                <p class="text-left mx-auto "><span class="font-weight-bold">f'210:</span> {{ obj.fc_210 }} kgf/cm²</p>
-                <p class="text-left mx-auto "><span class="font-weight-bold">f'280:</span> {{ obj.fc_280 }} kgf/cm²</p>
+                <p class="text-left"><span class="font-weight-bold">Determinación del Esfuerzo:</span></p>
+                <table class="table table-sm table-responsive table-bordered text-center">
+                    <thead class="primary-color-dark white-text">
+                        <tr>
+                            <th>Secuencia</th>
+                            <th>Elemento</th>
+                            <th>Fecha de Vaciado</th>
+                            <th>Fecha de Rotura</th>
+                            <th>Edad (dias)</th>
+                            <th>Diametro Superior (pulgadas)</th>
+                            <th>Diametro Inferior (pulgadas)</th>
+                            <th>Area (cm²)</th>
+                            <th>Carga (kgf)</th>
+                            <th>Esfuerzo (kgf/cm²)</th>
+                            <th>Esfuerzo (MPa)</th>
+                            <th>Esfuerzo a 175 (kgf/cm²)</th>
+                            <th>Esfuerzo a 210 (kgf/cm²)</th>
+                            <th>Esfuerzo a 280 (kgf/cm²)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for pice in qs_pice %}
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>{{ pice.element_name }}</td>
+                            <td>{{ pice.poured_date }}</td>
+                            <td>{{ pice.break_date }}</td>
+                            <td>{{ pice.dilate }}</td>
+                            <td>{{ pice.D_1 }}</td>
+                            <td>{{ pice.D_2 }}</td>
+                            <td>{{ pice.area }}</td>
+                            <td>{{ pice.load }}</td>
+                            <td>{{ pice.fc }}</td>
+                            <td>{{ pice.fc_MPa }}</td>
+                            <td>{{ pice.fc_175 }}</td>
+                            <td>{{ pice.fc_210 }}</td>
+                            <td>{{ pice.fc_280 }}</td>
+                        </tr>
+                        {% endfor %}
+                        <tr>
+                            <th scope="row"> Promedio</th>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>{{ mean_pice_fc }}</td>
+                            <td>{{ mean_pice_fc_MPa }}</td>  
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"> SD</th>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>{{ std_pice_fc }}</td>
+                            <td>{{ std_pice_fc_MPa }}</td>  
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="text-left"><span class="font-weight-bold">Resistencia Caracteristica:</span> {{ fc_caracteristic }} kgf/cm² - {{ fc_MPa_caracteristic }} MPa</p>
                 <hr class="my-3">
                                 
                 <p class="text-left mx-auto  mt-3"><span class="font-weight-bold"><u>Datos Extra</u></span></p>

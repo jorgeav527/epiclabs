@@ -452,20 +452,27 @@ def brick_type_detail(request, id):
 
     # Compretion Brick
     qs_compretion_brick = CompretionBrick.objects.filter(brick_type=obj.id)
+
     qs_fc_list = qs_compretion_brick.values_list('fc', flat=True)
-    avg_fc = round(np.mean(qs_fc_list), 2)
+    avg_fc = round(np.mean(qs_fc_list), 2) 
+    std_fc = round(np.std(qs_fc_list), 2)
+    fc_caracteristic = round(avg_fc - std_fc, 2)
+
     qs_fc_MPA = qs_compretion_brick.values_list('fc_MPa', flat=True)
     avg_fc_MPA = round(np.mean(qs_fc_MPA), 2)
+    std_fc_MPA = round(np.std(qs_fc_MPA), 2)
+    fc_caracteristic_MPA = round(avg_fc_MPA - std_fc_MPA, 2)
 
-    if avg_fc_MPA <= 17.6 and avg_fc_MPA > 12.7:
+
+    if fc_caracteristic_MPA <= 17.6 and fc_caracteristic_MPA > 12.7:
         type_compretion = "Ladrillo Tipo V"
-    elif avg_fc_MPA <= 12.7 and avg_fc_MPA > 9.3:
+    elif fc_caracteristic_MPA <= 12.7 and fc_caracteristic_MPA > 9.3:
         type_compretion = "Ladrillo Tipo IV"
-    elif avg_fc_MPA <= 9.3 and avg_fc_MPA > 6.9:
+    elif fc_caracteristic_MPA <= 9.3 and fc_caracteristic_MPA > 6.9:
         type_compretion = "Ladrillo Tipo III"
-    elif avg_fc_MPA <= 6.9 and avg_fc_MPA > 4.9:
+    elif fc_caracteristic_MPA <= 6.9 and fc_caracteristic_MPA > 4.9:
         type_compretion = "Ladrillo Tipo II"
-    elif avg_fc_MPA <= 4.9:
+    elif fc_caracteristic_MPA <= 4.9:
         type_compretion = "Ladrillo Tipo I"
     else:
         type_compretion = "No Corresponde"
@@ -512,7 +519,11 @@ def brick_type_detail(request, id):
         # Compretion Brick
         "qs_compretion_brick": qs_compretion_brick,
         "avg_fc": avg_fc,
+        "std_fc": std_fc,
+        "fc_caracteristic": fc_caracteristic,
         "avg_fc_MPA": avg_fc_MPA,
+        "std_fc_MPA": std_fc_MPA,
+        "fc_caracteristic_MPA": fc_caracteristic_MPA,
         "type_compretion": type_compretion,
         "norma_NTP_compretion_brick": "NTP 339.604",
 
@@ -709,20 +720,27 @@ def brick_type_pdf(request, id):
 
     # Compretion Brick
     qs_compretion_brick = CompretionBrick.objects.filter(brick_type=obj.id)
+
     qs_fc_list = qs_compretion_brick.values_list('fc', flat=True)
-    avg_fc = round(np.mean(qs_fc_list), 2)
+    avg_fc = round(np.mean(qs_fc_list), 2) 
+    std_fc = round(np.std(qs_fc_list), 2)
+    fc_caracteristic = round(avg_fc - std_fc, 2)
+
     qs_fc_MPA = qs_compretion_brick.values_list('fc_MPa', flat=True)
     avg_fc_MPA = round(np.mean(qs_fc_MPA), 2)
+    std_fc_MPA = round(np.std(qs_fc_MPA), 2)
+    fc_caracteristic_MPA = round(avg_fc_MPA - std_fc_MPA, 2)
 
-    if avg_fc_MPA <= 17.6 and avg_fc_MPA > 12.7:
+
+    if fc_caracteristic_MPA <= 17.6 and fc_caracteristic_MPA > 12.7:
         type_compretion = "Ladrillo Tipo V"
-    elif avg_fc_MPA <= 12.7 and avg_fc_MPA > 9.3:
+    elif fc_caracteristic_MPA <= 12.7 and fc_caracteristic_MPA > 9.3:
         type_compretion = "Ladrillo Tipo IV"
-    elif avg_fc_MPA <= 9.3 and avg_fc_MPA > 6.9:
+    elif fc_caracteristic_MPA <= 9.3 and fc_caracteristic_MPA > 6.9:
         type_compretion = "Ladrillo Tipo III"
-    elif avg_fc_MPA <= 6.9 and avg_fc_MPA > 4.9:
+    elif fc_caracteristic_MPA <= 6.9 and fc_caracteristic_MPA > 4.9:
         type_compretion = "Ladrillo Tipo II"
-    elif avg_fc_MPA <= 4.9:
+    elif fc_caracteristic_MPA <= 4.9:
         type_compretion = "Ladrillo Tipo I"
     else:
         type_compretion = "No Corresponde"
@@ -769,9 +787,12 @@ def brick_type_pdf(request, id):
         # Compretion Brick
         "qs_compretion_brick": qs_compretion_brick,
         "avg_fc": avg_fc,
+        "std_fc": std_fc,
+        "fc_caracteristic": fc_caracteristic,
         "avg_fc_MPA": avg_fc_MPA,
+        "std_fc_MPA": std_fc_MPA,
+        "fc_caracteristic_MPA": fc_caracteristic_MPA,
         "type_compretion": type_compretion,
-        "norma_NTP_compretion_brick": "NTP 339.604",
 
         "title": "DETERMINAR LAS PROPIEDADES EN UNIDADES DE ALBAÑILERIA CALCINADA PARA LA CONSTRUCCIÓN",
         "coordinator": coordinator,

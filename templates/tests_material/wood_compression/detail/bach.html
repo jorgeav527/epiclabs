@@ -77,8 +77,9 @@
                             <td>{{ parallel.average_area }}</td>
                             <td>{{ parallel.load }}</td>
                             <td>{{ parallel.fc_MPa }} ({{ parallel.fc }})</td>
-                        {% endfor %}
                         </tr>
+                        {% endfor %}
+                        <tr>
                             <th scope="row">Promedio</th>
                             <td></td>
                             <td></td>
@@ -90,6 +91,7 @@
                             <td></td>
                             <td></td>
                             <td>{{ avg_fc_MPA_parallel }} ({{ avg_fc_parallel }})</td>
+                        </tr>
                     </tbody>
                 </table>
                 {% endif %}
@@ -126,8 +128,9 @@
                             <td>{{ perpendicular.average_area }}</td>
                             <td>{{ perpendicular.load }}</td>
                             <td>{{ perpendicular.fc_MPa }} ({{ perpendicular.fc }})</td>
-                        {% endfor %}
                         </tr>
+                        {% endfor %}
+                        <tr>
                             <th scope="row">Promedio</th>
                             <td></td>
                             <td></td>
@@ -139,6 +142,7 @@
                             <td></td>
                             <td></td>
                             <td>{{ avg_fc_MPA_perpendicular }} ({{ avg_fc_perpendicular }})</td>
+                        </tr>
                     </tbody>
                 </table>
                 {% endif %}
@@ -159,8 +163,8 @@
                 <hr class="my-3">
                 
                 <div class="mt-5">
-                    <a href="{% url 'tests_material:brick_type_update' obj.id %}" class="btn btn-primary btn-block" type="button">Editar Ensayo</a>
-                    <a href="{% url 'tests_material:brick_type_list' %}" class="btn btn-primary btn-block" type="button">Cancelar</a>
+                    <a href="{% url 'tests_material:wood_compression_update' obj.id %}" class="btn btn-primary btn-block" type="button">Editar Ensayo</a>
+                    <a href="{% url 'tests_material:wood_compression_list' %}" class="btn btn-primary btn-block" type="button">Cancelar</a>
                 </div>
             </div>
         </div>

@@ -69,6 +69,7 @@
                             <td>{{ variation_dimentions.average_high }}</td>
                         </tr>
                         {% endfor %}
+                        <tr>
                             <th scope="row">VD (%)</th>
                             <td></td>
                             <td></td>
@@ -81,7 +82,8 @@
                             <td></td>
                             <td></td>
                             <td>{{ vd_high }}</td>
-                </tbody>
+                        </tr>
+                    </tbody>
                 </table>
                 {% endif %}
                 
@@ -105,13 +107,15 @@
                             <td>{{ warping.upface_convex }}</td>
                             <td>{{ warping.downface_concave }}</td>
                             <td>{{ warping.downface_convex }}</td>
-                        {% endfor %}
                         </tr>
+                        {% endfor %}
+                        <tr>
                             <th scope="row">Promedio</th>
                             <td>{{ avg_upface_concave }}</td>
                             <td>{{ avg_upface_convex }}</td>
                             <td>{{ avg_downface_concave }}</td>
                             <td>{{ avg_downface_convex }}</td>
+                        </tr>
                     </tbody>
                 </table>
                 {% endif %}
@@ -152,6 +156,7 @@
                             <td>{{ density_voids.density }}</td>
                         </tr>
                         {% endfor %}
+                        <tr>
                             <th scope="row">Promedio</th>
                             <td></td>
                             <td></td>
@@ -164,6 +169,7 @@
                             <td>{{ avg_void_percentage }}</td>
                             <td></td>
                             <td>{{ avg_density }}</td>
+                        </tr>
                     </tbody>
                 </table>
                 {% endif %}
@@ -200,6 +206,7 @@
                             <td>{{ suction.face_wet_weight_correction }}</td>
                         </tr>
                         {% endfor %}
+                        <tr>
                             <th scope="row">Promedio</th>
                             <td></td>
                             <td></td>
@@ -210,6 +217,7 @@
                             <td></td>
                             <td></td>
                             <td>{{ avg_face_wet_weight_correction }}</td>
+                        </tr>
                     </tbody>
                 </table>
                 {% endif %}
@@ -223,7 +231,6 @@
                             <th>Peso Seco (gr)</th>
                             <th>Peso Saturado en Agua Fria (gr)</th>
                             <th>Peso Saturado en Agua Caliente (gr)</th>
-                            <th>Peso Satura despues de 5 horas en Agua Caliente (gr)</th>
                             <th>Porcentaje de Absorcion (%)</th>
                             <th>Porcentaje de Absorcion Máxima (%)</th>
                             <th>Coeficiente de Saturación</th>
@@ -235,21 +242,21 @@
                             <th scope="row">{{ forloop.counter }}</th>
                             <td>{{ abs_sat_coff.dry_weight }}</td>
                             <td>{{ abs_sat_coff.wet_weight_cool_24 }}</td>
-                            <td>{{ abs_sat_coff.wet_weight_hot_24 }}</td>
                             <td>{{ abs_sat_coff.wet_weight_hot_5 }}</td>
                             <td>{{ abs_sat_coff.abs_brick }}</td>
                             <td>{{ abs_sat_coff.abs_max_brick }}</td>
                             <td>{{ abs_sat_coff.coeff_sat }}</td>
                         </tr>
                         {% endfor %}
+                        <tr>
                             <th scope="row">Promedio</th>
-                            <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td>{{ avg_abs_brick }}</td>
                             <td>{{ avg_abs_max_brick }}</td>
                             <td>{{ avg_coeff_sat }}</td>
+                        </tr>
                     </tbody>
                 </table>
                 {% endif %}
@@ -286,6 +293,7 @@
                             <td>{{ compretion_brick.fc_MPa }} ({{ compretion_brick.fc }})</td>
                         </tr>
                         {% endfor %}
+                        <tr>
                             <th scope="row">Promedio</th>
                             <td></td>
                             <td></td>
@@ -296,6 +304,19 @@
                             <td></td>
                             <td></td>
                             <td>{{ avg_fc_MPA }} ({{ avg_fc }})</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">SD</th>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>{{ std_fc_MPA }} ({{ std_fc }})</td>
+                        </tr>
                     </tbody>
                 </table>
                 {% endif %}
@@ -320,6 +341,7 @@
                 <p class="text-left"><span class="font-weight-bold">Tipo de Ladrillo segun el Coeficiente de Absorción:</span> {{ type_coeff_sat }}</p>
                 {% endif %}
                 {% if qs_compretion_brick %}
+                <p class="text-left"><span class="font-weight-bold">Resistencia Caracteristica:</span> {{ fc_caracteristic_MPA }} MPa - {{ fc_caracteristic }} kgf/cm²</p>
                 <p class="text-left"><span class="font-weight-bold">Tipo de Ladrillo segun el Compresión:</span> {{ type_compretion }}</p>
                 {% endif %}
                 <hr class="my-3">

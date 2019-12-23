@@ -32,7 +32,7 @@
                 <p class="text-left mt-3"><span class="font-weight-bold"><u>Resultados del Ensayo</u></span></p>
                 {% if qs_gravas %}
                 <p class="text-left"><span class="font-weight-bold">Contenido de Humedad Gravas:</span></p>
-                <table class="table--flip table table-sm table-responsive table-bordered text-center">
+                <table class="table table-sm table-responsive table-bordered text-center">
                     <thead class="primary-color-dark white-text">
                         <tr>
                             <th>Secuencia</th>
@@ -61,7 +61,7 @@
                 {% endif %}
                 {% if qs_finos %}
                 <p class="text-left"><span class="font-weight-bold">Contenido de Humedad Finos:</span></p>
-                <table class="table--flip table table-sm table-responsive table-bordered text-center">
+                <table class="table table-sm table-responsive table-bordered text-center">
                     <thead class="primary-color-dark white-text">
                         <tr>
                             <th>Secuencia</th>
@@ -175,8 +175,8 @@
                 <hr class="my-3">
                 
                 <div class="mt-5">
-                    <a href="{% url 'tests_soil:proctor_m_update' obj.id %}" class="btn btn-primary btn-block" type="button">Editar Ensayo</a>
-                    <a href="{% url 'tests_soil:proctor_m_list' %}" class="btn btn-primary btn-block" type="button">Cancelar</a>
+                    <a href="{% url 'tests_soil:moisture_content_update' obj.id %}" class="btn btn-primary btn-block" type="button">Editar Ensayo</a>
+                    <a href="{% url 'tests_soil:moisture_content_list' %}" class="btn btn-primary btn-block" type="button">Cancelar</a>
                 </div>
             </div>
         </div>

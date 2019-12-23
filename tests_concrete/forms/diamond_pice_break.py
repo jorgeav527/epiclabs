@@ -1,9 +1,10 @@
 from django import forms
 from functools import partial
 from datetime import datetime
+from django.forms import inlineformset_factory
 
 from accounts.models import User
-from tests_concrete.models import DiamondPiceBreak
+from tests_concrete.models import DiamondPiceBreak, DiamondPice
 from construction.models import Construction
 from reference_person.models import ReferencePerson
 from course.models import Course
@@ -17,87 +18,37 @@ class DiamondPiceBreakForm(forms.ModelForm):
         model = DiamondPiceBreak
         fields = [
             'fc_esp',
-            'element',
-            'extraction_data', 
-            'break_data', 
-            'D',
-            'L',
-            'F',
             'course'
         ]
         labels = {
             'fc_esp': 'Resistencia de Diseño', 
-            'element': 'Elemento',    
-            'extraction_data': 'Dia de la Extracción', 
-            'break_data': 'Dia de Rotura', 
-            'D': 'Diametro',
-            'L': 'Longitud',
-            'F': 'Carga Maquina',
         }
         help_texts = {
             'fc_esp': 'Unidades (kgf/cm²)', 
-            'D': 'Unidades (Pulgadas)',
-            'L': 'Unidades (Pulgadas)',
-            'F': 'Unidades (kgf)',
-        }
-        widgets = {
-            'extraction_data': DateInput(),
-            'break_data': DateInput(), 
         }
     
-    def clean(self):
-        cleaned_data = super().clean()
-        D_passed = cleaned_data.get("D")
-        L_passed = cleaned_data.get("L")
-        if L_passed/D_passed > 1.75:
-            raise forms.ValidationError("El factor L/D es mayor que 1.75 revisar Diametro y Longitud")
-
 
 class DiamondPiceBreakFormClient(forms.ModelForm):
     user = forms.ModelChoiceField(queryset=User.objects.filter(is_client=True), label="Escoje el Cliente", required=True)
+    sampling_date = forms.DateField(required=True, label="Fecha de Muestreo", widget=DateInput(), initial=datetime.now)
 
     class Meta:
         model = DiamondPiceBreak
         fields = [
             'user',
             'fc_esp',
-            'element',
-            'extraction_data', 
-            'break_data', 
-            'D',
-            'L',
-            'F',
+            'sampling_date', 
             'reference_person',
             'construction',
         ]
         labels = {
             'fc_esp': 'Resistencia de Diseño', 
-            'element': 'Elemento',    
-            'extraction_data': 'Dia de la Extracción', 
-            'break_data': 'Dia de Rotura', 
-            'D': 'Diametro',
-            'L': 'Longitud',
-            'F': 'Carga Maquina',
             'reference_person': 'Persona de Referencia',
             'construction': 'Construcción de Referencia',
         }
         help_texts = {
             'fc_esp': 'Unidades (kgf/cm²)', 
-            'D': 'Unidades (Pulgadas)',
-            'L': 'Unidades (Pulgadas)',
-            'F': 'Unidades (kgf)',
         }
-        widgets = {
-            'extraction_data': DateInput(),
-            'break_data': DateInput(), 
-        }
-
-    def clean(self):
-        cleaned_data = super().clean()
-        D_passed = cleaned_data.get("D")
-        L_passed = cleaned_data.get("L")
-        if L_passed/D_passed > 1.75:
-            raise forms.ValidationError("El factor L/D es mayor que 1.75 revisar Diametro y Longitud")
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -119,3 +70,46 @@ class DiamondPiceBreakFormClient(forms.ModelForm):
             self.fields['reference_person'].required = True
             self.fields['construction'].queryset = self.instance.user.clientprofile.construction_set.all()
             self.fields['construction'].required = True
+
+
+class DiamondPiceForm(forms.ModelForm):
+
+    class Meta:
+        model = DiamondPice
+        fields = [
+            'extraction_date',
+            'break_date',
+            'element_name',
+            'D',
+            'L',
+            'load',
+        ]
+        labels = {
+            'extraction_date': 'Fecha de Extracción',
+            'break_date': 'Fecha de Rotura',
+            'element_name': 'Elemento',    
+            'D': 'Diametro',
+            'L': 'Longitud',
+            'load': 'Carga',
+        }
+        help_texts = {
+            'D': 'Unidades (pulgadas)',
+            'L': 'Unidades (pulgadas)',
+            'load': 'Unidades (kgf)',
+        }
+        widgets = {
+            'extraction_date': DateInput(),
+            'break_date': DateInput(),
+        }
+
+    def clean(self):
+        cleaned_data = super().clean()
+        D_passed = cleaned_data.get("D")
+        L_passed = cleaned_data.get("L")
+        if L_passed/D_passed > 1.75:
+            raise forms.ValidationError("El factor L/D es mayor que 1.75 revisar Diametro y Longitud")
+
+DiamondPiceFormSet = inlineformset_factory(DiamondPiceBreak, DiamondPice, form=DiamondPiceForm, extra=3, max_num=3, can_delete=True)
+
+
+

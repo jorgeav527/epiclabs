@@ -49,3 +49,5 @@ numpy = "==1.17.3" # for maths in python
 
 https://www.supinfo.com/articles/single/379-generate-pdf-files-out-of-html-templates-with-django
 https://stackoverflow.com/questions/32798998/weasyprint-and-bootstrap
+
+https://docplayer.es/43631805-Capitulo-5-resistencia-de-prismas-de-albanileria.html

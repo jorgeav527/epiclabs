@@ -4,7 +4,7 @@
             <div class="card-body">
                 <!-- Section heading -->
                 <h4 class="h4-responsive font-weight-bold text-center ">{{ title }}</h4>
-                <p class="text-center dark-grey-text w-responsive mx-auto ">((NORMA ASTM C-109) / (NTP 334.051))</p>
+                <p class="dark-grey-text w-responsive text-center mx-auto">{{ norma_ASTM }} / {{ noma_NTP }}</p>
                 <hr class="my-3">
 
                 <!-- Section description -->
@@ -38,27 +38,59 @@
                 <hr class="my-3">
 
                 <p class="text-left mx-auto  mt-3"><span class="font-weight-bold"><u>Datos del Ensayo Ingresados</u></span></p>
-                <p class="text-left mx-auto "><span class="font-weight-bold">Resistencia de Diseño</span> {{ obj.fc_esp }} kgf/cm²</p>
-                <p class="text-left mx-auto "><span class="font-weight-bold">Elemento:</span> {{ obj.element|title }}</p>
-                <p class="text-left mx-auto "><span class="font-weight-bold">Fecha de Extracción:</span> {{ obj.extraction_data|date:"d/m/Y" }}</p>
-                <p class="text-left mx-auto "><span class="font-weight-bold">Fecha de Rotura:</span> {{ obj.break_data|date:"d/m/Y" }}</p>
-                <p class="text-left mx-auto "><span class="font-weight-bold">Diametro:</span> {{ obj.D }} pulgadas</p>
-                <p class="text-left mx-auto "><span class="font-weight-bold">Longitud:</span> {{ obj.L }} pulgadas</p>
-                <p class="text-left mx-auto "><span class="font-weight-bold">Ejecución:</span> {{ obj.created }}</p>
-                <p class="text-left mx-auto "><span class="font-weight-bold">Edición:</span> {{ obj.updated }}</p>
-                <p class="text-left mx-auto "><span class="font-weight-bold">Carga Maquina:</span> {{ obj.F }} kgf</p>
-                <p class="text-left mx-auto "><span class="font-weight-bold">Curso Especifico:</span> {{ obj.course|title }}</p>
+                <p class="text-left"><span class="font-weight-bold">Fecha de Muestreo:</span> {{ obj.sampling_date|date:"d/m/Y" }}</p>
+                <p class="text-left"><span class="font-weight-bold">Fecha del Ensayo:</span> {{ obj.created|date:"d/m/Y" }}</p>
+                <p class="text-left"><span class="font-weight-bold">Tipo de Diamante:</span> </p>
+                <p class="text-left"><span class="font-weight-bold">Resistencia de Diseño:</span> {{ obj.fc_esp }} kgf/cm²</p>
+                <p class="text-left"><span class="font-weight-bold">Curso Especifico:</span> {{ obj.course|title }}</p>
                 <hr class="my-3">
                 
                 <p class="text-left mx-auto  mt-3"><span class="font-weight-bold"><u>Resultados del Ensayo</u></span></p>
-                <p class="text-left mx-auto "><span class="font-weight-bold">Tiempo de Espera:</span> {{ obj.duration }} dias</p>
-                <p class="text-left mx-auto "><span class="font-weight-bold">Area:</span> {{ obj.area }} cm²</p>
-                <p class="text-left mx-auto "><span class="font-weight-bold">Factor:</span> {{ obj.factor_ld }}</p>
-                <p class="text-left mx-auto "><span class="font-weight-bold">Corrección:</span> {{ obj.correction }} Dato Interpolado</p>
-                <p class="text-left mx-auto "><span class="font-weight-bold">f'c:</span> {{ obj.fc }} kgf/cm²</p>
-                <p class="text-left mx-auto "><span class="font-weight-bold">f'175:</span> {{ obj.fc_175 }} kgf/cm²</p>
-                <p class="text-left mx-auto "><span class="font-weight-bold">f'210:</span> {{ obj.fc_210 }} kgf/cm²</p>
-                <p class="text-left mx-auto "><span class="font-weight-bold">f'280:</span> {{ obj.fc_280 }} kgf/cm²</p>
+                <p class="text-left"><span class="font-weight-bold">Determinación del Esfuerzo:</span></p>
+                <table class="table table-sm table-responsive table-bordered text-center">
+                    <thead class="primary-color-dark white-text">
+                        <tr>
+                            <th>Secuencia</th>
+                            <th>Elemento</th>
+                            <th>Fecha de Extracción</th>
+                            <th>Fecha de Rotura</th>
+                            <th>Tiempo de espera (dias)</th>
+                            <th>Diametro (pulgadas)</th>
+                            <th>Largo (pulgadas)</th>
+                            <th>Factor L/D</th>
+                            <th>Area (cm²)</th>
+                            <th>Corrección</th>
+                            <th>Carga (kgf)</th>
+                            <th>Esfuerzo (kgf/cm²)</th>
+                            <th>Esfuerzo (MPa)</th>
+                            <th>Esfuerzo a 175 (kgf/cm²)</th>
+                            <th>Esfuerzo a 210 (kgf/cm²)</th>
+                            <th>Esfuerzo a 280 (kgf/cm²)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for diamond_pice in qs_diamond_pice %}
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>{{ diamond_pice.element_name }}</td>
+                            <td>{{ diamond_pice.extraction_date }}</td>
+                            <td>{{ diamond_pice.break_date }}</td>
+                            <td>{{ diamond_pice.dilate }}</td>
+                            <td>{{ diamond_pice.D }}</td>
+                            <td>{{ diamond_pice.L }}</td>
+                            <td>{{ diamond_pice.factor_ld }}</td>
+                            <td>{{ diamond_pice.area }}</td>
+                            <td>{{ diamond_pice.correction }}</td>
+                            <td>{{ diamond_pice.load }}</td>
+                            <td>{{ diamond_pice.fc }}</td>
+                            <td>{{ diamond_pice.fc_MPa }}</td>
+                            <td>{{ diamond_pice.fc_175 }}</td>
+                            <td>{{ diamond_pice.fc_210 }}</td>
+                            <td>{{ diamond_pice.fc_280 }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
                 <hr class="my-3">
                                 
                 <p class="text-left mx-auto  mt-3"><span class="font-weight-bold"><u>Datos Extra</u></span></p>

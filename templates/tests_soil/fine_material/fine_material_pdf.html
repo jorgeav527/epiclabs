@@ -1,6 +1,6 @@
-{% extends "base_pdf_file.html" %}
+{% extends "pdf_file/base_pdf_file.html" %}
 
-{% block pdffile %}
+{% block pdf_file %}
   {% if obj.user.is_client %}
   {% include 'tests_soil/fine_material/pdf/client.html' %}
   {% endif %}

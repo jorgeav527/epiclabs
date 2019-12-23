@@ -33,4 +33,13 @@ urlpatterns = [
     path('wood-compression/<int:id>/pdf/', tests_material_views.wood_compression_pdf, name="wood_compression_pdf"),
         #  CRUD
     path('parallel-perpendicular/save/<int:id>/', tests_material_views.parallel_perpendicular_save , name="parallel_perpendicular_save"),
+    # Masonry Compression CRUD and PDF
+    path('masonry-compression/', tests_material_views.masonry_compression_list, name="masonry_compression_list"),
+    path('masonry-compression/create/', tests_material_views.masonry_compression_create, name="masonry_compression_create"),
+    path('masonry-compression/<int:id>/update/', tests_material_views.masonry_compression_update, name="masonry_compression_update"),
+    path('masonry-compression/<int:id>/detail/', tests_material_views.masonry_compression_detail, name="masonry_compression_detail"),
+    path('masonry-compression/<int:id>/delete/', tests_material_views.masonry_compression_delete, name="masonry_compression_delete"),
+    path('masonry-compression/<int:id>/pdf/', tests_material_views.masonry_compression_pdf, name="masonry_compression_pdf"),
+        #  CRUD
+    path('masonry/save/<int:id>/', tests_material_views.masonry_save , name="masonry_save"),
 ]

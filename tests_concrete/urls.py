@@ -17,34 +17,17 @@ urlpatterns = [
     path('pice-break/<int:id>/detail/', tests_concrete_views.pice_break_detail, name="pice_break_detail"),
     path('pice-break/<int:id>/delete/', tests_concrete_views.pice_break_delete , name="pice_break_delete"),
     path('pice-break/<int:id>/pdf/', tests_concrete_views.pice_break_pdf, name="pice_break_pdf"),
-    # Grout Dice Break CRUD and PDF
-    path('grout-dice-break/', tests_concrete_views.grout_dice_break_list, name="grout_dice_break_list"),
-    path('grout-dice-break/create/', tests_concrete_views.grout_dice_break_create, name="grout_dice_break_create"),
-    path('grout-dice-break/<int:id>/update/', tests_concrete_views.grout_dice_break_update, name="grout_dice_break_update"),
-    path('grout-dice-break/<int:id>/detail/', tests_concrete_views.grout_dice_break_detail, name="grout_dice_break_detail"),
-    path('grout-dice-break/<int:id>/delete/', tests_concrete_views.grout_dice_break_delete , name="grout_dice_break_delete"),
-    path('grout-dice-break/<int:id>/pdf/', tests_concrete_views.grout_dice_break_pdf, name="grout_dice_break_pdf"),
-    # Paver Break CRUD and PDF
-    path('paver-break/', tests_concrete_views.paver_break_list, name="paver_break_list"),
-    path('paver-break/create/', tests_concrete_views.paver_break_create, name="paver_break_create"),
-    path('paver-break/<int:id>/update/', tests_concrete_views.paver_break_update, name="paver_break_update"),
-    path('paver-break/<int:id>/detail/', tests_concrete_views.paver_break_detail, name="paver_break_detail"),
-    path('paver-break/<int:id>/delete/', tests_concrete_views.paver_break_delete , name="paver_break_delete"),
-    path('paver-break/<int:id>/pdf/', tests_concrete_views.paver_break_pdf, name="paver_break_pdf"),
-    # Lime Dice Break CRUD and PDF
-    path('lime-dice-break/', tests_concrete_views.lime_dice_break_list, name="lime_dice_break_list"),
-    path('lime-dice-break/create/', tests_concrete_views.lime_dice_break_create, name="lime_dice_break_create"),
-    path('lime-dice-break/<int:id>/update/', tests_concrete_views.lime_dice_break_update, name="lime_dice_break_update"),
-    path('lime-dice-break/<int:id>/detail/', tests_concrete_views.lime_dice_break_detail, name="lime_dice_break_detail"),
-    path('lime-dice-break/<int:id>/delete/', tests_concrete_views.lime_dice_break_delete , name="lime_dice_break_delete"),
-    path('lime-dice-break/<int:id>/pdf/', tests_concrete_views.lime_dice_break_pdf, name="lime_dice_break_pdf"),
-    # Lime Pice Break CRUD and PDF
-    path('lime-pice-break/', tests_concrete_views.lime_pice_break_list, name="lime_pice_break_list"),
-    path('lime-pice-break/create/', tests_concrete_views.lime_pice_break_create, name="lime_pice_break_create"),
-    path('lime-pice-break/<int:id>/update/', tests_concrete_views.lime_pice_break_update, name="lime_pice_break_update"),
-    path('lime-pice-break/<int:id>/detail/', tests_concrete_views.lime_pice_break_detail, name="lime_pice_break_detail"),
-    path('lime-pice-break/<int:id>/delete/', tests_concrete_views.lime_pice_break_delete , name="lime_pice_break_delete"),
-    path('lime-pice-break/<int:id>/pdf/', tests_concrete_views.lime_pice_break_pdf, name="lime_pice_break_pdf"),
+        # Pice CRUD
+    path('pice/save/<int:id>/', tests_concrete_views.pice_save, name="pice_save"),    
+    # Prism Break CRUD and PDF
+    path('prism-break/', tests_concrete_views.prism_break_list, name="prism_break_list"),
+    path('prism-break/create/', tests_concrete_views.prism_break_create , name="prism_break_create"),
+    path('prism-break/<int:id>/update/', tests_concrete_views.prism_break_update , name="prism_break_update"),
+    path('prism-break/<int:id>/detail/', tests_concrete_views.prism_break_detail, name="prism_break_detail"),
+    path('prism-break/<int:id>/delete/', tests_concrete_views.prism_break_delete , name="prism_break_delete"),
+    path('prism-break/<int:id>/pdf/', tests_concrete_views.prism_break_pdf, name="prism_break_pdf"),
+        # Prism CRUD
+    path('prism/save/<int:id>/', tests_concrete_views.prism_save, name="prism_save"),    
     # Diamond Pice Break CRUD and PDF
     path('diamond-pice-break/', tests_concrete_views.diamond_pice_break_list, name="diamond_pice_break_list"),
     path('diamond-pice-break/create/', tests_concrete_views.diamond_pice_break_create, name="diamond_pice_break_create"),
@@ -52,4 +35,6 @@ urlpatterns = [
     path('diamond-pice-break/<int:id>/detail/', tests_concrete_views.diamond_pice_break_detail, name="diamond_pice_break_detail"),
     path('diamond-pice-break/<int:id>/delete/', tests_concrete_views.diamond_pice_break_delete , name="diamond_pice_break_delete"),
     path('diamond-pice-break/<int:id>/pdf/', tests_concrete_views.diamond_pice_break_pdf, name="diamond_pice_break_pdf"),
+        # Prism CRUD
+    path('diamond-pice/save/<int:id>/', tests_concrete_views.diamond_pice_save, name="diamond_pice_save"),    
 ]

@@ -1,0 +1,13 @@
+{% extends "pdf_file/base_pdf_file.html" %}
+
+{% block pdf_file %}
+  {% if obj.user.is_client %}
+  {% include 'tests_concrete/prism_break/pdf/client.html' %}
+  {% endif %}
+  {% if obj.user.is_bach %}
+  {% include 'tests_concrete/prism_break/pdf/bach.html' %}
+  {% endif %}
+  {% if obj.user.is_group %}
+  {% include 'tests_concrete/prism_break/pdf/student.html' %}
+  {% endif %}
+{% endblock %}

@@ -13,30 +13,16 @@ from course.models import Course
 class DiamondPiceBreak(models.Model):
     user            = models.ForeignKey(User, on_delete=models.CASCADE)
     name            = models.CharField(max_length=50, default="Compresión Testigo Diamantinos")
-    element         = models.CharField(max_length=50, null=True, blank=True)
     code            = models.CharField(max_length=255, unique=True, editable=False)
     fc_esp          = models.FloatField(default=280)
-    extraction_data = models.DateField()
-    break_data      = models.DateField(default=datetime.datetime.now)
-    duration        = models.IntegerField(editable=False)
-    D               = models.FloatField()
-    L               = models.FloatField()
-    factor_ld       = models.FloatField(editable=False)
-    correction      = models.FloatField(editable=False)
-    area            = models.FloatField(editable=False)
-    F               = models.FloatField()
-    fc              = models.FloatField(editable=False)
-    fc_MPa          = models.FloatField(editable=False)
-    fc_175          = models.FloatField(editable=False)
-    fc_210          = models.FloatField(editable=False)
-    fc_280          = models.FloatField(editable=False)
+    sampling_date   = models.DateField(null=True, blank=True)
     created         = models.DateTimeField(auto_now_add=True)
     updated         = models.DateTimeField(auto_now=True)
     equipment           = models.ManyToManyField(Equip)
     tool                = models.ManyToManyField(Tool)    
-    course              = models.ForeignKey(Course, models.SET_NULL, null=True, blank=True)
-    reference_person    = models.ForeignKey(ReferencePerson, models.SET_NULL, null=True, blank=True)
-    construction        = models.ForeignKey(Construction, models.SET_NULL, null=True, blank=True)
+    course              = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True, blank=True)
+    reference_person    = models.ForeignKey(ReferencePerson, on_delete=models.SET_NULL, null=True, blank=True)
+    construction        = models.ForeignKey(Construction, on_delete=models.SET_NULL, null=True, blank=True)
 
 
     def save(self, *args, **kwargs):
@@ -48,15 +34,44 @@ class DiamondPiceBreak(models.Model):
             letters += word[0]
         self.code = f"{letters.upper()}{date.year}{date.month}{date.day}{date.hour}{date.minute}{date.second}"
 
-        # Generate the duration from the poured_data
-        diff = self.break_data - self.extraction_data
-        self.duration = diff.days
+        super(DiamondPiceBreak, self).save(*args, **kwargs)
 
-        # Generate the area from the avg largo and ancho
+    def __str__(self):
+        return f"Testigo de Diamantino {self.id}"
+
+
+class DiamondPice(models.Model):
+    extraction_date = models.DateField()
+    break_date      = models.DateField()
+    dilate          = models.IntegerField(editable=False)
+    element_name    = models.CharField(max_length=100, null=True, blank=True)
+    D               = models.FloatField()
+    L               = models.FloatField()
+    factor_ld       = models.FloatField(editable=False)
+    area            = models.FloatField(editable=False)
+    correction      = models.FloatField(editable=False)
+    load            = models.FloatField()
+    fc              = models.FloatField(editable=False)
+    fc_MPa          = models.FloatField(editable=False)
+    fc_175          = models.FloatField(editable=False)
+    fc_210          = models.FloatField(editable=False)
+    fc_280          = models.FloatField(editable=False)
+    created         = models.DateTimeField(auto_now_add=True)
+    updated         = models.DateTimeField(auto_now=True)
+    diamond_pice_break      = models.ForeignKey(DiamondPiceBreak, on_delete=models.CASCADE)
+    equipment               = models.ManyToManyField(Equip)
+    tool                    = models.ManyToManyField(Tool)
+
+    def save(self, *args, **kwargs):
+        # Generate the dilate from the extraction_date
+        diff = self.break_date - self.extraction_date
+        self.dilate = diff.days
+
+        # Generate the factor_ld
         factor = self.L / self.D
         self.factor_ld = round(factor, 2) 
 
-        # Generate the area from the avg largo and ancho
+        # Generate the area
         d_cm = self.D*2.54
         area_cm2 = ((d_cm**2)*math.pi)/4
         self.area = round(area_cm2, 2)
@@ -64,11 +79,11 @@ class DiamondPiceBreak(models.Model):
         # Generate the correction factor
         x_ld = [1, 1.25, 1.50, 1.75]
         y_correction = [0.87, 0.93, 0.96, 0.98]
-        correction = np.interp(self.factor_ld, x_ld, y_correction)
-        self.correction = round(correction, 2)
+        correc = np.interp(self.factor_ld, x_ld, y_correction)
+        self.correction = round(correc, 2)
 
         # Generate the fc
-        effort_fc = ( self.F / self.area ) * self.correction
+        effort_fc = ( self.load / self.area ) * self.correction
         self.fc = round(effort_fc, 2)
 
         # Generate fc_MPa
@@ -87,7 +102,9 @@ class DiamondPiceBreak(models.Model):
         effort_fc_280 = (self.fc/280)*100 
         self.fc_280 = round(effort_fc_280, 2)
 
-        super(DiamondPiceBreak, self).save(*args, **kwargs)
+        super(DiamondPice, self).save(*args, **kwargs)
 
     def __str__(self):
-        return f"Testigo de Diamantino {self.id}"
+        return f"Testigos Diamantinos {self.id}"
+
+

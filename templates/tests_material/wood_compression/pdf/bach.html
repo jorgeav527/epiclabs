@@ -6,12 +6,12 @@
         <div class="col-xs-12 panel panel-default">  
           
           <div class="row">
-            <div class="col-xs-9">
+            <div class="col-xs-8">
               <h4 class="text-center">
                 <strong>{{ title }}</strong> 
               </h4>
             </div>
-              <div class="col-xs-3">
+              <div class="col-xs-4">
                   <p style="margin-top: 1rem; margin-bottom: 0;" class="text-center"><strong>{{ norma_NTP_parallel }}</strong></p>
                   <p style="margin-top: 0; margin-bottom: 1rem;" class="text-center"><strong>{{ norma_NTP_perpendicular }}</strong></p>
                   </div>
@@ -61,7 +61,6 @@
       </div>    
       <div class="">
         <div class="">
-            <!-- <div class="panel panel-default"> -->
                 <!-- Default panel contents -->
                 {% if qs_parallel %}                
                 <div class="panel-heading"><strong>Resultados del Ensayo:</strong> Compresión Paralela a la fibra:</div>
@@ -95,8 +94,9 @@
                             <td class="text-center">{{ parallel.average_area }}</td>
                             <td class="text-center">{{ parallel.load }}</td>
                             <td class="text-center">{{ parallel.fc_MPa }} ({{ parallel.fc }})</td>
-                        {% endfor %}
                         </tr>
+                        {% endfor %}
+                        <tr>
                             <th class="text-center" scope="row">Prom.</th>
                             <td class="text-center"></td>
                             <td class="text-center"></td>
@@ -108,6 +108,7 @@
                             <td class="text-center"></td>
                             <td class="text-center"></td>
                             <td class="text-center">{{ avg_fc_MPA_parallel }} ({{ avg_fc_parallel }})</td>
+                        </tr>
                     </tbody>
                 </table>
                 {% endif %}
@@ -144,8 +145,9 @@
                             <td class="text-center">{{ perpendicular.average_area }}</td>
                             <td class="text-center">{{ perpendicular.load }}</td>
                             <td class="text-center">{{ perpendicular.fc_MPa }} ({{ perpendicular.fc }})</td>
-                        {% endfor %}
                         </tr>
+                        {% endfor %}
+                        <tr>
                             <th class="text-center" scope="row">Prom.</th>
                             <td class="text-center"></td>
                             <td class="text-center"></td>
@@ -157,11 +159,11 @@
                             <td class="text-center"></td>
                             <td class="text-center"></td>
                             <td class="text-center">{{ avg_fc_MPA_perpendicular }} ({{ avg_fc_perpendicular }})</td>
+                        </tr>
                     </tbody>
                 </table>
                 {% endif %}
               <br>
-            <!-- </div> -->
         </div>
       </div>
       <div class="row signature">
@@ -169,9 +171,13 @@
           <table class="table-bordered">
             <tbody>
               <tr>
-                <td>
-                  <p  class="text-muted text-center">UNIVERSIDAD CATÓLICA DE SANTA MARÍA</p>
-                </td>
+                  <td>
+                    <br>
+                    <br>
+                      <p  class="text-muted text-center">UNIVERSIDAD CATÓLICA DE SANTA MARÍA</p>
+                    <br>
+                    <br>
+                  </td>
               </tr>
             </tbody>
             <tfoot>
@@ -190,7 +196,11 @@
               <tbody>
                 <tr>
                   <td>
-                    <p  class="text-muted text-center">UNIVERSIDAD CATÓLICA DE SANTA MARÍA</p>
+                    <br>
+                    <br>
+                      <p  class="text-muted text-center">UNIVERSIDAD CATÓLICA DE SANTA MARÍA</p>
+                    <br>
+                    <br>
                   </td>
                 </tr>
               </tbody>
@@ -210,10 +220,7 @@
     <footer>
       <div class="row">
         <div class="col-xs-12 panel panel-default">
-          <span><strong> Dirección: </strong> Cayetano Arenas Nº152 - Parque Industrial - Arequipa - Perú </span>
-          <span><strong> Telefono: </strong> 054 382038 anexo 1465 </span>
-          <span><strong> Email: </strong> www.epiclabs.ucsm.com </span>
-          <div class="text-center panel-footer"><small>Laboratorio de Ingenieria Civil, Universidad Catolica de Santa Maria, EPICLABS &#169; 2019</small></div>
+          <p class="text-center">Laboratorio de Ingenieria Civil, Universidad Catolica de Santa Maria, EPICLABS &#169; 2019</p>
         </div>
       </div>   
     </footer>

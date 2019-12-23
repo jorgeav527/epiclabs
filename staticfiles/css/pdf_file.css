@@ -1,41 +1,43 @@
 @page {
     size: "A4";
-    margin: 1cm 1cm;
-    @bottom-right {
+    margin: 2cm 2cm 2.5cm 2cm;
+    @right-bottom {
+        text-align: center;
+        vertical-align: bottom;
         content: "Pag. " counter(page) " de " counter(pages); 
     } 
 }    
 footer {
     position: fixed;
-    bottom: -1.35cm;
+    bottom: -0.6cm;
     left: 0;
-    width: 100%;
+    width: 98%;
 }
 table {
-    font-size: 1.20rem;
+    font-size: 1rem;
     width: 100%;
 }
 td, th {
-    padding: 0.25rem;
+    padding: 0.2rem;
 }
 h4 {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
 }
 p {
-    font-size: 1.20rem;
-    margin-top: 0.25rem;
-    margin-bottom: 0.25rem;
+    font-size: 1rem;
+    margin-top: 0.2rem;
+    margin-bottom: 0.2rem;
 }
 span {
-    font-size: 1.10rem;
-    margin-top: 0.25rem;
-    margin-bottom: 0.25rem;
+    font-size: 1rem;
+    margin-top: 0.2rem;
+    margin-bottom: 0.2rem;
 }
 .panel-heading {
-    font-size: 1.25rem;
+    font-size: 1rem;
 }  
 .panel-footer {
-    font-size: 1.25rem;
+    font-size: 1rem;
 }
 .table--flip {
     display: flex;
@@ -45,15 +47,21 @@ span {
 .table--flip thead {
     display: flex;
     flex-shrink: 0;
+    min-width: -webkit-min-content;
+    min-width: -moz-min-content;
     min-width: min-content;
 }
 .table--flip tbody {
     display: flex;
     position: relative;
+    overflow-x: auto;
+    overflow-y: hidden;
 }
 .table--flip tr {
     display: flex;
     flex-direction: column;
+    min-width: -webkit-min-content;
+    min-width: -moz-min-content;
     min-width: min-content;
     flex-shrink: 0;
 }
@@ -62,7 +70,5 @@ span {
     display: block;
 }
 .signature {
-    position: absolute;
-    bottom: 1.5cm;
     width: 100%;
 }

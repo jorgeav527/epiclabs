@@ -269,7 +269,7 @@ def specific_gravity_pdf(request, id):
         "qs_fraction_pass": qs_fraction_pass,
         "qs_fraction_retained": qs_fraction_retained,
         "total_average_specific_gravity": total_average_specific_gravity,
-        "title": "DETERMINACIÓN DEL Gravedad Especifica de Solidos mediante el Picometro de Agua DE UN SUELO MTC E108",
+        "title": "DETERMINACIÓN DE LA GRAVEDAD ESPECIFICA DE SOLIDOS MEDIANTE EL PICOMETRO DE AGUA DE UN SUELO MTC E108",
         "norma_ASTM": "ASTM C2216",
         "noma_NTP": "NTP 339.127",
         "coordinator": coordinator,
@@ -286,6 +286,3 @@ def specific_gravity_pdf(request, id):
     # response['Content-Disposition'] = 'attachment; filename="{}"'.format(filename)
     HTML(string=html, base_url=request.build_absolute_uri()).write_pdf(response, stylesheets=[css_bootstrap, css_pdf])
     return response
-
-
-

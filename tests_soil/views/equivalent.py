@@ -77,6 +77,7 @@ def equivalent_create(request):
 def equiv_save(request, id):
     obj = get_object_or_404(Equivalent, id=id)
     equips = Equip.objects.filter(name__in=("Horno Eléctrico", "Balanza"))
+    
     if request.user.is_bach or request.user.is_group or request.user.is_superuser or request.user.is_admin:
         if request.method == "POST":
             formset = EquivFormSet(request.POST, instance=obj)
@@ -139,7 +140,7 @@ def equivalent_detail(request, id):
 
     # Mean of the equiv sand results
     equiv_sand = qs_equiv.values_list("equiv_sand", flat=True).order_by("id")
-    mean_equiv_sand = np.mean(equiv_sand)
+    mean_equiv_sand = round(np.mean(equiv_sand), 0)
 
     context = {
         "obj": obj,
@@ -182,7 +183,7 @@ def equivalent_pdf(request, id):
 
     # Mean of the equiv sand results
     equiv_sand = qs_equiv.values_list("equiv_sand", flat=True).order_by("id")
-    mean_equiv_sand = np.mean(equiv_sand)
+    mean_equiv_sand = round(np.mean(equiv_sand), 0)
 
     context = {
         "obj": obj,

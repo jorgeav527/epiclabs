@@ -288,6 +288,3 @@ def wood_compression_pdf(request, id):
     # response['Content-Disposition'] = 'attachment; filename="{}"'.format(filename)
     HTML(string=html, base_url=request.build_absolute_uri()).write_pdf(response, stylesheets=[css_bootstrap, css_pdf])
     return response
-
-
-

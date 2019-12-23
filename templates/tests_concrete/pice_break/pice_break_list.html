@@ -68,23 +68,14 @@
               <tr>
                 <th rowspan="2" class="text-center">Usuario</th>
                 <th rowspan="2" class="text-center">Id</th>
-                <th rowspan="2" class="text-center">Codigo</th>
+                <th colspan="2" class="text-center">Item</th>
                 <th rowspan="2" class="text-center">f'c Esp.</th>
-                <th colspan="2" class="text-center">Fecha</th>
-                <th rowspan="2" class="text-center">Edad (dias)</th>
-                <th colspan="3" class="text-center">Dimenciones</th>
-                <th rowspan="2" class="text-center">Carga (kgf)</th>
-                <th colspan="2" class="text-center">Esfuerzo de Rotura</th>
+                <th rowspan="2" class="text-center">Fecha de Muestreo</th>
                 <th rowspan="2" class="text-center">Acciones</th>
               </tr>
               <tr>
-                <th class="text-center">Vaciado</th>
-                <th class="text-center">Rotura</th>
-                <th class="text-center">Diametro Esp. (inch)</th>
-                <th class="text-center">Diametro Sup. (inch)</th>
-                <th class="text-center">Diametro Inf. (inch)</th>
-                <th class="text-center">(kgf/cm²)</th>
-                <th class="text-center">(MPA)</th>
+                <th class="text-center">Tipo de Probeta</th>
+                <th class="text-center">Código</th>
               </tr>
             </thead>
             <tbody>
@@ -92,17 +83,10 @@
               <tr>
                 <td class="text-center">{{ obj.user.username }}</td>
                 <td class="text-center">{{ obj.id }}</td>
+                <td class="text-center">{{ obj.pice_type }}</td>
                 <td class="text-center">{{ obj.code }}</td>
                 <td class="text-center">{{ obj.fc_esp }}</td>
-                <td class="text-center">{{ obj.poured_data|date:"d/m/Y" }}</td>
-                <td class="text-center">{{ obj.break_data|date:"d/m/Y" }}</td>
-                <td class="text-center">{{ obj.duration }}</td>
-                <td class="text-center">{{ obj.diameter_esp }}</td>
-                <td class="text-center">{{ obj.diameter_1 }}</td>
-                <td class="text-center">{{ obj.diameter_2 }}</td>
-                <td class="text-center">{{ obj.F }}</td>
-                <td class="text-center">{{ obj.fc }}</td>
-                <td class="text-center">{{ obj.fc_MPa }}</td>
+                <td class="text-center">{{ obj.sampling_date|date:"d/m/Y" }}</td>
                 <td>
                   <div class="btn-group" role="group" aria-label="Basic example">
                     <a
@@ -110,6 +94,10 @@
                       data-toggle="tooltip" title="Detalles" role="button" class="btn btn-primary btn-sm px-2 mx-1"><i class="far fa-eye"></i>
                     </a>
                     {% if request.user.is_superuser or request.user.is_group or request.user.is_bach or request.user.is_admin %}
+                    <a
+                      href="{% url 'tests_concrete:pice_save' obj.id %}"
+                      data-toggle="tooltip" title="Editar o Crear Compresión de Probetas" role="button" class="btn btn-dark btn-sm px-2 mx-1"><i class="fas fa-plus"></i>
+                    </a>
                     <a 
                       href="{% url 'tests_concrete:pice_break_update' obj.id %}" 
                       data-toggle="tooltip" title="Editar" role="button" class="btn btn-success btn-sm px-2 mx-1"><i class="fas fa-edit"></i>

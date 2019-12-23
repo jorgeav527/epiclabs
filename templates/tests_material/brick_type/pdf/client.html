@@ -6,12 +6,12 @@
         <div class="col-xs-12 panel panel-default">  
           
           <div class="row">
-            <div class="col-xs-9">
+            <div class="col-xs-8">
               <h4 class="text-center">
                 <strong>{{ title }}</strong> 
               </h4>
             </div>
-              <div class="col-xs-3">
+              <div class="col-xs-4">
                 {% if qs_variation_dimentions %}
                 <p style="margin-top: 1rem; margin-bottom: 0;" class="text-center"><strong>{{ norma_NTP_variation_dimentions }}</strong></p>
                 {% endif %}
@@ -70,6 +70,7 @@
           <p class="text-left"><strong>Tipo de Ladrillo segun el Coeficiente de Absorción:</strong> {{ type_coeff_sat }}</p>
           {% endif %}
           {% if qs_compretion_brick %}
+          <p class="text-left"><strong>Resistencia Caracteristica:</strong> {{ fc_caracteristic_MPA }} MPa - {{ fc_caracteristic }} kgf/cm²</p>
           <p class="text-left"><strong>Tipo de Ladrillo segun el Compresión:</strong> {{ type_compretion }}</p>
           {% endif %}
         </div>
@@ -86,7 +87,6 @@
       </div>    
       <div class="">
         <div class="">
-            <!-- <div class="panel panel-default"> -->
                 <!-- Default panel contents -->
                 {% if qs_variation_dimentions %}                
                 <div class="panel-heading"><strong>Resultados del Ensayo:</strong> Variación de Dimenciones:</div>
@@ -124,6 +124,7 @@
                           <td class="text-center">{{ variation_dimentions.average_high }}</td>
                       </tr>
                       {% endfor %}
+                      <tr>
                           <th class="text-center" scope="row">VD (%)</th>
                           <td class="text-center"></td>
                           <td class="text-center"></td>
@@ -136,7 +137,8 @@
                           <td class="text-center"></td>
                           <td class="text-center"></td>
                           <td class="text-center">{{ vd_high }}</td>
-                </tbody>
+                      </tr>
+                    </tbody>
                 </table>
                 {% endif %}
               <br>
@@ -160,13 +162,15 @@
                           <td class="text-center">{{ warping.upface_convex }}</td>
                           <td class="text-center">{{ warping.downface_concave }}</td>
                           <td class="text-center">{{ warping.downface_convex }}</td>
-                      {% endfor %}
                       </tr>
+                      {% endfor %}
+                      <tr>
                           <th class="text-center" scope="row">Promedio</th>
                           <td class="text-center">{{ avg_upface_concave }}</td>
                           <td class="text-center">{{ avg_upface_convex }}</td>
                           <td class="text-center">{{ avg_downface_concave }}</td>
                           <td class="text-center">{{ avg_downface_convex }}</td>
+                      </tr>
                   </tbody>
                 </table>
                 {% endif %}
@@ -207,6 +211,7 @@
                             <td class="text-center">{{ density_voids.density }}</td>
                         </tr>
                         {% endfor %}
+                        <tr>
                             <th class="text-center" scope="row">Prom.</th>
                             <td class="text-center"></td>
                             <td class="text-center"></td>
@@ -219,6 +224,7 @@
                             <td class="text-center">{{ avg_void_percentage }}</td>
                             <td class="text-center"></td>
                             <td class="text-center">{{ avg_density }}</td>
+                        </tr>
                     </tbody>
                 </table>
                 {% endif %}
@@ -235,7 +241,6 @@
                             <th class="text-center">Largo (cm)</th>
                             <th class="text-center">Ancho (cm)</th>
                             <th class="text-center">Area de Contacto (cm²)</th>
-                            <th class="text-center">Variable 200cm²</th>
                             <th class="text-center">Peso Mojado (gr)</th>
                             <th class="text-center">Peso Corregido (gr)</th>
                         </tr>
@@ -250,11 +255,11 @@
                             <td class="text-center">{{ suction.length }}</td>
                             <td class="text-center">{{ suction.width }}</td>
                             <td class="text-center">{{ suction.face_area }}</td>
-                            <td class="text-center">{{ suction.bar_200 }}</td>
                             <td class="text-center">{{ suction.face_wet_weight }}</td>
                             <td class="text-center">{{ suction.face_wet_weight_correction }}</td>
                         </tr>
                         {% endfor %}
+                        <tr>
                             <th class="text-center" scope="row">Promedio</th>
                             <td class="text-center"></td>
                             <td class="text-center"></td>
@@ -263,8 +268,8 @@
                             <td class="text-center"></td>
                             <td class="text-center"></td>
                             <td class="text-center"></td>
-                            <td class="text-center"></td>
                             <td class="text-center">{{ avg_face_wet_weight_correction }}</td>
+                        </tr>
                     </tbody>
                 </table>
                 {% endif %}
@@ -277,7 +282,6 @@
                             <th class="text-center">Secuencia</th>
                             <th class="text-center">Peso Seco (gr)</th>
                             <th class="text-center">Peso Saturado en Agua Fria (gr)</th>
-                            <th class="text-center">Peso Saturado en Agua Caliente (gr)</th>
                             <th class="text-center">Peso Satura despues de 5 horas en Agua Caliente (gr)</th>
                             <th class="text-center">Porcentaje de Absorcion (%)</th>
                             <th class="text-center">Porcentaje de Absorcion Máxima (%)</th>
@@ -290,21 +294,21 @@
                             <th class="text-center" scope="row">{{ forloop.counter }}</th>
                             <td class="text-center">{{ abs_sat_coff.dry_weight }}</td>
                             <td class="text-center">{{ abs_sat_coff.wet_weight_cool_24 }}</td>
-                            <td class="text-center">{{ abs_sat_coff.wet_weight_hot_24 }}</td>
                             <td class="text-center">{{ abs_sat_coff.wet_weight_hot_5 }}</td>
                             <td class="text-center">{{ abs_sat_coff.abs_brick }}</td>
                             <td class="text-center">{{ abs_sat_coff.abs_max_brick }}</td>
                             <td class="text-center">{{ abs_sat_coff.coeff_sat }}</td>
                         </tr>
                         {% endfor %}
+                        <tr>
                             <th class="text-center" scope="row">Promedio</th>
-                            <td class="text-center"></td>
                             <td class="text-center"></td>
                             <td class="text-center"></td>
                             <td class="text-center"></td>
                             <td class="text-center">{{ avg_abs_brick }}</td>
                             <td class="text-center">{{ avg_abs_max_brick }}</td>
                             <td class="text-center">{{ avg_coeff_sat }}</td>
+                        </tr>
                     </tbody>
                   </table>
                   {% endif %}
@@ -341,6 +345,7 @@
                               <td class="text-center">{{ compretion_brick.fc_MPa }} ({{ compretion_brick.fc }})</td>
                           </tr>
                           {% endfor %}
+                          <tr>
                               <th class="text-center" scope="row">Promedio</th>
                               <td class="text-center"></td>
                               <td class="text-center"></td>
@@ -351,11 +356,23 @@
                               <td class="text-center"></td>
                               <td class="text-center"></td>
                               <td class="text-center">{{ avg_fc_MPA }} ({{ avg_fc }})</td>
-                      </tbody>
+                          </tr>
+                          <tr>
+                              <th class="text-center" scope="row">SD</th>
+                              <td class="text-center"></td>
+                              <td class="text-center"></td>
+                              <td class="text-center"></td>
+                              <td class="text-center"></td>
+                              <td class="text-center"></td>
+                              <td class="text-center"></td>
+                              <td class="text-center"></td>
+                              <td class="text-center"></td>
+                              <td class="text-center">{{ std_fc_MPA }} ({{ std_fc }})</td>
+                          </tr>
+                    </tbody>
                   </table>
                   {% endif %}
                 <br>
-            <!-- </div> -->
         </div>
       </div>
       <div class="row">
@@ -364,7 +381,11 @@
             <tbody>
               <tr>
                 <td>
+                  <br>
+                  <br>
                   <p  class="text-muted text-center">UNIVERSIDAD CATÓLICA DE SANTA MARÍA</p>
+                  <br>
+                  <br>
                 </td>
               </tr>
             </tbody>
@@ -384,7 +405,11 @@
               <tbody>
                 <tr>
                   <td>
-                    <p  class="text-muted text-center">UNIVERSIDAD CATÓLICA DE SANTA MARÍA</p>
+                    <br>
+                    <br>
+                      <p  class="text-muted text-center">UNIVERSIDAD CATÓLICA DE SANTA MARÍA</p>
+                    <br>
+                    <br>
                   </td>
                 </tr>
               </tbody>
@@ -404,10 +429,7 @@
     <footer>
       <div class="row" >
         <div class="col-xs-12 panel panel-default">
-          <span><strong> Dirección: </strong> Cayetano Arenas Nº152 - Parque Industrial - Arequipa - Perú </span>
-          <span><strong> Telefono: </strong> 054 382038 anexo 1465 </span>
-          <span><strong> Email: </strong> www.epiclabs.ucsm.com </span>
-          <div class="text-center panel-footer"><small>Laboratorio de Ingenieria Civil, Universidad Catolica de Santa Maria, EPICLABS &#169; 2019</small></div>
+          <p class="text-center">Laboratorio de Ingenieria Civil, Universidad Catolica de Santa Maria, EPICLABS &#169; 2019</p>          
         </div>
       </div>   
     </footer>

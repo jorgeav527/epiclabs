@@ -6,12 +6,12 @@
         <div class="col-xs-12 panel panel-default">  
           
           <div class="row">
-            <div class="col-xs-9">
+            <div class="col-xs-8">
               <h4 class="text-center">
                 <strong>{{ title }}</strong> 
               </h4>
             </div>
-              <div class="col-xs-3">
+              <div class="col-xs-4">
                 <p style="margin-top: 1rem; margin-bottom: 0;" class="text-center"><strong>{{ norma_ASTM }}</strong></p>
                 <p style="margin-top: 0; margin-bottom: 1rem;" class="text-center"><strong>{{ noma_NTP }}</strong></p>
               </div>
@@ -43,67 +43,81 @@
           <p class="text-left"><strong>Corrección del Ensayo:</strong> {{ obj.updated|date:"d/m/Y P" }}</p>
           {% endif %}
           <p class="text-left"><strong>Emsion de Certificado:</strong> {% now "d/m/Y P" %}</p>
+          <p class="text-left"><strong>Resistencia Caracteristica:</strong> {{ fc_caracteristic }} kgf/cm² - {{ fc_MPa_caracteristic }} MPa</p>
         </div>
         <div style="margin-left: 4rem;" class="col-xs-3 panel panel-default">
           <p class="text-left panel-heading"><strong>Datos del Ensayo</strong></p>
           <p  class="text-left"><strong>ID:</strong> {{ obj.id }}</p>
           <p  class="text-left"><strong>Codigo QR:</strong></p>
           <p  class="text-center">{% qr_from_text obj.code size=4 image_format="png" %}</p>
-          {% if obj.diameter_esp %}
-          <p  class="text-left"><strong>Diametro Esp:</strong> {{ obj.diameter_esp }} pulgadas</p>
-          {% else %}
-          <p  class="text-left"><strong>Diametro Superior:</strong> {{ obj.diameter_1 }}"</p>
-          <p  class="text-left"><strong>Diametro Inferior:</strong> {{ obj.diameter_2 }}"</p>
-          {% endif %}
-          <p  class="text-left"><strong>f'c Esp:</strong> {{ obj.fc_esp }} kgf/cm²</p>
-          <p  class="text-left"><strong>F:</strong> {{ obj.F }} kgf</p>
+          <p class="text-left"><strong>Tipo de Probeta:</strong> {{ obj.pice_type|title }}</p>
+          <p class="text-left"><strong>f'c Esp:</strong> {{ obj.fc_esp }} kgf/cm²</p>
         </div>
       </div>    
       <div class="row">
         <div class="col-xs-12">
             <div class="panel panel-default">
                 <!-- Default panel contents -->
-                <div class="panel-heading"><strong>Resultados del Ensayo:</strong></div>
+                <div class="panel-heading"><strong>Resultados del Ensayo:</strong> Determinación del Esfuerzo</div>
 
                 <!-- Table -->
                 <table class="table-bordered">
-                  <thead class="">
-                    <tr>
-                      <th class="text-center">Id</th>
-                      <th colspan="2" class="text-center">Item</th>
-                      <th colspan="2" class="text-center">Fecha</th>
-                      <th class="text-center">Edad</th>
-                      <th class="text-center">Area</th>
-                      <th colspan="2" class="text-center">Esfuezo de Rotua</th>
-                    </tr>
-                    <tr>
-                      <th class="text-center">Nº</th>
-                      <th class="text-center">Elemento</th>
-                      <th class="text-center">Codigo</th>
-                      <th class="text-center">Vaciado</th>
-                      <th class="text-center">Rotura</th>
-                      <th class="text-center">(dias)</th>
-                      <th class="text-center">(cm²)</th>
-                      <th class="text-center">(MPa)</th>
-                      <th class="text-center">(kgf/cm²)</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td class="text-center">{{ obj.id }}</td>
-                      <td class="text-center">{{ obj.element|title }}</td>
-                      <td class="text-center">{{ obj.code }}</td>
-                      <td class="text-center">{{ obj.poured_data|date:"d/m/Y" }}</td>
-                      <td class="text-center">{{ obj.break_data|date:"d/m/Y" }}</td>
-                      <td class="text-center">{{ obj.duration }}</td>
-                      <td class="text-center">{{ obj.area }}</td>
-                      <td class="text-center">{{ obj.fc }}</td>
-                      <td class="text-center">{{ obj.fc_MPa }}</td>
-                    </tr>
-                    <!-- This is our clonable table line -->
-                  </tbody>
-                </table>
-            </div>
+                    <thead class="">
+                      <tr>
+                        <th colspan="2" class="text-center">Item</th>
+                        <th colspan="2" class="text-center">Fecha</th>
+                        <th class="text-center">Edad</th>
+                        <th class="text-center">Area</th>
+                        <th colspan="2" class="text-center">Esfuezo de Rotua</th>
+                      </tr>
+                      <tr>
+                        <th class="text-center">Nº</th>
+                        <th class="text-center">Elemento</th>
+                        <th class="text-center">Vaciado</th>
+                        <th class="text-center">Rotura</th>
+                        <th class="text-center">(dias)</th>
+                        <th class="text-center">(cm²)</th>
+                        <th class="text-center">(MPa)</th>
+                        <th class="text-center">(kgf/cm²)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for pice in qs_pice %}
+                      <tr>
+                        <th class="text-center" scope="row">{{ forloop.counter }}</th>
+                        <td class="text-center">{{ pice.element_name|title }}</td>
+                        <td class="text-center">{{ pice.poured_date|date:"d/m/Y" }}</td>
+                        <td class="text-center">{{ pice.break_date|date:"d/m/Y" }}</td>
+                        <td class="text-center">{{ pice.dilate }}</td>
+                        <td class="text-center">{{ pice.area }}</td>
+                        <td class="text-center">{{ pice.fc }}</td>
+                        <td class="text-center">{{ pice.fc_MPa }}</td>
+                      </tr>
+                      {% endfor %}
+                      <!-- This is our clonable table line -->
+                      <tr>
+                        <th class="text-center" scope="row"> Promedio</th>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">{{ mean_pice_fc }}</td>
+                        <td class="text-center">{{ mean_pice_fc_MPa }}</td>
+                      </tr>
+                      <tr>
+                        <th class="text-center" scope="row"> SD</th>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">{{ std_pice_fc }}</td>
+                        <td class="text-center">{{ std_pice_fc_MPa }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+              </div>
         </div>
       </div>
       <div class="row signature">
@@ -111,9 +125,13 @@
           <table class="table-bordered">
             <tbody>
               <tr>
-                <td>
-                  <p  class="text-muted text-center">UNIVERSIDAD CATÓLICA DE SANTA MARÍA</p>
-                </td>
+                  <td>
+                    <br>
+                    <br>
+                      <p  class="text-muted text-center">UNIVERSIDAD CATÓLICA DE SANTA MARÍA</p>
+                    <br>
+                    <br>
+                  </td>
               </tr>
             </tbody>
             <tfoot>
@@ -130,12 +148,16 @@
         <div class="col-xs-6">
             <table class="table-bordered">
               <tbody>
-                <tr>
-                  <td>
-                    <p  class="text-muted text-center">UNIVERSIDAD CATÓLICA DE SANTA MARÍA</p>
-                  </td>
-                </tr>
-              </tbody>
+                  <tr>
+                      <td>
+                        <br>
+                        <br>
+                          <p  class="text-muted text-center">UNIVERSIDAD CATÓLICA DE SANTA MARÍA</p>
+                        <br>
+                        <br>
+                      </td>
+                  </tr>
+                  </tbody>
               <tfoot>
                 <tr>
                   <th>
@@ -152,10 +174,7 @@
     <footer>
       <div class="row">
         <div class="col-xs-12 panel panel-default">
-          <span><strong> Dirección: </strong> Cayetano Arenas Nº152 - Parque Industrial - Arequipa - Perú </span>
-          <span><strong> Telefono: </strong> 054 382038 anexo 1465 </span>
-          <span><strong> Email: </strong> www.epiclabs.ucsm.com </span>
-          <div class="text-center panel-footer"><small>Laboratorio de Ingenieria Civil, Universidad Catolica de Santa Maria, EPICLABS &#169; 2019</small></div>
+          <p class="text-center">Laboratorio de Ingenieria Civil, Universidad Catolica de Santa Maria, EPICLABS &#169; 2019</p>
         </div>
       </div>   
     </footer>

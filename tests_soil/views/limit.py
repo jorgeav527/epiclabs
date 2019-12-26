@@ -13,6 +13,13 @@ import numpy as np
 from bokeh.plotting import figure
 from bokeh.embed import components
 
+from io import BytesIO
+import base64
+import matplotlib
+matplotlib.use('Agg')
+from matplotlib import pyplot as plt
+from PIL import Image
+
 from tests_soil.models import Limit, Liquid, Platic
 from tests_soil.forms import LimitForm, LimitFormClient, LiquidFormSet, PlasticFormSet
 from equipments.models import Equip
@@ -290,14 +297,26 @@ def limit_pdf(request, id):
     min_y = np.min(y_moisture) - 10
     x = np.linspace(min_x, max_x, 100)
     y = C + m*x
-    TOOLS="hover,crosshair,pan,wheel_zoom,reset,save,"
-    plot = figure(x_axis_type="log", x_range=(min_x, max_x), y_range=(min_y, max_y), tools=TOOLS, 
-        title="Limite Liquido", x_axis_label= 'Numero de Golpes', y_axis_label= 'Porcentaje de Humedad (%)',
-        sizing_mode="scale_width",)
-    plot.circle(x_hit, y_moisture, size=8, legend="Resultados")
-    plot.line(x, y, line_width=2, legend="Linea de Tendencia", line_dash='dashed')
-    plot.circle(25, hit_25, size=8, color="red", legend="25 Golpes")
-    script, div = components(plot)
+
+    fig = plt.figure()
+    plt.plot(x, y)
+    canvas = fig.canvas
+    buf, size = canvas.print_to_buffer()
+    image = Image.frombuffer('RGBA', size, buf, 'raw', 'RGBA', 0, 1)
+    buffer = BytesIO()
+    image.save(buffer,'PNG')
+    graphic = buffer.getvalue()
+    graphic = base64.b64encode(graphic)
+    buffer.close()
+
+    # TOOLS="hover,crosshair,pan,wheel_zoom,reset,save,"
+    # plot = figure(x_axis_type="log", x_range=(min_x, max_x), y_range=(min_y, max_y), tools=TOOLS, 
+    #     title="Limite Liquido", x_axis_label= 'Numero de Golpes', y_axis_label= 'Porcentaje de Humedad (%)',
+    #     sizing_mode="scale_width",)
+    # plot.circle(x_hit, y_moisture, size=8, legend="Resultados")
+    # plot.line(x, y, line_width=2, legend="Linea de Tendencia", line_dash='dashed')
+    # plot.circle(25, hit_25, size=8, color="red", legend="25 Golpes")
+    # script, div = components(plot)
 
     context = {
         "qs_liquid": qs_liquid,
@@ -306,6 +325,7 @@ def limit_pdf(request, id):
         "mean_y_moisture_plastic": mean_y_moisture_plastic,
         "plastic_index": plastic_index,
         "obj": obj,
+        "graphic": str(graphic)[2:-1],
         "title": "METODO DE ENSAYO PARA DETERMINAR EL LIMITE LÍQUIDO, LIMITE PLÁSTICO E INDICE DE PLASTICIDAD DE SUELOS MTC E110 - MTC E111",
         "norma_ASTM": "ASTM C 4318",
         "noma_NTP": "NTP 339.129",

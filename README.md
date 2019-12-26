@@ -51,3 +51,7 @@ https://www.supinfo.com/articles/single/379-generate-pdf-files-out-of-html-templ
 https://stackoverflow.com/questions/32798998/weasyprint-and-bootstrap
 
 https://docplayer.es/43631805-Capitulo-5-resistencia-de-prismas-de-albanileria.html
+
+https://stackoverflow.com/questions/48286094/serving-matplotlib-graphs-with-django-without-saving
+
+https://stackoverflow.com/questions/30531990/matplotlib-into-a-django-template?answertab=votes#tab-top

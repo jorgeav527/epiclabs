@@ -15,7 +15,10 @@ from bokeh.embed import components
 
 from io import BytesIO
 import base64
-import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.use('Agg')
+from matplotlib import pyplot as plt
+from PIL import Image
 
 from tests_soil.models import GranulometricGlobal
 from tests_soil.forms import GranulometricGlobalForm, GranulometricGlobalFormClient
@@ -299,28 +302,31 @@ def granulometric_global_pdf(request, id):
         CU = round(decil_60  / decil_10, 2)
         CC = round((decil_30 ** 2) / (decil_10 * decil_60 ), 2)
 
-    # Mathplotlib
+    # Ploting
+    fig = plt.figure()
     x = np.linspace(0, 2, 100)
 
-    plt.plot(x, x)
-    plt.plot(x, x**2)
-    plt.plot(x, x**3)
+    plt.plot(x, x, label='linear')
+    plt.plot(x, x**2, label='quadratic')
+    plt.plot(x, x**3, label='cubic')
 
     plt.xlabel('x label')
     plt.ylabel('y label')
 
     plt.title("Simple Plot")
 
+    plt.legend()
+
     plt.tight_layout()
 
+    canvas = fig.canvas
+    buf, size = canvas.print_to_buffer()
+    image = Image.frombuffer('RGBA', size, buf, 'raw', 'RGBA', 0, 1)
     buffer = BytesIO()
-    plt.savefig(buffer, format='png')
-    buffer.seek(0)
-    image_png = buffer.getvalue()
+    image.save(buffer,'PNG')
+    graphic = buffer.getvalue()
+    graphic = base64.b64encode(graphic)
     buffer.close()
-
-    graphic = base64.b64encode(image_png)
-    graphic = graphic.decode('utf-8')
 
     context = {
         "obj": obj,
@@ -339,7 +345,7 @@ def granulometric_global_pdf(request, id):
         "decil_10": decil_10,
         "CU": CU,
         "CC": CC,
-        "graphic": graphic,
+        "graphic": str(graphic)[2:-1],
         "title": "CLASIFICACIÓN DE SUELOS PARA FINES DE INGENIERÍA Y CONSTRUCCIÓN DE CARRETERAS",
         "norma_ASTM": "ASTM D2487",
         "noma_NTP": "ASTM D3282",

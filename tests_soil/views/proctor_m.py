@@ -13,6 +13,12 @@ import numpy as np
 from bokeh.plotting import figure
 from bokeh.embed import components
 
+from io import BytesIO
+import base64
+import matplotlib
+matplotlib.use('Agg')
+from matplotlib import pyplot as plt
+
 from tests_soil.models import ProctorM, DensityWetDry, Saturation, Correction
 from tests_soil.forms import ProctorMForm, ProctorMFormClient, DensityWetDryFormSet, SaturationFormSet, CorrectionFormSet
 from equipments.models import Equip
@@ -248,6 +254,7 @@ def proctor_m_detail(request, id):
     correction_moisture = round(max_x_moisture*pf_f_g/100+moisture_correction*pfe/100, 1) 
     correction_dry_density = round(100*max_y_dry_density*pefe*0.99821/(max_y_dry_density*pfe+pefe*0.99821*pf_f_g), 2) 
 
+    # ploting
     TOOLS="hover,crosshair,pan,wheel_zoom,reset,save,"
     plot = figure(x_range=(min_x-1, max_x+5), y_range=(min_y-0.05, max_y+0.1), tools=TOOLS, 
         title="Curva Humedad - Densidad Seca", x_axis_label= 'Porcentaje de Humedad (%)', y_axis_label= 'Densidad Seca (g/cm³)',
@@ -352,7 +359,30 @@ def proctor_m_pdf(request, id):
 
     # Correction
     correction_moisture = round(max_x_moisture*pf_f_g/100+moisture_correction*pfe/100, 1) 
-    correction_dry_density = round(100*max_y_dry_density*pefe*0.99821/(max_y_dry_density*pfe+pefe*0.99821*pf_f_g), 2) 
+    correction_dry_density = round(100*max_y_dry_density*pefe*0.99821/(max_y_dry_density*pfe+pefe*0.99821*pf_f_g), 2)
+
+    # ploting
+    fig = plt.figure(figsize=(5.5, 4.1), dpi=80)
+    plt.xlim(min_x-1, max_x+5)
+    plt.ylim(min_y-0.05, max_y+0.1)
+    plt.grid(b=True, which='both', axis='both')
+    
+    plt.scatter(x_moisture, y_dry_density, label='Resultados', s=20, c='blue',)
+    plt.plot(x, y, color='green', linestyle='dashed',)
+    plt.plot([max_w_100, min_w_100], [min_y, max_y], linestyle='dashed', color="red")
+    plt.plot([max_w_80, min_w_80], [min_y, max_y], linestyle='dashed', color="red")
+    plt.plot([max_w_60, min_w_60], [min_y, max_y], linestyle='dashed', color="red")
+    plt.scatter(max_x_moisture, max_y_dry_density, label='Maximo Punto', s=20, c='red',)
+
+    plt.xlabel('Porcentaje de Humedad (%)')
+    plt.ylabel('Densidad Seca (g/cm³)')
+    plt.title("Curva Humedad - Densidad Seca")
+    plt.legend()
+
+    buf = BytesIO()
+    fig.savefig(buf, format="png")
+    # Embed the result in the html output.
+    graphic = base64.b64encode(buf.getbuffer()).decode("ascii")
 
     context = {
         "qs_density": qs_density,
@@ -365,6 +395,7 @@ def proctor_m_pdf(request, id):
         "correction_moisture": correction_moisture,
         "correction_dry_density": correction_dry_density,
         "obj": obj,
+        "graphic": graphic,
         "title": "COMPACTACION DE SUELOS EN LABORATORIO UTILIZANDO UNA ENERGIA MODIFICADA (2 700 kN-m/m³ (56 000 pie-lbf/pie³)) PROCTOR MODIFICADO MTC E115",
         "norma_ASTM": "ASTM D 1557",
         "noma_NTP": "NTP 339.141",

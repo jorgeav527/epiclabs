@@ -55,3 +55,6 @@ https://docplayer.es/43631805-Capitulo-5-resistencia-de-prismas-de-albanileria.h
 https://stackoverflow.com/questions/48286094/serving-matplotlib-graphs-with-django-without-saving
 
 https://stackoverflow.com/questions/30531990/matplotlib-into-a-django-template?answertab=votes#tab-top
+
+add two arrays
+https://www.geeksforgeeks.org/python-map-function/

@@ -11,6 +11,17 @@ from construction.models import Construction
 from course.models import Course
 
 class GranulometricGlobal(models.Model):
+    SIZE_CHOICES = (
+        ('4"', "4 inch"),
+        ('3"', "3 inch"),
+        ('2 1/2"', "2 1/2 inch"),
+        ('2"', "2 inch"),
+        ('1 1/2"', "1 1/2 inch"),
+        ('1"', "1 inch"),
+        ('3/4"', "3/4 inch"),
+        ('1/2"', "1/2 inch"),
+        ('3/8"', "3/8 inch"),
+    )
     LAYER_CHOICES = (
         ("UNO", "Estrato 1"),
         ("DOS", "Estrato 2"),
@@ -25,19 +36,12 @@ class GranulometricGlobal(models.Model):
     sampling_date   = models.DateField()
     done_date       = models.DateField(default=datetime.datetime.now)
     dilate          = models.IntegerField(editable=False)
-    tamiz_1_1o2     = models.FloatField(null=True, blank=True)
-    tamiz_1         = models.FloatField(null=True, blank=True)
-    tamiz_3o4       = models.FloatField(null=True, blank=True)
-    tamiz_1o2       = models.FloatField(null=True, blank=True)
-    tamiz_3o8       = models.FloatField(null=True, blank=True)
-    tamiz_4         = models.FloatField(null=True, blank=True)
-    tamiz_10        = models.FloatField(null=True, blank=True)
-    tamiz_20        = models.FloatField(null=True, blank=True)
-    tamiz_40        = models.FloatField(null=True, blank=True)
-    tamiz_60        = models.FloatField(null=True, blank=True)
-    tamiz_100       = models.FloatField(null=True, blank=True)
-    tamiz_200       = models.FloatField(null=True, blank=True)
-    tamiz_fondo     = models.FloatField(null=True, blank=True)
+    hygr_humid      = models.FloatField(null=True, blank=True)
+    organic         = models.BooleanField(default=False)
+    liquid_limit    = models.FloatField()
+    plastic_limit   = models.FloatField()
+    plastic_index   = models.FloatField(editable=False)
+    max_size        = models.CharField(choices=SIZE_CHOICES, max_length=7, default='2"')
     created         = models.DateTimeField(auto_now_add=True)
     updated         = models.DateTimeField(auto_now=True)
     equipment           = models.ManyToManyField(Equip)
@@ -59,7 +63,45 @@ class GranulometricGlobal(models.Model):
         diff = self.done_date - self.sampling_date
         self.dilate = diff.days
 
+        # Generate the plastic_index
+        plastic = self.liquid_limit - self.plastic_limit
+        self.plastic_index = round(plastic, 1)
+
         super(GranulometricGlobal, self).save(*args, **kwargs)
 
     def __str__(self):
         return f"Granulometria Tamizado Gloval {self.id}"
+
+
+class GlobalMesh(models.Model):
+    tamiz_4         = models.FloatField(null=True, blank=True)
+    tamiz_3         = models.FloatField(null=True, blank=True)
+    tamiz_2_1o2     = models.FloatField(null=True, blank=True)
+    tamiz_2         = models.FloatField(null=True, blank=True)
+    tamiz_1_1o2     = models.FloatField(null=True, blank=True)
+    tamiz_1         = models.FloatField(null=True, blank=True)
+    tamiz_3o4       = models.FloatField(null=True, blank=True)
+    tamiz_1o2       = models.FloatField(null=True, blank=True)
+    tamiz_3o8       = models.FloatField(null=True, blank=True)
+    tamiz_N_4       = models.FloatField(null=True, blank=True)
+    tamiz_N_8       = models.FloatField(null=True, blank=True)
+    tamiz_N_10      = models.FloatField(null=True, blank=True)
+    tamiz_N_16      = models.FloatField(null=True, blank=True)
+    tamiz_N_20      = models.FloatField(null=True, blank=True)
+    tamiz_N_30      = models.FloatField(null=True, blank=True)
+    tamiz_N_40      = models.FloatField(null=True, blank=True)
+    tamiz_N_50      = models.FloatField(null=True, blank=True)
+    tamiz_N_60      = models.FloatField(null=True, blank=True)
+    tamiz_N_80      = models.FloatField(null=True, blank=True)
+    tamiz_N_100     = models.FloatField(null=True, blank=True)
+    tamiz_N_140     = models.FloatField(null=True, blank=True)
+    tamiz_N_200     = models.FloatField(null=True, blank=True)
+    tamiz_fondo     = models.FloatField(null=True, blank=True)
+    created         = models.DateTimeField(auto_now_add=True)
+    updated         = models.DateTimeField(auto_now=True)
+    granulometric_global = models.ForeignKey(GranulometricGlobal, on_delete=models.CASCADE)
+    equipment       = models.ManyToManyField(Equip)
+    tool            = models.ManyToManyField(Tool)
+
+    def __str__(self):
+        return f"Tamizes {self.id}"

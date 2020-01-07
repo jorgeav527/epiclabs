@@ -173,9 +173,13 @@
                     {% endfor %}
                 </tbody>
               </table>
-              <br>              
             <!-- </div> -->
         </div>
+      </div>
+      <div class="col-xs-12 text-center">
+        {% if graphic %}
+          <img src="data:image/png;base64,{{ graphic|safe }}">
+        {% endif %}
       </div>
       <div class="row signature">
         <div class="col-xs-6">

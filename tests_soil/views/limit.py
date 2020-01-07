@@ -18,7 +18,6 @@ import base64
 import matplotlib
 matplotlib.use('Agg')
 from matplotlib import pyplot as plt
-from PIL import Image
 
 from tests_soil.models import Limit, Liquid, Platic
 from tests_soil.forms import LimitForm, LimitFormClient, LiquidFormSet, PlasticFormSet
@@ -218,7 +217,7 @@ def limit_detail(request, id):
         title="Limite Liquido", x_axis_label= 'Numero de Golpes', y_axis_label= 'Porcentaje de Humedad (%)',
         sizing_mode="scale_width",)
     plot.circle(x_hit, y_moisture, size=8, legend="Resultados")
-    plot.line(x, y, line_width=2, legend="Linea de Tendencia", line_dash='dashed')
+    plot.line(x, y, line_width=2, color='green', legend="Linea de Tendencia", line_dash='dashed')
     plot.circle(25, hit_25, size=8, color="red", legend="25 Golpes")
     script, div = components(plot)
 
@@ -293,30 +292,31 @@ def limit_pdf(request, id):
     # ploting
     max_x = np.max(x_hit) + 5
     min_x = np.min(x_hit) - 5
-    max_y = np.max(y_moisture) + 10
-    min_y = np.min(y_moisture) - 10
+    max_y = np.max(y_moisture) + 5
+    min_y = np.min(y_moisture) - 5
     x = np.linspace(min_x, max_x, 100)
     y = C + m*x
 
-    fig = plt.figure()
-    plt.plot(x, y)
-    canvas = fig.canvas
-    buf, size = canvas.print_to_buffer()
-    image = Image.frombuffer('RGBA', size, buf, 'raw', 'RGBA', 0, 1)
-    buffer = BytesIO()
-    image.save(buffer,'PNG')
-    graphic = buffer.getvalue()
-    graphic = base64.b64encode(graphic)
-    buffer.close()
+    fig = plt.figure(figsize=(5.5, 4.1), dpi=80)
 
-    # TOOLS="hover,crosshair,pan,wheel_zoom,reset,save,"
-    # plot = figure(x_axis_type="log", x_range=(min_x, max_x), y_range=(min_y, max_y), tools=TOOLS, 
-    #     title="Limite Liquido", x_axis_label= 'Numero de Golpes', y_axis_label= 'Porcentaje de Humedad (%)',
-    #     sizing_mode="scale_width",)
-    # plot.circle(x_hit, y_moisture, size=8, legend="Resultados")
-    # plot.line(x, y, line_width=2, legend="Linea de Tendencia", line_dash='dashed')
-    # plot.circle(25, hit_25, size=8, color="red", legend="25 Golpes")
-    # script, div = components(plot)
+    plt.xlim(min_x, max_x)
+    plt.ylim(min_y, max_y)
+    plt.xscale('log')
+    plt.grid(b=True, which='both', axis='both')
+    
+    plt.scatter(x_hit, y_moisture, label='Resultados', s=20, c='blue',)
+    plt.plot(x, y, color='green', linestyle='dashed', label='Linea de Tendencia')
+    plt.scatter(25, hit_25, label='25 Golpes', s=20, c='red',)
+
+    plt.xlabel('Numero de Glopes')
+    plt.ylabel('Porcentaje de Humedad (%)')
+    plt.title("Limite Liquido")
+    plt.legend()
+
+    buf = BytesIO()
+    fig.savefig(buf, format="png")
+    # Embed the result in the html output.
+    graphic = base64.b64encode(buf.getbuffer()).decode("ascii")
 
     context = {
         "qs_liquid": qs_liquid,
@@ -325,7 +325,7 @@ def limit_pdf(request, id):
         "mean_y_moisture_plastic": mean_y_moisture_plastic,
         "plastic_index": plastic_index,
         "obj": obj,
-        "graphic": str(graphic)[2:-1],
+        "graphic": graphic,
         "title": "METODO DE ENSAYO PARA DETERMINAR EL LIMITE LÍQUIDO, LIMITE PLÁSTICO E INDICE DE PLASTICIDAD DE SUELOS MTC E110 - MTC E111",
         "norma_ASTM": "ASTM C 4318",
         "noma_NTP": "NTP 339.129",

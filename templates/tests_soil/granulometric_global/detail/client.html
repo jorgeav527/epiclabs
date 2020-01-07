@@ -27,7 +27,14 @@
                 <p class="text-left"><span class="font-weight-bold">Fecha del Ensayo:</span> {{ obj.done_date|date:"d/m/Y" }}</p>
                 <p class="text-left"><span class="font-weight-bold">Calicata:</span> {{ obj.quarry }}</p>
                 <p class="text-left"><span class="font-weight-bold">Estrato:</span> {{ obj.layer }}</p>
-                <p class="text-left"><span class="font-weight-bold">Peso Retenido en las Mallas:</span></p>
+                <p class="text-left"><span class="font-weight-bold">Total:</span> {{ total_amount }} g</p>
+                <p class="text-left"><span class="font-weight-bold">Humedad Higroscópica:</span> {{ obj.hygr_humid }}%</p>
+                <p class="text-left"><span class="font-weight-bold">Tamaño Max.:</span> {{ obj.max_size }}"</p>
+                <p class="text-left"><span class="font-weight-bold">Limite Líquido:</span> {{ obj.liquid_limit }}%</p>
+                <p class="text-left"><span class="font-weight-bold">Limite Plástico:</span> {{ obj.plastic_limit }}%</p>
+                <p class="text-left"><span class="font-weight-bold">Indice Plastico:</span> {{ obj.plastic_index }}%</p>
+                <p class="text-left"><span class="font-weight-bold">Organico:</span> {{ obj.organic }}</p>
+                      <p class="text-left"><span class="font-weight-bold">Peso Retenido en las Mallas:</span></p>
                 <table class="table table-sm table-responsive table-bordered text-center">
                     <thead class="primary-color-dark white-text">
                         <tr>
@@ -112,10 +119,12 @@
                 <p class="text-left"><span class="font-weight-bold">D10:</span> {{ decil_10 }}mm</p>
                 <p class="text-left"><span class="font-weight-bold">CU:</span> {{ CU }}</p>
                 <p class="text-left"><span class="font-weight-bold">CC:</span> {{ CC }}</p>
-                <p class="text-left"><span class="font-weight-bold">Gravas:</span> {{ gravas }}%</p>
-                <p class="text-left"><span class="font-weight-bold">Finos:</span> {{ finos }}%</p>
-                <p class="text-left"><span class="font-weight-bold">Arenas:</span> {{ arenas }}%</p>
+                <p class="text-left"><span class="font-weight-bold">Gravas:</span> {{ total_gravas }}%</p>
+                <p class="text-left"><span class="font-weight-bold">Finos:</span> {{ total_finos }}%</p>
+                <p class="text-left"><span class="font-weight-bold">Arenas:</span> {{ total_arenas }}%</p>
                 <p class="text-left"><span class="font-weight-bold">Total:</span> {{ total_amount }} g</p>
+                <p class="text-left"><span class="font-weight-bold">Clasificación SUCS:</span> FALTA</p>
+                <p class="text-left"><span class="font-weight-bold">Clasificación ASSHTO:</span> FALTA</p>
                 <hr class="my-3">
                 
                 <p class="text-left mt-3"><span class="font-weight-bold"><u>Contacto de Referencia</u></span></p>

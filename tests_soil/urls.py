@@ -73,6 +73,8 @@ urlpatterns = [
     path('granulometric-global/<int:id>/detail/', tests_soil_views.granulometric_global_detail, name="granulometric_global_detail"),
     path('granulometric-global/<int:id>/delete/', tests_soil_views.granulometric_global_delete, name="granulometric_global_delete"),
     path('granulometric-global/<int:id>/pdf/', tests_soil_views.granulometric_global_pdf, name="granulometric_global_pdf"),
+        # Global Mesh CRUD
+    path('global-mesh/save/<int:id>/', tests_soil_views.global_mesh_save, name="global_mesh_save"),
     # Sand Cone CRUD and PDF
     path('saned-cone/', tests_soil_views.sand_cone_list, name="sand_cone_list"),
     path('saned-cone/create/', tests_soil_views.sand_cone_create, name="sand_cone_create"),

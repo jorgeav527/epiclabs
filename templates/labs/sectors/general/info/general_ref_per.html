@@ -1,0 +1,75 @@
+{% extends "base_normal.html" %}
+
+{% block content %}
+<div class="my-5">
+  <div class="row">
+    <div class="col-md-3 col-lg-3">
+      {% include "labs/sectors/general/sidenav_general.html" %}
+    </div>
+    <div class="col-md-9 col-lg-9 mt-4">
+                <!--Grid row-->
+        <div class="row">
+
+            <!--Grid column-->
+            <div class="col-md-12 mb-4">  
+                <!-- Card -->
+                <div class="card">
+                  <div class="p-3">
+                    <h3 class="h3-responsive card-header mb-2">{{ title }}</h3>
+                    <table id="clientRefPer" class="display compact table table-bordered table-striped text-center">
+                        <thead class="primary-color-dark white-text">
+                          <tr>
+                            <th>Titulo</th>
+                            <th>Nombre y Apellidos</th>
+                            <th>DNI</th>
+                            <th>Telefono de Contacto</th>
+                            <th>Cliente</th>
+                            <th>Creado</th>
+                            <th>Actualizado</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for ref_person in qs_ref_persons %}
+                          <tr>
+                            <td nowrap="nowrap">{{ ref_person.title }}</td>
+                            <td nowrap="nowrap">{{ ref_person.name }}</td>
+                            <td nowrap="nowrap">{{ ref_person.dni }}</td>
+                            <td nowrap="nowrap">{{ ref_person.phone }}</td>
+                            <td nowrap="nowrap">{{ ref_person.client_profile }}</td>
+                            <td nowrap="nowrap">{{ ref_person.created }}</td>
+                            <td nowrap="nowrap">{{ ref_person.updated }}</td>
+                          </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                </div>
+                <!-- Card -->
+            </div>
+            <!--Grid column-->
+
+        </div>
+        <!--Grid row-->      
+    </div>
+  </div>
+</div>
+{% endblock content %}
+{% block js %}
+<script>
+  $(document).ready( function () {
+    $('#clientRefPer').DataTable({
+      "scrollX": true,
+      dom: 'B<"clear">lfrtip',
+      buttons: [
+          'csv', 'excel',
+          {
+            extend: 'pdfHtml5',
+            orientation: 'landscape',
+            pageSize: 'LEGAL',
+            filename: 'personas_referencia_{{ qs_ref_persons.count }}'
+          }
+      ]
+    });
+  } );
+</script>
+{% endblock %}

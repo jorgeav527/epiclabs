@@ -5,7 +5,7 @@ from .forms import *
 from thesis.models import Thesis
 from construction.models import Construction
 from reference_person.models import ReferencePerson
-from students.models import StudentGroup
+from students.models import Student
 from accounts.models import GroupProfile
 
 # Create your views here.
@@ -28,9 +28,9 @@ def register_group(request):
 
 
 def profile_group(request):
-    student_group = StudentGroup.objects.filter(group_profile=request.user.groupprofile)
+    student_group = Student.objects.filter(group_profile=request.user.groupprofile)
     obj = get_object_or_404(GroupProfile, id=request.user.groupprofile.id) # !! to dont colapce the db
-    profile_account = GroupAccountUpdatedForm(request.POST, instance=request.user)
+    profile_account = AccountUpdateForm(request.POST, instance=request.user)
     profile_group = GroupUpdateForm(request.POST, instance=request.user.groupprofile)
 
     if profile_account.is_valid() and profile_group.is_valid():
@@ -40,7 +40,7 @@ def profile_group(request):
         return redirect('accounts:profile_group')
 
     else:
-        profile_account = GroupAccountUpdatedForm(instance=request.user)
+        profile_account = AccountUpdateForm(instance=request.user)
         profile_group = GroupUpdateForm(instance=request.user.groupprofile)
 
     context = {

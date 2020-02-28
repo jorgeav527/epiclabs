@@ -1,13 +1,12 @@
 from django import forms
 from django.forms import inlineformset_factory
 
-from accounts.models import GroupProfile
-from .models import StudentGroup
+from .models import Student
 
-class StudentGroupForm(forms.ModelForm):
+class StudentForm(forms.ModelForm):
 
     class Meta:
-        model = StudentGroup
+        model = Student
         fields = [
             "full_name", 
             "codigo", 
@@ -25,4 +24,3 @@ class StudentGroupForm(forms.ModelForm):
             "email": "Solo @gmail", 
         }
 
-StudentGroupFormSet = inlineformset_factory(GroupProfile, StudentGroup, form=StudentGroupForm, extra=6, max_num=6, can_delete=True)

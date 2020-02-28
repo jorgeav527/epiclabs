@@ -1,0 +1,154 @@
+{% extends "base_normal.html" %}
+
+{% block content %}
+<div class="my-5">
+  <div class="row">
+    <div class="col-md-3 col-lg-3">
+      {% include "labs/sectors/bach/sidenav_bach.html" %}
+    </div>
+    <div class="col-md-9 col-lg-9 mt-4">
+                <!--Grid row-->
+        <div class="row">
+            <!--Grid column-->
+            <div class="col-md-12 mb-4">  
+                <!-- Card -->
+                <div class="card">
+                  <div class="p-3">
+                    <h3 class="h3-responsive card-header mb-2">{{ title }}</h3>
+                    <table id="bachBach" class="display compact table table-bordered table-striped text-center">
+                      <thead class="primary-color-dark white-text">
+                        <tr>
+                          <th colspan="8">Tesista</th>
+                          <th colspan="6">Tesis</th>
+                        </tr>
+                        <tr>
+                          <th>Usuario</th>
+                          <th>Nombre</th>
+                          <th>Apellido</th>
+                          <th>DNI</th>
+                          <th>Código</th>
+                          <th>Email</th>
+                          <th>Activo</th>
+                          <th>Título</th>
+                          <th>Linea</th>
+                          <th>Fecha de Comienzo</th>
+                          <th>Fecha de Culminación</th>
+                          <th>Asesor</th>
+                          <th>Curso Afin</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for user in qs_users %}
+                        <tr>
+                          <td>{{ user.username }}</td>
+                          <td>{{ user.first_name }}</td>
+                          <td>{{ user.last_name }}</td>
+                          <td>{{ user.bachprofile.dni }}</td>
+                          <td>{{ user.bachprofile.codigo }}</td>
+                          <td>{{ user.email }}</td>
+                          <td>{{ user.bachprofile.active }}</td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for thesis in user.bachprofile.thesis_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ thesis.title }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for thesis in user.bachprofile.thesis_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ thesis.line }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for thesis in user.bachprofile.thesis_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ thesis.start_day }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for thesis in user.bachprofile.thesis_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ thesis.finish_day }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for thesis in user.bachprofile.thesis_set.all %}
+                                {% for adviser in thesis.adviser.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ adviser }}</td>
+                                </tr>
+                                {% endfor %}
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for thesis in user.bachprofile.thesis_set.all %}
+                                {% for course in thesis.course.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ course }}</td>
+                                </tr>
+                                {% endfor %}
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <!-- Card -->
+            </div>
+            <!--Grid column-->
+
+        </div>
+        <!--Grid row-->      
+    </div>
+  </div>
+</div>
+{% endblock content %}
+{% block js %}
+<script>
+  $(document).ready( function () {
+    $('#bachBach').DataTable({
+      "scrollX": true,
+      dom: 'B<"clear">lfrtip',
+      buttons: [
+          'csv', 'excel',
+          {
+            extend: 'pdfHtml5',
+            orientation: 'landscape',
+            pageSize: 'LEGAL',
+            filename: 'bachilleres_{{ qs_users.count }}'
+          }
+      ]
+    });
+  } );
+</script>
+{% endblock %}

@@ -206,7 +206,7 @@ def masonry_compression_pdf(request, id):
         "avg_fc_MPA": avg_fc_MPA,
         "norma_NTP_fb": "NTP 251.014",
 
-        "title": "MÉTODO DE ENSAYO PARA LA DETERMINACIÓNa DE LA RESISTENCIA EN COMPRESIÓN DE PRISMAS DE ALBAÑILERIA",
+        "title": "MÉTODO DE ENSAYO PARA LA DETERMINACIÓN DE LA RESISTENCIA EN COMPRESIÓN DE PRISMAS DE ALBAÑILERIA",
         "coordinator": coordinator,
         "tecnic": tecnic,
     }

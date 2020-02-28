@@ -1,0 +1,326 @@
+{% extends "base_normal.html" %}
+
+{% block content %}
+<!-- Jumbotron -->
+
+    <div class="grid my-5">
+        <!-- <div class="grid-sizer col-md-12"></div> -->
+        <div class="grid-item col-md-12 mb-4">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title font-weight-bold">Bienvenido</h3>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">Acerca de este sitio</h5>
+              <p class="card-text text-justify">
+                Este sitio web se centra en la sistematización del Laboratorio de la Escuela Profesional 
+                de Ingeniería Civil (EPIC). La aplicación web brinda resultados de los diferentes ensayos 
+                pertenecientes a los laboratorios de Tecnología del Concreto, Materiales de Construcción y Suelos; que
+                son ejecutados por los Estudiantes, el Tesista o el personal Técnico capacitado para el 
+                Cliente que así lo solicite.   
+              </p>
+                <a href="#!" class="card-link mr-3">Repositorio de Tesis</a>
+                <a href="#!" class="card-link ml-0">UCSM</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 mb-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Sectores</h5>
+              <p class="card-text">
+                Los usuarios o actores con responsabilidad dentro del sistema son: 
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="card-title font-weight-bold">Sector Estudiantil</h5>
+                  <h6 class="card-subtitle mb-2 text-muted">Estudiante o Responsable de Grupo</h6>
+                </div>
+                <div class="card-body">
+                  <p class="card-text text-justify">
+                    El estudiante, responsable del grupo se podrá registrar sólo si tiene código de matricula vigente y
+                    tiene acesoria constante del docente del Curso de Practicas previamente regisrado. 
+                    <br>
+                    Para el ensayo ejecutado, el responsable de grupo deberá registrar dentro del PERFIL DE GRUPO, 
+                    los datos del grupo de practicas, los datos de sus compañeros de grupo 
+                    <i data-toggle="tooltip" title="Crear Alumno del Grupo" class="text-default fas fa-user-tie fa-1x" aria-hidden="true"></i>
+                    y los datos requeridos para cada ensayo con las caracteristicas de 
+                    las muestras que el sistema lo requiera, para obtener los resultados esperados.   
+                  </p>
+                  <a href="#!" class="badge badge-primary text-wrap" style="width: 8rem;">
+                    Regístrece como Responsable de Grupo Aqui
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                  <div class="card-header">
+                    <h5 class="card-title font-weight-bold">Sector Tesista</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Tesista o Bachiller</h6>
+                  </div>      
+                  <div class="card-body">
+                    <p class="card-text text-justify">
+                      El tesista se podrá registrar solamente por autorización de la Oficina de Coordinación del laboratorio, y presentando 
+                      la documentación requerida dentro del PERFIL DEL TESISTA,
+                      <i data-toggle="tooltip" title="Crear Tesis" class="text-primary fas fa-plus fa-1x" aria-hidden="true"></i>
+                      para hacer uso de las instalaciones, equipos y herramientas del laboratorio,
+                      tendra asesoría del docente, asignado como asesor del proyecto, como también asesoría técnica de presentarse
+                      algún inconveniente con el sistema. 
+                      <br>
+                      Será el responsable único, de todos los ensayos ejecutados y registrados que solicite para el desarrollo del
+                      proyecto de tesis y que se tenga a disposición del laboratorio. Para cada ensayo ejecutado, deberá registrar, las 
+                      características de las muestras y los datos que el sistema lo requiera, para obtener los resultados esperados, 
+                      la certificación del laboratorio y una base de datos propia de la tesis.   
+                    </p>
+                  </div>
+                </div>
+            </div>  
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                  <div class="card-header">
+                    <h5 class="card-title font-weight-bold">Sector Servicios a Terceros</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Clientes o Terceros</h6>
+                  </div>      
+                  <div class="card-body">
+                    <p class="card-text text-justify">
+                      El cliente se podrá registrar solamente por autorización de la Oficina de Coordinación del laboratorio, y presentando 
+                      la documentación requerida
+                      <i data-toggle="tooltip" title="Crear Persona de Referencia" class="text-dark fas fa-user-tie fa-1x" aria-hidden="true"></i>
+                      <i data-toggle="tooltip" title="Crear Construction de Referencia" class="text-primary fas fa-plus fa-1x" aria-hidden="true"></i>
+                      dentro del PERFIL DEL CLIENTE para la ejecución del ensayo solicitado, para que luego el personal técnico capacitado 
+                      responsable haga uso de las instalaciones, equipos y herramientas del laboratorio. El cliente tendrá derecho a 
+                      la asesoría técnica correspondiente al ensayo solicitado, acceso y seguimiento a las muestras ensayadas y a 
+                      reclamos y/o inconveniente que se presenten como responsabilidad del laboratorio, previo pago de derechos. 
+                      <br>
+                      El personal técnico será el responsable único, de todos los ensayos ejecutados y registrados que solicite el
+                      cliente al laboratorio, según la NTP vigente. Para cada ensayo ejecutado se deberá registrar, las 
+                      características de las muestras y los datos que el sistema lo requiera, para obtener los resultados esperados, 
+                      la certificación del laboratorio y una base de datos propia del cliente.   
+                    </p>
+                  </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 mb-4">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Laboratorios</h5>
+                <p class="card-text">
+                  Los ensayos que se pueden solicitar son:
+                </p>
+              </div>
+            </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 mb-4">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="font-weight-bold mb-3">Tecnología del Concreto</h5>
+                  <p class="mb-0 text-justify">
+                    Este laboratorio te brinda herramientas y experiencias necesarias para reconocer y proporcionar los fundamentos del concreto como material 
+                    de construcción; comprendiendo las características de su comportamiento en estado fresco y endurecido, tanto en el 
+                    aspecto resistente como de durabilidad.
+                  </p>
+                </div>
+                <div class="list-group" id="list-tab" role="tablist">
+                  <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#!"
+                    role="tab" aria-controls="home">MÉTODO DE ENSAYO NORMALIZADO PARA LA DETERMINACIÓN DE LA RESISTENCIA A LA COMPRESIÓN DE TESTIGOS EN MUESTRAS CILINDRICAS.</a>
+                  <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#!"
+                    role="tab" aria-controls="messages">MÉTODO DE ENSAYO NORMALIZADO PARA LA DETERMINACIÓN DE LA RESISTENCIA A LA COMPRESIÓN DE TESTIGOS EN MUESTRAS PRISMÁTICAS.</a>
+                  <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#!"
+                    role="tab" aria-controls="settings">MÉTODO DE ENSAYO NORMALIZADO PARA LA DETERMINACIÓN DE LA RESISTENCIA A LA COMPRESIÓN DE TESTIGOS DIAMANTINOS EN MUESTRAS CILINDRICAS.</a>
+                </div>
+                <div class="card-body">
+                  <a href="{% url 'labs:concrete' %}" class="card-link mr-3">Ingrese al Laboratorio</a>
+                </div>
+              </div>
+          </div>
+          <div class="col-md-4 mb-4">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="font-weight-bold mb-3">Materiales de Construcción</h5>
+                  <p class="mb-0 text-justify">
+                    Este laboratorio te brinda herramientas y experiencias necesarias para asegurar y controlar la calidad de los distintos
+                    materiales empleados en el sector de la construcción sus caracteristicas, su comportamiento, en aspectos de
+                    resistencia y durabilidad. 
+                  </p>
+                </div>
+                <div class="list-group" id="list-tab" role="tablist">
+                  <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#!"
+                    role="tab" aria-controls="home">DETERMINAR LAS PROPIEDADES EN UNIDADES DE ALBAÑILERIA CALCINADA PARA LA CONSTRUCCIÓN</a>
+                  <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#!"
+                    role="tab" aria-controls="messages">MÉTODO DE ENSAYO PARA LA DETERMINACIÓNa DE LA RESISTENCIA EN COMPRESIÓN DE PRISMAS DE ALBAÑILERIA</a>
+                  <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#!"
+                    role="tab" aria-controls="settings">DETERMINAR LA COMPRESIÓN SIMPLE, PERPENDICULAR O PARALELA EN MADERA</a>
+                </div>
+                <div class="card-body">
+                  <a href="{% url 'labs:material' %}" class="card-link mr-3">Ingrese al Laboratorio</a>
+                </div>
+              </div>
+          </div>
+          <div class="col-md-4 mb-4">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="font-weight-bold mb-3">Suelos</h5>
+                  <p class="mb-0 text-justify">
+                      Este laboratorio orienta y fortalece el desarrollo del conocimiento en el campo de la geotecnia: mecánica de suelos, 
+                      ingeniería de cimentaciones y pavimentos, y también en el análisis y evaluación de los materiales para pavimentación 
+                      y agregados para la construcción.
+                  </p>
+                </div>
+                <div class="list-group" id="list-tab" role="tablist">
+                  <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#!"
+                    role="tab" aria-controls="home">METODO DE ENSAYO ESTANDAR PARA EL VALOR EQUIVALENTE DE ARENA DE SUELOS Y AGREGADO FINO - MTC E114</a>
+                  <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#!"
+                    role="tab" aria-controls="messages">DETERMINACIÓN DE MATERIAL MAS FINO QUE EL TAMIZ 75μm (Nro. 200) EN SUELOS MTC E137</a>
+                  <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#!"
+                    role="tab" aria-controls="settings">CLASIFICACIÓN DE SUELOS PARA FINES DE INGENIERÍA Y CONSTRUCCIÓN DE CARRETERAS</a>
+                  <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#!"
+                    role="tab" aria-controls="settings">METODO DE ENSAYO PARA DETERMINAR EL LIMITE LÍQUIDO, LIMITE PLÁSTICO E INDICE DE PLASTICIDAD DE SUELOS MTC E110 - MTC E111</a>
+                  <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#!"
+                    role="tab" aria-controls="settings">DETERMINACIÓN DEL CONTENIDO DE HUMEDAD DE UN SUELO MTC E108</a>
+                  <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#!"
+                    role="tab" aria-controls="settings">COMPACTACION DE SUELOS EN LABORATORIO UTILIZANDO UNA ENERGIA MODIFICADA (2 700 kN-m/m³ (56 000 pie-lbf/pie³)) PROCTOR MODIFICADO MTC E115</a>
+                  <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#!"
+                    role="tab" aria-controls="settings">ENSAYO PARA DETERMINAR LA DENSIDAD Y PESO UNITARIO DEL SUELO IN SITU MEDIANTE EL MÉTODO DEL CONO DE ARENA - MTC E117</a>
+                  <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#!"
+                    role="tab" aria-controls="settings">DETERMINACIÓN DE LA GRAVEDAD ESPECIFICA DE SOLIDOS MEDIANTE EL PICOMETRO DE AGUA DE UN SUELO MTC E108</a>
+                </div>
+                <div class="card-body">
+                  <a href="{% url 'labs:soil' %}" class="card-link mr-3">Ingrese al Laboratorio</a>
+                </div>
+              </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3 mb-4">
+            <div class="card">
+              <div class="card-header">
+                Featured
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">Registro de Docentes y Personal Administrativo</h5>
+                <p class="card-text text-justify">
+                  Se podrán registrar los docentes y el personal administrativo, bajo autorización de la Oficina de Coordinación, teniendo
+                  permisos especiales para el desarrollo de sus funciones.
+                </p>
+                <a href="#!" class="badge badge-primary text-wrap" style="width: 8rem;">
+                  Ver plana Docente
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 mb-4">
+            <div class="card">
+              <div class="card-header">
+                Featured
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">Estadisticas Generales del Laboratorio de la EPIC</h5>
+                <p class="card-text text-justify">
+                  El sistema brindara tablas facilmente exportables de los ensayadas realizados para la Oficina de Coordinación y el
+                  personal autorizado, junto con estadisticas de las herramientas y equipos que se utilizaron.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 mb-4">
+            <div class="card">
+              <div class="card-header">
+                Featured
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">Flujo de Acciones</h5>
+                <p class="card-text text-justify">
+                  La plataforma tiene una interfaz intuitiva.
+                </p>
+                <ul class="list-group list-group-flush card-text text-justify">
+                  <li class="list-group-item">
+                    Crear el ensayo base.
+                    <a class="text-primary">
+                      <i class="fas fa-plus fa-2x" aria-hidden="true"></i>
+                    </a>
+                  </li>
+                  <li class="list-group-item">
+                    Ver los detalles del ensayo.
+                    <a class="btn btn-primary btn-sm px-2 mx-1">
+                      <i class="far fa-eye"></i>
+                    </a>
+                  </li>
+                  <li class="list-group-item">
+                      Editar o crear ensayos relacionados al ensayo base.
+                    <a class="btn btn-dark btn-sm px-2 mx-1">
+                      <i class="fas fa-plus"></i>
+                    </a>
+                  </li>
+                  <li class="list-group-item">
+                      Editar el ensayo base.
+                    <a class="btn btn-success btn-sm px-2 mx-1">
+                      <i class="fas fa-edit"></i>
+                    </a>
+                  </li>
+                  <li class="list-group-item">
+                      Eliminar el ensayo base.
+                    <a class="btn btn-danger btn-sm px-2 mx-1">
+                      <i class="fas fa-trash"></i>
+                    </a>
+                  </li>
+                  <li class="list-group-item">
+                      Generar certificados para impresión.  
+                    <a class="btn btn-orange btn-sm px-2 mx-1">
+                      <i class="far fa-file-pdf"></i>
+                    </a>
+                    <span class="text-danger">Sólo para personal administrativo</span>
+                  </li>
+                </ul>
+                <a href="#!" class="badge badge-primary text-wrap mt-3" style="width: 8rem;">
+                  Manual de Uso
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 mb-4">
+            <div class="card">
+              <div class="card-header">
+                Featured
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">Repositorio del Proyecto</h5>
+                <p class="card-text text-justify">
+                  Todas las personas que requieran información del código fuente o data para proyectos de investigación, deberán ser 
+                  solicitados a la Oficina de Coordinación para conceder autorización y terminos de uso. 
+                  <span class="text-info">Formatos disponibles CSV y Exel</span>
+                </p>
+                <a href="#!" class="badge badge-primary text-wrap" style="width: 8rem;">
+                  Solicitar Acceso al Repositorio
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>  
+        <div class="grid-item col-md-12 mb-4">
+          <div class="card">
+            <div class="card-header">
+              Quote
+            </div>
+            <div class="card-body">
+              <blockquote class="blockquote mb-0">
+                <p>You can never understand everything. But, you should push yourself to understand the system.</p>
+                <footer class="blockquote-footer">Ryan Dahl - <cite title="Source Title">Creator of Node JS</cite></footer>
+              </blockquote>
+            </div>
+          </div>
+        </div>
+  
+        
+    </div>
+
+<!-- Jumbotron -->
+{% endblock %}
+

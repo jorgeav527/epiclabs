@@ -10,8 +10,5 @@ class Equip(models.Model):
     maintenance_done        = models.BooleanField(default=False)
     use         = models.IntegerField(default=0)
     
-    #  def save(self, *args, **kwargs):
-    #     super(GroutDiceBreak, self).save(*args, **kwargs)
-
     def __str__(self):
         return f"{self.name} is used {self.use} times"

@@ -1,0 +1,427 @@
+{% extends "base_normal.html" %}
+
+{% block content %}
+<div class="my-5">
+  <div class="row">
+    <div class="col-md-3 col-lg-3">
+      {% include "labs/sectors/general/sidenav_general.html" %}
+    </div>
+    <div class="col-md-9 col-lg-9 mt-4">
+        <!--Grid row-->
+        <div class="row">
+            <!--Grid column-->
+            <div class="col-md-12 mb-4">  
+                <!-- Card -->
+                <div class="card">
+                  <div class="p-3">
+                    <h3 class="h3-responsive card-header mb-2">{{ title }}</h3>
+                    <table id="generalGranulometricGlobal" class="display compact table table-bordered table-striped text-center">
+                      <thead class="primary-color-dark white-text">
+                        <tr>
+                            <th colspan="19">Ensayo Base</th>
+                            <th colspan="23">Tamices</th>
+                        </tr>
+                        <tr>
+                          <th>Usuario</th>
+                          <th>Actor</th>
+                          <th>Nombre</th>
+                          <th>Código QR</th>
+                          <th>Calicata</th>
+                          <th>Estrato</th>
+                          <th>Humedad Higroscópica</th>
+                          <th>Organico</th>
+                          <th>Límite Líquido</th>
+                          <th>Límite Plástico</th>
+                          <th>Indice Plástico</th>
+                          <th>Tamaño Max.</th>
+                          <th>Fecha de Muestreo</th>
+                          <th>Fecha del Ensayo</th>
+                          <th>Creado</th>
+                          <th>Actualizado</th>
+                          <th>Curso</th>
+                          <th>Persona de Referencia</th>
+                          <th>Proyecto</th>
+                          <th nowrap="nowrap">tamiz 4"</th>
+                          <th nowrap="nowrap">tamiz 3"</th>
+                          <th nowrap="nowrap">tamiz 2 1/2"</th>
+                          <th nowrap="nowrap">tamiz 2"</th>
+                          <th nowrap="nowrap">tamiz 1 1/2"</th>
+                          <th nowrap="nowrap">tamiz 1"</th>
+                          <th nowrap="nowrap">tamiz 3/4"</th>
+                          <th nowrap="nowrap">tamiz 1/2"</th>
+                          <th nowrap="nowrap">tamiz 3/8"</th>
+                          <th nowrap="nowrap">tamiz Nº4</th>
+                          <th nowrap="nowrap">tamiz Nº8</th>
+                          <th nowrap="nowrap">tamiz Nº10</th>
+                          <th nowrap="nowrap">tamiz Nº16</th>
+                          <th nowrap="nowrap">tamiz Nº20</th>
+                          <th nowrap="nowrap">tamiz Nº30</th>
+                          <th nowrap="nowrap">tamiz Nº40</th>
+                          <th nowrap="nowrap">tamiz Nº50</th>
+                          <th nowrap="nowrap">tamiz Nº60</th>
+                          <th nowrap="nowrap">tamiz Nº80</th>
+                          <th nowrap="nowrap">tamiz Nº100</th>
+                          <th nowrap="nowrap">tamiz Nº140</th>
+                          <th nowrap="nowrap">tamiz Nº200</th>
+                          <th nowrap="nowrap">tamiz fondo</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for test in qs %}
+                        <tr>
+                          <td nowrap="nowrap">{{ test.user }}</td>
+                          {% if test.user.is_group %}
+                          <td nowrap="nowrap">Estudiante</td>
+                          {% elif test.user.is_bach %}
+                          <td nowrap="nowrap">Tesista</td>
+                          {% elif test.user.is_client %}
+                          <td nowrap="nowrap">Cliente</td>
+                          {% endif %}
+                          <td nowrap="nowrap">{{ test.name }}</td>
+                          <td nowrap="nowrap">{{ test.code }}</td>
+                          <td nowrap="nowrap">{{ test.quarry }}</td>
+                          <td nowrap="nowrap">{{ test.layer }}</td>
+                          <td nowrap="nowrap">{{ test.hygr_humid }}</td>
+                          <td nowrap="nowrap">{{ test.organic }}</td>
+                          <td nowrap="nowrap">{{ test.liquid_limit }}</td>
+                          <td nowrap="nowrap">{{ test.plastic_limit }}</td>
+                          <td nowrap="nowrap">{{ test.plastic_index }}</td>
+                          <td nowrap="nowrap">{{ test.max_size }}</td>
+                          <td nowrap="nowrap">{{ test.sampling_date }}</td>
+                          <td nowrap="nowrap">{{ test.done_date }}</td>
+                          <td nowrap="nowrap">{{ test.created }}</td>
+                          <td nowrap="nowrap">{{ test.updated }}</td>
+                          <td nowrap="nowrap">{{ test.course }}</td>
+                          <td nowrap="nowrap">{{ test.reference_person }}</td>
+                          <td nowrap="nowrap">{{ test.construction }}</td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.globalmesh_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.tamiz_4 }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.globalmesh_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.tamiz_3 }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.globalmesh_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.tamiz_2_1o2 }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.globalmesh_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.tamiz_2 }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.globalmesh_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.tamiz_1_1o2 }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.globalmesh_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.tamiz_1 }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.globalmesh_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.tamiz_3o4 }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.globalmesh_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.tamiz_1o2 }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.globalmesh_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.tamiz_3o8 }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.globalmesh_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.tamiz_N_4 }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.globalmesh_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.tamiz_N_8 }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.globalmesh_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.tamiz_N_10 }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.globalmesh_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.tamiz_N_16 }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.globalmesh_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.tamiz_N_20 }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.globalmesh_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.tamiz_N_30 }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.globalmesh_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.tamiz_N_40 }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.globalmesh_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.tamiz_N_50 }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.globalmesh_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.tamiz_N_60 }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.globalmesh_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.tamiz_N_80 }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.globalmesh_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.tamiz_N_100 }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.globalmesh_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.tamiz_N_140 }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.globalmesh_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.tamiz_N_200 }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.globalmesh_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.tamiz_fondo }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <!-- Card -->
+            </div>
+            <!--Grid column-->
+
+            <!--Grid column-->
+            <div class="col-md-6 mb-4">  
+                <!-- Card -->
+                <div class="card">
+                  <div class="p-3">
+                    <h3 class="h3-responsive card-header mb-2">Estadisticas</h3>
+                    <table class="table--flip display table table-sm table-bordered table-responsive table-striped text-center">
+                      <thead class="primary-color-dark white-text">
+                        <tr>
+                          <th>Total de Ensayos</th>
+                          <th>Total de Ensayos de Clientes</th>
+                          <th>Total de Ensayos de Tesistas</th>
+                          <th>Total de Ensayos de Estudiantes</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>{{ qs.count }}</td>
+                          <td>{{ tests_clients }}</td>
+                          <td>{{ tests_bachs }}</td>
+                          <td>{{ tests_groups }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <!-- Card -->
+            </div>
+            <!--Grid column-->
+
+            <!--Grid column-->
+            <div class="col-md-6 mb-4">  
+                <!-- Card -->
+                <div class="card">
+                  <div class="overflow-auto p-3">
+                    {{ div | safe }}
+                    {{ script | safe }}  
+                  </div>
+                </div>
+                <!-- Card -->
+            </div>
+            <!--Grid column-->
+
+        </div>
+        <!--Grid row-->      
+    </div>
+  </div>
+</div>
+{% endblock content %}
+{% block js %}
+<script>
+  $(document).ready( function () {
+    $('#generalGranulometricGlobal').DataTable({
+      "scrollX": true,
+      dom: 'B<"clear">lfrtip',
+      buttons: [
+          'csv', 'excel',
+          {
+            extend: 'pdfHtml5',
+            orientation: 'landscape',
+            pageSize: 'LEGAL',
+            filename: 'ensayos_{{ qs.count }}'
+          }
+      ]
+    });
+  } );
+</script>
+{% endblock %}

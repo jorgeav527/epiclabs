@@ -1,0 +1,490 @@
+{% extends "base_normal.html" %}
+
+{% block content %}
+<div class="my-5">
+  <div class="row">
+    <div class="col-md-3 col-lg-3">
+      {% include "labs/sectors/general/sidenav_general.html" %}
+    </div>
+    <div class="col-md-9 col-lg-9 mt-4">
+        <!--Grid row-->
+        <div class="row">
+            <!--Grid column-->
+            <div class="col-md-12 mb-4">  
+                <!-- Card -->
+                <div class="card">
+                  <div class="p-3">
+                    <h3 class="h3-responsive card-header mb-2">{{ title }}</h3>
+                    <table id="generalSpecificGravity" class="display compact table table-bordered table-striped text-center">
+                      <thead class="primary-color-dark white-text">
+                        <tr>
+                            <th colspan="13">Ensayo Base</th>
+                            <th colspan="13">Fracción Pasante de Tamiz Nº 4</th>
+                            <th colspan="16">Fracción Retenido en el Tamiz Nº 4</th>
+                        </tr>
+                        <tr>
+                          <th>Usuario</th>
+                          <th>Actor</th>
+                          <th>Nombre</th>
+                          <th>Código QR</th>
+                          <th>Calicata</th>
+                          <th>Estrato</th>
+                          <th>Fecha de Muestreo</th>
+                          <th>Fecha del Ensayo</th>
+                          <th>Creado</th>
+                          <th>Actualizado</th>
+                          <th>Curso</th>
+                          <th>Persona de Referencia</th>
+                          <th>Proyecto</th>
+
+                          <th>Temperatura de ensayo (°c)</th>
+                          <th>Densidad del agua a la temperatura de ensayo (g/mL)</th>
+                          <th>Volumen promedio calibrado del picnómetro seco (mL)</th>
+                          <th>Masa promedio calibrada del picnómetro seco (g)</th>
+                          <th>Masa del picnómetro y agua a la temperatura de ensayo (g)</th>
+                          <th>Masa de la muestra de sólidos del suelo a la temperatura de ensayo (g)</th>
+                          <th>Masa del picnómetro, agua y sólidos a la temperatura de ensayo (g)</th>
+                          <th>Masa del recipiente para secado (g)</th>
+                          <th>Masa del recipiente para secado + suelo seco (g)</th>
+                          <th>Masa de los solidos secados al horno </th>
+                          <th>Gravedad específica de los sólidos de suelo a temperatura de ensayo </th>
+                          <th>Coeficiente de temperatura del agua a 20°c </th>
+                          <th>Gravedad específica de los sólidos de suelo a 20°c </th>
+
+                          <th>Temperatura de ensayo entre 23±1.7 (°c)</th>
+                          <th>Peso de la muestra saturada con superficie seca en el aire (g/mL)</th>
+                          <th>Peso de la canastilla dentro del agua  (mL)</th>
+                          <th>Peso de la muestra saturada superficialmente seca + peso canastilla en agua (g)</th>
+                          <th>Peso del recipiente para secado (g)</th>
+                          <th>Peso del recipiente + muestra seca al horno (g)</th>
+                          <th>Peso de la muestra seca al horno (g)</th>
+                          <th>Peso de la muestra saturada dentro del agua (g)</th>
+                          <th>Gravedad específica de masa (g)</th>
+                          <th>Gravedad específica de masa SSS </th>
+                          <th>Gravedad específica aparente </th>
+                          <th>Coeficiente de temperatura del agua a 20°c </th>
+                          <th>Peso específico de masa </th>
+                          <th>Peso específico de masa SSS </th>
+                          <th>Peso específico aparente </th>
+                          <th>Absorción </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for test in qs %}
+                        <tr>
+                          <td nowrap="nowrap">{{ test.user }}</td>
+                          {% if test.user.is_group %}
+                          <td nowrap="nowrap">Estudiante</td>
+                          {% elif test.user.is_bach %}
+                          <td nowrap="nowrap">Tesista</td>
+                          {% elif test.user.is_client %}
+                          <td nowrap="nowrap">Cliente</td>
+                          {% endif %}
+                          <td nowrap="nowrap">{{ test.name }}</td>
+                          <td nowrap="nowrap">{{ test.code }}</td>
+                          <td nowrap="nowrap">{{ test.material }}</td>
+                          <td nowrap="nowrap">{{ test.quarry }}</td>
+                          <td nowrap="nowrap">{{ test.sampling_date }}</td>
+                          <td nowrap="nowrap">{{ test.done_date }}</td>
+                          <td nowrap="nowrap">{{ test.created }}</td>
+                          <td nowrap="nowrap">{{ test.updated }}</td>
+                          <td nowrap="nowrap">{{ test.course }}</td>
+                          <td nowrap="nowrap">{{ test.reference_person }}</td>
+                          <td nowrap="nowrap">{{ test.construction }}</td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.fractionpass_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.temperature }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.fractionpass_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.water_density }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.fractionpass_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.pycnometer_volume }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.fractionpass_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.pycnometer_mass }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.fractionpass_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.mass_pycnometer_water }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.fractionpass_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.sample_mass }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.fractionpass_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.mass_pyc_w_sample }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.fractionpass_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.mass_bowl }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.fractionpass_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.mass_bowl_sample }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.fractionpass_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.mass_dry_sample }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.fractionpass_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.gravity_specific }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.fractionpass_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.coefficient_water }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.fractionpass_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.gravity_specific_real }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.fractionretained_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.temperature_23 }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.fractionretained_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.saturated_sample }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.fractionretained_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.w_basket_water }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.fractionretained_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.w_basket_water_sample }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.fractionretained_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.w_bowl }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.fractionretained_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.w_bowl_sample }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.fractionretained_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.w_sample_dry }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.fractionretained_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.w_sample_sat_water }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.fractionretained_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.specific_grav_mass }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.fractionretained_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.specific_grav_mass_sss }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.fractionretained_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.apparent_spe_gravity }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.fractionretained_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.coefficient_water }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.fractionretained_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.specific_mass_weight }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.fractionretained_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.specific_mass_weight_sss }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.fractionretained_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.specific_mass_weight_app }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.fractionretained_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.absorption }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <!-- Card -->
+            </div>
+            <!--Grid column-->
+
+            <!--Grid column-->
+            <div class="col-md-6 mb-4">  
+                <!-- Card -->
+                <div class="card">
+                  <div class="p-3">
+                    <h3 class="h3-responsive card-header mb-2">Estadisticas</h3>
+                    <table class="table--flip display table table-sm table-bordered table-responsive table-striped text-center">
+                      <thead class="primary-color-dark white-text">
+                        <tr>
+                          <th>Total de Ensayos</th>
+                          <th>Total de Ensayos de Clientes</th>
+                          <th>Total de Ensayos de Tesistas</th>
+                          <th>Total de Ensayos de Estudiantes</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>{{ qs.count }}</td>
+                          <td>{{ tests_clients }}</td>
+                          <td>{{ tests_bachs }}</td>
+                          <td>{{ tests_groups }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <!-- Card -->
+            </div>
+            <!--Grid column-->
+
+            <!--Grid column-->
+            <div class="col-md-6 mb-4">  
+                <!-- Card -->
+                <div class="card">
+                  <div class="overflow-auto p-3">
+                    {{ div | safe }}
+                    {{ script | safe }}  
+                  </div>
+                </div>
+                <!-- Card -->
+            </div>
+            <!--Grid column-->
+
+        </div>
+        <!--Grid row-->      
+    </div>
+  </div>
+</div>
+{% endblock content %}
+{% block js %}
+<script>
+  $(document).ready( function () {
+    $('#generalSpecificGravity').DataTable({
+      "scrollX": true,
+      dom: 'B<"clear">lfrtip',
+      buttons: [
+          'csv', 'excel',
+          {
+            extend: 'pdfHtml5',
+            orientation: 'landscape',
+            pageSize: 'LEGAL',
+            filename: 'ensayos_{{ qs.count }}'
+          }
+      ]
+    });
+  } );
+</script>
+{% endblock %}

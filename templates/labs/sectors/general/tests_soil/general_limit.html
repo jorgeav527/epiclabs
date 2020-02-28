@@ -1,0 +1,320 @@
+{% extends "base_normal.html" %}
+
+{% block content %}
+<div class="my-5">
+  <div class="row">
+    <div class="col-md-3 col-lg-3">
+      {% include "labs/sectors/general/sidenav_general.html" %}
+    </div>
+    <div class="col-md-9 col-lg-9 mt-4">
+        <!--Grid row-->
+        <div class="row">
+            <!--Grid column-->
+            <div class="col-md-12 mb-4">  
+                <!-- Card -->
+                <div class="card">
+                  <div class="p-3">
+                    <h3 class="h3-responsive card-header mb-2">{{ title }}</h3>
+                    <table id="generalLimit" class="display compact table table-bordered table-striped text-center">
+                      <thead class="primary-color-dark white-text">
+                        <tr>
+                            <th colspan="13">Ensayo Base</th>
+                            <th colspan="8">Ensayos Límite Líquido</th>
+                            <th colspan="7">Ensayos Límite Plástico</th>
+                        </tr>
+                        <tr>
+                          <th>Usuario</th>
+                          <th>Actor</th>
+                          <th>Nombre</th>
+                          <th>Código QR</th>
+                          <th>Calicata</th>
+                          <th>Estrato</th>
+                          <th>Fecha de Muestreo</th>
+                          <th>Fecha del Ensayo</th>
+                          <th>Creado</th>
+                          <th>Actualizado</th>
+                          <th>Curso</th>
+                          <th>Persona de Referencia</th>
+                          <th>Proyecto</th>
+                          <th>Recipiente</th>
+                          <th>Nº de Golpes</th>
+                          <th>Peso del Recipiente (gramos)</th>
+                          <th>Peso Humedo (gramos)</th>
+                          <th>Peso Seco (gramos)</th>
+                          <th>Peso Agua (gramos)</th>
+                          <th>Peso Material (gramos)</th>
+                          <th>Humedad %</th>
+                          <th>Recipiente</th>
+                          <th>Peso del Recipiente (gramos)</th>
+                          <th>Peso Humedo (gramos)</th>
+                          <th>Peso Seco (gramos)</th>
+                          <th>Peso Agua (gramos)</th>
+                          <th>Peso Material (gramos)</th>
+                          <th>Humedad %</th>
+                    </tr>
+                      </thead>
+                      <tbody>
+                        {% for test in qs %}
+                        <tr>
+                          <td nowrap="nowrap">{{ test.user }}</td>
+                          {% if test.user.is_group %}
+                          <td nowrap="nowrap">Estudiante</td>
+                          {% elif test.user.is_bach %}
+                          <td nowrap="nowrap">Tesista</td>
+                          {% elif test.user.is_client %}
+                          <td nowrap="nowrap">Cliente</td>
+                          {% endif %}
+                          <td nowrap="nowrap">{{ test.name }}</td>
+                          <td nowrap="nowrap">{{ test.code }}</td>
+                          <td nowrap="nowrap">{{ test.pit }}</td>
+                          <td nowrap="nowrap">{{ test.layer }}</td>
+                          <td nowrap="nowrap">{{ test.extraction_data }}</td>
+                          <td nowrap="nowrap">{{ test.done_data }}</td>
+                          <td nowrap="nowrap">{{ test.created }}</td>
+                          <td nowrap="nowrap">{{ test.updated }}</td>
+                          <td nowrap="nowrap">{{ test.course }}</td>
+                          <td nowrap="nowrap">{{ test.reference_person }}</td>
+                          <td nowrap="nowrap">{{ test.construction }}</td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.liquid_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.bowl }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.liquid_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.hit }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.liquid_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.bowl_weight }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.liquid_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.wet_weight }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.liquid_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.dry_weight }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.liquid_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.water_weight }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.liquid_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.material_weight }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.liquid_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.moisture }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.platic_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.bowl }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.platic_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.bowl_weight }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.platic_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.wet_weight }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.platic_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.dry_weight }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.platic_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.water_weight }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.platic_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.material_weight }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.platic_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.moisture }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <!-- Card -->
+            </div>
+            <!--Grid column-->
+
+            <!--Grid column-->
+            <div class="col-md-6 mb-4">  
+                <!-- Card -->
+                <div class="card">
+                  <div class="p-3">
+                    <h3 class="h3-responsive card-header mb-2">Estadisticas</h3>
+                    <table class="table--flip display table table-sm table-bordered table-responsive table-striped text-center">
+                      <thead class="primary-color-dark white-text">
+                        <tr>
+                          <th>Total de Ensayos</th>
+                          <th>Total de Ensayos de Clientes</th>
+                          <th>Total de Ensayos de Tesistas</th>
+                          <th>Total de Ensayos de Estudiantes</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>{{ qs.count }}</td>
+                          <td>{{ tests_clients }}</td>
+                          <td>{{ tests_bachs }}</td>
+                          <td>{{ tests_groups }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <!-- Card -->
+            </div>
+            <!--Grid column-->
+
+            <!--Grid column-->
+            <div class="col-md-6 mb-4">  
+                <!-- Card -->
+                <div class="card">
+                  <div class="overflow-auto p-3">
+                    {{ div | safe }}
+                    {{ script | safe }}  
+                  </div>
+                </div>
+                <!-- Card -->
+            </div>
+            <!--Grid column-->
+
+        </div>
+        <!--Grid row-->      
+    </div>
+  </div>
+</div>
+{% endblock content %}
+{% block js %}
+<script>
+  $(document).ready( function () {
+    $('#generalLimit').DataTable({
+      "scrollX": true,
+      dom: 'B<"clear">lfrtip',
+      buttons: [
+          'csv', 'excel',
+          {
+            extend: 'pdfHtml5',
+            orientation: 'landscape',
+            pageSize: 'LEGAL',
+            filename: 'ensayos_{{ qs.count }}'
+          }
+      ]
+    });
+  } );
+</script>
+{% endblock %}

@@ -1,0 +1,92 @@
+{% extends "base_normal.html" %}
+
+{% block content %}
+<div class="my-5">
+  <div class="row">
+    <div class="col-md-3 col-lg-3">
+      {% include "labs/sectors/student/sidenav_student.html" %}
+    </div>
+    <div class="col-md-9 col-lg-9 mt-4">
+                <!--Grid row-->
+        <div class="row">
+            
+            <!--Grid column-->
+            <div class="col-md-12 mb-4">  
+                <!-- Card -->
+                <div class="card">
+                  <div class="p-3">
+                    <h3 class="h3-responsive card-header mb-2">{{ title }}</h3>
+                    <table id="clientEquipsMaterial" class="display compact table table-bordered table-responsive table-striped text-center">
+                      <thead class="warning-color-dark white-text">
+                        <tr>
+                          <th>Ensayo/Equipo</th>
+                          {% for name in qs_equips_names %}
+                          <th>{{ name }}</th>
+                          {% endfor %}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td scope="row">Ensayo de Clasificación del Ladrillo</td>
+                          {% for equip in qs_sum_equips_BrickType %}
+                          <td>{{ equip }}</td>
+                          {% endfor %}
+                        </tr>
+                        <tr>
+                          <td scope="row">Ensayo de Compresión Simple en Madera</td>
+                          {% for equip in qs_sum_equips_WoodCompression %}
+                          <td>{{ equip }}</td>
+                          {% endfor %}
+                        </tr>  
+                        <tr>
+                          <td scope="row">Ensayo de Compresión de Pilas de Ladrillos</td>
+                          {% for equip in qs_sum_equips_MasonryCompression %}
+                          <td>{{ equip }}</td>
+                          {% endfor %}
+                        </tr>  
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <!-- Card -->
+            </div>
+            <!--Grid column-->
+
+            <!--Grid column-->
+            <div class="col-md-12 mb-4">  
+              <!-- Card -->
+              <div class="card">
+                <div class="p-3">
+                  {{ div | safe }}
+                  {{ script | safe }}
+                </div>
+              </div>
+              <!-- Card -->            
+            </div>
+            <!--Grid column-->
+
+        </div>
+        <!--Grid row-->      
+    </div>
+  </div>
+</div>
+{% endblock content %}
+{% block js %}
+<script>
+  $(document).ready( function () {
+    $('#clientEquipsMaterial').DataTable({
+      "scrollX": true,
+      dom: 'B<"clear">lfrtip',
+      buttons: [
+          'csv', 'excel',
+          {
+            extend: 'pdfHtml5',
+            orientation: 'landscape',
+            pageSize: 'LEGAL',
+            filename: 'equipos_{{ qs_equips.count }}'
+          }
+      ]
+    });
+  } );
+</script>
+{% endblock %}

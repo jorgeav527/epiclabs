@@ -2,8 +2,38 @@
     <div class="list-group">
       <a href="#" class="list-group-item unique-color white-text" data-toggle="collapse" data-target="#list-one" data-parent="#menu"><i class="fas fa-chart-line pr-2"></i>Información General</a>
       <div class="list-group collapse" id="list-one">
-        <a class="list-group-item" href="{% url 'labs:general_personal' %}"><i class="fas fa-angle-double-right pr-2"></i>Personal</a>
+        <a class="list-group-item" href="{% url 'labs:general_personal' %}"><i class="fas fa-angle-double-right pr-2"></i>Personal del Laboratorio</a>
+        <a class="list-group-item" href="{% url 'labs:general_clients' %}"><i class="fas fa-angle-double-right pr-2"></i>Clientes</a>
+        <a class="list-group-item" href="{% url 'labs:general_ref_per' %}"><i class="fas fa-angle-double-right pr-2"></i>Persona de Referencia</a>
+        <a class="list-group-item" href="{% url 'labs:general_construction' %}"><i class="fas fa-angle-double-right pr-2"></i>Construcciones</a>
+        <a class="list-group-item" href="{% url 'labs:general_bach' %}"><i class="fas fa-angle-double-right pr-2"></i>Tesistas</a>
+        <a class="list-group-item" href="{% url 'labs:general_thesis' %}"><i class="fas fa-angle-double-right pr-2"></i>Tesis</a>
+        <a class="list-group-item" href="{% url 'labs:general_student' %}"><i class="fas fa-angle-double-right pr-2"></i>Estudiantes</a>
         <a class="list-group-item" href="{% url 'labs:general_equips' %}"><i class="fas fa-angle-double-right pr-2"></i>Equipos</a>
+        <a class="list-group-item" href="#!"><i class="fas fa-angle-double-right pr-2"></i>Herramientas</a>
+      </div>
+      <a href="#" class="list-group-item unique-color white-text" data-toggle="collapse" data-target="#list-two" data-parent="#menu"><i class="fas fa-chart-line pr-2"></i>Ensayos del Lab. de Tecnología del Concreto</a>
+      <div class="list-group collapse" id="list-two">
+        <a class="list-group-item" href="{% url 'labs:general_pice_break' %}"><i class="fas fa-angle-double-right pr-2"></i>Compresión de Testigos</a>
+        <a class="list-group-item" href="{% url 'labs:general_prism_break' %}"><i class="fas fa-angle-double-right pr-2"></i>Compresión de Prismas</a>
+        <a class="list-group-item" href="{% url 'labs:general_diamond_pice_break' %}"><i class="fas fa-angle-double-right pr-2"></i>Extracción y Compresión de Testigos Diamantinos</a>
+      </div>
+      <a href="#" class="list-group-item unique-color white-text" data-toggle="collapse" data-target="#list-three" data-parent="#menu"><i class="fas fa-chart-line pr-2"></i>Ensayos del Lab. de Materiales de Construcción</a>
+      <div class="list-group collapse" id="list-three">
+        <a class="list-group-item" href="{% url 'labs:general_brick_type' %}"><i class="fas fa-angle-double-right pr-2"></i>Determinación de Propiedades de Unidades de Ladrillo</a>
+        <a class="list-group-item" href="{% url 'labs:general_masonry_compression' %}"><i class="fas fa-angle-double-right pr-2"></i>Compresión de Pilas de Ladrillo</a>
+        <a class="list-group-item" href="{% url 'labs:general_wood_compression' %}"><i class="fas fa-angle-double-right pr-2"></i>Madera Compresión Simple</a>
+      </div>
+      <a href="#" class="list-group-item unique-color white-text" data-toggle="collapse" data-target="#list-four" data-parent="#menu"><i class="fas fa-chart-line pr-2"></i>Ensayos del Lab. de Suelos</a>
+      <div class="list-group collapse" id="list-four">
+        <a class="list-group-item" href="{% url 'labs:general_equivalent' %}" ><i class="fas fa-angle-double-right pr-2"></i>Determinación del Equivalente de Arena</a>
+        <a class="list-group-item" href="{% url 'labs:general_fine_material' %}" ><i class="fas fa-angle-double-right pr-2"></i>Material Más Fino Tamiz 75μm</a>
+        <a class="list-group-item" href="{% url 'labs:general_granulometric_global' %}" ><i class="fas fa-angle-double-right pr-2"></i>Clasificación de Suelos - Granulometria Gloval</a>
+        <a class="list-group-item" href="{% url 'labs:general_limit' %}" ><i class="fas fa-angle-double-right pr-2"></i>Limite Liquido y Limite Plastico</a>
+        <a class="list-group-item" href="{% url 'labs:general_moisture_content' %}" ><i class="fas fa-angle-double-right pr-2"></i>Contenido de Humedad de Suelos</a>
+        <a class="list-group-item" href="{% url 'labs:general_proctor_m' %}" ><i class="fas fa-angle-double-right pr-2"></i>Proctor Modificado MTC E115</a>
+        <a class="list-group-item" href="{% url 'labs:general_sand_cone' %}" ><i class="fas fa-angle-double-right pr-2"></i>Densidad Húmeda, Metodo Cono de Arena</a>
+        <a class="list-group-item" href="{% url 'labs:general_specific_gravity' %}" ><i class="fas fa-angle-double-right pr-2"></i>Gravedad Especifica de los Suelos (Picometro de Agua)</a>
       </div>
     </div>
 </div>

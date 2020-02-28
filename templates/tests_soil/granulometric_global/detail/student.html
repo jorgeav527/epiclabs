@@ -33,19 +33,9 @@
                     <thead class="primary-color-dark white-text">
                         <tr>
                             <th>Tamizes</th>
-                            <th>Tamiz 1 1/2"</th>
-                            <th>Tamiz 1"</th>
-                            <th>Tamiz 3/4"</th>
-                            <th>Tamiz 1/2"</th>
-                            <th>Tamiz 3/8"</th>
-                            <th>Tamiz Nº 4</th>
-                            <th>Tamiz Nº 10</th>
-                            <th>Tamiz Nº 20</th>
-                            <th>Tamiz Nº 40</th>
-                            <th>Tamiz Nº 60</th>
-                            <th>Tamiz Nº 100</th>
-                            <th>Tamiz Nº 200</th>
-                            <th>Tamiz de Fondo</th>
+                            {% for name in name_mesh %}
+                            <th>{{ name }}</th>
+                            {% endfor %}
                             <th>Suma (gramos)</th>
                         </tr>
                     </thead>
@@ -65,20 +55,10 @@
                 <table class="table--flip table table-sm table-responsive table-bordered text-center">
                     <thead class="primary-color-dark white-text">
                         <tr>
-                            <th>Tamizes</th>
-                            <th>Tamiz 1 1/2"</th>
-                            <th>Tamiz 1"</th>
-                            <th>Tamiz 3/4"</th>
-                            <th>Tamiz 1/2"</th>
-                            <th>Tamiz 3/8"</th>
-                            <th>Tamiz Nº 4</th>
-                            <th>Tamiz Nº 10</th>
-                            <th>Tamiz Nº 20</th>
-                            <th>Tamiz Nº 40</th>
-                            <th>Tamiz Nº 60</th>
-                            <th>Tamiz Nº 100</th>
-                            <th>Tamiz Nº 200</th>
-                            <th>Tamiz de Fondo</th>
+                            <th>Tamices</th>
+                            {% for name in name_mesh %}
+                            <th>{{ name }}</th>
+                            {% endfor %}
                         </tr>
                     </thead>
                     <tbody>

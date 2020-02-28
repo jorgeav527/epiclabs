@@ -1,20 +1,14 @@
 <div id="menu">
     <div class="list-group">
-      <a href="#" class="list-group-item unique-color white-text" data-toggle="collapse" data-target="#list-one" data-parent="#menu"><i class="fas fa-chart-line pr-2"></i>Estadisticas Generales</a>
+      <a href="#" class="list-group-item unique-color white-text" data-toggle="collapse" data-target="#list-one" data-parent="#menu"><i class="fas fa-chart-line pr-2"></i>Estudiantes</a>
       <div class="list-group collapse" id="list-one">
-        <a class="list-group-item" href="{% url 'labs:student_info' %}"><i class="fas fa-angle-double-right pr-2"></i>Información Estudiantes</a>
-        <a class="list-group-item" href="{% url 'labs:student_equips' %}"><i class="fas fa-angle-double-right pr-2"></i>Equipos Utilizados</a>
-        <a class="list-group-item" href="{% url 'labs:student_personal' %}"><i class="fas fa-angle-double-right pr-2"></i>Personal Profesores</a>
-        <a class="list-group-item" href="{% url 'labs:student_laboratories' %}"><i class="fas fa-angle-double-right pr-2"></i>Laboratorios</a>
+        <a class="list-group-item" href="{% url 'labs:student_info' %}"><i class="fas fa-angle-double-right pr-2"></i>Estudiantes Info</a>
       </div>
-      <a href="#" class="list-group-item unique-color white-text" data-toggle="collapse" data-target="#list-two" data-parent="#menu"><i class="fas fa-chart-line pr-2"></i>Ensayos</a>
+      <a href="#" class="list-group-item unique-color white-text" data-toggle="collapse" data-target="#list-two" data-parent="#menu"><i class="fas fa-chart-line pr-2"></i>Equipos del Lab. de:</a>
       <div class="list-group collapse" id="list-two">
-        <a class="list-group-item" href="#" ><i class="fas fa-angle-double-right pr-2"></i>uno</a>
-        <a class="list-group-item" href="#" ><i class="fas fa-angle-double-right pr-2"></i>dos</a>
-        <a class="list-group-item" href="#" ><i class="fas fa-angle-double-right pr-2"></i>tres</a>
-        <a class="list-group-item" href="#" ><i class="fas fa-angle-double-right pr-2"></i>cuatro</a>
-        <a class="list-group-item" href="#" ><i class="fas fa-angle-double-right pr-2"></i>cinco</a>
-        <a class="list-group-item" href="#" ><i class="fas fa-angle-double-right pr-2"></i>sexto</a>
+        <a class="list-group-item" href="{% url 'labs:student_equips_concrete' %}"><i class="fas fa-angle-double-right pr-2"></i>Tecnología del Concreto</a>
+        <a class="list-group-item" href="{% url 'labs:student_equips_material' %}"><i class="fas fa-angle-double-right pr-2"></i>Materiales de Construcción</a>
+        <a class="list-group-item" href="{% url 'labs:student_equips_soil' %}"><i class="fas fa-angle-double-right pr-2"></i>Suelos</a>
       </div>
     </div>
 </div>

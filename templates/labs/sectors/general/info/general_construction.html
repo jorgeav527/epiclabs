@@ -1,0 +1,77 @@
+{% extends "base_normal.html" %}
+
+{% block content %}
+<div class="my-5">
+  <div class="row">
+    <div class="col-md-3 col-lg-3">
+      {% include "labs/sectors/general/sidenav_general.html" %}
+    </div>
+    <div class="col-md-9 col-lg-9 mt-4">
+                <!--Grid row-->
+        <div class="row">
+            
+            <!--Grid column-->
+            <div class="col-md-12 mb-4">  
+                <!-- Card -->
+                <div class="card">
+                  <div class="p-3">
+                    <h3 class="h3-responsive card-header mb-2">{{ title }}</h3>
+                    <table id="clientConstruction" class="display compact table table-bordered table-striped text-center">
+                        <thead class="primary-color-dark white-text">
+                          <tr>
+                            <th>Construcción</th>
+                            <th>Localización</th>
+                            <th>Comienzo de Obra</th>
+                            <th>Fin de la Obra (Aprox.)</th>
+                            <th>Duración de la Obra (Aprox.) (Dias)</th>
+                            <th>Cliente</th>
+                            <th>Creado</th>
+                            <th>Actualizado</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for construction in qs_constructions %}
+                          <tr>
+                            <td nowrap="nowrap">{{ construction.name }}</td>
+                            <td nowrap="nowrap">{{ construction.location }}</td>
+                            <td nowrap="nowrap">{{ construction.start_day }}</td>
+                            <td nowrap="nowrap">{{ construction.finish_day }}</td>
+                            <td nowrap="nowrap">{{ construction.duration }}</td>
+                            <td nowrap="nowrap">{{ construction.client_profile }}</td>
+                            <td nowrap="nowrap">{{ construction.created }}</td>
+                            <td nowrap="nowrap">{{ construction.updated }}</td>
+                          </tr>
+                          {% endfor %}
+                        </tbody>
+                    </table>
+                  </div>
+                </div>
+                <!-- Card -->
+            </div>
+            <!--Grid column-->
+
+        </div>
+        <!--Grid row-->      
+    </div>
+  </div>
+</div>
+{% endblock content %}
+{% block js %}
+<script>
+  $(document).ready( function () {
+    $('#clientConstruction').DataTable({
+      "scrollX": true,
+      dom: 'B<"clear">lfrtip',
+      buttons: [
+          'csv', 'excel',
+          {
+            extend: 'pdfHtml5',
+            orientation: 'landscape',
+            pageSize: 'LEGAL',
+            filename: 'construcciones_{{ qs_users.count }}'
+          }
+      ]
+    });
+  } );
+</script>
+{% endblock %}

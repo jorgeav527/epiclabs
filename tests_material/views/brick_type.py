@@ -323,8 +323,6 @@ def brick_type_detail(request, id):
     else:
         type_high = "No Corresponde"
 
-    print(type_high)
-
     if vd_width <= 2 and vd_width > 0:
         type_width = "Ladrillo Tipo V"
     elif vd_width <= 3 and vd_width > 2:
@@ -504,7 +502,7 @@ def brick_type_detail(request, id):
         "type_density": type_density,
         "norma_NTP_density_voids": "NTP 331.017",
         # Suction
-        "qs_suctidon": qs_suction,
+        "qs_suction": qs_suction,
         "avg_face_wet_weight_correction": avg_face_wet_weight_correction,
         "type_face_wet_weight_correction": type_face_wet_weight_correction,
         "norma_NTP_suction": "NTP 339.613",

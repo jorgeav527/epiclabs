@@ -21,7 +21,7 @@ def reference_person_create(request):
 
     context = {
         "form": form,
-        "title": "Crear Cliente",
+        "title": "Crear Persona de Referencia",
     }
 
     return render(request, "reference_person/reference_person_form.html", context)
@@ -59,7 +59,7 @@ def reference_person_delete(request, id):
 
     context = {
         "obj": obj,
-        "title": "Eliminar la Construction:",
+        "title": "Eliminar la Persona de Referencia",
     }
 
     return render(request, 'reference_person/reference_person_delete_comfirm.html', context)

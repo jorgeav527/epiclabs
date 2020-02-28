@@ -1,0 +1,76 @@
+{% extends "base_normal.html" %}
+
+{% block content %}
+<div class="my-5">
+  <div class="row">
+    <div class="col-md-3 col-lg-3">
+      {% include "labs/sectors/general/sidenav_general.html" %}
+    </div>
+    <div class="col-md-9 col-lg-9 mt-4">
+                <!--Grid row-->
+        <div class="row">
+            <!--Grid column-->
+            <div class="col-md-12 mb-4">  
+                <!-- Card -->
+                <div class="card">
+                  <div class="p-3">
+                    <h3 class="h3-responsive card-header mb-2">{{ title }}</h3>
+                    <table id="generalThesis" class="display compact table table-bordered table-responsive table-striped text-center">
+                      <thead class="primary-color-dark white-text">
+                        <tr>
+                          <th>Titulo</th>
+                          <th>Linea</th>
+                          <th>Fecha de Comienzo</th>
+                          <th>Fecha de Culminación</th>
+                          <th>Duración</th>
+                          <th>Tesista</th>
+                          <th>Creado</th>
+                          <th>Actualizado</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for thesis in qs_thesis %}
+                        <tr>
+                          <td nowrap="nowrap">{{ thesis.title}}</td>
+                          <td nowrap="nowrap">{{ thesis.line }}</td>
+                          <td nowrap="nowrap">{{ thesis.start_day }}</td>
+                          <td nowrap="nowrap">{{ thesis.finish_day}}</td>
+                          <td nowrap="nowrap">{{ thesis.duration }}</td>
+                          <td nowrap="nowrap">{{ thesis.bach_profile }}</td>
+                          <td nowrap="nowrap">{{ thesis.created }}</td>
+                          <td nowrap="nowrap">{{ thesis.updated }}</td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <!-- Card -->
+            </div>
+            <!--Grid column-->
+
+        </div>
+        <!--Grid row-->      
+    </div>
+  </div>
+</div>
+{% endblock content %}
+{% block js %}
+<script>
+  $(document).ready( function () {
+    $('#generalThesis').DataTable({
+      "scrollX": true,
+      dom: 'B<"clear">lfrtip',
+      buttons: [
+          'csv', 'excel',
+          {
+            extend: 'pdfHtml5',
+            orientation: 'landscape',
+            pageSize: 'LEGAL',
+            filename: 'bachilleres_{{ qs_users.count }}'
+          }
+      ]
+    });
+  } );
+</script>
+{% endblock %}

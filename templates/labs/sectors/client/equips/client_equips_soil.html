@@ -1,0 +1,121 @@
+{% extends "base_normal.html" %}
+
+{% block content %}
+<div class="my-5">
+  <div class="row">
+    <div class="col-md-3 col-lg-3">
+      {% include "labs/sectors/client/sidenav_client.html" %}
+    </div>
+    <div class="col-md-9 col-lg-9 mt-4">
+                <!--Grid row-->
+        <div class="row">
+            <!--Grid column-->
+            <div class="col-md-12 mb-4">  
+                <!-- Card -->
+                <div class="card">
+                  <div class="p-3">
+                    <h3 class="h3-responsive card-header mb-2">{{ title }}</h3>
+                    <table id="clientEquipsSoil" class="display compact table table-bordered table-responsive table-striped text-center">
+                      <thead class="warning-color-dark white-text">
+                        <tr>
+                          <th>Ensayo/Maquina</th>
+                          {% for name in qs_equips_names %}
+                          <th>{{ name }}</th>
+                          {% endfor %}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td scope="row">Ensayo de Valor Equivalente de Arena y Fino</td>
+                          {% for equip in qs_sum_equips_Equivalent %}
+                          <td>{{ equip }}</td>
+                          {% endfor %}
+                        </tr>
+                        <tr>
+                          <td scope="row">Ensayo del Material más Fino que el Tamiz 75μm (Nro. 200)</td>
+                          {% for equip in qs_sum_equips_FineMaterial %}
+                          <td>{{ equip }}</td>
+                          {% endfor %}
+                        </tr>  
+                        <tr>
+                          <td scope="row">Ensayo de Granulometria Gloval</td>
+                          {% for equip in qs_sum_equips_GranulometricGlobal %}
+                          <td>{{ equip }}</td>
+                          {% endfor %}
+                        </tr>
+                        <tr>
+                          <td scope="row">Ensayo de Límite Líquido y Límite Plástico</td>
+                          {% for equip in qs_sum_equips_Limit %}
+                          <td>{{ equip }}</td>
+                          {% endfor %}
+                        </tr>
+                        <tr>
+                          <td scope="row">Ensayo de Contenido de Humedad de un Suelo</td>
+                          {% for equip in qs_sum_equips_MoistureContent %}
+                          <td>{{ equip }}</td>
+                          {% endfor %}
+                        </tr>
+                        <tr>
+                          <td scope="row">Ensayo de Proctor Modificado</td>
+                          {% for equip in qs_sum_equips_ProctorM %}
+                          <td>{{ equip }}</td>
+                          {% endfor %}
+                        </tr>
+                        <tr>
+                          <td scope="row">Ensayo del Cono de Arena</td>
+                          {% for equip in qs_sum_equips_SandCone %}
+                          <td>{{ equip }}</td>
+                          {% endfor %}
+                        </tr>
+                        <tr>
+                          <td scope="row">Ensayo de Gravedad Especifica mediante el Picómetro de Agua</td>
+                          {% for equip in qs_sum_equips_SpecificGravity %}
+                          <td>{{ equip }}</td>
+                          {% endfor %}
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <!-- Card -->
+            </div>
+            <!--Grid column-->
+
+            <!--Grid column-->
+            <div class="col-md-12 mb-4">  
+              <!-- Card -->
+              <div class="card">
+                <div class="p-3">
+                  {{ div | safe }}
+                  {{ script | safe }}
+                </div>
+              </div>
+              <!-- Card -->            
+            </div>
+            <!--Grid column-->
+
+          </div>
+        <!--Grid row-->      
+    </div>
+  </div>
+</div>
+{% endblock content %}
+{% block js %}
+<script>
+  $(document).ready( function () {
+    $('#clientEquipsSoil').DataTable({
+      "scrollX": true,
+      dom: 'B<"clear">lfrtip',
+      buttons: [
+          'csv', 'excel',
+          {
+            extend: 'pdfHtml5',
+            orientation: 'landscape',
+            pageSize: 'LEGAL',
+            filename: 'equipos_{{ qs_equips.count }}'
+          }
+      ]
+    });
+  } );
+</script>
+{% endblock %}

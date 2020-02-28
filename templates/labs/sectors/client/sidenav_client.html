@@ -1,22 +1,14 @@
 <div id="menu">
     <div class="list-group">
-      <a href="#" class="list-group-item unique-color white-text" data-toggle="collapse" data-target="#list-one" data-parent="#menu"><i class="fas fa-chart-line pr-2"></i>Información General</a>
+      <a href="#" class="list-group-item unique-color white-text" data-toggle="collapse" data-target="#list-one" data-parent="#menu"><i class="fas fa-chart-line pr-2"></i>Servicios a Terceros</a>
       <div class="list-group collapse" id="list-one">
-        <a class="list-group-item" href="{% url 'labs:client_info_clients' %}"><i class="fas fa-angle-double-right pr-2"></i>Clientes</a>
-        <a class="list-group-item" href="{% url 'labs:client_info_ref_per' %}"><i class="fas fa-angle-double-right pr-2"></i>Persona de Referencia</a>
-        <a class="list-group-item" href="{% url 'labs:client_info_construction' %}"><i class="fas fa-angle-double-right pr-2"></i>Construcciones</a>
+        <a class="list-group-item" href="{% url 'labs:client_info' %}"><i class="fas fa-angle-double-right pr-2"></i>Clientes Info</a>
       </div>
-      <a href="#" class="list-group-item unique-color white-text" data-toggle="collapse" data-target="#list-two" data-parent="#menu"><i class="fas fa-chart-line pr-2"></i>Equipos del Lab.</a>
+      <a href="#" class="list-group-item unique-color white-text" data-toggle="collapse" data-target="#list-two" data-parent="#menu"><i class="fas fa-chart-line pr-2"></i>Equipos del Lab. de:</a>
       <div class="list-group collapse" id="list-two">
-        <a class="list-group-item" href="{% url 'labs:client_equips_concrete' %}"><i class="fas fa-angle-double-right pr-2"></i>Concreto</a>
-        <a class="list-group-item" href="{% url 'labs:client_equips_material' %}"><i class="fas fa-angle-double-right pr-2"></i>Materiales</a>
+        <a class="list-group-item" href="{% url 'labs:client_equips_concrete' %}"><i class="fas fa-angle-double-right pr-2"></i>Tecnología del Concreto</a>
+        <a class="list-group-item" href="{% url 'labs:client_equips_material' %}"><i class="fas fa-angle-double-right pr-2"></i>Materiales de Construcción</a>
         <a class="list-group-item" href="{% url 'labs:client_equips_soil' %}"><i class="fas fa-angle-double-right pr-2"></i>Suelos</a>
-      </div>
-      <a href="#" class="list-group-item unique-color white-text" data-toggle="collapse" data-target="#list-three" data-parent="#menu"><i class="fas fa-chart-line pr-2"></i>Ensayos del Lab.</a>
-      <div class="list-group collapse" id="list-three">
-        <a class="list-group-item" href="{% url 'labs:client_tests_concrete' %}"><i class="fas fa-angle-double-right pr-2"></i>Concreto</a>
-        <a class="list-group-item" href="{% url 'labs:client_tests_material' %}"><i class="fas fa-angle-double-right pr-2"></i>Materiales</a>
-        <a class="list-group-item" href="{% url 'labs:client_tests_soil' %}"><i class="fas fa-angle-double-right pr-2"></i>Suelos</a>
       </div>
     </div>
 </div>

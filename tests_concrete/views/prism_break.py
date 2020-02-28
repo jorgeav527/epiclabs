@@ -215,7 +215,7 @@ def prism_break_pdf(request, id):
         "mean_prism_fc_MPa": mean_prism_fc_MPa,
         "std_prism_fc_MPa": std_prism_fc_MPa,
         "fc_MPa_caracteristic": fc_MPa_caracteristic,
-        "title": "CONCRETO. MÉTODO DE ENSAYO NORMALIZADO PARA LA DETERMINACIÓN DE LA RESISTENCIA A LA COMPRESIÓN DE TESTIGOS EN MUESTRAS CILINDRICAS.",
+        "title": "CONCRETO. MÉTODO DE ENSAYO NORMALIZADO PARA LA DETERMINACIÓN DE LA RESISTENCIA A LA COMPRESIÓN DE TESTIGOS EN MUESTRAS PRISMÁTICAS.",
         "norma_ASTM": "NORMA ASTM C-109",
         "noma_NTP": "NTP 334.034",
         "coordinator": coordinator,

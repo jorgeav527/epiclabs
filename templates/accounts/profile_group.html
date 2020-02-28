@@ -9,7 +9,7 @@
           <div class="card-body">
             {% if request.user.is_group %}
             <span class="table-add float-right">
-              <a href="{% url 'students:student_group_save' obj.id %}" data-toggle="tooltip" title="Crear Alumno del Grupo" class="text-default">
+              <a href="{% url 'students:student_create' %}" data-toggle="tooltip" title="Crear Alumno del Grupo" class="text-default">
                 <i class="fas fa-user-tie fa-2x" aria-hidden="true"></i>
               </a>
             </span>
@@ -20,6 +20,8 @@
             <div>
               <div class="media-body">
                 <p class="card-meta mb-2"><i class="fas fa-user-edit mr-2"></i><strong>Usuario: </strong>{{ user.username }}</p>
+                <p class="card-meta mb-2"><i class="fas fa-user-edit mr-2"></i><strong>Nombres: </strong>{{ user.first_name|default_if_none:"Complete el Formulario"|title }}</p>
+                <p class="card-meta mb-2"><i class="fas fa-user-edit mr-2"></i><strong>Apellidos: </strong>{{ user.last_name|default_if_none:"Complete el Formulario"|title }}</p>
                 <p class="card-meta mb-2"><i class="fas fa-user-edit mr-2"></i><strong>Email: </strong>{{ user.email }}</p>
                 <p class="card-meta mb-2"><i class="fas fa-user-edit mr-2"></i><strong>Nombre del Grupo: </strong>{{ user.groupprofile.group_name|default_if_none:"Complete el Formulario"|title }}</p>
               </div>
@@ -53,7 +55,25 @@
                   </div>
               </div>
               <hr class="my-3 rgba-white-light">
-                            
+              <div class="btn-group float-right" role="group" aria-label="Basic example">
+                <a 
+                  href="{% url 'students:student_update' student.id %}" 
+                  data-toggle="tooltip" title="Editar" role="button" class="btn btn-success btn-sm px-2 mx-1"><i class="fas fa-edit"></i>
+                </a>
+                <a 
+                  href="{% url 'students:student_delete' student.id %}"
+                  data-toggle="tooltip" title="Borrar" role="button" class="btn btn-danger btn-sm px-2 mx-1"><i class="fas fa-trash"></i>
+                </a>
+                <a
+                  href="#"
+                  data-toggle="tooltip" title="Detalles" role="button" class="btn btn-primary btn-sm px-2 mx-1"><i class="far fa-eye"></i>
+                </a>
+                <a 
+                  href="#" 
+                  data-toggle="tooltip" title="Descargar PDF" role="button" class="btn btn-orange btn-sm px-2 mx-1"><i class="far fa-file-pdf"></i>
+                </a>
+              </div>
+                          
             </div>
           </div>
           {% endif %}

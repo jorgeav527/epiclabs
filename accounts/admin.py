@@ -2,7 +2,7 @@ from django.contrib import admin
 
 # Register your models here.
 from .models import *
-from students.models import StudentGroup
+from students.models import Student
 
 # Register your models here.
 
@@ -12,8 +12,8 @@ class UserAdmin(admin.ModelAdmin):
 admin.site.register(User, UserAdmin)
 
 
-class StudentGroupAdmin(admin.TabularInline):
-    model = StudentGroup
+class StudentAdmin(admin.TabularInline):
+    model = Student
     fields = ( 
         'full_name', 'codigo', 'email', 'phone', 'group_profile'
     )
@@ -26,7 +26,7 @@ class StudentGroupAdmin(admin.TabularInline):
 
 class GroupProfileAdmin(admin.ModelAdmin):
     list_display = ['user', 'active', 'group_name', 'created', 'updated',]
-    inlines = [StudentGroupAdmin,]
+    inlines = [StudentAdmin,]
 
 admin.site.register(GroupProfile, GroupProfileAdmin)
 

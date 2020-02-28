@@ -1,0 +1,124 @@
+{% extends "base_normal.html" %}
+
+{% block content %}
+<div class="my-5">
+  <div class="row">
+    <div class="col-md-3 col-lg-3">
+      {% include "labs/sectors/student/sidenav_student.html" %}
+    </div>
+    <div class="col-md-9 col-lg-9 mt-4">
+                <!--Grid row-->
+        <div class="row">
+            <!--Grid column-->
+            <div class="col-md-12 mb-4">  
+                <!-- Card -->
+                <div class="card">
+                  <div class="p-3">
+                    <h3 class="h3-responsive card-header mb-2">{{ title }}</h3>
+                    <table id="studentStudents" class="display compact table table-bordered table-striped text-center">
+                      <thead class="primary-color-dark white-text">
+                        <tr>
+                          <th colspan="6">Responsable</th>
+                          <th colspan="4">Estuddiantes</th>
+                        </tr>
+                        <tr>
+                          <th>Usuario</th>
+                          <th>Nombre</th>
+                          <th>Apellido</th>
+                          <th>Grupo</th>
+                          <th>Email</th>
+                          <th>Activo</th>
+                          <th>Nombres y Apellidos</th>
+                          <th>Código</th>
+                          <th>Email</th>
+                          <th>Telefono</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for user in qs_users %}
+                        <tr>
+                          <td>{{ user.username }}</td>
+                          <td>{{ user.first_name }}</td>
+                          <td>{{ user.last_name }}</td>
+                          <td>{{ user.groupprofile.group_name }}</td>
+                          <td>{{ user.email }}</td>
+                          <td>{{ user.groupprofile.active }}</td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for student in user.groupprofile.student_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ student.full_name }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for student in user.groupprofile.student_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ student.codigo }}.</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for student in user.groupprofile.student_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ student.email }}.</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for student in user.groupprofile.student_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ student.phone }}.</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <!-- Card -->
+            </div>
+            <!--Grid column-->
+
+        </div>
+        <!--Grid row-->      
+    </div>
+  </div>
+</div>
+{% endblock content %}
+{% block js %}
+<script>
+  $(document).ready( function () {
+    $('#studentStudents').DataTable({
+      "scrollX": true,
+      dom: 'B<"clear">lfrtip',
+      buttons: [
+          'csv', 'excel',
+          {
+            extend: 'pdfHtml5',
+            orientation: 'landscape',
+            pageSize: 'LEGAL',
+            filename: 'clientes_{{ qs_users.count }}'
+          }
+      ]
+    });
+  } );
+</script>
+{% endblock %}

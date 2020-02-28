@@ -1,0 +1,490 @@
+{% extends "base_normal.html" %}
+
+{% block content %}
+<div class="my-5">
+  <div class="row">
+    <div class="col-md-3 col-lg-3">
+      {% include "labs/sectors/general/sidenav_general.html" %}
+    </div>
+    <div class="col-md-9 col-lg-9 mt-4">
+        <!--Grid row-->
+        <div class="row">
+            <!--Grid column-->
+            <div class="col-md-12 mb-4">  
+                <!-- Card -->
+                <div class="card">
+                  <div class="p-3">
+                    <h3 class="h3-responsive card-header mb-2">{{ title }}</h3>
+                    <table id="generalProctorM" class="display compact table table-bordered table-striped text-center">
+                      <thead class="primary-color-dark white-text">
+                        <tr>
+                            <th colspan="13">Ensayo Base</th>
+                            <th colspan="7">Compactación y Determinación de la Densidad Húmeda</th>
+                            <th colspan="8">Determinación de la Húmedad y Densidad Seca</th>
+                            <th colspan="8">Determinación de la Curva de Saturación</th>
+                            <th colspan="6">Determinación de la Correccion</th>
+                        </tr>
+                        <tr>
+                          <th>Usuario</th>
+                          <th>Actor</th>
+                          <th>Nombre</th>
+                          <th>Código QR</th>
+                          <th>Material</th>
+                          <th>Calicata</th>
+                          <th>Fecha de Muestreo</th>
+                          <th>Fecha del Ensayo</th>
+                          <th>Creado</th>
+                          <th>Actualizado</th>
+                          <th>Curso</th>
+                          <th>Persona de Referencia</th>
+                          <th>Proyecto</th>
+                          <th>Nº De capas</th>
+                          <th>Nº de Golpes</th>
+                          <th>Peso del Suelo + Molde (gramos)</th>
+                          <th>Peso del Molde (gramos)</th>
+                          <th>Peso del Suelo Compactado (gramos)</th>
+                          <th>Volumen del Molde (cm³)</th>
+                          <th>Densidad Humeda (g/cm³)</th>
+                          <th>Recipiente</th>
+                          <th>Peso del recipiente (gramos)</th>
+                          <th>Peso del material húmedo + recipiente (gramos)</th>
+                          <th>Peso de material seco + recipiente (gramos)</th>
+                          <th>Peso de agua (gramos)</th>
+                          <th>Peso de material seco (gramos)</th>
+                          <th>Contenido de humedad (%)</th>
+                          <th>Densidad Seca (g/cm³)</th>
+                          <th>Peso de fracción extradim (%)</th>
+                          <th>Peso de fracción gruesa (%)</th>
+                          <th>Peso de fracción fina (%)</th>
+                          <th>P.Esp. aparente de la fracción extrad. a 20°c</th>
+                          <th>P.Esp. aparente de la fracción gruesa a 20°c</th>
+                          <th>G.Esp. específica de la fracción fina a 20°c</th>
+                          <th>G. Esp. frac. Fina+gruesa a 20°c (Gmfg)</th>
+                          <th>Gravedad específica global a 20°c (Gmg)</th>
+                          <th>Peso del recipiente (g)</th>
+                          <th>Peso de fracción extrad. húmeda + recipiente (g)</th>
+                          <th>Peso de fracción extrad. seca + recipiente (g)</th>
+                          <th>Peso del agua (g)</th>
+                          <th>Peso de fracción extrad. seca (g)</th>
+                          <th>Humedad de la fracción extradim. "wc" (%)</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for test in qs %}
+                        <tr>
+                          <td nowrap="nowrap">{{ test.user }}</td>
+                          {% if test.user.is_group %}
+                          <td nowrap="nowrap">Estudiante</td>
+                          {% elif test.user.is_bach %}
+                          <td nowrap="nowrap">Tesista</td>
+                          {% elif test.user.is_client %}
+                          <td nowrap="nowrap">Cliente</td>
+                          {% endif %}
+                          <td nowrap="nowrap">{{ test.name }}</td>
+                          <td nowrap="nowrap">{{ test.code }}</td>
+                          <td nowrap="nowrap">{{ test.material }}</td>
+                          <td nowrap="nowrap">{{ test.quarry }}</td>
+                          <td nowrap="nowrap">{{ test.sampling_date }}</td>
+                          <td nowrap="nowrap">{{ test.done_date }}</td>
+                          <td nowrap="nowrap">{{ test.created }}</td>
+                          <td nowrap="nowrap">{{ test.updated }}</td>
+                          <td nowrap="nowrap">{{ test.course }}</td>
+                          <td nowrap="nowrap">{{ test.reference_person }}</td>
+                          <td nowrap="nowrap">{{ test.construction }}</td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.densitywetdry_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.layers }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.densitywetdry_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.hits }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.densitywetdry_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.bowl_weight }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.densitywetdry_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.material_weight_P }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.densitywetdry_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.compacted_weight_P }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.densitywetdry_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.bowl_volume_P }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.densitywetdry_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.wet_density }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.densitywetdry_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.bowl }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.densitywetdry_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.bowl_weight }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.densitywetdry_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.wet_weight }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.densitywetdry_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.dry_weight }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.densitywetdry_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.water_weight }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.densitywetdry_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.material_weight }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.densitywetdry_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.moisture }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.densitywetdry_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.dry_density }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.saturation_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.frac_extrad_weight }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.saturation_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.frac_gruesa_weight }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.saturation_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.frac_fina_weight }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.saturation_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.p_sp_frac_extrad }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.saturation_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.p_sp_frac_gruesa }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.saturation_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.g_sp_frac_fina }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.saturation_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.g_frac_fina_gruesa }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.saturation_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.g_sp_global }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.correction_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.bowl_weight }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.correction_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.wet_weight }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.correction_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.dry_weight }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.correction_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.water_weight }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.correction_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.material_weight }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                          <td>
+                            <table style="width:100%">
+                              <tbody>
+                                {% for test_ref in test.correction_set.all %}
+                                <tr>
+                                  <td nowrap="nowrap">{{ test_ref.moisture }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <!-- Card -->
+            </div>
+            <!--Grid column-->
+
+            <!--Grid column-->
+            <div class="col-md-6 mb-4">  
+                <!-- Card -->
+                <div class="card">
+                  <div class="p-3">
+                    <h3 class="h3-responsive card-header mb-2">Estadisticas</h3>
+                    <table class="table--flip display table table-sm table-bordered table-responsive table-striped text-center">
+                      <thead class="primary-color-dark white-text">
+                        <tr>
+                          <th>Total de Ensayos</th>
+                          <th>Total de Ensayos de Clientes</th>
+                          <th>Total de Ensayos de Tesistas</th>
+                          <th>Total de Ensayos de Estudiantes</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>{{ qs.count }}</td>
+                          <td>{{ tests_clients }}</td>
+                          <td>{{ tests_bachs }}</td>
+                          <td>{{ tests_groups }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <!-- Card -->
+            </div>
+            <!--Grid column-->
+
+            <!--Grid column-->
+            <div class="col-md-6 mb-4">  
+                <!-- Card -->
+                <div class="card">
+                  <div class="overflow-auto p-3">
+                    {{ div | safe }}
+                    {{ script | safe }}  
+                  </div>
+                </div>
+                <!-- Card -->
+            </div>
+            <!--Grid column-->
+
+        </div>
+        <!--Grid row-->      
+    </div>
+  </div>
+</div>
+{% endblock content %}
+{% block js %}
+<script>
+  $(document).ready( function () {
+    $('#generalProctorM').DataTable({
+      "scrollX": true,
+      dom: 'B<"clear">lfrtip',
+      buttons: [
+          'csv', 'excel',
+          {
+            extend: 'pdfHtml5',
+            orientation: 'landscape',
+            pageSize: 'LEGAL',
+            filename: 'ensayos_{{ qs.count }}'
+          }
+      ]
+    });
+  } );
+</script>
+{% endblock %}

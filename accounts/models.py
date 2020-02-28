@@ -14,7 +14,6 @@ class User(AbstractUser):
     is_client   = models.BooleanField(default=False)
     is_admin    = models.BooleanField(default=False)
 
-# alphanumeric = RegexValidator(r'^[0-9a-zA-Z]*$', 'Only alphanumeric characters are allowed.')
 
 class GroupProfile(models.Model):
     user        = models.OneToOneField(User, on_delete=models.CASCADE)

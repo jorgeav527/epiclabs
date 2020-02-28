@@ -1,6 +1,7 @@
 from django.shortcuts import render
 import numpy as np
 
+from bokeh.core.properties import value
 from bokeh.plotting import figure
 from bokeh.embed import components
 
@@ -12,97 +13,114 @@ from tests_concrete.models import *
 from tests_material.models import *
 from tests_soil.models import *
 
-# Create your views here.
+# CLIENT SECTOR REUSE FUNCTIONS
+#==============================
+
+def graph_client_sector(equips, tests, colors, data):
+    TOOLS="hover,pan,wheel_zoom,reset,save"
+    plot = figure(x_range=equips, plot_height=500, plot_width=800, title="Numero de Usos vs Equipos", 
+        tools=TOOLS, y_axis_label= 'Numero de Usos', tooltips="@equips: @$name",
+        sizing_mode="fixed",)
+
+    plot.vbar_stack(tests, x='equips', width=0.5, color=colors, source=data, legend=[value(x) for x in tests])
+
+    plot.y_range.start = 0
+    plot.legend.location = "top_right"
+    plot.xgrid.grid_line_color = None
+    plot.xaxis.major_label_orientation = 1
+    script, div = components(plot)
+
+    return script, div
+
+# CLIENT VIEWS USERS
+#===================
 
 def sector_client_view(request):
     return render(request, 'labs/sectors/client/client.html')
 
 
-def client_info_clients_view(request):
-
+def sector_client_info_view(request):
     if request.user.is_superuser or request.user.is_admin:
-
         qs_users = User.objects.filter(is_client=True)
 
         context = {
             "title": "Informacion de Clientes",
             "qs_users": qs_users,
         }
-        return render(request, 'labs/sectors/client/client_info_clients.html', context)
-
-
-def client_info_ref_per_view(request):
-
-    if request.user.is_superuser or request.user.is_admin:
-
-        qs_ref_persons = ReferencePerson.objects.all()
-
-        context = {
-            "title": "Informacion de Personas de Referencia",
-            "qs_ref_persons": qs_ref_persons,
-        }
-        return render(request, 'labs/sectors/client/client_info_ref_per.html', context)
-
-
-def client_info_construction_view(request):
-
-    if request.user.is_superuser or request.user.is_admin:
-
-        qs_constructions = Construction.objects.all()
-
-        context = {
-            "title": "Informacion de Construcciónes",
-            "qs_constructions": qs_constructions,
-        }
-        return render(request, 'labs/sectors/client/client_info_construction.html', context)
+        return render(request, 'labs/sectors/client/info/client_info_clients.html', context)
 
 
 def client_equips_concrete_view(request):
-
     if request.user.is_superuser or request.user.is_admin:
-
         qs_equips = Equip.objects.all()
         qs_equips_names = qs_equips.values_list("name", flat=True)
         qs_DiamondPiceBreak_equips = []
-        qs_GroutDiceBreak_equips = []
-        qs_LimeDiceBreak_equips = []
-        qs_LimePiceBreak_equips = []
-        qs_PaverBreak_equips = []
+        qs_DiamondPice_equips = []
         qs_PiceBreak_equips = []
+        qs_Pice_equips = []
+        qs_PrismBreak_equips = []
+        qs_Prism_equips = []
         
         for name in qs_equips_names:
 
             qs_DiamondPiceBreak = Equip.objects.get(name=name).diamondpicebreak_set.filter(user__is_client=True).count()
-            qs_GroutDiceBreak = Equip.objects.get(name=name).groutdicebreak_set.filter(user__is_client=True).count()
-            qs_LimeDiceBreak = Equip.objects.get(name=name).limedicebreak_set.filter(user__is_client=True).count()
-            qs_LimePiceBreak = Equip.objects.get(name=name).limepicebreak_set.filter(user__is_client=True).count()
-            qs_PaverBreak = Equip.objects.get(name=name).paverbreak_set.filter(user__is_client=True).count()
+            qs_DiamondPice = Equip.objects.get(name=name).diamondpice_set.filter(diamond_pice_break__user__is_client=True).count()
             qs_PiceBreak = Equip.objects.get(name=name).picebreak_set.filter(user__is_client=True).count()
+            qs_Pice = Equip.objects.get(name=name).pice_set.filter(pice_break__user__is_client=True).count()
+            qs_PrismBreak = Equip.objects.get(name=name).prismbreak_set.filter(user__is_client=True).count()
+            qs_Prism = Equip.objects.get(name=name).prism_set.filter(prism_break__user__is_client=True).count()
 
             qs_DiamondPiceBreak_equips.append(qs_DiamondPiceBreak)
-            qs_GroutDiceBreak_equips.append(qs_GroutDiceBreak)
-            qs_LimeDiceBreak_equips.append(qs_LimeDiceBreak)
-            qs_LimePiceBreak_equips.append(qs_LimePiceBreak)
-            qs_PaverBreak_equips.append(qs_PaverBreak)
+            qs_DiamondPice_equips.append(qs_DiamondPice)
             qs_PiceBreak_equips.append(qs_PiceBreak)
+            qs_Pice_equips.append(qs_Pice)
+            qs_PrismBreak_equips.append(qs_PrismBreak)
+            qs_Prism_equips.append(qs_Prism)
+
+        qs_sum_equips_DiamondPiceBreak = list(map(sum, zip(
+            qs_DiamondPiceBreak_equips, 
+            qs_DiamondPice_equips, 
+        )))
+
+        qs_sum_equips_PiceBreak = list(map(sum, zip(
+            qs_PiceBreak_equips, 
+            qs_Pice_equips, 
+        )))
+
+        qs_sum_equips_PrismBreak = list(map(sum, zip(
+            qs_PrismBreak_equips, 
+            qs_Prism_equips, 
+        )))
+
+        equips = list(qs_equips_names)
+        tests = ["Compresión de Testigos", "Compresión de Prismas", "Compresión de Testigos Diamantinos"]
+        colors = ["#c9d9d3", "#718dbf", "#e84d60"]
+
+        data = {
+            'equips' : equips,
+            'Compresión de Testigos': qs_sum_equips_DiamondPiceBreak,
+            'Compresión de Prismas': qs_sum_equips_PiceBreak,
+            'Compresión de Testigos Diamantinos': qs_sum_equips_PrismBreak,
+        }
+
+        graph = graph_client_sector(equips, tests, colors, data)
+        script = graph[0]
+        div = graph[1]
 
         context = {
+            "script": script,
+            "div": div,
             "title": "Equipos Usados en el Laboratorio de Concreto",
             "qs_equips_names": qs_equips_names,
-            "qs_DiamondPiceBreak_equips": qs_DiamondPiceBreak_equips,
-            "qs_GroutDiceBreak_equips": qs_GroutDiceBreak_equips,
-            "qs_LimeDiceBreak_equips": qs_LimeDiceBreak_equips,
-            "qs_LimePiceBreak_equips": qs_LimePiceBreak_equips,
-            "qs_PaverBreak_equips": qs_PaverBreak_equips,
-            "qs_PiceBreak_equips": qs_PiceBreak_equips,
+            "qs_sum_equips_DiamondPiceBreak": qs_sum_equips_DiamondPiceBreak,
+            "qs_sum_equips_PiceBreak": qs_sum_equips_PiceBreak,
+            "qs_sum_equips_PrismBreak": qs_sum_equips_PrismBreak,
         }
-        return render(request, 'labs/sectors/client/client_equips_concrete.html', context)
+        return render(request, 'labs/sectors/client/equips/client_equips_concrete.html', context)
 
 
 def client_equips_material_view(request):
-
     if request.user.is_superuser or request.user.is_admin:
-
         qs_equips = Equip.objects.all()
         qs_equips_names = qs_equips.values_list("name", flat=True)
         qs_BrickType_equips = []
@@ -114,6 +132,8 @@ def client_equips_material_view(request):
         qs_CompretionBrick_equips = []
         qs_WoodCompression_equips = []
         qs_ParallelPerpendicular_equips = []
+        qs_MasonryCompression_equips = []
+        qs_Masonry_equips = []
         
         for name in qs_equips_names:
 
@@ -126,6 +146,8 @@ def client_equips_material_view(request):
             qs_CompretionBrick =Equip.objects.get(name=name).compretionbrick_set.filter(brick_type__user__is_client=True).count()
             qs_WoodCompression = Equip.objects.get(name=name).woodcompression_set.filter(user__is_client=True).count() 
             qs_ParallelPerpendicular =Equip.objects.get(name=name).parallelperpendicular_set.filter(wood_compression__user__is_client=True).count()
+            qs_MasonryCompression =Equip.objects.get(name=name).masonrycompression_set.filter(user__is_client=True).count()
+            qs_Masonry =Equip.objects.get(name=name).masonry_set.filter(masonry_compression__user__is_client=True).count()
 
             qs_BrickType_equips.append(qs_BrickType)
             qs_VariationDimensions_equips.append(qs_VariationDimensions)
@@ -136,61 +158,65 @@ def client_equips_material_view(request):
             qs_CompretionBrick_equips.append(qs_CompretionBrick)
             qs_WoodCompression_equips.append(qs_WoodCompression)
             qs_ParallelPerpendicular_equips.append(qs_ParallelPerpendicular)
+            qs_MasonryCompression_equips.append(qs_MasonryCompression)
+            qs_Masonry_equips.append(qs_Masonry)
+        
+        qs_sum_equips_BrickType = list(map(sum, zip(
+            qs_BrickType_equips, 
+            qs_VariationDimensions_equips, 
+            qs_Warping_equips, 
+            qs_DensityVoids_equips, 
+            qs_Suction_equips, 
+            qs_AbsSatuCoeff_equips, 
+            qs_CompretionBrick_equips
+        )))
 
-        qs_BrickType_VariationDimensions = np.add(qs_BrickType_equips, qs_VariationDimensions_equips)
-        qs_VariationDimensionsqs_Warping = np.add(qs_BrickType_VariationDimensions, qs_Warping_equips)
-        qs_Warping_DensityVoids = np.add(qs_VariationDimensionsqs_Warping, qs_DensityVoids_equips)
-        qs_DensityVoids_Suction = np.add(qs_Warping_DensityVoids, qs_Suction_equips)
-        qs_Suction_AbsSatuCoeff = np.add(qs_DensityVoids_Suction, qs_AbsSatuCoeff_equips)
-        qs_AbsSatuCoeff_CompretionBrick = np.add(qs_Suction_AbsSatuCoeff, qs_CompretionBrick_equips)
-        qs_WoodCompression_ParallelPerpendicular = np.add(qs_WoodCompression_equips, qs_ParallelPerpendicular_equips)
+        qs_sum_equips_WoodCompression = list(map(sum, zip(
+            qs_WoodCompression_equips, 
+            qs_ParallelPerpendicular_equips, 
+        )))
 
-        print( list(qs_AbsSatuCoeff_CompretionBrick))
-        print(list(qs_WoodCompression_ParallelPerpendicular))
+        qs_sum_equips_MasonryCompression = list(map(sum, zip(
+            qs_MasonryCompression_equips, 
+            qs_Masonry_equips, 
+        )))
 
         equips = list(qs_equips_names)
-        tests = ["Ensayo de Clasificación del Ladrillo", "Ensayo de Compresión Simple en Madera",]
-        colors = ["#718dbf", "#e84d60",]
+        tests = ["Clasificación del Ladrillo", "Compresión Simple en Madera", "Compresión de Pilas de Ladrillos"]
+        colors = ["#c9d9d3", "#718dbf", "#e84d60"]
 
-        data = {'equips' : equips,
-                'Ensayo de Clasificación del Ladrillo'   : qs_AbsSatuCoeff_CompretionBrick,
-                'Ensayo de Compresión Simple en Madera'   : qs_WoodCompression_ParallelPerpendicular,}
+        data = {
+            'equips' : equips,
+            'Clasificación del Ladrillo': qs_sum_equips_BrickType,
+            'Compresión Simple en Madera': qs_sum_equips_WoodCompression,
+            'Compresión de Pilas de Ladrillos': qs_sum_equips_MasonryCompression,
+        }
 
-        TOOLS="hover,pan,wheel_zoom,reset,save"
-        plot = figure(x_range=equips, plot_height=300, tools=TOOLS, y_axis_label= 'Numero de Usos',
-            tooltips="$name @equips: @$name",
-            sizing_mode="scale_width",)
-
-        plot.vbar_stack(tests, x='equips', width=0.5, color=colors, source=data,)
-
-        plot.y_range.start = 0
-        plot.legend.location = "top_left"
-        plot.xaxis.major_label_orientation = 1
-        script, div = components(plot)
+        graph = graph_client_sector(equips, tests, colors, data)
+        script = graph[0]
+        div = graph[1]
 
         context = {
             "script": script,
             "div": div,
-            "title": "Equipos Usados en el Laboratorio de Materiales",
-            "title_g2": "Uso vs Equipos",
+            "title": "Equipos Usados en el Laboratorio de Materiales de Construcción",
             "qs_equips_names": qs_equips_names,
-            "qs_AbsSatuCoeff_CompretionBrick": qs_AbsSatuCoeff_CompretionBrick,
-            "qs_WoodCompression_ParallelPerpendicular": qs_WoodCompression_ParallelPerpendicular,
+            "qs_sum_equips_BrickType": qs_sum_equips_BrickType,
+            "qs_sum_equips_WoodCompression": qs_sum_equips_WoodCompression,
+            "qs_sum_equips_MasonryCompression": qs_sum_equips_MasonryCompression,
         }
-        return render(request, 'labs/sectors/client/client_equips_material.html', context)
-
+        return render(request, 'labs/sectors/client/equips/client_equips_material.html', context)
 
 
 def client_equips_soil_view(request):
-
     if request.user.is_superuser or request.user.is_admin:
-
         qs_equips = Equip.objects.all()
         qs_equips_names = qs_equips.values_list("name", flat=True)
         qs_Equivalent_equips = []
         qs_Equiv_equips = []
         qs_FineMaterial_equips = []
         qs_GranulometricGlobal_equips = []
+        qs_GlobalMesh_equips = []
         qs_Limit_equips = []
         qs_Liquid_equips = []
         qs_Platic_equips = []
@@ -215,6 +241,7 @@ def client_equips_soil_view(request):
             qs_Equiv = Equip.objects.get(name=name).equiv_set.filter(equivalent__user__is_client=True).count()
             qs_FineMaterial = Equip.objects.get(name=name).finematerial_set.filter(user__is_client=True).count()
             qs_GranulometricGlobal = Equip.objects.get(name=name).granulometricglobal_set.filter(user__is_client=True).count()
+            qs_GlobalMesh = Equip.objects.get(name=name).globalmesh_set.filter(granulometric_global__user__is_client=True).count()
             qs_Limit = Equip.objects.get(name=name).limit_set.filter(user__is_client=True).count()
             qs_Liquid = Equip.objects.get(name=name).liquid_set.filter(limit__user__is_client=True).count()
             qs_Platic = Equip.objects.get(name=name).platic_set.filter(limit__user__is_client=True).count()
@@ -237,6 +264,7 @@ def client_equips_soil_view(request):
             qs_Equiv_equips.append(qs_Equiv)
             qs_FineMaterial_equips.append(qs_FineMaterial)
             qs_GranulometricGlobal_equips.append(qs_GranulometricGlobal)
+            qs_GlobalMesh_equips.append(qs_GlobalMesh)
             qs_Limit_equips.append(qs_Limit)
             qs_Liquid_equips.append(qs_Liquid)
             qs_Platic_equips.append(qs_Platic)
@@ -255,97 +283,94 @@ def client_equips_soil_view(request):
             qs_FractionPass_equips.append(qs_FractionPass)
             qs_FractionRetained_equips.append(qs_FractionRetained)
 
-        qs_Equivalent_Equiv = np.add(qs_Equivalent_equips, qs_Equiv_equips)
-        qs_Limit_Liquid = np.add(qs_Limit_equips, qs_Liquid_equips)
-        qs_Liquid_Platic = np.add(qs_Limit_Liquid, qs_Platic_equips)
-        qs_MoistureContent_MoistureMaterial = np.add(qs_MoistureContent_equips, qs_MoistureMaterial_equips)
-        qs_ProctorM_DensityWetDry = np.add(qs_ProctorM_equips, qs_DensityWetDry_equips)
-        qs_DensityWetDry_Saturation = np.add(qs_ProctorM_DensityWetDry, qs_Saturation_equips)
-        qs_Saturation_Correction = np.add(qs_DensityWetDry_Saturation, qs_Correction_equips)
-        qs_SandCone_HumidDensity = np.add(qs_SandCone_equips, qs_HumidDensity_equips)
-        qs_HumidDensity_ContentMoisture = np.add(qs_SandCone_HumidDensity, qs_ContentMoisture_equips)
-        qs_ContentMoisture_ContentMoistureCarbure = np.add(qs_HumidDensity_ContentMoisture, qs_ContentMoistureCarbure_equips)
-        qs_ContentMoistureCarbure_CorrectionSandCone = np.add(qs_ContentMoisture_ContentMoistureCarbure, qs_CorrectionSandCone_equips)
-        qs_SpecificGravity_FractionPass = np.add(qs_SpecificGravity_equips, qs_FractionPass_equips)
-        qs_FractionPass_FractionRetained = np.add(qs_SpecificGravity_FractionPass, qs_FractionRetained_equips)
+        qs_sum_equips_Equivalent = list(map(sum, zip(
+            qs_Equivalent_equips, 
+            qs_Equiv_equips, 
+        )))
+
+        qs_sum_equips_FineMaterial = list(map(sum, zip(
+            qs_FineMaterial_equips, 
+        )))
+
+        qs_sum_equips_GranulometricGlobal = list(map(sum, zip(
+            qs_GranulometricGlobal_equips,
+            qs_GlobalMesh_equips,
+        )))
+
+        qs_sum_equips_Limit = list(map(sum, zip(
+            qs_Limit_equips,
+            qs_Liquid_equips,
+            qs_Platic_equips,
+        )))
+
+        qs_sum_equips_MoistureContent = list(map(sum, zip(
+            qs_MoistureContent_equips,
+            qs_MoistureMaterial_equips,
+        )))
+
+        qs_sum_equips_ProctorM = list(map(sum, zip(
+            qs_ProctorM_equips,
+            qs_DensityWetDry_equips,
+            qs_Saturation_equips,
+            qs_Correction_equips,
+        )))
         
+        qs_sum_equips_SandCone = list(map(sum, zip(
+            qs_SandCone_equips,
+            qs_HumidDensity_equips,
+            qs_ContentMoisture_equips,
+            qs_ContentMoistureCarbure_equips,
+            qs_CorrectionSandCone_equips,
+        )))
+
+        qs_sum_equips_SpecificGravity = list(map(sum, zip(
+            qs_SpecificGravity_equips,
+            qs_FractionPass_equips,
+            qs_FractionRetained_equips,
+        )))
+
+        equips = list(qs_equips_names)
+        tests = [
+            "Valor Equivalente de Arena y Fino",
+            "Material más Fino que el Tamiz 75μm (Nro. 200)",
+            "Granulometria Gloval",
+            "Límite Líquido y Límite Plástico",
+            "Contenido de Humedad de un Suelo",
+            "Proctor Modificado",
+            "Cono de Arena",
+            "Gravedad Especifica mediante el Picómetro de Agua",
+        ]
+        colors = ["#c9d9d3", "#718dbf", "#e84d60", "darkblue", "darkcyan", "darkgoldenrod", "darkgray", "darkgreen"]
+
+        data = {
+            'equips': equips,
+            'Valor Equivalente de Arena y Fino': qs_sum_equips_Equivalent,
+            'Material más Fino que el Tamiz 75μm (Nro. 200)': qs_sum_equips_FineMaterial,
+            'Granulometria Gloval': qs_sum_equips_GranulometricGlobal,
+            'Límite Líquido y Límite Plástico': qs_sum_equips_Limit,
+            'Contenido de Humedad de un Suelo': qs_sum_equips_MoistureContent,
+            'Proctor Modificado': qs_sum_equips_ProctorM,
+            'Cono de Arena': qs_sum_equips_SandCone,
+            'Gravedad Especifica mediante el Picómetro de Agua': qs_sum_equips_SpecificGravity,
+        }
+
+        graph = graph_client_sector(equips, tests, colors, data)
+        script = graph[0]
+        div = graph[1]
+
         context = {
+            "script": script,
+            "div": div,
             "title": "Equipos Usados en el Laboratorio de Suelos",
             "qs_equips_names": qs_equips_names,
-            "qs_Equivalent_Equiv": qs_Equivalent_Equiv,
-            "qs_FineMaterial_equips": qs_FineMaterial_equips,
-            "qs_GranulometricGlobal_equips": qs_GranulometricGlobal_equips,
-            "qs_Liquid_Platic": qs_Liquid_Platic,
-            "qs_MoistureContent_MoistureMaterial": qs_MoistureContent_MoistureMaterial,
-            "qs_Saturation_Correction": qs_Saturation_Correction,
-            "qs_ContentMoistureCarbure_CorrectionSandCone": qs_ContentMoistureCarbure_CorrectionSandCone,
-            "qs_FractionPass_FractionRetained": qs_FractionPass_FractionRetained,
+            "qs_sum_equips_Equivalent": qs_sum_equips_Equivalent,
+            "qs_sum_equips_FineMaterial": qs_sum_equips_FineMaterial,
+            "qs_sum_equips_GranulometricGlobal": qs_sum_equips_GranulometricGlobal,
+            "qs_sum_equips_Limit": qs_sum_equips_Limit,
+            "qs_sum_equips_MoistureContent": qs_sum_equips_MoistureContent,
+            "qs_sum_equips_ProctorM": qs_sum_equips_ProctorM,
+            "qs_sum_equips_SandCone": qs_sum_equips_SandCone,
+            "qs_sum_equips_SpecificGravity": qs_sum_equips_SpecificGravity,
         }
 
-        return render(request, 'labs/sectors/client/client_equips_soil.html', context)
-
-
-def client_tests_concrete_view(request):
-
-    if request.user.is_superuser or request.user.is_admin:
-
-        qs_DiamondPiceBreak = DiamondPiceBreak.objects.filter(user__is_client=True)
-        qs_GroutDiceBreak   = GroutDiceBreak.objects.filter(user__is_client=True)
-        qs_LimeDiceBreak    = LimeDiceBreak.objects.filter(user__is_client=True)
-        qs_LimePiceBreak    = LimePiceBreak.objects.filter(user__is_client=True)
-        qs_PaverBreak       = PaverBreak.objects.filter(user__is_client=True)
-        qs_PiceBreak        = PiceBreak.objects.filter(user__is_client=True)
-
-        context = {
-            "title": "Ensayos del Laboratorio de Concreto",
-            "qs_DiamondPiceBreak": qs_DiamondPiceBreak,
-            "qs_GroutDiceBreak": qs_GroutDiceBreak,
-            "qs_LimeDiceBreak": qs_LimeDiceBreak,
-            "qs_LimePiceBreak": qs_LimePiceBreak,
-            "qs_PaverBreak": qs_PaverBreak,
-            "qs_PiceBreak": qs_PiceBreak,
-        }
-        return render(request, 'labs/sectors/client/client_tests_concrete.html', context)
-
-
-def client_tests_material_view(request):
-
-    if request.user.is_superuser or request.user.is_admin:
-
-        qs_BrickType                = BrickType.objects.filter(user__is_client=True)
-        qs_WoodCompression          = WoodCompression.objects.filter(user__is_client=True)
-
-        context = {
-
-            "title": "Ensayos del Laboratorio de Materiales",
-            "qs_BrickType": qs_BrickType,
-            "qs_WoodCompression": qs_WoodCompression,
-        }
-        return render(request, 'labs/sectors/client/client_tests_material.html', context)
-
-
-def client_tests_soil_view(request):
-
-    if request.user.is_superuser or request.user.is_admin:
-
-        qs_Equivalent           = Equivalent.objects.filter(user__is_client=True)
-        qs_FineMaterial         = FineMaterial.objects.filter(user__is_client=True)
-        qs_GranulometricGlobal  = GranulometricGlobal.objects.filter(user__is_client=True)
-        qs_Limit                = Limit.objects.filter(user__is_client=True)
-        qs_MoistureContent      = MoistureContent.objects.filter(user__is_client=True)
-        qs_ProctorM             = ProctorM.objects.filter(user__is_client=True)
-        qs_SandCone             = SandCone.objects.filter(user__is_client=True)
-        qs_SpecificGravity      = SpecificGravity.objects.filter(user__is_client=True)
-
-        context = {
-            "title": "Ensayos del Laboratorio de Suelos",
-            "qs_Equivalent": qs_Equivalent,
-            "qs_FineMaterial": qs_FineMaterial,
-            "qs_GranulometricGlobal": qs_GranulometricGlobal,
-            "qs_Limit": qs_Limit,
-            "qs_MoistureContent": qs_MoistureContent,
-            "qs_ProctorM": qs_ProctorM,
-            "qs_SandCone": qs_SandCone,
-            "qs_SpecificGravity": qs_SpecificGravity,
-        }
-        return render(request, 'labs/sectors/client/client_tests_soil.html', context)
+        return render(request, 'labs/sectors/client/equips/client_equips_soil.html', context)

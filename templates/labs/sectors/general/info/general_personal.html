@@ -1,0 +1,143 @@
+{% extends "base_normal.html" %}
+
+{% block content %}
+<div class="my-5">
+  <div class="row">
+    <div class="col-md-3 col-lg-3">
+      {% include "labs/sectors/general/sidenav_general.html" %}
+    </div>
+    <div class="col-md-9 col-lg-9 mt-4">
+                <!--Grid row-->
+        <div class="row">
+            <!--Grid column-->
+            <div class="col-md-12 mb-4">  
+                <!-- Card -->
+                <div class="card">
+                    <div class="p-3">
+                        <h3 class="h3-responsive card-header mb-2">{{ title_admin }}</h3>
+                        <table id="generalAdmin" class="display compact table table-bordered table-responsive table-striped text-center">
+                            <thead class="primary-color-dark white-text">
+                              <tr>
+                                <th>Usuario</th>
+                                <th>Titulo</th>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Labor</th>
+                                <th>DNI</th>
+                                <th>CIP</th>
+                                <th>Email</th>
+                                <th>Activo</th>
+                                <th>Creado</th>
+                                <th>Actualizado</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {% for admin in qs_admins %}
+                              <tr>
+                                <td nowrap="nowrap">{{ admin.username }}</td>
+                                <td nowrap="nowrap">{{ admin.adminprofile.title }}</td>
+                                <td nowrap="nowrap">{{ admin.first_name }}</td>
+                                <td nowrap="nowrap">{{ admin.last_name }}</td>
+                                <td nowrap="nowrap">{{ admin.adminprofile.staff }}</td>
+                                <td nowrap="nowrap">{{ admin.adminprofile.dni }}</td>
+                                <td nowrap="nowrap">{{ admin.adminprofile.codigo }}</td>
+                                <td nowrap="nowrap">{{ admin.email }}</td>
+                                <td nowrap="nowrap">{{ admin.adminprofile.active }}</td>
+                                <td nowrap="nowrap">{{ admin.adminprofile.created }}</td>
+                                <td nowrap="nowrap">{{ admin.adminprofile.updated }}</td>
+                              </tr>
+                              {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- Card -->
+            </div>
+            <!--Grid column-->
+
+            <!--Grid column-->
+            <div class="col-md-12 mb-4">  
+                <!-- Card -->
+                <div class="card">
+                    <div class="p-3">
+                        <h3 class="card-title">{{ title_teacher }}</h3>
+                        <table id="generalTeacher" class="display compact table table-bordered table-responsive table-striped text-center">
+                            <thead class="primary-color-dark white-text">
+                              <tr>
+                                <th>Usuario</th>
+                                <th>Titulo</th>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>DNI</th>
+                                <th>CIP</th>
+                                <th>Email</th>
+                                <th>Activo</th>
+                                <th>Creado</th>
+                                <th>Actualizado</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {% for teacher in qs_teachers %}
+                              <tr>
+                                <td nowrap="nowrap">{{ teacher.username }}</td>
+                                <td nowrap="nowrap">{{ teacher.teacherprofile.title }}</td>
+                                <td nowrap="nowrap">{{ teacher.first_name }}</td>
+                                <td nowrap="nowrap">{{ teacher.last_name }}</td>
+                                <td nowrap="nowrap">{{ teacher.teacherprofile.dni }}</td>
+                                <td nowrap="nowrap">{{ teacher.teacherprofile.codigo }}</td>
+                                <td nowrap="nowrap">{{ teacher.email }}</td>
+                                <td nowrap="nowrap">{{ teacher.teacherprofile.active }}</td>
+                                <td nowrap="nowrap">{{ teacher.teacherprofile.created }}</td>
+                                <td nowrap="nowrap">{{ teacher.teacherprofile.updated }}</td>
+                              </tr>
+                              {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- Card -->
+            </div>
+            <!--Grid column-->
+
+        </div>
+        <!--Grid row-->      
+    </div>
+  </div>
+</div>
+{% endblock content %}
+{% block js %}
+<script>
+  $(document).ready( function () {
+    $('#generalAdmin').DataTable({
+      "scrollX": true,
+      dom: 'B<"clear">lfrtip',
+      buttons: [
+          'csv', 'excel',
+          {
+            extend: 'pdfHtml5',
+            orientation: 'landscape',
+            pageSize: 'LEGAL',
+            filename: 'administrativos_{{ qs_admins.count }}'
+          }
+      ]
+    });
+  } );
+</script>
+<script>
+  $(document).ready( function () {
+    $('#generalTeacher').DataTable({
+      "scrollX": true,
+      dom: 'B<"clear">lfrtip',
+      buttons: [
+          'csv', 'excel',
+          {
+            extend: 'pdfHtml5',
+            orientation: 'landscape',
+            pageSize: 'LEGAL',
+            filename: 'docentes_{{ qs_teachers.count }}'
+          }
+      ]
+    });
+  } );
+</script>
+{% endblock %}

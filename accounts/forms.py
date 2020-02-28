@@ -40,14 +40,6 @@ class GroupRegister(UserCreationForm):
         return group
 
 
-class GroupAccountUpdatedForm(forms.ModelForm):
-    email = forms.EmailField(max_length=30, required=True, help_text='Solo @gmail',)
-
-    class Meta:
-        model = User
-        fields = ("username", "email",)
-
-
 class GroupUpdateForm(forms.ModelForm):
     group_name = forms.CharField(required=True, label='Nombre del Grupo', help_text='G-C-2019-() <br> G-S-2019-() <br> G-M-2019-()',)
 

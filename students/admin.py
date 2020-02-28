@@ -4,7 +4,7 @@ from .models import *
 
 # Register your models here.
 
-class StudentGroupAdmin(admin.ModelAdmin):
+class StudentAdmin(admin.ModelAdmin):
     list_display = ['full_name', 'codigo', 'email', 'phone', 'group_profile']
 
-admin.site.register(StudentGroup, StudentGroupAdmin)
+admin.site.register(Student, StudentAdmin)

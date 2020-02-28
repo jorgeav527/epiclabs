@@ -273,7 +273,7 @@ def wood_compression_pdf(request, id):
         "norma_NTP_perpendicular": "NTP E-010",
         "type_perpendicular": type_perpendicular,
 
-        "title": "DETERMINAR LAS Compresión Simple Perpendicular o Paralela en Madera",
+        "title": "DETERMINAR LA COMPRESIÓN SIMPLE, PERPENDICULAR O PARALELA EN MADERA",
         "coordinator": coordinator,
         "tecnic": tecnic,
     }

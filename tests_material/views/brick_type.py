@@ -573,7 +573,6 @@ def brick_type_pdf(request, id):
     avg_length_vd = round(np.mean(qs_avg_length_vd_list), 2)
     vd_lengt = round((abs(obj.n_d_length - avg_length_vd) / avg_length_vd) * 100, 0)
 
-    print(vd_high, vd_width, vd_lengt)
 
     if vd_high <= 3 and vd_high > 0:
         type_high = "Ladrillo Tipo V"
@@ -588,7 +587,6 @@ def brick_type_pdf(request, id):
     else:
         type_high = "No Corresponde"
 
-    print(type_high)
 
     if vd_width <= 2 and vd_width > 0:
         type_width = "Ladrillo Tipo V"

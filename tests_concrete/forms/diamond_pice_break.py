@@ -29,7 +29,7 @@ class DiamondPiceBreakForm(forms.ModelForm):
     
 
 class DiamondPiceBreakFormClient(forms.ModelForm):
-    user = forms.ModelChoiceField(queryset=User.objects.filter(is_client=True), label="Escoje el Cliente", required=True)
+    user = forms.ModelChoiceField(queryset=User.objects.filter(is_client=True), label="Escoge el Cliente", required=True)
     sampling_date = forms.DateField(required=True, label="Fecha de Muestreo", widget=DateInput(), initial=datetime.now)
 
     class Meta:

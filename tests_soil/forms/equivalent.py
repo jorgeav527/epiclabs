@@ -39,7 +39,7 @@ class EquivalentForm(forms.ModelForm):
 
 
 class EquivalentFormClient(forms.ModelForm):
-    user = forms.ModelChoiceField(queryset=User.objects.filter(is_client=True), label="Escoje el Cliente", required=True)
+    user = forms.ModelChoiceField(queryset=User.objects.filter(is_client=True), label="Escoge el Cliente", required=True)
 
     class Meta:
         model = Equivalent

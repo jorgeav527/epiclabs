@@ -40,7 +40,7 @@ class SpecificGravityForm(forms.ModelForm):
 
 
 class SpecificGravityFormClient(forms.ModelForm):
-    user = forms.ModelChoiceField(queryset=User.objects.filter(is_client=True), label="Escoje el Cliente", required=True)
+    user = forms.ModelChoiceField(queryset=User.objects.filter(is_client=True), label="Escoge el Cliente", required=True)
 
     class Meta:
         model = SpecificGravity

@@ -110,7 +110,7 @@ def client_equips_concrete_view(request):
         context = {
             "script": script,
             "div": div,
-            "title": "Equipos Usados en el Laboratorio de Concreto",
+            "title": "Equipos Usados en el Laboratorio de Tecnología del Concreto",
             "qs_equips_names": qs_equips_names,
             "qs_sum_equips_DiamondPiceBreak": qs_sum_equips_DiamondPiceBreak,
             "qs_sum_equips_PiceBreak": qs_sum_equips_PiceBreak,

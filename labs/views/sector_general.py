@@ -146,7 +146,32 @@ def general_equips_view(request):
     if request.user.is_superuser or request.user.is_admin:
         qs_equips = Equip.objects.all()
 
+    qs_equips_names = qs_equips.values_list("name", flat=True)
+    qs_equips_uses = qs_equips.values_list("use", flat=True)
+
+    x = dict(zip(qs_equips_names, qs_equips_uses))
+
+    data = pd.Series(x).reset_index(name='value').rename(columns={'index':'equipos'})
+    data['angle'] = data['value']/data['value'].sum() * 2*pi
+    data['color'] = Category20c[len(x)]
+
+    TOOLS="hover,pan,wheel_zoom,reset,save"
+    plot = figure(plot_height=500, title="Equipos vs Uso",
+        tools=TOOLS, tooltips="@equipos: @value", x_range=(-0.4, 0.7), 
+        sizing_mode="fixed")
+
+    plot.wedge(x=0, y=1, radius=0.3,
+        start_angle=cumsum('angle', include_zero=True), end_angle=cumsum('angle'),
+        line_color="white", fill_color='color', legend='equipos', source=data)
+
+    plot.axis.axis_label=None
+    plot.axis.visible=False
+    plot.grid.grid_line_color = None
+    script, div = components(plot)
+
     context = {
+        "script": script,
+        "div": div,
         "title": "Personal",
         "qs_equips": qs_equips,
     }

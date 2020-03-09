@@ -16,22 +16,19 @@ class PiceBreak(models.Model):
         ("CONCRETO", "Testigo de Concreto"),
         ("CAL", "Testigo de Cal"),
     )
-    pice_type       = models.CharField(max_length=10, choices=COMPOSITION_CHOICES, default="CONCRETO", db_column='Tipo de Testigo')
-    user            = models.ForeignKey(User, on_delete=models.CASCADE, db_column='Usuario')
-    sampling_date   = models.DateField(default=datetime.datetime.now, null=True, blank=True, db_column='Fecha de Muestreo')
-    name            = models.CharField(max_length=50, default="Rotura Testigo", db_column='Nombre Propio')
-    code            = models.CharField(max_length=255, unique=True, editable=False, db_column='Codigo')
-    fc_esp          = models.FloatField(default=280, db_column='Esfuerzo Especificado')
-    created         = models.DateTimeField(auto_now_add=True, db_column='Creado')
-    updated         = models.DateTimeField(auto_now=True, db_column='Actualizado')
-    equipment           = models.ManyToManyField(Equip, db_column='Equipos', db_table='Ensayo de Testigos - Uso de Equipos')
-    tool                = models.ManyToManyField(Tool, db_column='Herramientas', db_table='Ensayo de Testigos - Uso de Herramientas')    
-    course              = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True, blank=True, db_column='Curso')
-    reference_person    = models.ForeignKey(ReferencePerson, on_delete=models.SET_NULL, null=True, blank=True, db_column='Persona de Referencia')
-    construction        = models.ForeignKey(Construction, on_delete=models.SET_NULL, null=True, blank=True, db_column='Construccion')
-
-    class Meta:
-        db_table = 'Ensayos de Testigos'
+    pice_type       = models.CharField(max_length=10, choices=COMPOSITION_CHOICES, default="CONCRETO")
+    user            = models.ForeignKey(User, on_delete=models.CASCADE)
+    sampling_date   = models.DateField(default=datetime.datetime.now, null=True, blank=True)
+    name            = models.CharField(max_length=50, default="Rotura Testigo")
+    code            = models.CharField(max_length=255, unique=True, editable=False)
+    fc_esp          = models.FloatField(default=280)
+    created         = models.DateTimeField(auto_now_add=True)
+    updated         = models.DateTimeField(auto_now=True)
+    equipment           = models.ManyToManyField(Equip)
+    tool                = models.ManyToManyField(Tool)    
+    course              = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True, blank=True)
+    reference_person    = models.ForeignKey(ReferencePerson, on_delete=models.SET_NULL, null=True, blank=True)
+    construction        = models.ForeignKey(Construction, on_delete=models.SET_NULL, null=True, blank=True)
 
     def save(self, *args, **kwargs):
         # Generate the code for the barcode (e.g. RDC2009092701)
@@ -49,27 +46,24 @@ class PiceBreak(models.Model):
 
 
 class Pice(models.Model):
-    poured_date     = models.DateField(db_column='Fecha de Vaciado')
-    break_date      = models.DateField(db_column='Fecha de Rotura')
-    dilate          = models.IntegerField(editable=False, db_column='Diferencia entre Fechas')
-    element_name    = models.CharField(max_length=100, null=True, blank=True, db_column='Nombre del Elemento')
-    D_1             = models.FloatField(db_column='Diametro 1')
-    D_2             = models.FloatField(db_column='Diametro 2')
-    area            = models.FloatField(editable=False, db_column='Area')
-    load            = models.FloatField(db_column='Carga')
-    fc              = models.FloatField(editable=False, db_column='Esfuerzo')
-    fc_MPa          = models.FloatField(editable=False, db_column='Esfuerzo MPa')
-    fc_175          = models.FloatField(editable=False, db_column='Esfuerzo a 175')
-    fc_210          = models.FloatField(editable=False, db_column='Esfuerzo a 210')
-    fc_280          = models.FloatField(editable=False, db_column='Esfuerzo a 280')
-    created         = models.DateTimeField(auto_now_add=True, db_column='Creado')
-    updated         = models.DateTimeField(auto_now=True, db_column='Actualizado')
-    pice_break      = models.ForeignKey(PiceBreak, on_delete=models.CASCADE, db_column='Ensayos de Testigos')
-    equipment       = models.ManyToManyField(Equip, db_column='Equipos', db_table='Testigos - Uso de Equipos')
-    tool            = models.ManyToManyField(Tool, db_column='Herramientas', db_table='Testigos - Uso de Herramientas')
-
-    class Meta:
-        db_table = 'Testigos'
+    poured_date     = models.DateField()
+    break_date      = models.DateField()
+    dilate          = models.IntegerField(editable=False)
+    element_name    = models.CharField(max_length=100, null=True, blank=True)
+    D_1             = models.FloatField()
+    D_2             = models.FloatField()
+    area            = models.FloatField(editable=False)
+    load            = models.FloatField()
+    fc              = models.FloatField(editable=False)
+    fc_MPa          = models.FloatField(editable=False)
+    fc_175          = models.FloatField(editable=False)
+    fc_210          = models.FloatField(editable=False)
+    fc_280          = models.FloatField(editable=False)
+    created         = models.DateTimeField(auto_now_add=True)
+    updated         = models.DateTimeField(auto_now=True)
+    pice_break      = models.ForeignKey(PiceBreak, on_delete=models.CASCADE)
+    equipment       = models.ManyToManyField(Equip)
+    tool            = models.ManyToManyField(Tool)
 
     def save(self, *args, **kwargs):
         # Generate the dilate from the poured_date

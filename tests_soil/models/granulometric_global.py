@@ -21,6 +21,7 @@ class GranulometricGlobal(models.Model):
         ('3/4"', "3/4 inch"),
         ('1/2"', "1/2 inch"),
         ('3/8"', "3/8 inch"),
+        ('# 4', "Nº 4"),
     )
     LAYER_CHOICES = (
         ("UNO", "Estrato 1"),
@@ -83,7 +84,7 @@ class GlobalMesh(models.Model):
     tamiz_3o4       = models.FloatField(null=True, blank=True)
     tamiz_1o2       = models.FloatField(null=True, blank=True)
     tamiz_3o8       = models.FloatField(null=True, blank=True)
-    tamiz_N_4       = models.FloatField(null=True, blank=True)
+    tamiz_N_4       = models.FloatField()
     tamiz_N_8       = models.FloatField(null=True, blank=True)
     tamiz_N_10      = models.FloatField(null=True, blank=True)
     tamiz_N_16      = models.FloatField(null=True, blank=True)
@@ -95,8 +96,8 @@ class GlobalMesh(models.Model):
     tamiz_N_80      = models.FloatField(null=True, blank=True)
     tamiz_N_100     = models.FloatField(null=True, blank=True)
     tamiz_N_140     = models.FloatField(null=True, blank=True)
-    tamiz_N_200     = models.FloatField(null=True, blank=True)
-    tamiz_fondo     = models.FloatField(null=True, blank=True)
+    tamiz_N_200     = models.FloatField()
+    tamiz_fondo     = models.FloatField()
     created         = models.DateTimeField(auto_now_add=True)
     updated         = models.DateTimeField(auto_now=True)
     granulometric_global = models.ForeignKey(GranulometricGlobal, on_delete=models.CASCADE)

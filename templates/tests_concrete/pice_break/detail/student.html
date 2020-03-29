@@ -97,7 +97,9 @@
                         </tr>
                     </tbody>
                 </table>
-                <p class="text-left"><span class="font-weight-bold">Resistencia Caracteristica:</span> {{ fc_caracteristic }} kgf/cm² - {{ fc_MPa_caracteristic }} MPa</p>
+                {% for a,b in zippedList %}
+                <p class="text-left"><span class="font-weight-bold">{{ a|title }}:</span> {{ b }} % de {{ obj.fc_esp }} kgf/cm²</p>
+                {% endfor %}
                 <hr class="my-3">
                                 
                 <p class="text-left mx-auto  mt-3"><span class="font-weight-bold"><u>Datos Extra</u></span></p>

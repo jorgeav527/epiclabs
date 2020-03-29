@@ -142,22 +142,23 @@ def pice_break_detail(request, id):
     pice_fc = qs_pice.values_list("fc", flat=True).order_by("id")
     mean_pice_fc = round(np.mean(pice_fc), 2) 
     std_pice_fc = round(np.std(pice_fc), 2)
-    fc_caracteristic = round(mean_pice_fc - std_pice_fc, 2)
+
+    pice_element_name = list(qs_pice.values_list("element_name", flat=True).order_by("id"))
+    porcentage_off = list(map(lambda x:round((x-obj.fc_esp)/obj.fc_esp*100, 2), pice_fc))
+    zippedList = zip(pice_element_name, porcentage_off)
 
     pice_fc_MPa = qs_pice.values_list("fc_MPa", flat=True).order_by("id")
     mean_pice_fc_MPa = round(np.mean(pice_fc_MPa), 2) 
     std_pice_fc_MPa = round(np.std(pice_fc_MPa), 2)
-    fc_MPa_caracteristic = round(mean_pice_fc_MPa - std_pice_fc_MPa, 2)
 
     context = {
         "obj": obj,
         "qs_pice": qs_pice,
         "mean_pice_fc": mean_pice_fc,
         "std_pice_fc": std_pice_fc,
-        "fc_caracteristic": fc_caracteristic,
+        "zippedList": zippedList,
         "mean_pice_fc_MPa": mean_pice_fc_MPa,
         "std_pice_fc_MPa": std_pice_fc_MPa,
-        "fc_MPa_caracteristic": fc_MPa_caracteristic,
         "norma_ASTM": "NORMA ASTM C-109",
         "noma_NTP": "NTP 334.034",
         "title": "Detalles del Ensayo de Rotura de Testigos",
@@ -199,24 +200,23 @@ def pice_break_pdf(request, id):
     pice_fc = qs_pice.values_list("fc", flat=True).order_by("id")
     mean_pice_fc = round(np.mean(pice_fc), 2) 
     std_pice_fc = round(np.std(pice_fc), 2)
-    fc_caracteristic = round(mean_pice_fc - std_pice_fc, 2)
+
+    pice_element_name = list(qs_pice.values_list("element_name", flat=True).order_by("id"))
+    porcentage_off = list(map(lambda x:round((x-obj.fc_esp)/obj.fc_esp*100, 2), pice_fc))
+    zippedList = zip(pice_element_name, porcentage_off)
 
     pice_fc_MPa = qs_pice.values_list("fc_MPa", flat=True).order_by("id")
     mean_pice_fc_MPa = round(np.mean(pice_fc_MPa), 2) 
     std_pice_fc_MPa = round(np.std(pice_fc_MPa), 2)
-    fc_MPa_caracteristic = round(mean_pice_fc_MPa - std_pice_fc_MPa, 2)
-
-    print(obj)
 
     context = {
         "obj": obj,
         "qs_pice": qs_pice,
         "mean_pice_fc": mean_pice_fc,
         "std_pice_fc": std_pice_fc,
-        "fc_caracteristic": fc_caracteristic,
+        "zippedList": zippedList,
         "mean_pice_fc_MPa": mean_pice_fc_MPa,
         "std_pice_fc_MPa": std_pice_fc_MPa,
-        "fc_MPa_caracteristic": fc_MPa_caracteristic,
         "title": "CONCRETO. MÉTODO DE ENSAYO NORMALIZADO PARA LA DETERMINACIÓN DE LA RESISTENCIA A LA COMPRESIÓN DE TESTIGOS EN MUESTRAS CILINDRICAS.",
         "norma_ASTM": "NORMA ASTM C-109",
         "noma_NTP": "NTP 334.034",

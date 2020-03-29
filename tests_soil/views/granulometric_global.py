@@ -24,6 +24,85 @@ from tests_soil.forms import GranulometricGlobalForm, GranulometricGlobalFormCli
 from equipments.models import Equip
 from accounts.models import AdminProfile
 
+# Classification SUCS.
+name_0 = ""
+name_1 = ""
+name_2 = ""
+name_3 = ""
+name_4 = ""
+def sucs(pass_200, pass_4, CU, CC, LL, IP):
+    global name_0, name_1, name_2, name_3, name_4
+    if pass_200 >= 50:
+        name_0 = "Suelo Fino"
+        if LL <= 50 and LL > 0:
+            name_3 = "L"
+        elif LL > 50 and LL <= 110:
+            name_3 = "H"
+        else:
+            name_3 = "Verifique el Limite Liquido"
+        if IP < 0.73 * (LL - 20):
+            name_4 = "M"
+        else: 
+            name_4 = "C"
+    elif pass_200 < 50:
+        name_0 = "Suelo Grueso"
+        if pass_4 >= 50:
+            name_1 = "S"
+            if pass_200 < 5:
+                if CU > 6 and CC >=1 and CC <=3:
+                    name_2 = "W"
+                else:
+                    name_2 = "P" 
+            elif pass_200 >= 5 and pass_200 <= 12:
+                if CU > 6 and CC >=1 and CC <=3:
+                    name_2 = "W"
+                else:
+                    name_2 = "P"
+                if LL <= 50 and LL > 0:
+                    name_3 = "L"
+                elif LL > 50 and LL <= 110:
+                    name_3 = "H"
+                else:
+                    name_3 = "Verifique el Limite Liquido"
+                if IP < 0.73 * (LL - 20):
+                    name_4 = "M"
+                else: 
+                    name_4 = "C"
+            elif pass_200 > 12:
+                if IP < 0.73 * (LL - 20):
+                    name_4 = "M"
+                else: 
+                    name_4 = "C"
+        elif pass_4 < 50:
+            name_1 = "G"
+            if pass_200 < 5:
+                if CU > 6 and CC >=1 and CC <=3:
+                    name_2 = "W"
+                else:
+                    name_2 = "P" 
+            elif pass_200 >= 5 and pass_200 <= 12:
+                if CU > 6 and CC >=1 and CC <=3:
+                    name_2 = "W"
+                else:
+                    name_2 = "P"
+                if LL <= 50 and LL > 0:
+                    name_3 = "L"
+                elif LL > 50 and LL <= 110:
+                    name_3 = "H"
+                else:
+                    name_3 = "Verifique el Limite Liquido"
+                if IP < 0.73 * (LL - 20):
+                    name_4 = "M"
+                else: 
+                    name_4 = "C"
+            elif pass_200 > 12:
+                if IP < 0.73 * (LL - 20):
+                    name_4 = "M"
+                else: 
+                    name_4 = "C"
+    
+    return name_0, name_1, name_2, name_3, name_4
+
 
 # Create your views here.
 
@@ -353,7 +432,7 @@ def granulometric_global_detail(request, id):
         decil = [60, 30, 10]
         position = []
         for i in (0,1,2):
-            for k in range(0,13):
+            for k in range(0, len(passing_percentage)):
                 if passing_percentage[k] <= decil[i]:
                     position.append(k)
                     break # 7, 9, 10
@@ -368,6 +447,37 @@ def granulometric_global_detail(request, id):
         decil_10 = d_x[2]
         CU = round(decil_60  / decil_10, 2)
         CC = round((decil_30 ** 2) / (decil_10 * decil_60 ), 2)
+
+    if obj.max_size == '# 4' and total_amount >= 100:
+        min_total_amount = "Ok"
+    elif obj.max_size == '3/8"' or  obj.max_size == '1/2"' and total_amount >= 200:
+        min_total_amount = "Ok"
+    elif obj.max_size == '3/4"' or obj.max_size == '1"' and total_amount >= 1: 
+        min_total_amount = "Ok"
+    elif obj.max_size == '1 1/2"' or obj.max_size == '2"' or obj.max_size == '2 1/2"' and total_amount >= 8: 
+        min_total_amount = "Ok"
+    elif obj.max_size == '3"' or obj.max_size == '4"' and total_amount >= 60: 
+        min_total_amount = "Ok"
+    else:
+        min_total_amount = "Verifique el Peso Seco Mínimo"
+    
+    # SUCS
+    used = []
+    used_4_200 = filter(lambda item: item['retained'] is not None, granulometric)
+    for i in used_4_200:
+        used.append(i['id'])
+
+    pass_4 = passing_percentage[used.index(10)]
+    pass_200 = passing_percentage[used.index(22)]
+
+    names = sucs(pass_200, pass_4, CU, CC, obj.liquid_limit, obj.plastic_index)
+    name_sucs_fino_grueso = names[0]
+    name_sucs_S_G = names[1]
+    name_sucs_W_P = names[2]
+    name_sucs_L_H = names[3]
+    name_sucs_M_C = names[4]
+
+    # ASSTHO
 
     # Ploting
     max_x = np.max(diameter_mesh)
@@ -403,6 +513,12 @@ def granulometric_global_detail(request, id):
         "decil_10": decil_10,
         "CU": CU,
         "CC": CC,
+        "min_total_amount": min_total_amount,
+        "name_sucs_fino_grueso": name_sucs_fino_grueso,
+        "name_sucs_S_G": name_sucs_S_G,
+        "name_sucs_W_P": name_sucs_W_P,
+        "name_sucs_L_H": name_sucs_L_H,
+        "name_sucs_M_C": name_sucs_M_C,
         "norma_ASTM": "ASTM D1140",
         "noma_NTP": "ASTM D3282",
         "title": "Detalles del Ensayo Granulometria Gloval",
@@ -641,7 +757,7 @@ def granulometric_global_pdf(request, id):
         decil = [60, 30, 10]
         position = []
         for i in (0,1,2):
-            for k in range(0,13):
+            for k in range(0, len(passing_percentage)):
                 if passing_percentage[k] <= decil[i]:
                     position.append(k)
                     break # 7, 9, 10
@@ -656,6 +772,37 @@ def granulometric_global_pdf(request, id):
         decil_10 = d_x[2]
         CU = round(decil_60  / decil_10, 2)
         CC = round((decil_30 ** 2) / (decil_10 * decil_60 ), 2)
+
+    if obj.max_size == '# 4' and total_amount >= 100:
+        min_total_amount = "Ok"
+    elif obj.max_size == '3/8"' or  obj.max_size == '1/2"' and total_amount >= 200:
+        min_total_amount = "Ok"
+    elif obj.max_size == '3/4"' or obj.max_size == '1"' and total_amount >= 1: 
+        min_total_amount = "Ok"
+    elif obj.max_size == '1 1/2"' or obj.max_size == '2"' or obj.max_size == '2 1/2"' and total_amount >= 8: 
+        min_total_amount = "Ok"
+    elif obj.max_size == '3"' or obj.max_size == '4"' and total_amount >= 60: 
+        min_total_amount = "Ok"
+    else:
+        min_total_amount = "Verifique el Peso Seco Mínimo"
+    
+    # SUCS
+    used = []
+    used_4_200 = filter(lambda item: item['retained'] is not None, granulometric)
+    for i in used_4_200:
+        used.append(i['id'])
+
+    pass_4 = passing_percentage[used.index(10)]
+    pass_200 = passing_percentage[used.index(22)]
+
+    names = sucs(pass_200, pass_4, CU, CC, obj.liquid_limit, obj.plastic_index)
+    name_sucs_fino_grueso = names[0]
+    name_sucs_S_G = names[1]
+    name_sucs_W_P = names[2]
+    name_sucs_L_H = names[3]
+    name_sucs_M_C = names[4]
+
+    # ASSTHO
 
     # Ploting
     max_x = np.max(diameter_mesh)
@@ -703,6 +850,12 @@ def granulometric_global_pdf(request, id):
         "decil_10": decil_10,
         "CU": CU,
         "CC": CC,
+        "min_total_amount": min_total_amount,
+        "name_sucs_fino_grueso": name_sucs_fino_grueso,
+        "name_sucs_S_G": name_sucs_S_G,
+        "name_sucs_W_P": name_sucs_W_P,
+        "name_sucs_L_H": name_sucs_L_H,
+        "name_sucs_M_C": name_sucs_M_C,
         "graphic": graphic,
         "title": "CLASIFICACIÓN DE SUELOS PARA FINES DE INGENIERÍA Y CONSTRUCCIÓN DE CARRETERAS",
         "norma_ASTM": "ASTM D2487",

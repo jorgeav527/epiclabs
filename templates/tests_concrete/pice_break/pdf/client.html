@@ -35,7 +35,9 @@
           {% endif %}
           <p class="text-left"><strong>Emsion de Certificado:</strong> {% now "d/m/Y P" %}</p>
           <p class="text-left"><strong>Persona de Referencia:</strong> {{ obj.reference_person.title }} {{ obj.reference_person.name|title }}</p>          
-          <p class="text-left"><strong>Resistencia Caracteristica:</strong> {{ fc_caracteristic }} kgf/cm² - {{ fc_MPa_caracteristic }} MPa</p>
+          {% for a,b in zippedList %}
+          <p class="text-left"><strong>{{ a|title }}:</strong> {{ b }} %</p>
+          {% endfor %}
         </div>
         <div style="margin-left: 4rem;" class="col-xs-3 panel panel-default">
           <p class="text-left panel-heading"><strong>Datos del Ensayo</strong></p>

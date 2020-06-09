@@ -148,7 +148,7 @@ def wood_compression_detail(request, id):
     qs_fc_parallel_list = qs_parallel.values_list('fc', flat=True)
     avg_fc_parallel = round(np.mean(qs_fc_parallel_list), 2)
     qs_fc_MPA_parallel = qs_parallel.values_list('fc_MPa', flat=True)
-    avg_fc_MPA_parallel = round(np.mean(qs_fc_MPA_parallel), 2)
+    avg_fc_MPA_parallel = round(np.mean(qs_fc_MPA_parallel), 1)
 
     if avg_fc_MPA_parallel >= 7.8 and avg_fc_MPA_parallel < 10.8:
         type_parallel = "Grupo C"
@@ -164,7 +164,7 @@ def wood_compression_detail(request, id):
     qs_fc_perpendicular_list = qs_perpendicular.values_list('fc', flat=True)
     avg_fc_perpendicular = round(np.mean(qs_fc_perpendicular_list), 2)
     qs_fc_MPA_perpendicular = qs_perpendicular.values_list('fc_MPa', flat=True)
-    avg_fc_MPA_perpendicular = round(np.mean(qs_fc_MPA_perpendicular), 2)
+    avg_fc_MPA_perpendicular = round(np.mean(qs_fc_MPA_perpendicular), 1)
 
     if avg_fc_MPA_perpendicular >= 1.5 and avg_fc_MPA_perpendicular < 2.7:
         type_perpendicular = "Grupo C"
@@ -231,7 +231,7 @@ def wood_compression_pdf(request, id):
     qs_fc_parallel_list = qs_parallel.values_list('fc', flat=True)
     avg_fc_parallel = round(np.mean(qs_fc_parallel_list), 2)
     qs_fc_MPA_parallel = qs_parallel.values_list('fc_MPa', flat=True)
-    avg_fc_MPA_parallel = round(np.mean(qs_fc_MPA_parallel), 2)
+    avg_fc_MPA_parallel = round(np.mean(qs_fc_MPA_parallel), 1)
 
     if avg_fc_MPA_parallel >= 7.8 and avg_fc_MPA_parallel < 10.8:
         type_parallel = "Grupo C"
@@ -247,7 +247,7 @@ def wood_compression_pdf(request, id):
     qs_fc_perpendicular_list = qs_perpendicular.values_list('fc', flat=True)
     avg_fc_perpendicular = round(np.mean(qs_fc_perpendicular_list), 2)
     qs_fc_MPA_perpendicular = qs_perpendicular.values_list('fc_MPa', flat=True)
-    avg_fc_MPA_perpendicular = round(np.mean(qs_fc_MPA_perpendicular), 2)
+    avg_fc_MPA_perpendicular = round(np.mean(qs_fc_MPA_perpendicular), 1)
 
     if avg_fc_MPA_perpendicular >= 1.5 and avg_fc_MPA_perpendicular < 2.7:
         type_perpendicular = "Grupo C"

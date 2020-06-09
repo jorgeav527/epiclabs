@@ -83,13 +83,18 @@ def prism_save(request, id):
             if formset.is_valid():
                 instances = formset.save(commit=False)
                 for instance in instances:
-                    instance.save()
-                    for equip in equips:
-                        instance.equipment.add(equip)
-                        equip.use = F("use") + 1
-                        equip.save()
+                    check_per = instance.check_per
+                    if check_per == False:
+                        messages.error(request, f"El testigo no cumple con la perpendicularidad adecuada")
+                        return redirect('tests_concrete:prism_save', id=obj.id)
+                    else:
+                        instance.save()
+                        for equip in equips:
+                            instance.equipment.add(equip)
+                            equip.use = F("use") + 1
+                            equip.save()
+                        messages.success(request, f"Los ensayos han sido creados o actualizados")
                 formset.save()
-                messages.success(request, f"Los ensayos han sido creados o actualizados")
                 return redirect('tests_concrete:prism_save', id=obj.id)
     
     formset = PrismFormSet(instance=obj)
@@ -142,22 +147,24 @@ def prism_break_detail(request, id):
     prism_fc = qs_prism.values_list("fc", flat=True).order_by("id")
     mean_prism_fc = round(np.mean(prism_fc), 2) 
     std_prism_fc = round(np.std(prism_fc), 2)
-    fc_caracteristic = round(mean_prism_fc - std_prism_fc, 2)
+
+    prism_element_name = list(qs_prism.values_list("element_name", flat=True).order_by("id"))
+    porcentage_off = list(map(lambda x:round((x-obj.fc_esp)/obj.fc_esp*100, 1), prism_fc))
+    zippedList = zip(prism_element_name, porcentage_off)
+
 
     prism_fc_MPa = qs_prism.values_list("fc_MPa", flat=True).order_by("id")
-    mean_prism_fc_MPa = round(np.mean(prism_fc_MPa), 2) 
-    std_prism_fc_MPa = round(np.std(prism_fc_MPa), 2)
-    fc_MPa_caracteristic = round(mean_prism_fc_MPa - std_prism_fc_MPa, 2)
+    mean_prism_fc_MPa = round(np.mean(prism_fc_MPa), 1) 
+    std_prism_fc_MPa = round(np.std(prism_fc_MPa), 1)
 
     context = {
         "obj": obj,
         "qs_prism": qs_prism,
         "mean_prism_fc": mean_prism_fc,
         "std_prism_fc": std_prism_fc,
-        "fc_caracteristic": fc_caracteristic,
+        "zippedList": zippedList,
         "mean_prism_fc_MPa": mean_prism_fc_MPa,
         "std_prism_fc_MPa": std_prism_fc_MPa,
-        "fc_MPa_caracteristic": fc_MPa_caracteristic,
         "norma_ASTM": "NORMA ASTM C-109",
         "noma_NTP": "NTP 334.034",
         "title": "Detalles del Ensayo de Rotura de Prismas",
@@ -199,22 +206,23 @@ def prism_break_pdf(request, id):
     prism_fc = qs_prism.values_list("fc", flat=True).order_by("id")
     mean_prism_fc = round(np.mean(prism_fc), 2) 
     std_prism_fc = round(np.std(prism_fc), 2)
-    fc_caracteristic = round(mean_prism_fc - std_prism_fc, 2)
+
+    prism_element_name = list(qs_prism.values_list("element_name", flat=True).order_by("id"))
+    porcentage_off = list(map(lambda x:round((x-obj.fc_esp)/obj.fc_esp*100, 1), prism_fc))
+    zippedList = zip(prism_element_name, porcentage_off)
 
     prism_fc_MPa = qs_prism.values_list("fc_MPa", flat=True).order_by("id")
-    mean_prism_fc_MPa = round(np.mean(prism_fc_MPa), 2) 
-    std_prism_fc_MPa = round(np.std(prism_fc_MPa), 2)
-    fc_MPa_caracteristic = round(mean_prism_fc_MPa - std_prism_fc_MPa, 2)
+    mean_prism_fc_MPa = round(np.mean(prism_fc_MPa), 1) 
+    std_prism_fc_MPa = round(np.std(prism_fc_MPa), 1)
 
     context = {
         "obj": obj,
         "qs_prism": qs_prism,
         "mean_prism_fc": mean_prism_fc,
         "std_prism_fc": std_prism_fc,
-        "fc_caracteristic": fc_caracteristic,
+        "zippedList": zippedList,
         "mean_prism_fc_MPa": mean_prism_fc_MPa,
         "std_prism_fc_MPa": std_prism_fc_MPa,
-        "fc_MPa_caracteristic": fc_MPa_caracteristic,
         "title": "CONCRETO. MÉTODO DE ENSAYO NORMALIZADO PARA LA DETERMINACIÓN DE LA RESISTENCIA A LA COMPRESIÓN DE TESTIGOS EN MUESTRAS PRISMÁTICAS.",
         "norma_ASTM": "NORMA ASTM C-109",
         "noma_NTP": "NTP 334.034",

@@ -34,15 +34,12 @@
                             <th>Fecha de Vaciado</th>
                             <th>Fecha de Rotura</th>
                             <th>Edad (dias)</th>
-                            <th>Diametro Superior (pulgadas)</th>
-                            <th>Diametro Inferior (pulgadas)</th>
+                            <th>Largo (mm)</th>
+                            <th>Ancho (mm)</th>
                             <th>Area (cm²)</th>
                             <th>Carga (kgf)</th>
                             <th>Esfuerzo (kgf/cm²)</th>
                             <th>Esfuerzo (MPa)</th>
-                            <th>Esfuerzo a 175 (kgf/cm²)</th>
-                            <th>Esfuerzo a 210 (kgf/cm²)</th>
-                            <th>Esfuerzo a 280 (kgf/cm²)</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -59,13 +56,13 @@
                             <td>{{ prism.load }}</td>
                             <td>{{ prism.fc }}</td>
                             <td>{{ prism.fc_MPa }}</td>
-                            <td>{{ prism.fc_175 }}</td>
-                            <td>{{ prism.fc_210 }}</td>
-                            <td>{{ prism.fc_280 }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
+                {% for a,b in zippedList %}
+                <p class="text-left"><span class="font-weight-bold">{{ a|title }}:</span> {{ b }} % de {{ obj.fc_esp }} kgf/cm²</p>
+                {% endfor %}
                 <hr class="my-3">
                                 
                 <p class="text-left mx-auto  mt-3"><span class="font-weight-bold"><u>Datos Extra</u></span></p>

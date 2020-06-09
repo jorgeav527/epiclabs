@@ -55,6 +55,7 @@ class MasonryCompression(models.Model):
 class Masonry(models.Model):
     poured_date     = models.DateField()
     break_date      = models.DateField()
+    element_name    = models.CharField(max_length=40)
     dilate          = models.IntegerField(editable=False)
     L               = models.FloatField()
     A               = models.FloatField()
@@ -78,7 +79,7 @@ class Masonry(models.Model):
         self.dilate = diff.days
 
         # Generate the area
-        area_cm2 = self.L + self.A
+        area_cm2 = (self.L*0.1) * (self.A*0.1)
         self.area = round(area_cm2, 2)
 
         # Generate the hp_tp
@@ -97,7 +98,7 @@ class Masonry(models.Model):
 
         # Generate fc_MPa
         effort_fc_MPa = self.fc * 0.0981
-        self.fc_MPa = round(effort_fc_MPa, 2)
+        self.fc_MPa = round(effort_fc_MPa, 1)
 
         super(Masonry, self).save(*args, **kwargs)
 

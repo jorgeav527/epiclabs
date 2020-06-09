@@ -1,5 +1,6 @@
 import os
 from decouple import config
+from django.contrib.messages import constants as messages
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -126,7 +127,6 @@ GRAPH_MODELS = {
     'group_models': True,
 }
 
-
 # Login roots
 LOGIN_REDIRECT_URL = 'labs:home'
 # LOGIN_URL = 'login'
@@ -150,3 +150,8 @@ LOGIN_REDIRECT_URL = 'labs:home'
 
 # # For store the images
 # DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+# Django's default message tags do not match perfectly with Bootstrap's
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
+}

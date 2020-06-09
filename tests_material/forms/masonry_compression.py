@@ -24,7 +24,7 @@ class MasonryCompressionForm(forms.ModelForm):
         ]
         labels = {
             'brick_type': 'Tipo de Unidad',
-            'element_name': 'Elemto Nombre',
+            'element_name': 'Elemento Nombre',
             'done_date': 'Fecha de Ensayo',
         }
         help_texts = {
@@ -53,7 +53,7 @@ class MasonryCompressionFormClient(forms.ModelForm):
         ]
         labels = {
             'brick_type': 'Tipo de Unidad',
-            'element_name': 'Elemto Nombre',
+            'element_name': 'Elemento Nombre',
             'sampling_date': 'Fecha de Muestreo',
             'done_date': 'Fecha de Ensayo',
             'reference_person': 'Persona de Referencia',
@@ -96,6 +96,7 @@ class MasonryForm(forms.ModelForm):
         fields = [
             'poured_date',
             'break_date',
+            'element_name',
             'L',
             'A',
             'hp',
@@ -105,22 +106,25 @@ class MasonryForm(forms.ModelForm):
         labels = {
             'poured_date': 'Fecha de Vacidado',
             'break_date': 'Fecha de Rotura',
+            'element_name': 'Elemento Nombre',
             'L': 'Longitud',
             'A': 'Ancho',
-            'hp': 'Altura de la Pila o Murete',
-            'tp': 'Espesor de la Pila o Murete',
+            'hp': 'Altura de la Pila o Murete (hp)',
+            'tp': 'Espesor de la Pila o Murete (tp)',
             'load': 'Carga',
         }
         help_texts = {
-            'L': 'Unidades (cm)',
-            'A': 'Unidades (cm)',
-            'hp': 'Unidades (cm)',
-            'tp': 'Unidades (cm)',
-            'load': 'Unidades (kgf)',
+            'poured_date': 'mm/dd/yyyy',
+            'break_date': 'mm/dd/yyyy',
+            'L': 'Unidades (mm) <br> Aproximación (1 mm)',
+            'A': 'Unidades (mm) <br> Aproximación (1 mm)',
+            'hp': 'Unidades (mm) <br> Aproximación (1 mm)',
+            'tp': 'Unidades (mm) <br> Aproximación (1 mm)',
+            'load': 'Unidades (kgf) <br> Aproximación (1 kgf)',
         }
         widgets = {
             'poured_date': DateInput(),
             'break_date': DateInput(),
         }
 
-MasonryFormSet = inlineformset_factory(MasonryCompression, Masonry, form=MasonryForm, extra=3, max_num=3)
+MasonryFormSet = inlineformset_factory(MasonryCompression, Masonry, form=MasonryForm, extra=5, max_num=5, can_delete=True)

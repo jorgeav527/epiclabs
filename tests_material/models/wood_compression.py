@@ -54,6 +54,7 @@ class ParallelPerpendicular(models.Model):
         ("PERPENDICULAR", "Compreción Perpendicular a la Fibra"),
     )
     type_compression = models.CharField(max_length=40, choices=POSITION_CHOICES, default="NINGUNA",)
+    name_element    = models.CharField(max_length=40)
     length_1        = models.FloatField()
     width_1         = models.FloatField()
     area_1          = models.FloatField(editable=False)
@@ -72,11 +73,11 @@ class ParallelPerpendicular(models.Model):
     def save(self, *args, **kwargs):
 
         # Generate area_1
-        a_1 = self.length_1 * self.width_1 
+        a_1 = (self.length_1*0.1) * (self.width_1*0.1)
         self.area_1 = round(a_1, 2)
 
         # Generate area_2
-        a_2 = self.length_2 * self.width_2 
+        a_2 = (self.length_2*0.1) * (self.width_2*0.1) 
         self.area_2 = round(a_2, 2)
         
         # Generate average_area
@@ -89,7 +90,7 @@ class ParallelPerpendicular(models.Model):
 
         # Generate fc_MPa
         fc_MPa = self.fc*0.0981 
-        self.fc_MPa = round(fc_MPa, 2)
+        self.fc_MPa = round(fc_MPa, 1)
 
         super(ParallelPerpendicular, self).save(*args, **kwargs)
 

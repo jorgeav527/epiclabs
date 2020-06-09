@@ -36,13 +36,14 @@
                     <thead class="primary-color-dark white-text">
                         <tr>
                             <th>Secuencia</th>
+                            <th>Nombre</th>
                             <th>Fecha de Vaciado</th>
                             <th>Fecha de Rotura</th>
                             <th>Edad (dias)</th>
-                            <th>Largo (cm)</th>
-                            <th>Ancho (cm)</th>
-                            <th>Altura de la Pila (cm)</th>
-                            <th>Menor Dimensión Lateral (cm)</th>
+                            <th>Largo (mm)</th>
+                            <th>Ancho (mm)</th>
+                            <th>Altura de la Pila (mm)</th>
+                            <th>Menor Dimensión Lateral (mm)</th>
                             <th>hp/tp</th>
                             <th>Corrección</th>
                             <th>Area (cm²)</th>
@@ -55,6 +56,7 @@
                         {% for masonry in qs_masonry %}
                         <tr>
                             <th scope="row">{{ forloop.counter }}</th>
+                            <td>{{ masonry.element_name }}</td>
                             <td>{{ masonry.poured_date }}</td>
                             <td>{{ masonry.break_date }}</td>
                             <td>{{ masonry.dilate }}</td>
@@ -72,6 +74,7 @@
                         {% endfor %}
                         <tr>
                             <th scope="row">Promedio</th>
+                            <td></td>
                             <td></td>
                             <td></td>
                             <td></td>

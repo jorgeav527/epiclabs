@@ -69,8 +69,8 @@
                 <th rowspan="2" class="text-center">Usuario</th>
                 <th rowspan="2" class="text-center">Id</th>
                 <th colspan="2" class="text-center">Item</th>
-                <th rowspan="2" class="text-center">f'c Esp.</th>
-                <th rowspan="2" class="text-center">Fecha Muestreo</th>
+                <th rowspan="2" class="text-center">f'c Esp. (kgf/cm²)</th>
+                <th rowspan="2" class="text-center">Fecha Muestreo (dd/mm/yyyy)</th>
                 <th rowspan="2" class="text-center">Acciones</th>
               </tr>
               <tr>
@@ -83,7 +83,7 @@
               <tr>
                 <td class="text-center">{{ obj.user.username }}</td>
                 <td class="text-center">{{ obj.id }}</td>
-                <td class="text-center"></td>
+                <td class="text-center">Concreto</td>
                 <td class="text-center">{{ obj.code }}</td>
                 <td class="text-center">{{ obj.fc_esp }}</td>
                 <td class="text-center">{{ obj.sampling_date|date:"d/m/Y" }}</td>

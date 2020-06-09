@@ -24,7 +24,7 @@ class DiamondPiceBreakForm(forms.ModelForm):
             'fc_esp': 'Resistencia de Diseño', 
         }
         help_texts = {
-            'fc_esp': 'Unidades (kgf/cm²)', 
+            'fc_esp': 'Unidades (kgf/cm²) <br> Aproximación (1 kgf/cm²)', 
         }
     
 
@@ -47,7 +47,7 @@ class DiamondPiceBreakFormClient(forms.ModelForm):
             'construction': 'Construcción de Referencia',
         }
         help_texts = {
-            'fc_esp': 'Unidades (kgf/cm²)', 
+            'fc_esp': 'Unidades (kgf/cm²) <br> Aproximación (1 kgf/cm²)', 
         }
 
     def __init__(self, *args, **kwargs):
@@ -82,6 +82,7 @@ class DiamondPiceForm(forms.ModelForm):
             'element_name',
             'D',
             'L',
+            'check_per',
             'load',
         ]
         labels = {
@@ -90,26 +91,22 @@ class DiamondPiceForm(forms.ModelForm):
             'element_name': 'Elemento',    
             'D': 'Diametro',
             'L': 'Longitud',
+            'check_per': 'Verificación de la Perpendicularidad',
             'load': 'Carga',
         }
         help_texts = {
-            'D': 'Unidades (pulgadas)',
-            'L': 'Unidades (pulgadas)',
-            'load': 'Unidades (kgf)',
+            'extraction_date': 'mm/dd/yyyy',
+            'break_date': 'mm/dd/yyyy',
+            'D': 'Unidades (mm) <br> Aproximación (1 mm)',
+            'L': 'Unidades (mm) <br> Aproximación (1 mm)',
+            'load': 'Unidades (kgf) <br> Aproximación (1 kgf)',
         }
         widgets = {
             'extraction_date': DateInput(),
             'break_date': DateInput(),
         }
 
-    def clean(self):
-        cleaned_data = super().clean()
-        D_passed = cleaned_data.get("D")
-        L_passed = cleaned_data.get("L")
-        if L_passed/D_passed > 1.75:
-            raise forms.ValidationError("El factor L/D es mayor que 1.75 revisar Diametro y Longitud")
-
-DiamondPiceFormSet = inlineformset_factory(DiamondPiceBreak, DiamondPice, form=DiamondPiceForm, extra=3, max_num=3, can_delete=True)
+DiamondPiceFormSet = inlineformset_factory(DiamondPiceBreak, DiamondPice, form=DiamondPiceForm, extra=5, max_num=5, can_delete=True,)
 
 
 

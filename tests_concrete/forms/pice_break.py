@@ -3,7 +3,6 @@ from functools import partial
 from datetime import datetime
 from django.forms import inlineformset_factory
 
-
 from accounts.models import User
 from tests_concrete.models import PiceBreak, Pice
 from construction.models import Construction
@@ -27,7 +26,7 @@ class PiceBreakForm(forms.ModelForm):
             'fc_esp': 'Resistencia de Diseño',
         }
         help_texts = {
-            'fc_esp': 'Unidades (kgf/cm²)', 
+            'fc_esp': 'Unidades (kgf/cm²) <br> Aproximación (1 kgf/cm²)', 
         }
 
 
@@ -52,7 +51,7 @@ class PiceBreakFormClient(forms.ModelForm):
             'construction': 'Construcción de Referencia',
         }
         help_texts = {
-            'fc_esp': 'Unidades (kgf/cm²)', 
+            'fc_esp': 'Unidades (kgf/cm²) <br> Aproximación (1 kgf/cm²)', 
         }
 
     def __init__(self, *args, **kwargs):
@@ -85,6 +84,7 @@ class PiceForm(forms.ModelForm):
             'poured_date',
             'break_date',
             'element_name',
+            'check_per',
             'D_1',
             'D_2',
             'load',
@@ -93,14 +93,17 @@ class PiceForm(forms.ModelForm):
             'poured_date': 'Fecha de Vaciado',
             'break_date': 'Fecha de Rotura',
             'element': 'Elemento',    
+            'check_per': 'Verificación de la Perpendicularidad',
             'D_1': 'Diametro 1',
             'D_2': 'Diametro 2',
             'load': 'Carga',
         }
         help_texts = {
-            'D_1': 'Unidades (pulgadas)',
-            'D_2': 'Unidades (pulgadas)',
-            'load': 'Unidades (kgf)',
+            'D_1': 'Unidades (mm) <br> Aproximación (1 mm)',
+            'D_2': 'Unidades (mm) <br> Aproximación (1 mm)',
+            'load': 'Unidades (kgf) <br> Aproximación (1 kgf)',
+            'poured_date': 'mm-dd-yyyy',
+            'break_date': 'mm-dd-yyyy',
         }
         widgets = {
             'poured_date': DateInput(),

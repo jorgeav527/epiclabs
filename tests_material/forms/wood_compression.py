@@ -96,6 +96,7 @@ class ParallelPerpendicularForm(forms.ModelForm):
         model = ParallelPerpendicular
         fields = [
             'type_compression',
+            'name_element',
             'length_1',
             'width_1',
             'length_2',
@@ -104,6 +105,7 @@ class ParallelPerpendicularForm(forms.ModelForm):
         ]
         labels = {
             'type_compression': 'Tipo de Compresión',
+            'name_element': 'Elemento Nombre',
             'length_1': 'Largo Superior',
             'width_1': 'Ancho Superior',
             'length_2': 'Largo Inferior',
@@ -111,11 +113,11 @@ class ParallelPerpendicularForm(forms.ModelForm):
             'load': 'Carga',
         }
         help_texts = {
-            'length_1': 'Unidades (cm)',
-            'width_1': 'Unidades (cm)',
-            'length_2': 'Unidades (cm)',
-            'width_2': 'Unidades (cm)',
-            'load': 'Unidades (kgf)',
+            'length_1': 'Unidades (mm) <br> Aproximación (1 mm)',
+            'width_1': 'Unidades (mm) <br> Aproximación (1 mm)',
+            'length_2': 'Unidades (mm) <br> Aproximación (1 mm)',
+            'width_2': 'Unidades (mm) <br> Aproximación (1 mm)',
+            'load': 'Unidades (kgf) <br> Aproximación (1 kgf)',
         }
 
-ParallelPerpendicularFormSet = inlineformset_factory(WoodCompression, ParallelPerpendicular, form=ParallelPerpendicularForm, extra=4 , max_num=4)
+ParallelPerpendicularFormSet = inlineformset_factory(WoodCompression, ParallelPerpendicular, form=ParallelPerpendicularForm, extra=5 , max_num=8, can_delete=True)

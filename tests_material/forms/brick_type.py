@@ -36,10 +36,9 @@ class BrickTypeForm(forms.ModelForm):
             'done_date': 'Fecha de Ensayo',
         }
         help_texts = {
-            'name_element': 'Nombre Propio',
-            'n_d_length': 'Unidades (mm)',
-            'n_d_width': 'Unidades (mm)',
-            'n_d_high': 'Unidades (mm)',
+            'n_d_length': 'Unidades (mm) <br> Aproximación (1 mm)',
+            'n_d_width': 'Unidades (mm) <br> Aproximación (1 mm)',
+            'n_d_high': 'Unidades (mm) <br> Aproximación (1 mm)',
         }
         widgets = {
             'sampling_date': DateInput(),
@@ -76,10 +75,9 @@ class BrickTypeFormClient(forms.ModelForm):
             'construction': 'Construcción de Referencia',
         }
         help_texts = {
-            'name_element': 'Nombre Propio',
-            'n_d_length': 'Unidades (mm)',
-            'n_d_width': 'Unidades (mm)',
-            'n_d_high': 'Unidades (mm)',
+            'n_d_length': 'Unidades (mm) <br> Aproximación (1 mm)',
+            'n_d_width': 'Unidades (mm) <br> Aproximación (1 mm)',
+            'n_d_high': 'Unidades (mm) <br> Aproximación (1 mm)',
         }
         widgets = {
             'sampling_date': DateInput(),
@@ -133,14 +131,14 @@ class VadriationDimensionsForm(forms.ModelForm):
             'high_lefside': 'Alto Arista Izquierda',
         }
         help_texts = {
-            'upface_length': 'Unidades (mm)',
-            'downface_length': 'Unidades (mm)',
-            'upface_width': 'Unidades (mm)',
-            'downface_width': 'Unidades (mm)',
-            'high_backside': 'Unidades (mm)',
-            'high_rightside': 'Unidades (mm)',
-            'high_frontside': 'Unidades (mm)',
-            'high_lefside': 'Unidades (mm)',
+            'upface_length': 'Unidades (mm) <br> Aproximación (1 mm)',
+            'downface_length': 'Unidades (mm) <br> Aproximación (1 mm)',
+            'upface_width': 'Unidades (mm) <br> Aproximación (1 mm)',
+            'downface_width': 'Unidades (mm) <br> Aproximación (1 mm)',
+            'high_backside': 'Unidades (mm) <br> Aproximación (1 mm)',
+            'high_rightside': 'Unidades (mm) <br> Aproximación (1 mm)',
+            'high_frontside': 'Unidades (mm) <br> Aproximación (1 mm)',
+            'high_lefside': 'Unidades (mm) <br> Aproximación (1 mm)',
         }
 
 VadriationDimensionsFormSet = inlineformset_factory(BrickType, VariationDimensions, form=VadriationDimensionsForm, extra=5, max_num=5, can_delete=True)
@@ -163,10 +161,10 @@ class WarpingForm(forms.ModelForm):
             'downface_convex': 'Cara Inferior Convexo',
         }
         help_texts = {
-            'upface_concave': 'Unidades (mm)',
-            'upface_convex': 'Unidades (mm)',
-            'downface_concave': 'Unidades (mm)',
-            'downface_convex': 'Unidades (mm)',
+            'upface_concave': 'Unidades (mm) <br> Aproximación (1 mm)',
+            'upface_convex': 'Unidades (mm) <br> Aproximación (1 mm)',
+            'downface_concave': 'Unidades (mm) <br> Aproximación (1 mm)',
+            'downface_convex': 'Unidades (mm) <br> Aproximación (1 mm)',
         }
 
 WarpingFormSet = inlineformset_factory(BrickType, Warping, form=WarpingForm, extra=5, max_num=5, can_delete=True)
@@ -193,12 +191,12 @@ class DensityVoidsForm(forms.ModelForm):
             'weight': 'Peso del Especimen',
         }
         help_texts = {
-            'length': 'Unidades (cm)',
-            'width': 'Unidades (cm)',
-            'high': 'Unidades (cm)',
-            'sc': 'Unidades (gr)',
-            'su': 'Unidades (gr)',
-            'weight': 'Unidades (gr)',
+            'length': 'Unidades (mm) <br> Aproximación (1 mm)',
+            'width': 'Unidades (mm) <br> Aproximación (1 mm)',
+            'high': 'Unidades (mm) <br> Aproximación (1 mm)',
+            'sc': 'Unidades (gr) <br> Aproximación (0.5 gr)',
+            'su': 'Unidades (gr) <br> Aproximación (0.5 gr)',
+            'weight': 'Unidades (gr) <br> Aproximación (0.5 gr)',
         }
 
 DensityVoidsFormSet = inlineformset_factory(BrickType, DensityVoids, form=DensityVoidsForm, extra=5 ,max_num=5, can_delete=True)
@@ -223,11 +221,11 @@ class SuctionForm(forms.ModelForm):
             'face_wet_weight': 'Peso con la Cara Inferior Mojada', 
         }
         help_texts = {
-            'nomal_weight': 'Unidades (gr)', 
-            'dry_weight': 'Unidades (gr)', 
-            'length': 'Unidades (cm)', 
-            'width': 'Unidades (cm)', 
-            'face_wet_weight': 'Unidades (gr/min)', 
+            'nomal_weight': 'Unidades (gr) <br> Aproximación (0.5 gr)', 
+            'dry_weight': 'Unidades (gr) <br> Aproximación (0.5 gr)', 
+            'length': 'Unidades (mm) <br> Aproximación (1 mm)', 
+            'width': 'Unidades (mm) <br> Aproximación (1 mm)', 
+            'face_wet_weight': 'Unidades (gr/min/200cm²) <br> Aproximación (0.5 gr/min/200cm²)', 
         }
 
 SuctionFormSet = inlineformset_factory(BrickType, Suction, form=SuctionForm, extra=5, max_num=5, can_delete=True)
@@ -248,9 +246,9 @@ class AbsSatuCoeffForm(forms.ModelForm):
             'wet_weight_hot_5': 'Peso del Especimen Saturado en Agua Caliente a 5 Horas',
         }
         help_texts = {
-            'dry_weight': 'Unidades (gr)',
-            'wet_weight_cool_24': 'Unidades (gr)',
-            'wet_weight_hot_5': 'Unidades (gr)',
+            'dry_weight': 'Unidades (gr) <br> Aproximación (0.5 gr)',
+            'wet_weight_cool_24': 'Unidades (gr) <br> Aproximación (0.5 gr)',
+            'wet_weight_hot_5': 'Unidades (gr) <br> Aproximación (0.5 gr)',
         }
 
 AbsSatuCoeffFormSet = inlineformset_factory(BrickType, AbsSatuCoeff, form=AbsSatuCoeffForm, extra=5, max_num=5, can_delete=True)
@@ -275,11 +273,11 @@ class CompretionBrickForm(forms.ModelForm):
             'load': 'Carga',
         }
         help_texts = {
-            'upface_length': 'Unidades (cm)',
-            'upface_width': 'Unidades (cm)',
-            'downface_length': 'Unidades (cm)',
-            'downface_width': 'Unidades (cm)',
-            'load': 'Unidades (kgf)',
+            'upface_length': 'Unidades (mm) <br> Aproximación (1 mm)',
+            'upface_width': 'Unidades (mm) <br> Aproximación (1 mm)',
+            'downface_length': 'Unidades (mm) <br> Aproximación (1 mm)',
+            'downface_width': 'Unidades (mm) <br> Aproximación (1 mm)',
+            'load': 'Unidades (kgf) <br> Aproximación (1 kgf)',
         }
 
-CompretionBrickFormSet = inlineformset_factory(BrickType, CompretionBrick, form=CompretionBrickForm, max_num=3, can_delete=True)
+CompretionBrickFormSet = inlineformset_factory(BrickType, CompretionBrick, form=CompretionBrickForm, extra=5, max_num=5, can_delete=True)

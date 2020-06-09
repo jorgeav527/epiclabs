@@ -70,15 +70,15 @@ class VariationDimensions(models.Model):
 
         # Generate average_length
         al = (self.upface_length + self.downface_length) / 2
-        self.average_length = round(al, 2)
+        self.average_length = round(al, 1)
 
         # Generate average_width
         aw = (self.upface_width + self.downface_width) / 2
-        self.average_width = round(aw, 2)
+        self.average_width = round(aw, 1)
 
         # Generate average_high
         ah = (self.high_backside + self.high_rightside + self.high_frontside + self.high_lefside) / 4
-        self.average_high = round(ah, 2)
+        self.average_high = round(ah, 1)
 
         super(VariationDimensions, self).save(*args, **kwargs)
 
@@ -118,16 +118,16 @@ class DensityVoids(models.Model):
     def save(self, *args, **kwargs):
 
         # Generate volume_brick
-        volume = self.length * self.width * self.high
-        self.volume_brick = round(volume, 2)
+        volume = (self.length*0.1) * (self.width*0.1) * (self.high*0.1)
+        self.volume_brick = round(volume, 1)
 
         # Generate volume_void
         vv = ( 500 / self.sc ) * self.su
-        self.volume_void = round(vv, 2)
+        self.volume_void = round(vv, 1)
 
         # Generate volume_real
         vr = self.volume_brick - self.volume_void
-        self.volume_real = round(vr, 2)
+        self.volume_real = round(vr, 1)
 
         # Generate void_percentage
         vp = (self.volume_void / self.volume_brick) * (1/1.64) * 100
@@ -160,18 +160,18 @@ class Suction(models.Model):
 
         # Generate diff_weight
         dw = self.nomal_weight - self.dry_weight
-        self.diff_weight = round(dw, 2)
+        self.diff_weight = round(dw, 1)
 
         # Generate face_area
-        fa = self.length * self.width
-        self.face_area = round(fa, 2)
+        fa = (self.length*0.1) * (self.width*0.1)
+        self.face_area = round(fa, 1)
 
         # Generate face_wet_weight_correction
         if self.face_area > (200 + (200 * 2.5 / 100)) or self.face_area < (200 - (200 * 2.5 / 100)):
             fwwc = (200 * self.face_wet_weight) / (self.length * self.width)
-            self.face_wet_weight_correction = round(fwwc, 2)
+            self.face_wet_weight_correction = round(fwwc, 1)
         else:
-            self.face_wet_weight_correction = round(self.face_wet_weight, 2) 
+            self.face_wet_weight_correction = round(self.face_wet_weight, 1) 
 
         super(Suction, self).save(*args, **kwargs)
 
@@ -202,7 +202,7 @@ class AbsSatuCoeff(models.Model):
         
         # Generate coeff_sat
         cs = (self.wet_weight_cool_24 - self.dry_weight) / (self.wet_weight_hot_5 - self.dry_weight)
-        self.coeff_sat = round(cs, 3)
+        self.coeff_sat = round(cs, 2)
 
         super(AbsSatuCoeff, self).save(*args, **kwargs)
 
@@ -228,16 +228,16 @@ class CompretionBrick(models.Model):
     def save(self, *args, **kwargs):
 
         # Generate upface_area
-        afa = self.upface_length * self.upface_width 
-        self.upface_area = round(afa, 2)
+        afa = (self.upface_length*0.1) * (self.upface_width*0.1) 
+        self.upface_area = round(afa, 1)
 
         # Generate downface_area
-        dfa = self.downface_length * self.downface_width 
-        self.downface_area = round(dfa, 2)
+        dfa = (self.downface_length*0.1) * (self.downface_width*0.1) 
+        self.downface_area = round(dfa, 1)
         
         # Generate average_area
         aa = (self.upface_area + self.downface_area) / 2
-        self.average_area = round(aa, 2)
+        self.average_area = round(aa, 1)
 
         # Generate compression_resistance
         fc = self.load / self.average_area
@@ -245,7 +245,7 @@ class CompretionBrick(models.Model):
 
         # Generate fc_MPa
         fc_MPa = self.fc*0.0981 
-        self.fc_MPa = round(fc_MPa, 2)
+        self.fc_MPa = round(fc_MPa, 1)
 
         super(CompretionBrick, self).save(*args, **kwargs)
 

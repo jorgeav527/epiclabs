@@ -47,15 +47,13 @@ class DiamondPice(models.Model):
     element_name    = models.CharField(max_length=100, null=True, blank=True)
     D               = models.FloatField()
     L               = models.FloatField()
+    check_per       = models.BooleanField()
     factor_ld       = models.FloatField(editable=False)
     area            = models.FloatField(editable=False)
     correction      = models.FloatField(editable=False)
     load            = models.FloatField()
     fc              = models.FloatField(editable=False)
     fc_MPa          = models.FloatField(editable=False)
-    fc_175          = models.FloatField(editable=False)
-    fc_210          = models.FloatField(editable=False)
-    fc_280          = models.FloatField(editable=False)
     created         = models.DateTimeField(auto_now_add=True)
     updated         = models.DateTimeField(auto_now=True)
     diamond_pice_break      = models.ForeignKey(DiamondPiceBreak, on_delete=models.CASCADE)
@@ -72,7 +70,7 @@ class DiamondPice(models.Model):
         self.factor_ld = round(factor, 2) 
 
         # Generate the area
-        d_cm = self.D*2.54
+        d_cm = self.D*0.1
         area_cm2 = ((d_cm**2)*math.pi)/4
         self.area = round(area_cm2, 2)
         
@@ -89,18 +87,6 @@ class DiamondPice(models.Model):
         # Generate fc_MPa
         effort_fc_MPa = self.fc*0.0981 
         self.fc_MPa = round(effort_fc_MPa, 2)
-
-        # Generate the fc_175
-        effort_fc_175 = (self.fc/175)*100 
-        self.fc_175 = round(effort_fc_175, 2)
-
-        # Generate the fc_210
-        effort_fc_210 = (self.fc/210)*100 
-        self.fc_210 = round(effort_fc_210, 2)
-
-        # Generate the fc_280
-        effort_fc_280 = (self.fc/280)*100 
-        self.fc_280 = round(effort_fc_280, 2)
 
         super(DiamondPice, self).save(*args, **kwargs)
 

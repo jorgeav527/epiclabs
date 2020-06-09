@@ -6,12 +6,10 @@ from .models import *
 class PiceAdmin(admin.TabularInline):
     model = Pice
     fields = ( 
-        "poured_date", "element_name", "break_date", "dilate", "D_1", "D_2", "area", "load", 
-        "fc", "fc_MPa", "fc_175", "fc_210", "fc_280",
+        "poured_date", "element_name", "break_date", "dilate", "D_1", "D_2", "area", "load", "fc",
     )
     readonly_fields = (
-        "poured_date", "element_name", "break_date", "dilate", "D_1", "D_2", "area", "load", 
-        "fc", "fc_MPa", "fc_175", "fc_210", "fc_280",
+        "poured_date", "element_name", "break_date", "dilate", "D_1", "D_2", "area", "load", "fc",
     )
     extra = 0
     can_delete = False
@@ -29,12 +27,10 @@ admin.site.register(PiceBreak, PiceBreakAdmin)
 class PrismAdmin(admin.TabularInline):
     model = Prism
     fields = ( 
-        "poured_date", "element_name", "break_date", "dilate", "D_1", "D_2", "area", "load", 
-        "fc", "fc_MPa", "fc_175", "fc_210", "fc_280",
+        "poured_date", "element_name", "break_date", "dilate", "D_1", "D_2", "area", "load", "fc",
     )
     readonly_fields = (
-        "poured_date", "element_name", "break_date", "dilate", "D_1", "D_2", "area", "load", 
-        "fc", "fc_MPa", "fc_175", "fc_210", "fc_280",
+        "poured_date", "element_name", "break_date", "dilate", "D_1", "D_2", "area", "load", "fc",
     )
     extra = 0
     can_delete = False
@@ -53,11 +49,11 @@ class DiamondPice(admin.TabularInline):
     model = DiamondPice
     fields = ( 
         'extraction_date', 'break_date', 'dilate', 'element_name', 'D', 'L', 
-        'factor_ld', 'area', 'correction', 'load', 'fc', 'fc_MPa', 'fc_175', 'fc_210', 'fc_280',
+        'factor_ld', 'area', 'correction', 'load', 'fc', 'fc_MPa',
     )
     readonly_fields = (
         'extraction_date', 'break_date', 'dilate', 'element_name', 'D', 'L', 
-        'factor_ld', 'area', 'correction', 'load', 'fc', 'fc_MPa', 'fc_175', 'fc_210', 'fc_280',
+        'factor_ld', 'area', 'correction', 'load', 'fc', 'fc_MPa',
     )
     extra = 0
     can_delete = False

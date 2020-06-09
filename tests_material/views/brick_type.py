@@ -353,10 +353,10 @@ def brick_type_detail(request, id):
     qs_downface_concave_list = qs_warping.values_list('downface_concave', flat=True) 
     qs_downface_convex_list = qs_warping.values_list('downface_convex', flat=True) 
 
-    avg_upface_concave = round(np.mean(qs_upface_concave_list), 2)
-    avg_upface_convex = round(np.mean(qs_upface_convex_list), 2)
-    avg_downface_concave = round(np.mean(qs_downface_concave_list), 2)
-    avg_downface_convex = round(np.mean(qs_downface_convex_list), 2)
+    avg_upface_concave = round(np.mean(qs_upface_concave_list), 0)
+    avg_upface_convex = round(np.mean(qs_upface_convex_list), 0)
+    avg_downface_concave = round(np.mean(qs_downface_concave_list), 0)
+    avg_downface_convex = round(np.mean(qs_downface_convex_list), 0)
     max_avg_warping = max(avg_upface_concave, avg_upface_convex, avg_downface_concave, avg_downface_convex,)
 
     if max_avg_warping <= 2 and max_avg_warping > 0:
@@ -398,7 +398,7 @@ def brick_type_detail(request, id):
     qs_suction = Suction.objects.filter(brick_type=obj.id)
 
     qs_face_wet_weight_correction_list = qs_suction.values_list('face_wet_weight_correction', flat=True)
-    avg_face_wet_weight_correction = round(np.mean(qs_face_wet_weight_correction_list), 2)
+    avg_face_wet_weight_correction = round(np.mean(qs_face_wet_weight_correction_list), 1)
 
     if avg_face_wet_weight_correction < 38:
         type_face_wet_weight_correction = "Ladrillo Tipo V"
@@ -420,7 +420,7 @@ def brick_type_detail(request, id):
     qs_coeff_sat_list = qs_abs_sat_coff.values_list('coeff_sat', flat=True)
     avg_abs_brick = round(np.mean(qs_abs_brick_list), 1)
     avg_abs_max_brick = round(np.mean(qs_abs_max_brick_list), 1)
-    avg_coeff_sat = round(np.mean(qs_coeff_sat_list), 3)
+    avg_coeff_sat = round(np.mean(qs_coeff_sat_list), 2)
 
     if avg_abs_brick < 22:
         type_abs = "Ladrillo Tipo V"
@@ -457,9 +457,9 @@ def brick_type_detail(request, id):
     fc_caracteristic = round(avg_fc - std_fc, 2)
 
     qs_fc_MPA = qs_compretion_brick.values_list('fc_MPa', flat=True)
-    avg_fc_MPA = round(np.mean(qs_fc_MPA), 2)
-    std_fc_MPA = round(np.std(qs_fc_MPA), 2)
-    fc_caracteristic_MPA = round(avg_fc_MPA - std_fc_MPA, 2)
+    avg_fc_MPA = round(np.mean(qs_fc_MPA), 1)
+    std_fc_MPA = round(np.std(qs_fc_MPA), 1)
+    fc_caracteristic_MPA = round(avg_fc_MPA - std_fc_MPA, 1)
 
 
     if fc_caracteristic_MPA <= 17.6 and fc_caracteristic_MPA > 12.7:
@@ -618,10 +618,10 @@ def brick_type_pdf(request, id):
     qs_downface_concave_list = qs_warping.values_list('downface_concave', flat=True) 
     qs_downface_convex_list = qs_warping.values_list('downface_convex', flat=True) 
 
-    avg_upface_concave = round(np.mean(qs_upface_concave_list), 2)
-    avg_upface_convex = round(np.mean(qs_upface_convex_list), 2)
-    avg_downface_concave = round(np.mean(qs_downface_concave_list), 2)
-    avg_downface_convex = round(np.mean(qs_downface_convex_list), 2)
+    avg_upface_concave = round(np.mean(qs_upface_concave_list), 0)
+    avg_upface_convex = round(np.mean(qs_upface_convex_list), 0)
+    avg_downface_concave = round(np.mean(qs_downface_concave_list), 0)
+    avg_downface_convex = round(np.mean(qs_downface_convex_list), 0)
     max_avg_warping = max(avg_upface_concave, avg_upface_convex, avg_downface_concave, avg_downface_convex,)
 
     if max_avg_warping <= 2 and max_avg_warping > 0:
@@ -663,7 +663,7 @@ def brick_type_pdf(request, id):
     qs_suction = Suction.objects.filter(brick_type=obj.id)
 
     qs_face_wet_weight_correction_list = qs_suction.values_list('face_wet_weight_correction', flat=True)
-    avg_face_wet_weight_correction = round(np.mean(qs_face_wet_weight_correction_list), 2)
+    avg_face_wet_weight_correction = round(np.mean(qs_face_wet_weight_correction_list), 1)
 
     if avg_face_wet_weight_correction < 38:
         type_face_wet_weight_correction = "Ladrillo Tipo V"
@@ -686,7 +686,7 @@ def brick_type_pdf(request, id):
     qs_coeff_sat_list = qs_abs_sat_coff.values_list('coeff_sat', flat=True)
     avg_abs_brick = round(np.mean(qs_abs_brick_list), 1)
     avg_abs_max_brick = round(np.mean(qs_abs_max_brick_list), 1)
-    avg_coeff_sat = round(np.mean(qs_coeff_sat_list), 3)
+    avg_coeff_sat = round(np.mean(qs_coeff_sat_list), 2)
 
     if avg_abs_brick < 22:
         type_abs = "Ladrillo Tipo V"
@@ -723,9 +723,9 @@ def brick_type_pdf(request, id):
     fc_caracteristic = round(avg_fc - std_fc, 2)
 
     qs_fc_MPA = qs_compretion_brick.values_list('fc_MPa', flat=True)
-    avg_fc_MPA = round(np.mean(qs_fc_MPA), 2)
-    std_fc_MPA = round(np.std(qs_fc_MPA), 2)
-    fc_caracteristic_MPA = round(avg_fc_MPA - std_fc_MPA, 2)
+    avg_fc_MPA = round(np.mean(qs_fc_MPA), 1)
+    std_fc_MPA = round(np.std(qs_fc_MPA), 1)
+    fc_caracteristic_MPA = round(avg_fc_MPA - std_fc_MPA, 1)
 
 
     if fc_caracteristic_MPA <= 17.6 and fc_caracteristic_MPA > 12.7:

@@ -113,13 +113,23 @@ def diamond_pice_save(request, id):
             if formset.is_valid():
                 instances = formset.save(commit=False)
                 for instance in instances:
-                    instance.save()
-                    for equip in equips:
-                        instance.equipment.add(equip)
-                        equip.use = F("use") + 1
-                        equip.save()
+                    D_passed = instance.D
+                    L_passed = instance.L
+                    check_per = instance.check_per
+                    if L_passed/D_passed > 1.75:
+                        messages.error(request, f"El diametro y la longitud no cumplen la norma NTP")
+                        return redirect('tests_concrete:diamond_pice_save', id=obj.id)
+                    elif check_per == False:
+                        messages.error(request, f"El testigo no cumple con la perpendicularidad adecuada")
+                        return redirect('tests_concrete:diamond_pice_save', id=obj.id)
+                    else:
+                        instance.save()
+                        for equip in equips:
+                            instance.equipment.add(equip)
+                            equip.use = F("use") + 1
+                            equip.save()
+                        messages.success(request, f"Los ensayos han sido creados o actualizados")
                 formset.save()
-                messages.success(request, f"Los ensayos han sido creados o actualizados")
                 return redirect('tests_concrete:diamond_pice_save', id=obj.id)
     
     formset = DiamondPiceFormSet(instance=obj)

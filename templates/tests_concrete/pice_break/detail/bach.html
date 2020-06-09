@@ -54,15 +54,12 @@
                             <th>Fecha de Vaciado</th>
                             <th>Fecha de Rotura</th>
                             <th>Edad (dias)</th>
-                            <th>Diametro Superior (pulgadas)</th>
-                            <th>Diametro Inferior (pulgadas)</th>
+                            <th>Diametro Superior (mm)</th>
+                            <th>Diametro Inferior (mm)</th>
                             <th>Area (cm²)</th>
                             <th>Carga (kgf)</th>
                             <th>Esfuerzo (kgf/cm²)</th>
-                            <th>Esfuerzo (MPa)</th>
-                            <th>Esfuerzo a 175 (kgf/cm²)</th>
-                            <th>Esfuerzo a 210 (kgf/cm²)</th>
-                            <th>Esfuerzo a 280 (kgf/cm²)</th>
+                            <th>Esfuerzo (MPa)</th>                            
                         </tr>
                     </thead>
                     <tbody>
@@ -79,9 +76,6 @@
                             <td>{{ pice.load }}</td>
                             <td>{{ pice.fc }}</td>
                             <td>{{ pice.fc_MPa }}</td>
-                            <td>{{ pice.fc_175 }}</td>
-                            <td>{{ pice.fc_210 }}</td>
-                            <td>{{ pice.fc_280 }}</td>
                         </tr>
                         {% endfor %}
                         <tr>
@@ -96,9 +90,6 @@
                             <td></td>
                             <td>{{ mean_pice_fc }}</td>
                             <td>{{ mean_pice_fc_MPa }}</td>  
-                            <td></td>
-                            <td></td>
-                            <td></td>
                         </tr>
                         <tr>
                             <th scope="row"> SD</th>
@@ -112,9 +103,6 @@
                             <td></td>
                             <td>{{ std_pice_fc }}</td>
                             <td>{{ std_pice_fc_MPa }}</td>  
-                            <td></td>
-                            <td></td>
-                            <td></td>
                         </tr>
                     </tbody>
                 </table>

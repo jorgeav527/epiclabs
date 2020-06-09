@@ -13,11 +13,12 @@ from course.models import Course
 
 class PrismBreak(models.Model):
     COMPOSITION_CHOICES = (
-        ("DADO_GROUT", "Dado de Grout"),
+        ("DADO_CONCRETO", "Dado de Concreto"),
         ("DADO_CAL", "Dado de Cal"),
+        ("ROCA", "Roca"),
         ("ADOQUIN_CONCRETO", "Adoquin de Concreto"),
     )
-    prism_type      = models.CharField(max_length=20, choices=COMPOSITION_CHOICES, default="DADO_GROUT",)
+    prism_type      = models.CharField(max_length=20, choices=COMPOSITION_CHOICES, default="DADO_CONCRETO",)
     user            = models.ForeignKey(User, on_delete=models.CASCADE)
     sampling_date   = models.DateField(default=datetime.datetime.now, null=True, blank=True)
     name            = models.CharField(max_length=50, default="Rotura Testigo")
@@ -51,15 +52,13 @@ class Prism(models.Model):
     break_date      = models.DateField()
     dilate          = models.IntegerField(editable=False)
     element_name    = models.CharField(max_length=100, null=True, blank=True)
+    check_per       = models.BooleanField()
     D_1             = models.FloatField()
     D_2             = models.FloatField()
     area            = models.FloatField(editable=False)
     load            = models.FloatField()
     fc              = models.FloatField(editable=False)
     fc_MPa          = models.FloatField(editable=False)
-    fc_175          = models.FloatField(editable=False)
-    fc_210          = models.FloatField(editable=False)
-    fc_280          = models.FloatField(editable=False)
     created         = models.DateTimeField(auto_now_add=True)
     updated         = models.DateTimeField(auto_now=True)
     prism_break      = models.ForeignKey(PrismBreak, on_delete=models.CASCADE)
@@ -72,7 +71,7 @@ class Prism(models.Model):
         self.dilate = diff.days
 
         # Generate the area
-        avg_D = self.D_1 * self.D_2
+        avg_D = (self.D_1*0.1) * (self.D_2*0.1)
         self.area = round(avg_D, 2)
 
         # Generate the fc
@@ -81,19 +80,7 @@ class Prism(models.Model):
 
         # Generate fc_MPa
         effort_fc_MPa = self.fc * 0.0981 
-        self.fc_MPa = round(effort_fc_MPa, 2)
-
-        # Generate the fc_175
-        effort_fc_175 = (self.fc / 175) * 100 
-        self.fc_175 = round(effort_fc_175, 2)
-
-        # Generate the fc_210
-        effort_fc_210 = (self.fc / 210) * 100 
-        self.fc_210 = round(effort_fc_210, 2)
-
-        # Generate the fc_280
-        effort_fc_280 = (self.fc / 280) * 100 
-        self.fc_280 = round(effort_fc_280, 2)
+        self.fc_MPa = round(effort_fc_MPa, 1)
 
         super(Prism, self).save(*args, **kwargs)
 

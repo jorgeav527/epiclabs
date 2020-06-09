@@ -145,7 +145,7 @@ def masonry_compression_detail(request, id):
     qs_fc_masonry = qs_masonry.values_list('fc', flat=True)
     avg_fc = round(np.mean(qs_fc_masonry), 2)
     qs_fc_MPA = qs_masonry.values_list('fc_MPa', flat=True)
-    avg_fc_MPA = round(np.mean(qs_fc_MPA), 2)
+    avg_fc_MPA = round(np.mean(qs_fc_MPA), 1)
 
     context = {
         "obj": obj,
@@ -195,7 +195,7 @@ def masonry_compression_pdf(request, id):
     qs_fc_masonry = qs_masonry.values_list('fc', flat=True)
     avg_fc = round(np.mean(qs_fc_masonry), 2)
     qs_fc_MPA = qs_masonry.values_list('fc_MPa', flat=True)
-    avg_fc_MPA = round(np.mean(qs_fc_MPA), 2)
+    avg_fc_MPA = round(np.mean(qs_fc_MPA), 1)
 
     context = {
         "obj": obj,

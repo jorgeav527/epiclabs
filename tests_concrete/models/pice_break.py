@@ -50,15 +50,13 @@ class Pice(models.Model):
     break_date      = models.DateField()
     dilate          = models.IntegerField(editable=False)
     element_name    = models.CharField(max_length=100, null=True, blank=True)
+    check_per       = models.BooleanField()
     D_1             = models.FloatField()
     D_2             = models.FloatField()
     area            = models.FloatField(editable=False)
     load            = models.FloatField()
     fc              = models.FloatField(editable=False)
     fc_MPa          = models.FloatField(editable=False)
-    fc_175          = models.FloatField(editable=False)
-    fc_210          = models.FloatField(editable=False)
-    fc_280          = models.FloatField(editable=False)
     created         = models.DateTimeField(auto_now_add=True)
     updated         = models.DateTimeField(auto_now=True)
     pice_break      = models.ForeignKey(PiceBreak, on_delete=models.CASCADE)
@@ -71,9 +69,10 @@ class Pice(models.Model):
         self.dilate = diff.days
 
         # Generate the area
-        avg_D = ((self.D_1 + self.D_2) / 2) * 2.54
-        area_cm2 = ((avg_D**2)*math.pi) / 4
-        self.area = round(area_cm2, 2)
+        area_d1 = (((self.D_1*0.1)**2)*math.pi) / 4
+        area_d2 = (((self.D_1*0.1)**2)*math.pi) / 4
+        avg_area = ((area_d1 + area_d2) / 2)
+        self.area = round(avg_area, 2)
 
         # Generate the fc
         effort_fc = self.load / self.area
@@ -81,19 +80,7 @@ class Pice(models.Model):
 
         # Generate fc_MPa
         effort_fc_MPa = self.fc * 0.0981 
-        self.fc_MPa = round(effort_fc_MPa, 2)
-
-        # Generate the fc_175
-        effort_fc_175 = (self.fc / 175) * 100 
-        self.fc_175 = round(effort_fc_175, 2)
-
-        # Generate the fc_210
-        effort_fc_210 = (self.fc / 210) * 100 
-        self.fc_210 = round(effort_fc_210, 2)
-
-        # Generate the fc_280
-        effort_fc_280 = (self.fc / 280) * 100 
-        self.fc_280 = round(effort_fc_280, 2)
+        self.fc_MPa = round(effort_fc_MPa, 1)
 
         super(Pice, self).save(*args, **kwargs)
 

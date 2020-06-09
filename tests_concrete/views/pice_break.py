@@ -83,13 +83,18 @@ def pice_save(request, id):
             if formset.is_valid():
                 instances = formset.save(commit=False)
                 for instance in instances:
-                    instance.save()
-                    for equip in equips:
-                        instance.equipment.add(equip)
-                        equip.use = F("use") + 1
-                        equip.save()
+                    check_per = instance.check_per
+                    if check_per == False:
+                        messages.error(request, f"El testigo no cumple con la perpendicularidad adecuada")
+                        return redirect('tests_concrete:pice_save', id=obj.id)
+                    else:
+                        instance.save()
+                        for equip in equips:
+                            instance.equipment.add(equip)
+                            equip.use = F("use") + 1
+                            equip.save()
+                        messages.success(request, f"Los ensayos han sido creados o actualizados")
                 formset.save()
-                messages.success(request, f"Los ensayos han sido creados o actualizados")
                 return redirect('tests_concrete:pice_save', id=obj.id)
     
     formset = PiceFormSet(instance=obj)
@@ -140,16 +145,16 @@ def pice_break_detail(request, id):
     qs_pice = Pice.objects.filter(pice_break=obj.id)
 
     pice_fc = qs_pice.values_list("fc", flat=True).order_by("id")
-    mean_pice_fc = round(np.mean(pice_fc), 2) 
+    mean_pice_fc = round(np.mean(pice_fc), 2)
     std_pice_fc = round(np.std(pice_fc), 2)
 
     pice_element_name = list(qs_pice.values_list("element_name", flat=True).order_by("id"))
-    porcentage_off = list(map(lambda x:round((x-obj.fc_esp)/obj.fc_esp*100, 2), pice_fc))
+    porcentage_off = list(map(lambda x:round((x-obj.fc_esp)/obj.fc_esp*100, 1), pice_fc))
     zippedList = zip(pice_element_name, porcentage_off)
 
     pice_fc_MPa = qs_pice.values_list("fc_MPa", flat=True).order_by("id")
-    mean_pice_fc_MPa = round(np.mean(pice_fc_MPa), 2) 
-    std_pice_fc_MPa = round(np.std(pice_fc_MPa), 2)
+    mean_pice_fc_MPa = round(np.mean(pice_fc_MPa), 1)
+    std_pice_fc_MPa = round(np.std(pice_fc_MPa), 1)
 
     context = {
         "obj": obj,
@@ -202,12 +207,12 @@ def pice_break_pdf(request, id):
     std_pice_fc = round(np.std(pice_fc), 2)
 
     pice_element_name = list(qs_pice.values_list("element_name", flat=True).order_by("id"))
-    porcentage_off = list(map(lambda x:round((x-obj.fc_esp)/obj.fc_esp*100, 2), pice_fc))
+    porcentage_off = list(map(lambda x:round((x-obj.fc_esp)/obj.fc_esp*100, 1), pice_fc))
     zippedList = zip(pice_element_name, porcentage_off)
 
     pice_fc_MPa = qs_pice.values_list("fc_MPa", flat=True).order_by("id")
-    mean_pice_fc_MPa = round(np.mean(pice_fc_MPa), 2) 
-    std_pice_fc_MPa = round(np.std(pice_fc_MPa), 2)
+    mean_pice_fc_MPa = round(np.mean(pice_fc_MPa), 1) 
+    std_pice_fc_MPa = round(np.std(pice_fc_MPa), 1)
 
     context = {
         "obj": obj,

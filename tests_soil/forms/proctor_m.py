@@ -19,6 +19,9 @@ class ProctorMForm(forms.ModelForm):
         fields = [
             'material',
             'quarry',
+            'process',
+            'saturation_check',
+            'correction_check',
             'sampling_date',
             'done_date',
             'course'
@@ -26,6 +29,9 @@ class ProctorMForm(forms.ModelForm):
         labels = {
             'material': 'Material',
             'quarry': 'Cantera',
+            'process': 'Tipo de Procedimiento',
+            'saturation_check': 'Curva de 100% de Saturación',
+            'correction_check': 'Corrección',
             'sampling_date': 'Fecha de Muestreo',
             'done_date': 'Fecha del Ensayo',
         }
@@ -49,6 +55,9 @@ class ProctorMFormClient(forms.ModelForm):
             'material',
             'quarry',
             'sampling_date',
+            'process',
+            'saturation_check',
+            'correction_check',
             'done_date',
             'reference_person',
             'construction',
@@ -56,6 +65,9 @@ class ProctorMFormClient(forms.ModelForm):
         labels = {
             'material': 'Material',
             'quarry': 'Cantera',
+            'process': 'Tipo de Procedimiento',
+            'saturation_check': 'Curva de 100% de Saturación',
+            'correction_check': 'Corrección',
             'sampling_date': 'Fecha de Muestreo',
             'done_date': 'Fecha del Ensayo',
             'reference_person': 'Persona de Referencia',
@@ -119,15 +131,17 @@ class DensityWetDryForm(forms.ModelForm):
             'dry_weight': 'Peso de material seco + recipiente',
         }
         help_texts = {
-            'material_weight_P': 'Unidades (Gramos)',
-            'bowl_weight_P': 'Unidades (Gramos)',
-            'bowl_volume_P': 'Unidades (cm³)',
-            'bowl_weight': 'Unidades (Gramos)',
-            'wet_weight': 'Unidades (Gramos)',
-            'dry_weight': 'Unidades (Gramos)',
+            'layers': 'Aproximación de 1',
+            'hits': 'Aproximación de 1',
+            'material_weight_P': 'Unidades (Gramos) <br> Aproximación (1 g)',
+            'bowl_weight_P': 'Unidades (Gramos) <br> Aproximación (1 g)',
+            'bowl_volume_P': 'Unidades (cm³) <br> Aproximación (0.1 cm³)',
+            'bowl_weight': 'Unidades (Gramos) <br> Aproximación (1 g)',
+            'wet_weight': 'Unidades (Gramos) <br> Aproximación (1 g)',
+            'dry_weight': 'Unidades (Gramos) <br> Aproximación (1 g)',
         }
 
-DensityWetDryFormSet = inlineformset_factory(ProctorM, DensityWetDry, form=DensityWetDryForm, max_num=4)
+DensityWetDryFormSet = inlineformset_factory(ProctorM, DensityWetDry, form=DensityWetDryForm, max_num=5, extra=5)
 
 
 class SaturationForm(forms.ModelForm):
@@ -151,12 +165,12 @@ class SaturationForm(forms.ModelForm):
             'g_sp_frac_fina': 'G.Esp. específica de la fracción fina a 20°c',    
         }
         help_texts = {
-            'frac_extrad_weight': 'Unidades (%)',
-            'frac_gruesa_weight': 'Unidades (%)',
-            'frac_fina_weight': 'Unidades (%)',  
-            'p_sp_frac_extrad': 'Unidades (g/cm³)',  
-            'p_sp_frac_gruesa': 'Unidades (g/cm³)',  
-            'g_sp_frac_fina': 'Adimencional',    
+            'frac_extrad_weight': 'Unidades (%) <br> Aproximación (0.01%)',
+            'frac_gruesa_weight': 'Unidades (%) <br> Aproximación (0.01%)',
+            'frac_fina_weight': 'Unidades (%) <br> Aproximación (0.01%)',  
+            'p_sp_frac_extrad': 'Unidades (g/cm³) <br> Aproximación (0.001 g/cm³)',  
+            'p_sp_frac_gruesa': 'Unidades (g/cm³) <br> Aproximación (0.001 g/cm³)',  
+            'g_sp_frac_fina': 'Adimencional <br> Aproximación (0.001)',    
         }
 
 SaturationFormSet = inlineformset_factory(ProctorM, Saturation, form=SaturationForm, max_num=1, can_delete=False)
@@ -177,9 +191,9 @@ class CorrectionForm(forms.ModelForm):
             'dry_weight': 'Peso de fracción extrad. seca + recipiente',  
         }
         help_texts = {
-            'bowl_weight': 'Unidades (gramos)',
-            'wet_weight': 'Unidades (gramos)',
-            'dry_weight': 'Unidades (gramos)', 
+            'bowl_weight': 'Unidades (gramos) <br> Aproximación (0.1 g)',
+            'wet_weight': 'Unidades (gramos) <br> Aproximación (0.1 g)',
+            'dry_weight': 'Unidades (gramos) <br> Aproximación (0.1 g)', 
         }
 
 CorrectionFormSet = inlineformset_factory(ProctorM, Correction, form=CorrectionForm, max_num=1, can_delete=False)

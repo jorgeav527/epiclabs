@@ -39,10 +39,10 @@ class FineMaterialForm(forms.ModelForm):
         help_texts = {
             'pit': 'Nombre Propio de la Calicata',
             'bowl': 'Numero del Recipiente',
-            'before_weight': 'Unidades (gramos)',
-            'bowl_weight': 'Unidades (gramos)',
-            'dry_weight': '+ Recipiente,',
-            'dry_weight': 'Unidades (gramos)',
+            'before_weight': 'Unidades (gramos) <br> Aproximación (0.01 gr)',
+            'bowl_weight': 'Unidades (gramos) <br> Aproximación (0.01 gr)',
+            'dry_weight': '+ Recipiente',
+            'dry_weight': 'Unidades (gramos) <br> Aproximación (0.01 gr)',
         }
         widgets = {
             'sampling_date': DateInput(),
@@ -83,9 +83,9 @@ class FineMaterialFormClient(forms.ModelForm):
         help_texts = {
             'pit': 'Nombre Propio de la Calicata',
             'bowl': 'Numero del Recipiente',
-            'before_weight': 'Unidades (gramos)',
-            'bowl_weight': 'Unidades (gramos)',
-            'dry_weight': 'Unidades (gramos) + Peso del Recipiente',
+            'before_weight': 'Unidades (gramos) <br> Aproximación (0.01 gr)',
+            'bowl_weight': 'Unidades (gramos) <br> Aproximación (0.01 gr)',
+            'dry_weight': 'Unidades (gramos) + Peso del Recipiente <br> Aproximación (0.01 gr)',
         }
         widgets = {
             'sampling_date': DateInput(),

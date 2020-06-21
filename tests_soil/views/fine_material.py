@@ -113,7 +113,7 @@ def fine_material_detail(request, id):
 
     context = {
         "obj": obj,
-        "norma_ASTM": "ASTM D1140",
+        "norma_ASTM": "",
         "noma_NTP": "NTP 339.132",
         "title": "Detalles del Ensayo Determinación del Material más Fino que Pasa la Malla Nª200",
     }
@@ -150,7 +150,7 @@ def fine_material_pdf(request, id):
     context = {
         "obj": obj,
         "title": "DETERMINACIÓN DE MATERIAL MAS FINO QUE EL TAMIZ 75μm (Nro. 200) EN SUELOS MTC E137",
-        "norma_ASTM": "ASTM D1140",
+        "norma_ASTM": "",
         "noma_NTP": "NTP 339.132",
         "coordinator": coordinator,
         "tecnic": tecnic,

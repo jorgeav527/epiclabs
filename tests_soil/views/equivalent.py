@@ -9,6 +9,7 @@ from weasyprint import HTML, CSS
 
 from django.db.models import F
 import numpy as np
+import math
 
 from tests_soil.models import Equivalent, Equiv
 from tests_soil.forms import EquivalentForm, EquivalentFormClient, EquivFormSet
@@ -140,13 +141,13 @@ def equivalent_detail(request, id):
 
     # Mean of the equiv sand results
     equiv_sand = qs_equiv.values_list("equiv_sand", flat=True).order_by("id")
-    mean_equiv_sand = round(np.mean(equiv_sand), 0)
+    mean_equiv_sand = math.ceil(np.mean(equiv_sand))
 
     context = {
         "obj": obj,
         "qs_equiv": qs_equiv,
         "mean_equiv_sand": mean_equiv_sand,
-        "norma_ASTM": "ASTM D2419",
+        "norma_ASTM": "",
         "noma_NTP": "NTP 339.146",
         "title": "Detalles del Ensayo de la Determinación del Equivalente de Arena",
     }
@@ -183,14 +184,14 @@ def equivalent_pdf(request, id):
 
     # Mean of the equiv sand results
     equiv_sand = qs_equiv.values_list("equiv_sand", flat=True).order_by("id")
-    mean_equiv_sand = round(np.mean(equiv_sand), 0)
+    mean_equiv_sand = math.ceil(np.mean(equiv_sand))
 
     context = {
         "obj": obj,
         "qs_equiv": qs_equiv,
         "mean_equiv_sand": mean_equiv_sand,
         "title": "METODO DE ENSAYO ESTANDAR PARA EL VALOR EQUIVALENTE DE ARENA DE SUELOS Y AGREGADO FINO - MTC E114",
-        "norma_ASTM": "ASTM D2419",
+        "norma_ASTM": "",
         "noma_NTP": "NTP 339.146",
         "coordinator": coordinator,
         "tecnic": tecnic,

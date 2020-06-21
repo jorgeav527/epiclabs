@@ -70,7 +70,7 @@ class DiamondPice(models.Model):
         self.factor_ld = round(factor, 2) 
 
         # Generate the area
-        d_cm = self.D*0.1
+        d_cm = self.D
         area_cm2 = ((d_cm**2)*math.pi)/4
         self.area = round(area_cm2, 2)
         
@@ -81,7 +81,7 @@ class DiamondPice(models.Model):
         self.correction = round(correc, 2)
 
         # Generate the fc
-        effort_fc = ( self.load / self.area ) * self.correction
+        effort_fc = ( self.load / (self.area/100) ) * self.correction
         self.fc = round(effort_fc, 2)
 
         # Generate fc_MPa

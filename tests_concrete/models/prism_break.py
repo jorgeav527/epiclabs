@@ -71,11 +71,11 @@ class Prism(models.Model):
         self.dilate = diff.days
 
         # Generate the area
-        avg_D = (self.D_1*0.1) * (self.D_2*0.1)
+        avg_D = self.D_1 * self.D_2
         self.area = round(avg_D, 2)
 
         # Generate the fc
-        effort_fc = self.load / self.area
+        effort_fc = self.load / (self.area/100)
         self.fc = round(effort_fc, 2)
 
         # Generate fc_MPa

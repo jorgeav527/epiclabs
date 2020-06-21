@@ -519,8 +519,8 @@ def granulometric_global_detail(request, id):
         "name_sucs_W_P": name_sucs_W_P,
         "name_sucs_L_H": name_sucs_L_H,
         "name_sucs_M_C": name_sucs_M_C,
-        "norma_ASTM": "ASTM D1140",
-        "noma_NTP": "ASTM D3282",
+        "norma_ASTM": "",
+        "noma_NTP": "NPT 339.134",
         "title": "Detalles del Ensayo Granulometria Gloval",
     }
 
@@ -858,8 +858,8 @@ def granulometric_global_pdf(request, id):
         "name_sucs_M_C": name_sucs_M_C,
         "graphic": graphic,
         "title": "CLASIFICACIÓN DE SUELOS PARA FINES DE INGENIERÍA Y CONSTRUCCIÓN DE CARRETERAS",
-        "norma_ASTM": "ASTM D2487",
-        "noma_NTP": "ASTM D3282",
+        "norma_ASTM": "",
+        "noma_NTP": "NPT 339.134",
         "coordinator": coordinator,
         "tecnic": tecnic,
     }

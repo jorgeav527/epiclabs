@@ -173,24 +173,43 @@ def specific_gravity_update(request, id):
 @login_required
 def specific_gravity_detail(request, id):
     obj = get_object_or_404(SpecificGravity, id=id)
-    qs_fraction_pass = FractionPass.objects.filter(specific_gravity=obj.id)
-    qs_fraction_retained = FractionRetained.objects.filter(specific_gravity=obj.id)
-    grav_sp_real_list = qs_fraction_pass.values_list('gravity_specific_real', flat=True).order_by('id')
-    mean_grav_sp = round(np.mean(grav_sp_real_list), 3)
-    spe_mass_wei_list = qs_fraction_retained.values_list('specific_mass_weight', flat=True).order_by('id')
-    mean_spe_mass_wei = round(np.mean(spe_mass_wei_list), 3)
-    spe_mass_wei_sss_list = qs_fraction_retained.values_list('specific_mass_weight_sss', flat=True).order_by('id')
-    mean_spe_mass_wei_sss = round(np.mean(spe_mass_wei_sss_list), 3)
-    spe_mass_wei_app_list = qs_fraction_retained.values_list('specific_mass_weight_app', flat=True).order_by('id')
-    mean_spe_mass_wei_app = round(np.mean(spe_mass_wei_app_list), 3)
-    absorption_list = qs_fraction_retained.values_list('absorption', flat=True).order_by('id')
-    mean_absorption = round(np.mean(absorption_list), 3)
-    material_pass_list = qs_fraction_pass.values_list('material_pass', flat=True).order_by('id')
-    mean_material_pass = round(np.mean(material_pass_list), 2)
-    material_retained_list = qs_fraction_retained.values_list('material_retained', flat=True).order_by('id')
-    mean_material_retained = round(np.mean(material_retained_list), 2)
-    total_ave_spe_grav = 1/(((mean_material_retained/100)/mean_spe_mass_wei_app)+((mean_material_pass/100)/mean_grav_sp))
-    total_average_specific_gravity = round(total_ave_spe_grav, 3)
+
+    if obj.pass_check:
+        qs_fraction_pass = FractionPass.objects.filter(specific_gravity=obj.id)
+        grav_sp_real_list = qs_fraction_pass.values_list('gravity_specific_real', flat=True).order_by('id')
+        mean_grav_sp = round(np.mean(grav_sp_real_list), 3)
+        material_pass_list = qs_fraction_pass.values_list('material_pass', flat=True).order_by('id')
+        mean_material_pass = round(np.mean(material_pass_list), 2)
+    else:
+        qs_fraction_pass = None
+        mean_grav_sp = 0
+        mean_material_pass = 0
+
+    if obj.reteained_check:
+        qs_fraction_retained = FractionRetained.objects.filter(specific_gravity=obj.id)
+        spe_mass_wei_list = qs_fraction_retained.values_list('specific_mass_weight', flat=True).order_by('id')
+        mean_spe_mass_wei = round(np.mean(spe_mass_wei_list), 3)
+        spe_mass_wei_sss_list = qs_fraction_retained.values_list('specific_mass_weight_sss', flat=True).order_by('id')
+        mean_spe_mass_wei_sss = round(np.mean(spe_mass_wei_sss_list), 3)
+        spe_mass_wei_app_list = qs_fraction_retained.values_list('specific_mass_weight_app', flat=True).order_by('id')
+        mean_spe_mass_wei_app = round(np.mean(spe_mass_wei_app_list), 3)
+        absorption_list = qs_fraction_retained.values_list('absorption', flat=True).order_by('id')
+        mean_absorption = round(np.mean(absorption_list), 3)
+        material_retained_list = qs_fraction_retained.values_list('material_retained', flat=True).order_by('id')
+        mean_material_retained = round(np.mean(material_retained_list), 2)
+    else:
+        qs_fraction_retained = None
+        mean_spe_mass_wei = 0
+        mean_spe_mass_wei_sss = 0
+        mean_spe_mass_wei_app = 0
+        mean_absorption = 0
+        mean_material_retained = 0
+            
+    if mean_material_pass !=0 and mean_material_retained != 0:
+        total_ave_spe_grav = 1/(((mean_material_retained/100)/mean_spe_mass_wei_app)+((mean_material_pass/100)/mean_grav_sp))
+        total_average_specific_gravity = round(total_ave_spe_grav, 3)
+    else:
+        total_average_specific_gravity = None
 
     context = {
         "obj": obj,
@@ -204,8 +223,8 @@ def specific_gravity_detail(request, id):
         "mean_material_pass": mean_material_pass,
         "mean_material_retained": mean_material_retained,
         "total_average_specific_gravity": total_average_specific_gravity,
-        "norma_ASTM": "ASTM Ninguna",
-        "noma_NTP": "NTP 339.131",
+        "norma_ASTM": "",
+        "noma_NTP": "NTP 339.131 / NTP 400.021",
         "title": "Detalles del Ensayo de Gravedad Especifica de Solidos mediante el Picometro de Agua",
     }
 
@@ -238,24 +257,43 @@ def specific_gravity_pdf(request, id):
     obj = get_object_or_404(SpecificGravity, id=id)
     coordinator = AdminProfile.objects.filter(staff="COORDINADOR", active=True).first() 
     tecnic = AdminProfile.objects.filter(staff="OFICINA_TECNICA", active=True).first()
-    qs_fraction_pass = FractionPass.objects.filter(specific_gravity=obj.id)
-    qs_fraction_retained = FractionRetained.objects.filter(specific_gravity=obj.id)
-    grav_sp_real_list = qs_fraction_pass.values_list('gravity_specific_real', flat=True).order_by('id')
-    mean_grav_sp = round(np.mean(grav_sp_real_list), 3)
-    spe_mass_wei_list = qs_fraction_retained.values_list('specific_mass_weight', flat=True).order_by('id')
-    mean_spe_mass_wei = round(np.mean(spe_mass_wei_list), 3)
-    spe_mass_wei_sss_list = qs_fraction_retained.values_list('specific_mass_weight_sss', flat=True).order_by('id')
-    mean_spe_mass_wei_sss = round(np.mean(spe_mass_wei_sss_list), 3)
-    spe_mass_wei_app_list = qs_fraction_retained.values_list('specific_mass_weight_app', flat=True).order_by('id')
-    mean_spe_mass_wei_app = round(np.mean(spe_mass_wei_app_list), 3)
-    absorption_list = qs_fraction_retained.values_list('absorption', flat=True).order_by('id')
-    mean_absorption = round(np.mean(absorption_list), 3)
-    material_pass_list = qs_fraction_pass.values_list('material_pass', flat=True).order_by('id')
-    mean_material_pass = round(np.mean(material_pass_list), 2)
-    material_retained_list = qs_fraction_retained.values_list('material_retained', flat=True).order_by('id')
-    mean_material_retained = round(np.mean(material_retained_list), 2)
-    total_ave_spe_grav = 1/(((mean_material_retained/100)/mean_spe_mass_wei_app)+((mean_material_pass/100)/mean_grav_sp))
-    total_average_specific_gravity = round(total_ave_spe_grav, 3)
+
+    if obj.pass_check:
+        qs_fraction_pass = FractionPass.objects.filter(specific_gravity=obj.id)
+        grav_sp_real_list = qs_fraction_pass.values_list('gravity_specific_real', flat=True).order_by('id')
+        mean_grav_sp = round(np.mean(grav_sp_real_list), 3)
+        material_pass_list = qs_fraction_pass.values_list('material_pass', flat=True).order_by('id')
+        mean_material_pass = round(np.mean(material_pass_list), 2)
+    else:
+        qs_fraction_pass = None
+        mean_grav_sp = 0
+        mean_material_pass = 0
+
+    if obj.reteained_check:
+        qs_fraction_retained = FractionRetained.objects.filter(specific_gravity=obj.id)
+        spe_mass_wei_list = qs_fraction_retained.values_list('specific_mass_weight', flat=True).order_by('id')
+        mean_spe_mass_wei = round(np.mean(spe_mass_wei_list), 3)
+        spe_mass_wei_sss_list = qs_fraction_retained.values_list('specific_mass_weight_sss', flat=True).order_by('id')
+        mean_spe_mass_wei_sss = round(np.mean(spe_mass_wei_sss_list), 3)
+        spe_mass_wei_app_list = qs_fraction_retained.values_list('specific_mass_weight_app', flat=True).order_by('id')
+        mean_spe_mass_wei_app = round(np.mean(spe_mass_wei_app_list), 3)
+        absorption_list = qs_fraction_retained.values_list('absorption', flat=True).order_by('id')
+        mean_absorption = round(np.mean(absorption_list), 3)
+        material_retained_list = qs_fraction_retained.values_list('material_retained', flat=True).order_by('id')
+        mean_material_retained = round(np.mean(material_retained_list), 2)
+    else:
+        qs_fraction_retained = None
+        mean_spe_mass_wei = 0
+        mean_spe_mass_wei_sss = 0
+        mean_spe_mass_wei_app = 0
+        mean_absorption = 0
+        mean_material_retained = 0
+            
+    if mean_material_pass !=0 and mean_material_retained != 0:
+        total_ave_spe_grav = 1/(((mean_material_retained/100)/mean_spe_mass_wei_app)+((mean_material_pass/100)/mean_grav_sp))
+        total_average_specific_gravity = round(total_ave_spe_grav, 3)
+    else:
+        total_average_specific_gravity = None
 
     context = {
         "obj": obj,
@@ -270,8 +308,8 @@ def specific_gravity_pdf(request, id):
         "qs_fraction_retained": qs_fraction_retained,
         "total_average_specific_gravity": total_average_specific_gravity,
         "title": "DETERMINACIÓN DE LA GRAVEDAD ESPECIFICA DE SOLIDOS MEDIANTE EL PICOMETRO DE AGUA DE UN SUELO MTC E108",
-        "norma_ASTM": "ASTM C2216",
-        "noma_NTP": "NTP 339.127",
+        "norma_ASTM": "",
+        "noma_NTP": "NTP 339.131 / NTP 400.021",
         "coordinator": coordinator,
         "tecnic": tecnic,
     }

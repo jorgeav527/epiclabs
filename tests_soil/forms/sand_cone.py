@@ -36,14 +36,14 @@ class SandConeForm(forms.ModelForm):
             'element_side': 'Elemento o Lado',
             'layer': 'Capa',
             'weight_dry_max': 'Peso unit. Seco máx.',
-            'opt_moisture': 'Ópt. Cont. de humedad',
+            'opt_moisture': 'Ópt. Cont. de humedad' ,
             'moisture': 'Método de Carburo de Calcio?',
             'sampling_date': 'Fecha de Muestreo',
             'done_date': 'Fecha del Ensayo',
         }
         help_texts = {
-            'weight_dry_max': 'Unidades (g/cm³)',
-            'opt_moisture': 'Unidades (%)',
+            'weight_dry_max': 'Unidades (g/cm³) <br> Aproximación (0.01 g/cm³)',
+            'opt_moisture': 'Unidades (%) <br> Aproximación (0.1%)',
         }
         widgets = {
             'sampling_date': DateInput(),
@@ -86,8 +86,8 @@ class SandConeFormClient(forms.ModelForm):
             'construction': 'Construcción de Referencia',
         }
         help_texts = {
-            'weight_dry_max': 'Unidades (g/cm³)',
-            'opt_moisture': 'Unidades (%)',
+            'weight_dry_max': 'Unidades (g/cm³) <br> Aproximación (0.01 g/cm³)',
+            'opt_moisture': 'Unidades (%) <br> Aproximación (0.1%)',
         }
         widgets = {
             'sampling_date': DateInput(),
@@ -137,12 +137,12 @@ class HumidDensityForm(forms.ModelForm):
             'container_weight': 'Peso de recipiente',
         }
         help_texts = {
-            'bowl_weight_sand': 'Unidades (g)',
-            'bowl_weight_remaining_sand': 'Unidades (g)',
-            'weight_sand_cone_plate': 'Unidades (g)',
-            'sand_density': 'Unidades (g/cm³)',
-            'sample_weight_container': 'Unidades (cm³)',
-            'container_weight': 'Unidades (g)',
+            'bowl_weight_sand': 'Unidades (g) <br> Aproximación (1 g)',
+            'bowl_weight_remaining_sand': 'Unidades (g) <br> Aproximación (1 g)',
+            'weight_sand_cone_plate': 'Unidades (g) <br> Aproximación (1 g)',
+            'sand_density': 'Unidades (g/cm³) <br> Aproximación (0.01 g/cm³)',
+            'sample_weight_container': 'Unidades (g) <br> Aproximación (1 g)',
+            'container_weight': 'Unidades (g) <br> Aproximación (1 g)',
         }
 
 HumidDensityFormSet = inlineformset_factory(SandCone, HumidDensity, form=HumidDensityForm, max_num=1, can_delete=False,)
@@ -165,9 +165,9 @@ class ContentMoistureForm(forms.ModelForm):
             'dry_sample_weight_bowl': 'Peso de muestra seca + recipiente',
         }
         help_texts = {
-            'bowl_weight': 'Unidades (g)',
-            'wet_sample_weight_bowl': 'Unidades (g)',
-            'dry_sample_weight_bowl': 'Unidades (g)',
+            'bowl_weight': 'Unidades (g) <br> Aproximación (0.1 g)',
+            'wet_sample_weight_bowl': 'Unidades (g) <br> Aproximación (0.1 g)',
+            'dry_sample_weight_bowl': 'Unidades (g) <br> Aproximación (0.1 g)',
         }
 
 ContentMoistureFormSet = inlineformset_factory(SandCone, ContentMoisture, form=ContentMoistureForm, max_num=1, can_delete=False,)
@@ -186,8 +186,8 @@ class ContentMoistureCarbureForm(forms.ModelForm):
             'dry_weight_percentage': 'Contenido de humedad de fracción gruesa+fina',
         }
         help_texts = {
-            'wet_weight_percentage': '% del peso húmedo',
-            'dry_weight_percentage': '% del peso seco',
+            'wet_weight_percentage': '% del peso húmedo <br> Aproximación (0.1%)',
+            'dry_weight_percentage': '% del peso seco <br> Aproximación (1%)',
         }
 
 ContentMoistureCarbureFormSet = inlineformset_factory(SandCone, ContentMoistureCarbure, form=ContentMoistureCarbureForm, max_num=1, can_delete=False,)
@@ -208,9 +208,9 @@ class CorrectionSandConeForm(forms.ModelForm):
             'per_abs_tails_extrad': '% Abs. Frac. Extrad.',
         }
         help_texts = {
-            'wet_fraction_weight': 'Unidades (g)',
-            'p_e_ap_frac_extrad': 'Unidades (g/cm³), NTP 400.021 - ASTM C127',
-            'per_abs_tails_extrad': 'Unidades (%), NTP 400.021 - ASTM C127',
+            'wet_fraction_weight': 'Unidades (g) <br> Aproximación (1 g)',
+            'p_e_ap_frac_extrad': 'Unidades (g/cm³), NTP 400.021 - ASTM C127 <br> Aproximación (0.001g/cm³)',
+            'per_abs_tails_extrad': 'Unidades (%), NTP 400.021 - ASTM C127 <br> Aproximación (0.1%)',
         }
 
 CorrectionSandConeFormSet = inlineformset_factory(SandCone, CorrectionSandCone, form=CorrectionSandConeForm, max_num=1, can_delete=False,)

@@ -69,13 +69,13 @@ class Pice(models.Model):
         self.dilate = diff.days
 
         # Generate the area
-        area_d1 = (((self.D_1*0.1)**2)*math.pi) / 4
-        area_d2 = (((self.D_1*0.1)**2)*math.pi) / 4
+        area_d1 = ((self.D_1**2)*math.pi) / 4
+        area_d2 = ((self.D_1**2)*math.pi) / 4
         avg_area = ((area_d1 + area_d2) / 2)
         self.area = round(avg_area, 2)
 
         # Generate the fc
-        effort_fc = self.load / self.area
+        effort_fc = self.load / (self.area/100)
         self.fc = round(effort_fc, 2)
 
         # Generate fc_MPa

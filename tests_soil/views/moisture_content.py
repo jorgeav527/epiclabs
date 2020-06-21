@@ -166,7 +166,7 @@ def moisture_content_detail(request, id):
         "mean_arenas": mean_arenas,
         "qs_suelos": qs_suelos,
         "mean_suelos": mean_suelos,
-        "norma_ASTM": "ASTM C2216",
+        "norma_ASTM": "",
         "noma_NTP": "NTP 339.127",
         "title": "Detalles del Ensayo de Contenido de Humedad",
     }
@@ -225,7 +225,7 @@ def moisture_content_pdf(request, id):
         "qs_suelos": qs_suelos,
         "mean_suelos": mean_suelos,
         "title": "DETERMINACIÓN DEL CONTENIDO DE HUMEDAD DE UN SUELO MTC E108",
-        "norma_ASTM": "ASTM C2216",
+        "norma_ASTM": "",
         "noma_NTP": "NTP 339.127",
         "coordinator": coordinator,
         "tecnic": tecnic,

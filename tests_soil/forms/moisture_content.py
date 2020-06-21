@@ -109,9 +109,9 @@ class MoistureMaterialForm(forms.ModelForm):
             'dry_weight': 'Peso de fracción extrad. seca + recipiente',  
         }
         help_texts = {
-            'bowl_weight': 'Unidades (gramos)',
-            'wet_weight': 'Unidades (gramos)',
-            'dry_weight': 'Unidades (gramos)', 
+            'bowl_weight': 'Unidades (gramos) <br> Aproximación (0.1 g)',
+            'wet_weight': 'Unidades (gramos) <br> Aproximación (0.1 g)',
+            'dry_weight': 'Unidades (gramos) <br> Aproximación (0.1 g)', 
         }
 
 MoistureMaterialFormSet = inlineformset_factory(MoistureContent, MoistureMaterial, form=MoistureMaterialForm, extra=6 , max_num=6)

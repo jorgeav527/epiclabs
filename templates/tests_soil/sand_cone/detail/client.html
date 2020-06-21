@@ -30,12 +30,12 @@
                 <p class="text-left"><span class="font-weight-bold">Tramo o Nivel:</span> {{ obj.section_level }}</p>
                 <p class="text-left"><span class="font-weight-bold">Elemento o Lado:</span> {{ obj.element_side }}</p>
                 <p class="text-left"><span class="font-weight-bold">Capa:</span> {{ obj.layer }}</p>
-                <p class="text-left"><span class="font-weight-bold">Peso unit. Seco máx.:</span> {{ obj.weight_dry_max }}</p>
-                <p class="text-left"><span class="font-weight-bold">Ópt. Cont. de humedad:</span> {{ obj.opt_moisture }}</p>
+                <p class="text-left"><span class="font-weight-bold">Peso unit. Seco máx.:</span> {{ obj.weight_dry_max }} g/cm³</p>
+                <p class="text-left"><span class="font-weight-bold">Ópt. Cont. de humedad:</span> {{ obj.opt_moisture }} %</p>
                 <hr class="my-3">
                 
                 <p class="text-left mt-3"><span class="font-weight-bold"><u>Resultados del Ensayo</u></span></p>
-                <p class="text-left"><span class="font-weight-bold">Densidad Humeda:</span></p>
+                <p class="text-left"><span class="font-weight-bold"><u>Densidad Humeda:</u></span></p>
                 <p class="text-left"><span class="font-weight-bold">Peso del frasco + arena:</span> {{ humid.bowl_weight_sand }} g</p>
                 <p class="text-left"><span class="font-weight-bold">Peso del frasco + arena que queda:</span> {{ humid.bowl_weight_remaining_sand }} g</p>
                 <p class="text-left"><span class="font-weight-bold">Peso de arena empleada:</span> {{ humid.weight_sand }} g</p>
@@ -47,7 +47,7 @@
                 <p class="text-left"><span class="font-weight-bold">Peso de recipiente:</span> {{ humid.container_weight }} g</p>
                 <p class="text-left"><span class="font-weight-bold">Peso del muestra total húmeda:</span> {{ humid.wet_sample_weight }} g</p>
                 <p class="text-left"><span class="font-weight-bold">Densidad de la muestra total húmeda:</span> {{ humid.density_wet_sample }} g/cm³</p>
-                <p class="text-left"><span class="font-weight-bold">Contenido de Humedad:</span></p>
+                <p class="text-left"><span class="font-weight-bold"><u>Contenido de Humedad:</u></span></p>
                 <p class="text-left"><span class="font-weight-bold">Fracción de muestra:</span> {{ moisture.sample_fraction_pass }}</p>
                 <p class="text-left"><span class="font-weight-bold">Peso de recipiente:</span> {{ moisture.bowl_weight }} g</p>
                 <p class="text-left"><span class="font-weight-bold">Peso de muestra húmeda + recipiente:</span> {{ moisture.wet_sample_weight_bowl }} g</p>
@@ -58,7 +58,7 @@
                 <p class="text-left"><span class="font-weight-bold">Contenido de Humedad - Carbono 14:</span></p>
                 <p class="text-left"><span class="font-weight-bold">Contenido de humedad de fracción gruesa+fina (% del peso húmedo):</span> {{ carbure.wet_weight_percentage }} %</p>
                 <p class="text-left"><span class="font-weight-bold">Contenido de humedad de fracción gruesa+fina (% del peso seco):</span> {{ carbure.dry_weight_percentage }} %</p>
-                <p class="text-left"><span class="font-weight-bold">Correctión del Peso Unitario y Contenido de Agua:</span></p>
+                <p class="text-left"><span class="font-weight-bold"><u>Correctión del Peso Unitario y Contenido de Agua:</u></span></p>
                 <p class="text-left"><span class="font-weight-bold">Peso de fracción extradimensionada húmeda:</span> {{ correction.wet_fraction_weight }} g</p>
                 <p class="text-left"><span class="font-weight-bold">P.E Ap. Frac. Extrad. A 20°c:</span> {{ correction.p_e_ap_frac_extrad }} g/cm³</p>
                 <p class="text-left"><span class="font-weight-bold">% Abs. Frac. Extrad.:</span> {{ correction.per_abs_tails_extrad }} %</p>

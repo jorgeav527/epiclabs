@@ -13,8 +13,10 @@ from course.models import Course
 class SpecificGravity(models.Model):
     user            = models.ForeignKey(User, on_delete=models.CASCADE)
     name            = models.CharField(max_length=50, default="Gravedad Especifica")
-    material        = models.CharField(max_length=50,)
-    quarry          = models.CharField(max_length=50,)
+    material        = models.CharField(max_length=50)
+    quarry          = models.CharField(max_length=50)
+    pass_check      = models.BooleanField(default=True)
+    reteained_check = models.BooleanField(default=False)
     code            = models.CharField(max_length=255, unique=True, editable=False)
     sampling_date   = models.DateField()
     done_date       = models.DateField(default=datetime.datetime.now)

@@ -11,14 +11,22 @@ from construction.models import Construction
 from course.models import Course
 
 class ProctorM(models.Model):
+    PROCESS_CHOICES = (
+        ("PROCEDIMIENTO_A", "Procedimiento A"),
+        ("PROCEDIMIENTO_B", "Procedimiento B"),
+        ("PROCEDIMIENTO_C", "Procedimiento C"),
+    )
     user            = models.ForeignKey(User, on_delete=models.CASCADE)
     name            = models.CharField(max_length=50, default="Proctor Modificado")
-    material        = models.CharField(max_length=50,)
-    quarry          = models.CharField(max_length=50,)
+    material        = models.CharField(max_length=100)
+    quarry          = models.CharField(max_length=50)
+    process         = models.CharField(choices=PROCESS_CHOICES, max_length=15, default="PROCEDIMIENTO_A")
     code            = models.CharField(max_length=255, unique=True, editable=False)
     sampling_date   = models.DateField()
     done_date       = models.DateField(default=datetime.datetime.now)
     dilate          = models.IntegerField(editable=False)
+    saturation_check = models.BooleanField(default=False)
+    correction_check = models.BooleanField(default=False)
     created         = models.DateTimeField(auto_now_add=True)
     updated         = models.DateTimeField(auto_now=True)
     equipment           = models.ManyToManyField(Equip)
@@ -47,12 +55,12 @@ class ProctorM(models.Model):
 
 
 class DensityWetDry(models.Model):
-    layers              = models.IntegerField(default=5)
+    layers              = models.IntegerField()
     hits                = models.IntegerField()
     material_weight_P   = models.IntegerField()
-    bowl_weight_P       = models.IntegerField(default=6380)
+    bowl_weight_P       = models.IntegerField()
     compacted_weight_P  = models.IntegerField(editable=False)
-    bowl_volume_P       = models.FloatField(default=2130.0)
+    bowl_volume_P       = models.FloatField()
     wet_density         = models.FloatField(editable=False)
     bowl                = models.IntegerField()
     bowl_weight         = models.FloatField()

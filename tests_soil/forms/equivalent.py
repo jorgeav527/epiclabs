@@ -113,13 +113,13 @@ class EquivForm(forms.ModelForm):
             'max_high_sand': 'Altura Máxima de la Arena'
         }
         help_texts = {
-            'max_size': 'Pasante del tamiz #4',
+            'max_size': 'Pasante del tamiz #4 <br> Aproximación (0.01 mm)',
             'start_sat_time': 'Unidades (hh:mm:ss)',
             'out_sat_time': 'Unidades (hh:mm:ss)',
             'start_dec_time': 'Unidades (hh:mm:ss)',
             'out_dec_time': 'Unidades (hh:mm:ss)',
-            'max_high_fine': 'Unidades (mm)',
-            'max_high_sand': 'Unidades (mm)',
+            'max_high_fine': 'Unidades (mm) <br> Aproximación (0.1 mm)',
+            'max_high_sand': 'Unidades (mm) <br> Aproximación (0.1 mm)',
         }
 
 EquivFormSet = inlineformset_factory(Equivalent, Equiv, form=EquivForm, max_num=3)

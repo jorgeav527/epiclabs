@@ -92,13 +92,24 @@ def liquid_save(request, id):
             if formset.is_valid():
                 instances = formset.save(commit=False)
                 for instance in instances:
-                    instance.save()
-                    for equip in equips:    
-                        instance.equipment.add(equip)
-                        equip.use = F("use") + 1
-                        equip.save()
+                    hit_passed = instance.hit
+                    if hit_passed <= 25:
+                        instance.save()
+                        for equip in equips:    
+                            instance.equipment.add(equip)
+                            equip.use = F("use") + 1
+                            equip.save()
+                        messages.warning(request, f"Si el numero de golpes de los tres ensayos es menor a 25 el Indice de Plasticidad no se podrá determinar")
+                        messages.success(request, f"Los ensayos han sido creados")
+                    else:
+                        instance.save()
+                        for equip in equips:    
+                            instance.equipment.add(equip)
+                            equip.use = F("use") + 1
+                            equip.save()
+                        messages.success(request, f"Los ensayos han sido creados")
+                        # return redirect('tests_soil:liquid_save', id=obj.id)
                 formset.save()
-                messages.success(request, f"Los ensayos han sido creados")
                 return redirect('tests_soil:liquid_save', id=obj.id)
     
     formset = LiquidFormSet(instance=obj)
@@ -191,7 +202,7 @@ def limit_detail(request, id):
     #     number += (x_hit[i] - mean_x_hit) * (y_moisture[i] - mean_y_moisture)
     #     denom += (x_hit[i] - mean_x_hit) ** 2
     # m = number / denom
-    # C = mean_y_moisture - (m * mean_x_hit)
+    # C = mean_y_moisture - (m * mean_x_hit) 
 
     coef_x1 = np.polyfit(x_hit, y_moisture, 1)
     m = coef_x1[0]
@@ -203,7 +214,17 @@ def limit_detail(request, id):
     mean_y_moisture_plastic = round(np.mean(y_moisture_plastic), 1)
 
     # plastic index
-    plastic_index = round(hit_25 - mean_y_moisture_plastic, 1)   
+    count = 0
+    for i in x_hit:
+        if i <= 25:
+            count += 1
+        else:
+            count += 0
+    
+    if count == 3:
+        plastic_index = "No se pudo Determinar"
+    else:
+        plastic_index = round(hit_25 - mean_y_moisture_plastic, 1) 
 
     # ploting
     max_x = np.max(x_hit) + 5
@@ -230,7 +251,7 @@ def limit_detail(request, id):
         "mean_y_moisture_plastic": mean_y_moisture_plastic,
         "plastic_index": plastic_index,
         "obj": obj,
-        "norma_ASTM": "ASTM C 4318",
+        "norma_ASTM": "",
         "noma_NTP": "NTP 339.129",
         "title": "Detalles del Ensayo de Limite Liquido y Limite Plastico",
     }
@@ -328,7 +349,7 @@ def limit_pdf(request, id):
         "graphic": graphic,
         "title": "METODO DE ENSAYO PARA DETERMINAR EL LIMITE LÍQUIDO, LIMITE PLÁSTICO E INDICE DE PLASTICIDAD DE SUELOS MTC E110 - MTC E111",
         "norma_ASTM": "ASTM C 4318",
-        "noma_NTP": "NTP 339.129",
+        "noma_NTP": "",
         "coordinator": coordinator,
         "tecnic": tecnic,
     }

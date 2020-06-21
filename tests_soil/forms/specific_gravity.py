@@ -19,6 +19,8 @@ class SpecificGravityForm(forms.ModelForm):
         fields = [
             'material',
             'quarry',
+            'pass_check',
+            'reteained_check',
             'sampling_date',
             'done_date',
             'course'
@@ -26,6 +28,8 @@ class SpecificGravityForm(forms.ModelForm):
         labels = {
             'material': 'Material',
             'quarry': 'Cantera',
+            'pass_check': 'Material pasante el tamiz Nº4 (4.75 mm)',
+            'reteained_check': 'Material retenido en el tamiz Nº4 (4.75 mm)',
             'sampling_date': 'Fecha de Muestreo',
             'done_date': 'Fecha del Ensayo',
         }
@@ -48,6 +52,8 @@ class SpecificGravityFormClient(forms.ModelForm):
             'user',
             'material',
             'quarry',
+            'pass_check',
+            'reteained_check',
             'sampling_date',
             'done_date',
             'reference_person',
@@ -56,6 +62,8 @@ class SpecificGravityFormClient(forms.ModelForm):
         labels = {
             'material': 'Material',
             'quarry': 'Cantera',
+            'pass_check': 'Material pasante el tamiz Nº4 (4.75 mm)',
+            'reteained_check': 'Material retenido en el tamiz Nº4 (4.75 mm)',
             'sampling_date': 'Fecha de Muestreo',
             'done_date': 'Fecha del Ensayo',
             'reference_person': 'Persona de Referencia',
@@ -121,19 +129,19 @@ class FractionPassForm(forms.ModelForm):
             'coefficient_water': 'Coeficiente de temperatura del agua a 20°c',
         }
         help_texts = {
-            'material_pass': 'Unidades (%)',
-            'temperature': 'Unidades (°c)',
-            'water_density': 'Unidades (g/mL)',
-            'pycnometer_volume': 'Unidades (mL)',
-            'pycnometer_mass': 'Unidades (gramos)',
-            'sample_mass': 'Unidades (gramos)',    
-            'mass_pyc_w_sample': 'Unidades (gramos)',
-            'mass_bowl': 'Unidades (gramos)',
-            'mass_bowl_sample': 'Unidades (gramos)',
-            'coefficient_water': 'Adimencional',
+            'material_pass': 'Unidades (%) <br> Aproximación (0.01%)',
+            'temperature': 'Unidades (°C) <br> Aproximación (0.1ºC)',
+            'water_density': 'Unidades (g/mL) <br> Aproximación (0.00001 g/mL)',
+            'pycnometer_volume': 'Unidades (mL) <br> Aproximación (0.01 mL)',
+            'pycnometer_mass': 'Unidades (gramos) <br> Aproximación (0.01 g)',
+            'sample_mass': 'Unidades (gramos) <br> Aproximación (0.01 g)',    
+            'mass_pyc_w_sample': 'Unidades (gramos) <br> Aproximación (0.01 g)',
+            'mass_bowl': 'Unidades (gramos) <br> Aproximación (0.01 g)',
+            'mass_bowl_sample': 'Unidades (gramos) <br> Aproximación (0.01 g)',
+            'coefficient_water': 'Adimencional <br> Aproximación (0.00001)',
         }
 
-FractionPassFormSet = inlineformset_factory(SpecificGravity, FractionPass, form=FractionPassForm, extra=2 , max_num=2)
+FractionPassFormSet = inlineformset_factory(SpecificGravity, FractionPass, form=FractionPassForm, extra=3 , max_num=3)
 
 
 class FractionRetainedForm(forms.ModelForm):
@@ -161,14 +169,14 @@ class FractionRetainedForm(forms.ModelForm):
             'coefficient_water': 'Coeficiente de temperatura del agua',
         }
         help_texts = {
-            'material_retained': 'Unidades (%)',
-            'temperature_23': 'Unidades (°c)' ,
-            'saturated_sample': 'Unidades (gramos)',
-            'w_basket_water': 'Unidades (gramos)',
-            'w_basket_water_sample': 'Unidades (gramos)',
-            'w_bowl': 'Unidades (gramos)',
-            'w_bowl_sample': 'Unidades (gramos)',
-            'coefficient_water': 'Unidades (gramos)',
+            'material_retained': 'Unidades (%) <br> Aproximación (0.01%)',
+            'temperature_23': 'Unidades (°C) <br> Aproximación (0.1ºC)' ,
+            'saturated_sample': 'Unidades (gramos) <br> Aproximación (0.1 g)',
+            'w_basket_water': 'Unidades (gramos) <br> Aproximación (0.1 g)',
+            'w_basket_water_sample': 'Unidades (gramos) <br> Aproximación (0.1 g)',
+            'w_bowl': 'Unidades (gramos) <br> Aproximación (0.1 g)',
+            'w_bowl_sample': 'Unidades (gramos) <br> Aproximación (0.1 g)',
+            'coefficient_water': 'Unidades (Adimencional) <br> Aproximación (0.00001)',
         }
 
-FractionRetainedFormSet = inlineformset_factory(SpecificGravity, FractionRetained, form=FractionRetainedForm, extra=2 , max_num=2)
+FractionRetainedFormSet = inlineformset_factory(SpecificGravity, FractionRetained, form=FractionRetainedForm, extra=3, max_num=3)

@@ -48,8 +48,6 @@ class MoistureContent(models.Model):
 
 class MoistureMaterial(models.Model):
     MATERIAL_CHOICES = (
-        ("SUELO", "Suelos"),
-        ("ARENA", "Arenas"),
         ("GRAVA", "Gravas"),
         ("FINO", "Finos"),
     )

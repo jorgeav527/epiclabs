@@ -256,7 +256,7 @@ def sand_cone_detail(request, id):
         ans_06 = round((Densidad_muestra_total_humeda * 100) / (ans_05 + 100), 2)
         ans_07 = round(Peso_fracción_extrad_seca + ans_01, 2)
         ans_08 = round((ans_06 * P_E_Ap_Frac_Extrad * ans_03) / (100 * P_E_Ap_Frac_Extrad - ans_06 * ans_05), 2)
-        ans_09 = round(ans_08 / obj.weight_dry_max * 100, 1)
+        ans_09 = round(ans_08 / obj.weight_dry_max * 100, 0)
     else:
         ans_01 = round((Peso_muestra_total_humeda - peso_fracción_extradimensionada_húmeda)/(1 + Contenido_humedad_muestra/100), 2)
         ans_02 = round((Peso_fracción_extrad_seca / (Peso_fracción_extrad_seca + ans_01)) * 100, 2) 
@@ -266,7 +266,7 @@ def sand_cone_detail(request, id):
         ans_06 = round((Densidad_muestra_total_humeda * 100) / (ans_05 + 100), 2) 
         ans_07 = round(Peso_fracción_extrad_seca + ans_01, 2) 
         ans_08 = round((ans_06 * P_E_Ap_Frac_Extrad * ans_03) / (100 * P_E_Ap_Frac_Extrad - ans_06 * ans_05), 2) 
-        ans_09 = round(ans_08 / obj.weight_dry_max * 100, 1)
+        ans_09 = round(ans_08 / obj.weight_dry_max * 100, 0)
 
     context = {
         "obj": obj,
@@ -283,7 +283,7 @@ def sand_cone_detail(request, id):
         "ans_07": ans_07,
         "ans_08": ans_08,
         "ans_09": ans_09,
-        "norma_ASTM": "ASTM D 1556",
+        "norma_ASTM": "",
         "noma_NTP": "NTP 339.143",
         "title": "Detalles del Ensayo de Densidad del Peso Unitario In Situ Método del Cono de Arena",
     }
@@ -339,7 +339,7 @@ def sand_cone_pdf(request, id):
         ans_06 = round((Densidad_muestra_total_humeda * 100) / (ans_05 + 100), 2) 
         ans_07 = round(Peso_fracción_extrad_seca + ans_01, 2) 
         ans_08 = round((ans_06 * P_E_Ap_Frac_Extrad * ans_03) / (100 * P_E_Ap_Frac_Extrad - ans_06 * ans_05), 2) 
-        ans_09 = round(ans_08 / obj.weight_dry_max * 100, 1)
+        ans_09 = round(ans_08 / obj.weight_dry_max * 100, 0)
     else:
         ans_01 = round((Peso_muestra_total_humeda - peso_fracción_extradimensionada_húmeda)/(1 + Contenido_humedad_muestra/100), 2)
         ans_02 = round((Peso_fracción_extrad_seca / (Peso_fracción_extrad_seca + ans_01)) * 100, 2) 
@@ -349,7 +349,7 @@ def sand_cone_pdf(request, id):
         ans_06 = round((Densidad_muestra_total_humeda * 100) / (ans_05 + 100), 2) 
         ans_07 = round(Peso_fracción_extrad_seca + ans_01, 2) 
         ans_08 = round((ans_06 * P_E_Ap_Frac_Extrad * ans_03) / (100 * P_E_Ap_Frac_Extrad - ans_06 * ans_05), 2) 
-        ans_09 = round(ans_08 / obj.weight_dry_max * 100, 1)
+        ans_09 = round(ans_08 / obj.weight_dry_max * 100, 0)
 
     context = {
         "obj": obj,
@@ -367,7 +367,7 @@ def sand_cone_pdf(request, id):
         "ans_07": ans_07,
         "ans_08": ans_08,
         "ans_09": ans_09,
-        "norma_ASTM": "ASTM D 1556",
+        "norma_ASTM": "",
         "noma_NTP": "NTP 339.143",
         "coordinator": coordinator,
         "tecnic": tecnic,

@@ -72,7 +72,7 @@ class Pice(models.Model):
         area_d1 = ((self.D_1**2)*math.pi) / 4
         area_d2 = ((self.D_1**2)*math.pi) / 4
         avg_area = ((area_d1 + area_d2) / 2)
-        self.area = round(avg_area, 2)
+        self.area = round(avg_area, 1)
 
         # Generate the fc
         effort_fc = self.load / (self.area/100)

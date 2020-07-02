@@ -13,7 +13,7 @@
                 <p class="text-left"><span class="font-weight-bold">Nombre:</span> {{ obj.user.first_name|title }}</p>
                 <p class="text-left"><span class="font-weight-bold">Apellidos:</span> {{ obj.user.last_name|title }}</p>
                 <p class="text-left"><span class="font-weight-bold">DNI:</span> {{ obj.user.bachprofile.dni }}</p>
-                <p class="text-left"><span class="font-weight-bold">Codigo:</span> {{ obj.user.bachprofile.codigo }}</p>
+                <p class="text-left"><span class="font-weight-bold">Código:</span> {{ obj.user.bachprofile.codigo }}</p>
                 <hr class="my-3">
 
                 <p class="text-left mt-3"><span class="font-weight-bold"><u>Datos de la Tesis</u></span></p>
@@ -26,14 +26,14 @@
                     <p class="text-left">&#8594; {{ course }}</p>                
                     {% endfor %}
 
-                    <p class="text-left"><span class="font-weight-bold">Acesores:</span> </p>                
+                    <p class="text-left"><span class="font-weight-bold">Asesores:</span> </p>                
                     {% for adviser in thesis.adviser.all %}
                     <p class="text-left">&#8594; {{ adviser }}</p>                
                     {% endfor %}
 
                 <p class="text-left"><span class="font-weight-bold">Comienzo de la Thesis:</span> {{ thesis.start_day|date:"d/m/Y" }}</p>
                 <p class="text-left"><span class="font-weight-bold">Termino de la Thesis:</span> {{ thesis.finish_day|date:"d/m/Y" }}</p>
-                <p class="text-left"><span class="font-weight-bold">Duración:</span> {{ thesis.duration }} dias</p>
+                <p class="text-left"><span class="font-weight-bold">Duración:</span> {{ thesis.duration }} días</p>
                 {% endfor %}
                 <hr class="my-3">
 
@@ -45,15 +45,15 @@
                 <p class="text-left"><span class="font-weight-bold">Total:</span> {{ total_amount }} g</p>
                 <p class="text-left"><span class="font-weight-bold">Humedad Higroscópica:</span> {{ obj.hygr_humid }}%</p>
                 <p class="text-left"><span class="font-weight-bold">Tamaño Max.:</span> {{ obj.max_size }}"</p>
-                <p class="text-left"><span class="font-weight-bold">Limite Líquido:</span> {{ obj.liquid_limit }}%</p>
-                <p class="text-left"><span class="font-weight-bold">Limite Plástico:</span> {{ obj.plastic_limit }}%</p>
-                <p class="text-left"><span class="font-weight-bold">Indice Plastico:</span> {{ obj.plastic_index }}%</p>
-                <p class="text-left"><span class="font-weight-bold">Organico:</span> {{ obj.organic }}</p>
+                <p class="text-left"><span class="font-weight-bold">Límite Líquido:</span> {{ obj.liquid_limit }}%</p>
+                <p class="text-left"><span class="font-weight-bold">Límite Plástico:</span> {{ obj.plastic_limit }}%</p>
+                <p class="text-left"><span class="font-weight-bold">Indice Plástico:</span> {{ obj.plastic_index }}%</p>
+                <p class="text-left"><span class="font-weight-bold">Orgánico:</span> {{ obj.organic }}</p>
                 <p class="text-left"><span class="font-weight-bold">Peso Retenido en las Mallas:</span></p>
                 <table class="table table-sm table-responsive table-bordered text-center">
                     <thead class="primary-color-dark white-text">
                         <tr>
-                            <th>Tamizes</th>
+                            <th>Tamices</th>
                             {% for name in name_mesh %}
                             <th>{{ name }}</th>
                             {% endfor %}

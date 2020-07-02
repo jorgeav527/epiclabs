@@ -18,7 +18,7 @@ class Limit(models.Model):
         ("CUATRO", "Estrato 4"),
     )
     user            = models.ForeignKey(User, on_delete=models.CASCADE)
-    name            = models.CharField(max_length=50, default="Limite Liquido Pastico")
+    name            = models.CharField(max_length=50, default="Límite Líquido Pastico")
     pit             = models.CharField(max_length=50, null=True, blank=True)
     layer           = models.CharField(choices=LAYER_CHOICES, max_length=6)
     code            = models.CharField(max_length=255, unique=True, editable=False)
@@ -49,7 +49,7 @@ class Limit(models.Model):
         super(Limit, self).save(*args, **kwargs)
     
     def __str__(self):
-        return f"Limite Liquido Plastico {self.id}"
+        return f"Límite Líquido Plástico {self.id}"
 
 
 class Liquid(models.Model):
@@ -82,7 +82,7 @@ class Liquid(models.Model):
         super(Liquid, self).save(*args, **kwargs)
 
     def __str__(self):
-        return f"Limite Liquido {self.id}"
+        return f"Límite Líquido {self.id}"
 
 
 class Platic(models.Model):
@@ -114,4 +114,4 @@ class Platic(models.Model):
         super(Platic, self).save(*args, **kwargs)
 
     def __str__(self):
-        return f"Limite Plastico {self.id}"
+        return f"Límite Plástico {self.id}"

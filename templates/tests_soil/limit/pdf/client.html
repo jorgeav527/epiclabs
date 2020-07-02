@@ -32,16 +32,16 @@
           {% if obj.created|date:"d/m/Y" != obj.updated|date:"d/m/Y" %}
           <p class="text-left"><strong>Corrección del Ensayo:</strong> {{ obj.updated|default_if_none:"Ninguna Corrección"|date:"d/m/Y P" }}</p>
           {% endif %}
-          <p class="text-left"><strong>Emsion de Certificado:</strong> {% now "d/m/Y P" %}</p>
+          <p class="text-left"><strong>Emisión de Certificado:</strong> {% now "d/m/Y P" %}</p>
           <p class="text-left"><strong>Persona de Referencia:</strong> {{ obj.reference_person.title }} {{ obj.reference_person.name|title }}</p>          
-          <p class="text-left"><strong>Limite Liquido:</strong> {{ hit_25 }}%</p>          
-          <p class="text-left"><strong>Limite Plastico:</strong> {{ mean_y_moisture_plastic }}%</p>          
+          <p class="text-left"><strong>Límite Líquido:</strong> {{ hit_25 }}%</p>          
+          <p class="text-left"><strong>Límite Plástico:</strong> {{ mean_y_moisture_plastic }}%</p>          
           <p class="text-left"><strong>Indice de Plasticidad:</strong> {{ plastic_index }}</p>          
         </div>
         <div style="margin-left: 4rem;" class="col-xs-3 panel panel-default">
           <p class="text-left panel-heading"><strong>Datos del Ensayo</strong></p>
           <p class="text-left"><strong>ID:</strong> {{ obj.id }}</p>
-          <p class="text-left"><strong>Codigo QR:</strong></p>
+          <p class="text-left"><strong>Código QR:</strong></p>
           <p class="text-center">{% qr_from_text obj.code size=4 image_format="png" %}</p>
           <p class="text-left"><strong>Calicata:</strong> {{ obj.pit }}</p>
           <p class="text-left"><strong>Estrato:</strong> {{ obj.layer }}</p>
@@ -51,7 +51,7 @@
         <div class="col-xs-12">
                 <!-- Default panel contents -->
                 <!-- Table -->
-                <div class="panel-heading"><strong>Resultados del Ensayo:</strong> Limite Liquido</div>
+                <div class="panel-heading"><strong>Resultados del Ensayo:</strong> Límite Líquido</div>
                 <table class="table-bordered">
                   <thead class="">
                       <tr>
@@ -59,7 +59,7 @@
                           <th class="text-center">Recipiente</th>
                           <th class="text-center">Nº de Golpes</th>
                           <th class="text-center">Peso del Recipiente (gramos)</th>
-                          <th class="text-center">Peso Humedo (gramos)</th>
+                          <th class="text-center">Peso Húmedo (gramos)</th>
                           <th class="text-center">Peso Seco (gramos)</th>
                           <th class="text-center">Peso Agua (gramos)</th>
                           <th class="text-center">Peso Material (gramos)</th>
@@ -83,14 +83,14 @@
                   </tbody>
                 </table>
                 <!-- Table -->
-                <div class="panel-heading"><strong>Resultados del Ensayo:</strong> Limite Plastico</div>
+                <div class="panel-heading"><strong>Resultados del Ensayo:</strong> Límite Plástico</div>
                 <table class="table-bordered">
                   <thead class="">
                       <tr>
                           <th class="text-center">Secuencia</th>
                           <th class="text-center">Recipiente</th>
                           <th class="text-center">Peso del Recipiente (gramos)</th>
-                          <th class="text-center">Peso Humedo (gramos)</th>
+                          <th class="text-center">Peso Húmedo (gramos)</th>
                           <th class="text-center">Peso Seco (gramos)</th>
                           <th class="text-center">Peso Agua (gramos)</th>
                           <th class="text-center">Peso Material (gramos)</th>
@@ -173,7 +173,7 @@
     <footer>
       <div class="row" >
         <div class="col-xs-12 panel panel-default">
-            <p class="text-center">Laboratorio de Ingenieria Civil, Universidad Catolica de Santa Maria, EPICLABS &#169; 2019</p>
+            <p class="text-center">Laboratorio de Ingeniería Civil, Universidad Católica de Santa Maria, EPICLABS &#169; 2019</p>
         </div>
       </div>   
     </footer>

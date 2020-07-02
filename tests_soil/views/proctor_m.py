@@ -279,7 +279,7 @@ def proctor_m_detail(request, id):
         plot.line([max_w_100, min_w_100], [min_y, max_y], line_width=1, line_dash='dashed', color="red")
         plot.line([max_w_80, min_w_80], [min_y, max_y], line_width=1, line_dash='dashed', color="red")
         plot.line([max_w_60, min_w_60], [min_y, max_y], line_width=1, line_dash='dashed', color="red")
-    plot.circle(max_x_moisture, max_y_dry_density, size=8, color="red", legend="Maximo Punto")
+    plot.circle(max_x_moisture, max_y_dry_density, size=8, color="red", legend="Máximo Punto")
     script, div = components(plot)
 
     context = {
@@ -401,7 +401,7 @@ def proctor_m_pdf(request, id):
         plt.plot([max_w_100, min_w_100], [min_y, max_y], linestyle='dashed', color="red")
         plt.plot([max_w_80, min_w_80], [min_y, max_y], linestyle='dashed', color="red")
         plt.plot([max_w_60, min_w_60], [min_y, max_y], linestyle='dashed', color="red")
-    plt.scatter(max_x_moisture, max_y_dry_density, label='Maximo Punto', s=20, c='red',)
+    plt.scatter(max_x_moisture, max_y_dry_density, label='Máximo Punto', s=20, c='red',)
 
     plt.xlabel('Porcentaje de Humedad (%)')
     plt.ylabel('Densidad Seca (g/cm³)')
@@ -426,7 +426,7 @@ def proctor_m_pdf(request, id):
         "obj": obj,
         "graphic": graphic,
         "title": "COMPACTACION DE SUELOS EN LABORATORIO UTILIZANDO UNA ENERGIA MODIFICADA (2 700 kN-m/m³ (56 000 pie-lbf/pie³)) PROCTOR MODIFICADO MTC E115",
-        "norma_ASTM": "ASTM D 1557",
+        "norma_ASTM": "",
         "noma_NTP": "NTP 339.141",
         "coordinator": coordinator,
         "tecnic": tecnic,

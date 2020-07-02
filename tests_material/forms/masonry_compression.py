@@ -19,11 +19,13 @@ class MasonryCompressionForm(forms.ModelForm):
         fields = [
             'brick_type',
             'element_name',
+            'sampling_date',
             'done_date',
             'course',
         ]
         labels = {
             'brick_type': 'Tipo de Unidad',
+            'sampling_date': 'Fecha de Muestreo',
             'element_name': 'Elemento Nombre',
             'done_date': 'Fecha de Ensayo',
         }
@@ -100,17 +102,15 @@ class MasonryForm(forms.ModelForm):
             'L',
             'A',
             'hp',
-            'tp',
             'load',
         ]
         labels = {
-            'poured_date': 'Fecha de Vacidado',
+            'poured_date': 'Fecha de Vaciado',
             'break_date': 'Fecha de Rotura',
             'element_name': 'Elemento Nombre',
             'L': 'Longitud',
-            'A': 'Ancho',
+            'A': 'Ancho o Espesor de la Pila o Murete (tp)',
             'hp': 'Altura de la Pila o Murete (hp)',
-            'tp': 'Espesor de la Pila o Murete (tp)',
             'load': 'Carga',
         }
         help_texts = {
@@ -119,7 +119,6 @@ class MasonryForm(forms.ModelForm):
             'L': 'Unidades (mm) <br> Aproximación (1 mm)',
             'A': 'Unidades (mm) <br> Aproximación (1 mm)',
             'hp': 'Unidades (mm) <br> Aproximación (1 mm)',
-            'tp': 'Unidades (mm) <br> Aproximación (1 mm)',
             'load': 'Unidades (kgf) <br> Aproximación (1 kgf)',
         }
         widgets = {

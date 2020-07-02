@@ -71,7 +71,7 @@ class GranulometricGlobal(models.Model):
         super(GranulometricGlobal, self).save(*args, **kwargs)
 
     def __str__(self):
-        return f"Granulometria Tamizado Gloval {self.id}"
+        return f"Granulometria Tamizado Global {self.id}"
 
 
 class GlobalMesh(models.Model):
@@ -105,4 +105,4 @@ class GlobalMesh(models.Model):
     tool            = models.ManyToManyField(Tool)
 
     def __str__(self):
-        return f"Tamizes {self.id}"
+        return f"Tamices {self.id}"

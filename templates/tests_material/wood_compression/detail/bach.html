@@ -13,7 +13,7 @@
                 <p class="text-left"><span class="font-weight-bold">Nombre:</span> {{ obj.user.first_name|title }}</p>
                 <p class="text-left"><span class="font-weight-bold">Apellidos:</span> {{ obj.user.last_name|title }}</p>
                 <p class="text-left"><span class="font-weight-bold">DNI:</span> {{ obj.user.bachprofile.dni }}</p>
-                <p class="text-left"><span class="font-weight-bold">Codigo:</span> {{ obj.user.bachprofile.codigo }}</p>
+                <p class="text-left"><span class="font-weight-bold">Código:</span> {{ obj.user.bachprofile.codigo }}</p>
                 <hr class="my-3">
 
                 <p class="text-left mt-3"><span class="font-weight-bold"><u>Datos de la Tesis</u></span></p>
@@ -26,14 +26,14 @@
                     <p class="text-left">&#8594; {{ course }}</p>                
                     {% endfor %}
 
-                    <p class="text-left"><span class="font-weight-bold">Acesores:</span> </p>                
+                    <p class="text-left"><span class="font-weight-bold">Asesores:</span> </p>                
                     {% for adviser in thesis.adviser.all %}
                     <p class="text-left">&#8594; {{ adviser }}</p>                
                     {% endfor %}
 
                 <p class="text-left"><span class="font-weight-bold">Comienzo de la Thesis:</span> {{ thesis.start_day|date:"d/m/Y" }}</p>
                 <p class="text-left"><span class="font-weight-bold">Termino de la Thesis:</span> {{ thesis.finish_day|date:"d/m/Y" }}</p>
-                <p class="text-left"><span class="font-weight-bold">Duración:</span> {{ thesis.duration }} dias</p>
+                <p class="text-left"><span class="font-weight-bold">Duración:</span> {{ thesis.duration }} días</p>
                 {% endfor %}
                 <hr class="my-3">
 
@@ -54,11 +54,11 @@
                             <th>Tipo de Compresión</th>
                             <th>Superior Largo (mm)</th>
                             <th>Superior Ancho (mm)</th>
-                            <th>Area Superior (cm²)</th>
+                            <th>Área Superior (cm²)</th>
                             <th>Inferior Largo (mm)</th>
                             <th>Inferior Ancho (mm)</th>
-                            <th>Area Inferior (cm²)</th>
-                            <th>Prom. Areas (cm²)</th>
+                            <th>Área Inferior (cm²)</th>
+                            <th>Prom. Áreas (cm²)</th>
                             <th>Carga (kgf)</th>
                             <th>Resistencia a la Compresión (MPa (kgf/cm²))</th>
                         </tr>
@@ -105,11 +105,11 @@
                             <th>Tipo de Compresión</th>
                             <th>Superior Largo (mm)</th>
                             <th>Superior Ancho (mm)</th>
-                            <th>Area Superior (cm²)</th>
+                            <th>Área Superior (cm²)</th>
                             <th>Inferior Largo (mm)</th>
                             <th>Inferior Ancho (mm)</th>
-                            <th>Area Inferior (cm²)</th>
-                            <th>Prom. Areas (cm²)</th>
+                            <th>Área Inferior (cm²)</th>
+                            <th>Prom. Áreas (cm²)</th>
                             <th>Carga (kgf)</th>
                             <th>Resistencia a la Compresión (MPa (kgf/cm²))</th>
                         </tr>
@@ -148,10 +148,10 @@
                 {% endif %}
 
                 {% if qs_parallel %}
-                <p class="text-left"><span class="font-weight-bold">Grupo segun Esfuerzos Admisibles (Paralela):</span> {{ type_parallel }}</p>
+                <p class="text-left"><span class="font-weight-bold">Grupo según Esfuerzos Admisibles (Paralela):</span> {{ type_parallel }}</p>
                 {% endif %}
                 {% if qs_perpendicular %}
-                <p class="text-left"><span class="font-weight-bold">Grupo segun Esfuerzos Admisibles (Perpendicular):</span> {{ type_perpendicular }}</p>
+                <p class="text-left"><span class="font-weight-bold">Grupo según Esfuerzos Admisibles (Perpendicular):</span> {{ type_perpendicular }}</p>
                 {% endif %}
                 <hr class="my-3">
                 

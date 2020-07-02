@@ -100,7 +100,7 @@ def parallel_perpendicular_save(request, id):
     context = {
         "obj": obj,
         "formset": formset,
-        "title": "Crear Ensayos de Determinación de Variación de Dimenciones",
+        "title": "Crear Ensayos de Determinación de Variación de Dimensiones",
     }
 
     return render(request, "tests_material/wood_compression/parallel_perpendicular_form.html", context)

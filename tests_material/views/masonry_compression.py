@@ -22,7 +22,7 @@ def masonry_compression_list(request):
         obj_list = MasonryCompression.objects.filter(user=request.user)
         context = {
             "file_name": "Compresion_Pilas_Muretes",
-            "title": "Ensayos de Compresión de Prismas de Albañileria",
+            "title": "Ensayos de Compresión de Prismas de Albañilería",
             "obj_list": obj_list,
         }
         return render(request, 'tests_material/masonry_compression/masonry_compression_list.html', context)        
@@ -31,7 +31,7 @@ def masonry_compression_list(request):
         obj_list = MasonryCompression.objects.all()
         context = {
             "file_name": "Compresion_Pilas_Muretes",
-            "title": "Ensayos de Compresión de Prismas de Albañileria",
+            "title": "Ensayos de Compresión de Prismas de Albañilería",
             "obj_list": obj_list,
         }
         return render(request, 'tests_material/masonry_compression/masonry_compression_list.html', context)        
@@ -67,7 +67,7 @@ def masonry_compression_create(request):
 
     context = {
         "form": form,
-        "title": "Crear Ensayo de Compresión de Prismas de Albañileria",
+        "title": "Crear Ensayo de Compresión de Prismas de Albañilería",
     }
 
     return render(request, "tests_material/masonry_compression/masonry_compression_form.html", context)
@@ -98,7 +98,7 @@ def masonry_save(request, id):
     context = {
         "obj": obj,
         "formset": formset,
-        "title": "Crear Ensayos de Determinación de Variación de Dimenciones",
+        "title": "Crear Ensayos de Determinación de Variación de Dimensiones",
     }
 
     return render(request, "tests_material/masonry_compression/masonry_form.html", context)
@@ -128,7 +128,7 @@ def masonry_compression_update(request, id):
     context = {
         "form": form,
         "obj": obj,
-        "title": "Actualizar Ensayo de Compresión de Prismas de Albañileria",
+        "title": "Actualizar Ensayo de Compresión de Prismas de Albañilería",
     }
 
     return render(request, "tests_material/masonry_compression/masonry_compression_form.html", context)
@@ -153,9 +153,9 @@ def masonry_compression_detail(request, id):
         # fb Compression
         "avg_fc": avg_fc,
         "avg_fc_MPA": avg_fc_MPA,
-        "norma_NTP_fb": "NTP 251.014",
+        "norma_NTP_fb": "NTP 339.605",
 
-        "title": "Detalles del EnCompresión de Prismas de Albañileria",
+        "title": "Detalles del EnCompresión de Prismas de Albañilería",
     }
 
     return render(request, 'tests_material/masonry_compression/masonry_compression_detail.html', context)
@@ -176,7 +176,7 @@ def masonry_compression_delete(request, id):
 
     context = {
         "obj": obj,
-        "title": "Eliminar el Ensayo de Compresión de Prismas de Albañileria",
+        "title": "Eliminar el Ensayo de Compresión de Prismas de Albañilería",
     }
 
     return render(request, 'tests_material/masonry_compression/masonry_compression_delete_comfirm.html', context)
@@ -204,7 +204,7 @@ def masonry_compression_pdf(request, id):
         # fb Compression
         "avg_fc": avg_fc,
         "avg_fc_MPA": avg_fc_MPA,
-        "norma_NTP_fb": "NTP 251.014",
+        "norma_NTP_fb": "NTP 339.605",
 
         "title": "MÉTODO DE ENSAYO PARA LA DETERMINACIÓN DE LA RESISTENCIA EN COMPRESIÓN DE PRISMAS DE ALBAÑILERIA",
         "coordinator": coordinator,

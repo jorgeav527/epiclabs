@@ -29,7 +29,7 @@
                   <p class="card-meta mb-2"><i class="fas fa-user-tie mr-2"></i><strong>Nombre de la Enpresa: </strong>{{ user.clientprofile.long_name|default_if_none:"Complete el Formulario"|title }}</p>
                   <p class="card-meta mb-2"><i class="fas fa-user-tie mr-2"></i><strong>Dirección de la Empresa: </strong>{{ user.clientprofile.direction|default_if_none:"Complete el Formulario"|title }}</p>
                   <p class="card-meta mb-2"><i class="fas fa-user-tie mr-2"></i><strong>RUC: </strong>{{ user.clientprofile.ruc|default_if_none:"Complete el Formulario" }}</p>
-                  <p class="card-meta mb-2"><i class="fas fa-user-tie mr-2"></i><strong>Telefono o Celular: </strong>{{ user.clientprofile.phone|default_if_none:"Complete el Formulario" }}</p>
+                  <p class="card-meta mb-2"><i class="fas fa-user-tie mr-2"></i><strong>Teléfono o Celular: </strong>{{ user.clientprofile.phone|default_if_none:"Complete el Formulario" }}</p>
                   <p class="card-meta mb-2"><strong>Categoria: </strong></p>
                   {% for category in user.clientprofile.category.all %}
                   <p class="card-meta mb-2"><i class="fas fa-user-tie mr-2"></i>{{ category }}</p>
@@ -97,7 +97,7 @@
                       <h4 class="h4-responsive card-title">{{ obj_reference_person.title }}. {{ obj_reference_person.name|title }}</h4>
                       <hr class="my-3 rgba-white-light">
                       <p class="card-meta mb-2"><i class="fas fa-user-tie mr-2"></i><strong>DNI: </strong>{{ obj_reference_person.dni }}</p>
-                      <p class="card-meta mb-2"><i class="fas fa-user-tie mr-2"></i><strong>Telefono: </strong>{{ obj_reference_person.phone }}</p>
+                      <p class="card-meta mb-2"><i class="fas fa-user-tie mr-2"></i><strong>Teléfono: </strong>{{ obj_reference_person.phone }}</p>
                   </div>
               </div>
               <hr class="my-3 rgba-white-light">

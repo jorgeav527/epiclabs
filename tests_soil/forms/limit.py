@@ -105,7 +105,7 @@ class LiquidForm(forms.ModelForm):
             'bowl': 'Recipiente Numero',
             'hit': 'Numero de Golpes',
             'bowl_weight': 'Peso del Recipiente',
-            'wet_weight': 'Peso Humedo de la Muestra',
+            'wet_weight': 'Peso Húmedo de la Muestra',
             'dry_weight': 'Peso Seco de la Muestra',
         }
         help_texts = {
@@ -114,7 +114,7 @@ class LiquidForm(forms.ModelForm):
             'dry_weight': 'Unidades (Gramos) <br> Aproximación (0.01 g)',
         }
 
-LiquidFormSet = inlineformset_factory(Limit, Liquid, form=LiquidForm, max_num=3)
+LiquidFormSet = inlineformset_factory(Limit, Liquid, form=LiquidForm, max_num=4)
 
 
 class PlasticForm(forms.ModelForm):
@@ -130,7 +130,7 @@ class PlasticForm(forms.ModelForm):
         labels = {
             'bowl': 'Recipiente Numero',
             'bowl_weight': 'Peso del Recipiente',
-            'wet_weight': 'Peso Humedo de la Muestra',
+            'wet_weight': 'Peso Húmedo de la Muestra',
             'dry_weight': 'Peso Seco de la Muestra',
         }
         help_texts = {
@@ -139,4 +139,4 @@ class PlasticForm(forms.ModelForm):
             'dry_weight': 'Unidades (Gramos) <br> Aproximación (0.01 g)',
         }
 
-PlasticFormSet = inlineformset_factory(Limit, Platic, form=PlasticForm, max_num=3)
+PlasticFormSet = inlineformset_factory(Limit, Platic, form=PlasticForm, max_num=4)

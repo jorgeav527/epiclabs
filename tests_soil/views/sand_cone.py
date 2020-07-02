@@ -13,8 +13,8 @@ import numpy as np
 from bokeh.plotting import figure
 from bokeh.embed import components
 
-from tests_soil.models import SandCone, HumidDensity, ContentMoisture, ContentMoistureCarbure, CorrectionSandCone
-from tests_soil.forms import SandConeForm, SandConeFormClient, HumidDensityFormSet, ContentMoistureFormSet, ContentMoistureCarbureFormSet, CorrectionSandConeFormSet
+from tests_soil.models import SandCone, HumidDensity, ContentMoisture, CorrectionSandCone
+from tests_soil.forms import SandConeForm, SandConeFormClient, HumidDensityFormSet, ContentMoistureFormSet, CorrectionSandConeFormSet
 from equipments.models import Equip
 from accounts.models import AdminProfile
 
@@ -134,40 +134,10 @@ def content_moisture_save(request, id):
     context = {
         "obj": obj,
         "formset": formset,
-        "title": "Crear Ensayo de Contenido de Húmedad",
+        "title": "Crear Ensayo de Contenido de Humedad",
     }
 
     return render(request, "tests_soil/sand_cone/content_moisture_form.html", context)
-
-
-@login_required
-def moisture_carbure_save(request, id):
-    obj = get_object_or_404(SandCone, id=id)
-    equips = Equip.objects.filter(name__in=("Maquinas Varias", "Balanza", "Speedy"))
-    if request.user.is_bach or request.user.is_group or request.user.is_superuser or request.user.is_admin:
-        if request.method == "POST":
-            formset = ContentMoistureCarbureFormSet(request.POST, instance=obj)
-            if formset.is_valid():
-                instances = formset.save(commit=False)
-                for instance in instances:
-                    instance.save()
-                    for equip in equips:    
-                        instance.equipment.add(equip)
-                        equip.use = F("use") + 1
-                        equip.save()
-                formset.save()                
-                messages.success(request, f"Los ensayos han sido creados")
-                return redirect('tests_soil:moisture_carbure_save', id=obj.id)
-    
-    formset = ContentMoistureCarbureFormSet(instance=obj)
-
-    context = {
-        "obj": obj,
-        "formset": formset,
-        "title": "Crear Ensayo de Contenido de Húmedad Usando Carbono 14",
-    }
-
-    return render(request, "tests_soil/sand_cone/moisture_carbure_form.html", context)
 
 
 @login_required
@@ -235,29 +205,23 @@ def sand_cone_detail(request, id):
     obj = get_object_or_404(SandCone, id=id)
     humid = HumidDensity.objects.filter(sand_cone=obj.id).first()
     moisture = ContentMoisture.objects.filter(sand_cone=obj.id).first()
-    carbure = ContentMoistureCarbure.objects.filter(sand_cone=obj.id).first()
-    correction = CorrectionSandCone.objects.filter(sand_cone=obj.id).first()
     
     Peso_muestra_total_humeda = humid.wet_sample_weight
     Densidad_muestra_total_humeda = humid.density_wet_sample
     Contenido_humedad_muestra = moisture.sample_moisture
-    Contenido_humedad_frac_peso_seco = carbure.dry_weight_percentage
-    peso_fracción_extradimensionada_húmeda = correction.wet_fraction_weight
-    P_E_Ap_Frac_Extrad = correction.p_e_ap_frac_extrad
-    Abs_Frac_Extrad = correction.per_abs_tails_extrad
-    Peso_fracción_extrad_seca = correction.weight_fraction_extrad
-    
-    if obj.moisture:
-        ans_01 = round((Peso_muestra_total_humeda - peso_fracción_extradimensionada_húmeda)/(1 + Contenido_humedad_frac_peso_seco/100), 2)
-        ans_02 = round((Peso_fracción_extrad_seca / (Peso_fracción_extrad_seca + ans_01)) * 100, 2) 
-        ans_03 = round((ans_01 / (Peso_fracción_extrad_seca + ans_01)) * 100, 2)
-        ans_04 = round(ans_02 + ans_03, 2)
-        ans_05 = round((ans_03 * Contenido_humedad_frac_peso_seco + ans_02 * Abs_Frac_Extrad) / 100, 1)
-        ans_06 = round((Densidad_muestra_total_humeda * 100) / (ans_05 + 100), 2)
-        ans_07 = round(Peso_fracción_extrad_seca + ans_01, 2)
-        ans_08 = round((ans_06 * P_E_Ap_Frac_Extrad * ans_03) / (100 * P_E_Ap_Frac_Extrad - ans_06 * ans_05), 2)
-        ans_09 = round(ans_08 / obj.weight_dry_max * 100, 0)
+    Densidad_muestra_total_seca = round((Densidad_muestra_total_humeda / (Contenido_humedad_muestra + 100)) * 100, 2)
+
+    if obj.weight_dry_max is not None:
+        Porcentaje_grado_compac = round((Densidad_muestra_total_seca/obj.weight_dry_max) * 100, 0)
     else:
+        Porcentaje_grado_compac = "Porfavor llenar el Peso unit. Seco máx. (1er formulario)"
+
+    if obj.moisture:
+        correction = CorrectionSandCone.objects.filter(sand_cone=obj.id).first()
+        peso_fracción_extradimensionada_húmeda = correction.wet_fraction_weight
+        P_E_Ap_Frac_Extrad = correction.p_e_ap_frac_extrad
+        Abs_Frac_Extrad = correction.per_abs_tails_extrad
+        Peso_fracción_extrad_seca = correction.weight_fraction_extrad
         ans_01 = round((Peso_muestra_total_humeda - peso_fracción_extradimensionada_húmeda)/(1 + Contenido_humedad_muestra/100), 2)
         ans_02 = round((Peso_fracción_extrad_seca / (Peso_fracción_extrad_seca + ans_01)) * 100, 2) 
         ans_03 = round((ans_01 / (Peso_fracción_extrad_seca + ans_01)) * 100, 2)
@@ -267,13 +231,29 @@ def sand_cone_detail(request, id):
         ans_07 = round(Peso_fracción_extrad_seca + ans_01, 2) 
         ans_08 = round((ans_06 * P_E_Ap_Frac_Extrad * ans_03) / (100 * P_E_Ap_Frac_Extrad - ans_06 * ans_05), 2) 
         ans_09 = round(ans_08 / obj.weight_dry_max * 100, 0)
+    else:
+        correction = None
+        peso_fracción_extradimensionada_húmeda = None
+        P_E_Ap_Frac_Extrad = None
+        Abs_Frac_Extrad = None
+        Peso_fracción_extrad_seca = None
+        ans_01 = None
+        ans_02 = None
+        ans_03 = None
+        ans_04 = None
+        ans_05 = None
+        ans_06 = None
+        ans_07 = None
+        ans_08 = None
+        ans_09 = None
 
     context = {
         "obj": obj,
         "humid": humid,
         "moisture": moisture,
-        "carbure": carbure,
         "correction": correction,
+        "Densidad_muestra_total_seca": Densidad_muestra_total_seca,
+        "Porcentaje_grado_compac": Porcentaje_grado_compac,
         "ans_01": ans_01,
         "ans_02": ans_02,
         "ans_03": ans_03,
@@ -318,29 +298,24 @@ def sand_cone_pdf(request, id):
     tecnic = AdminProfile.objects.filter(staff="OFICINA_TECNICA", active=True).first()
     humid = HumidDensity.objects.filter(sand_cone=obj.id).first()
     moisture = ContentMoisture.objects.filter(sand_cone=obj.id).first()
-    carbure = ContentMoistureCarbure.objects.filter(sand_cone=obj.id).first()
-    correction = CorrectionSandCone.objects.filter(sand_cone=obj.id).first()
     
     Peso_muestra_total_humeda = humid.wet_sample_weight
     Densidad_muestra_total_humeda = humid.density_wet_sample
     Contenido_humedad_muestra = moisture.sample_moisture
-    Contenido_humedad_frac_peso_seco = carbure.dry_weight_percentage
-    peso_fracción_extradimensionada_húmeda = correction.wet_fraction_weight
-    P_E_Ap_Frac_Extrad = correction.p_e_ap_frac_extrad
-    Abs_Frac_Extrad = correction.per_abs_tails_extrad
-    Peso_fracción_extrad_seca = correction.weight_fraction_extrad
-    
-    if obj.moisture:
-        ans_01 = round((Peso_muestra_total_humeda - peso_fracción_extradimensionada_húmeda)/(1 + Contenido_humedad_frac_peso_seco/100), 2)
-        ans_02 = round((Peso_fracción_extrad_seca / (Peso_fracción_extrad_seca + ans_01)) * 100, 2) 
-        ans_03 = round((ans_01 / (Peso_fracción_extrad_seca + ans_01)) * 100, 2)
-        ans_04 = round(ans_02 + ans_03, 2) 
-        ans_05 = round((ans_03 * Contenido_humedad_frac_peso_seco + ans_02 * Abs_Frac_Extrad) / 100, 1)
-        ans_06 = round((Densidad_muestra_total_humeda * 100) / (ans_05 + 100), 2) 
-        ans_07 = round(Peso_fracción_extrad_seca + ans_01, 2) 
-        ans_08 = round((ans_06 * P_E_Ap_Frac_Extrad * ans_03) / (100 * P_E_Ap_Frac_Extrad - ans_06 * ans_05), 2) 
-        ans_09 = round(ans_08 / obj.weight_dry_max * 100, 0)
+    Densidad_muestra_total_seca = round((Densidad_muestra_total_humeda / (Contenido_humedad_muestra + 100)) * 100, 2)
+
+    if obj.weight_dry_max is not None:
+        Porcentaje_grado_compac = round((Densidad_muestra_total_seca/obj.weight_dry_max) * 100, 0)
     else:
+        Porcentaje_grado_compac = "Porfavor llenar el Peso unit. Seco máx. (1er formulario)"
+
+
+    if obj.moisture:
+        correction = CorrectionSandCone.objects.filter(sand_cone=obj.id).first()
+        peso_fracción_extradimensionada_húmeda = correction.wet_fraction_weight
+        P_E_Ap_Frac_Extrad = correction.p_e_ap_frac_extrad
+        Abs_Frac_Extrad = correction.per_abs_tails_extrad
+        Peso_fracción_extrad_seca = correction.weight_fraction_extrad
         ans_01 = round((Peso_muestra_total_humeda - peso_fracción_extradimensionada_húmeda)/(1 + Contenido_humedad_muestra/100), 2)
         ans_02 = round((Peso_fracción_extrad_seca / (Peso_fracción_extrad_seca + ans_01)) * 100, 2) 
         ans_03 = round((ans_01 / (Peso_fracción_extrad_seca + ans_01)) * 100, 2)
@@ -350,14 +325,30 @@ def sand_cone_pdf(request, id):
         ans_07 = round(Peso_fracción_extrad_seca + ans_01, 2) 
         ans_08 = round((ans_06 * P_E_Ap_Frac_Extrad * ans_03) / (100 * P_E_Ap_Frac_Extrad - ans_06 * ans_05), 2) 
         ans_09 = round(ans_08 / obj.weight_dry_max * 100, 0)
+    else:
+        correction = None
+        peso_fracción_extradimensionada_húmeda = None
+        P_E_Ap_Frac_Extrad = None
+        Abs_Frac_Extrad = None
+        Peso_fracción_extrad_seca = None
+        ans_01 = None
+        ans_02 = None
+        ans_03 = None
+        ans_04 = None
+        ans_05 = None
+        ans_06 = None
+        ans_07 = None
+        ans_08 = None
+        ans_09 = None
 
     context = {
         "obj": obj,
         "title": "ENSAYO PARA DETERMINAR LA DENSIDAD Y PESO UNITARIO DEL SUELO IN SITU MEDIANTE EL MÉTODO DEL CONO DE ARENA - MTC E117",
         "humid": humid,
         "moisture": moisture,
-        "carbure": carbure,
         "correction": correction,
+        "Densidad_muestra_total_seca": Densidad_muestra_total_seca,
+        "Porcentaje_grado_compac": Porcentaje_grado_compac,
         "ans_01": ans_01,
         "ans_02": ans_02,
         "ans_03": ans_03,

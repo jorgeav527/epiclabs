@@ -51,6 +51,7 @@ class BrickType(models.Model):
 
 
 class VariationDimensions(models.Model):
+    name_element    = models.CharField(max_length=50)
     upface_length   = models.FloatField()
     downface_length = models.FloatField()
     average_length  = models.FloatField(editable=False)
@@ -83,10 +84,11 @@ class VariationDimensions(models.Model):
         super(VariationDimensions, self).save(*args, **kwargs)
 
     def __str__(self):
-        return f"Variacion Dimenciones Ladrillo {self.id}"
+        return f"Variacion Dimensiones Ladrillo {self.id}"
 
 
 class Warping(models.Model):
+    name_element    = models.CharField(max_length=50)
     upface_concave      = models.FloatField(default=0)
     upface_convex       = models.FloatField(default=0)
     downface_concave    = models.FloatField(default=0)
@@ -100,6 +102,7 @@ class Warping(models.Model):
 
 
 class DensityVoids(models.Model):
+    name_element    = models.CharField(max_length=50)
     length          = models.FloatField()
     width           = models.FloatField()
     high            = models.FloatField()
@@ -122,7 +125,7 @@ class DensityVoids(models.Model):
         self.volume_brick = round(volume, 1)
 
         # Generate volume_void
-        vv = ( 500 / self.sc ) * self.su
+        vv = self.su / self.sc 
         self.volume_void = round(vv, 1)
 
         # Generate volume_real
@@ -130,7 +133,7 @@ class DensityVoids(models.Model):
         self.volume_real = round(vr, 1)
 
         # Generate void_percentage
-        vp = (self.volume_void / self.volume_brick) * (1/1.64) * 100
+        vp = (self.volume_void / self.volume_brick) *  100
         self.void_percentage = round(vp, 0)
 
         # Generate density
@@ -140,10 +143,11 @@ class DensityVoids(models.Model):
         super(DensityVoids, self).save(*args, **kwargs)
 
     def __str__(self):
-        return f"Densidad y Vacios {self.id}"
+        return f"Densidad y Vacíos {self.id}"
 
 
 class Suction(models.Model):
+    name_element    = models.CharField(max_length=50)
     nomal_weight    = models.FloatField()
     dry_weight      = models.FloatField()
     diff_weight     = models.FloatField(editable=False)
@@ -167,11 +171,8 @@ class Suction(models.Model):
         self.face_area = round(fa, 1)
 
         # Generate face_wet_weight_correction
-        if self.face_area > (200 + (200 * 2.5 / 100)) or self.face_area < (200 - (200 * 2.5 / 100)):
-            fwwc = (200 * self.face_wet_weight) / (self.length * self.width)
-            self.face_wet_weight_correction = round(fwwc, 1)
-        else:
-            self.face_wet_weight_correction = round(self.face_wet_weight, 1) 
+        fwwc = ((self.face_wet_weight - self.dry_weight) / self.face_area) * 200
+        self.face_wet_weight_correction = round(fwwc, 1)
 
         super(Suction, self).save(*args, **kwargs)
 
@@ -180,6 +181,7 @@ class Suction(models.Model):
 
 
 class AbsSatuCoeff(models.Model):
+    name_element    = models.CharField(max_length=50)
     dry_weight          = models.FloatField()
     wet_weight_cool_24  = models.FloatField()
     wet_weight_hot_5    = models.FloatField()
@@ -207,10 +209,11 @@ class AbsSatuCoeff(models.Model):
         super(AbsSatuCoeff, self).save(*args, **kwargs)
 
     def __str__(self):
-        return f"Absorcion Coeficiente Saturacion Ladrillo {self.id}"
+        return f"Absorción Coeficiente Saturacion Ladrillo {self.id}"
 
 
 class CompretionBrick(models.Model):
+    name_element    = models.CharField(max_length=50)
     upface_length   = models.FloatField()
     upface_width    = models.FloatField()
     downface_length = models.FloatField()

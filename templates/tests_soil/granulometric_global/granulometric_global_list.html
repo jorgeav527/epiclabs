@@ -70,20 +70,20 @@
                 <th rowspan="2">Id</th>
                 <th colspan="3">Item</th>
                 <th colspan="2">Fecha</th>
-                <th rowspan="2">Tiempo de Espera (dias)</th>
-                <th colspan="6">Caracteristicas</th>
+                <th rowspan="2">Tiempo de Espera (días)</th>
+                <th colspan="6">Características</th>
                 <th rowspan="2">Acciones</th>
               </tr>
               <tr>
                 <th>Calicata</th>
                 <th>Estrato</th>
-                <th>Codigo</th>
+                <th>Código</th>
                 <th>Muestreo</th>
                 <th>Ensayo</th>
                 <th>Humedad Higroscópica (%)</th>
                 <th>Materia Orgánica</th>
-                <th>Limite Líquido</th>
-                <th>Limite Plástico</th>
+                <th>Límite Líquido</th>
+                <th>Límite Plástico</th>
                 <th>Indice Plástico</th>
                 <th>Tamaño Max (inch)</th>
               </tr>
@@ -114,7 +114,7 @@
                     {% if request.user.is_superuser or request.user.is_group or request.user.is_bach or request.user.is_admin %}
                     <a
                       href="{% url 'tests_soil:global_mesh_save' obj.id %}"
-                      data-toggle="tooltip" title="Peso Retenido en Tamizes" role="button" class="btn btn-dark btn-sm px-2 mx-1"><i class="fas fa-plus"></i>
+                      data-toggle="tooltip" title="Peso Retenido en Tamices" role="button" class="btn btn-dark btn-sm px-2 mx-1"><i class="fas fa-plus"></i>
                     </a>
                     <a 
                       href="{% url 'tests_soil:granulometric_global_update' obj.id %}" 

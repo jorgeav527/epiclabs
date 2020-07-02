@@ -170,7 +170,7 @@ class SaturationForm(forms.ModelForm):
             'frac_fina_weight': 'Unidades (%) <br> Aproximación (0.01%)',  
             'p_sp_frac_extrad': 'Unidades (g/cm³) <br> Aproximación (0.001 g/cm³)',  
             'p_sp_frac_gruesa': 'Unidades (g/cm³) <br> Aproximación (0.001 g/cm³)',  
-            'g_sp_frac_fina': 'Adimencional <br> Aproximación (0.001)',    
+            'g_sp_frac_fina': 'Adimensional <br> Aproximación (0.001)',    
         }
 
 SaturationFormSet = inlineformset_factory(ProctorM, Saturation, form=SaturationForm, max_num=1, can_delete=False)

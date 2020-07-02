@@ -16,7 +16,7 @@ class ReferencePersonForm(forms.ModelForm):
     title   = forms.ChoiceField(required=True, choices=TITLE_CHOICES, label='Formación', help_text='Selecciona la Formación',)
     name    = forms.CharField(required=True, label="Nombre Completo",)
     dni     = forms.IntegerField(required=True, label='DNI', help_text='Documento Nacional de Identidad',)
-    phone   = forms.IntegerField(required=True, label='Telefono o Celular',)
+    phone   = forms.IntegerField(required=True, label='Teléfono o Celular',)
 
     class Meta:
         model = ReferencePerson

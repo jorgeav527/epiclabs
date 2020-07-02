@@ -89,7 +89,7 @@ class DiamondPiceForm(forms.ModelForm):
             'extraction_date': 'Fecha de Extracción',
             'break_date': 'Fecha de Rotura',
             'element_name': 'Elemento',    
-            'D': 'Diametro',
+            'D': 'Diámetro',
             'L': 'Longitud',
             'check_per': 'Verificación de la Perpendicularidad',
             'load': 'Carga',

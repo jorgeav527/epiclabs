@@ -35,7 +35,7 @@ class GranulometricGlobalForm(forms.ModelForm):
             'done_date': 'Fecha del Ensayo',
             'hygr_humid': '% humedad higroscópica de la fracción fina',
             'organic': 'Contenido de materia orgánica',
-            'liquid_limit': 'Limite Líquido',
+            'liquid_limit': 'Límite Líquido',
             'plastic_limit': 'Límite Plástico',
             'max_size': 'Tamaño máximo',
         }
@@ -43,9 +43,9 @@ class GranulometricGlobalForm(forms.ModelForm):
             'quarry': 'Nombre propio de la Cantera',
             'sampling_date': 'Fecha de Muestreo',
             'done_date': 'Fecha del Ensayo',
-            'hygr_humid': 'Porcentaje',
-            'liquid_limit': 'Porcentaje',
-            'plastic_limit': 'Porcentaje',
+            'hygr_humid': 'Porcentaje <br> Aproximación (0.1 %)',
+            'liquid_limit': 'Porcentaje <br> Aproximación (0.1 %)',
+            'plastic_limit': 'Porcentaje <br> Aproximación (0.1 %)',
             'max_size': 'Pulgadas',
         }
         widgets = {
@@ -80,7 +80,7 @@ class GranulometricGlobalFormClient(forms.ModelForm):
             'done_date': 'Fecha del Ensayo',
             'hygr_humid': '% humedad higroscópica de la fracción fina',
             'organic': 'Contenido de materia orgánica',
-            'liquid_limit': 'Limite Líquido',
+            'liquid_limit': 'Límite Líquido',
             'plastic_limit': 'Límite Plástico',
             'max_size': 'Tamaño máximo',
             'reference_person': 'Persona de Referencia',

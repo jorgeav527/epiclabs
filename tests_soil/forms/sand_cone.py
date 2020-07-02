@@ -4,7 +4,7 @@ from datetime import datetime
 from django.forms import inlineformset_factory
 
 from accounts.models import User
-from tests_soil.models import SandCone, HumidDensity, ContentMoisture, ContentMoistureCarbure, CorrectionSandCone
+from tests_soil.models import SandCone, HumidDensity, ContentMoisture, CorrectionSandCone
 from construction.models import Construction
 from reference_person.models import ReferencePerson
 from course.models import Course
@@ -22,9 +22,9 @@ class SandConeForm(forms.ModelForm):
             'section_level',
             'element_side',
             'layer',
+            'moisture',
             'weight_dry_max',
             'opt_moisture',
-            'moisture',
             'sampling_date',
             'done_date',
             'course',
@@ -35,9 +35,9 @@ class SandConeForm(forms.ModelForm):
             'section_level': 'Tramo o Nivel',
             'element_side': 'Elemento o Lado',
             'layer': 'Capa',
+            'moisture': 'Corrección?',
             'weight_dry_max': 'Peso unit. Seco máx.',
             'opt_moisture': 'Ópt. Cont. de humedad' ,
-            'moisture': 'Método de Carburo de Calcio?',
             'sampling_date': 'Fecha de Muestreo',
             'done_date': 'Fecha del Ensayo',
         }
@@ -63,9 +63,9 @@ class SandConeFormClient(forms.ModelForm):
             'section_level',
             'element_side',
             'layer',
+            'moisture',
             'weight_dry_max',
             'opt_moisture',
-            'moisture',
             'sampling_date',
             'done_date',
             'reference_person',
@@ -77,9 +77,9 @@ class SandConeFormClient(forms.ModelForm):
             'section_level': 'Tramo o Nivel',
             'element_side': 'Elemento o Lado',
             'layer': 'Capa',
+            'moisture': 'Corrección?',
             'weight_dry_max': 'Peso unit. Seco máx.',
             'opt_moisture': 'Ópt. Cont. de humedad',
-            'moisture': 'Método de Carburo de Calcio?',
             'sampling_date': 'Fecha de Muestreo',
             'done_date': 'Fecha del Ensayo',
             'reference_person': 'Persona de Referencia',
@@ -171,26 +171,6 @@ class ContentMoistureForm(forms.ModelForm):
         }
 
 ContentMoistureFormSet = inlineformset_factory(SandCone, ContentMoisture, form=ContentMoistureForm, max_num=1, can_delete=False,)
-
-
-class ContentMoistureCarbureForm(forms.ModelForm):
-
-    class Meta:
-        model = ContentMoistureCarbure
-        fields = [
-            'wet_weight_percentage',
-            'dry_weight_percentage',
-        ]
-        labels = {
-            'wet_weight_percentage': 'Contenido de humedad de fracción gruesa+fina',
-            'dry_weight_percentage': 'Contenido de humedad de fracción gruesa+fina',
-        }
-        help_texts = {
-            'wet_weight_percentage': '% del peso húmedo <br> Aproximación (0.1%)',
-            'dry_weight_percentage': '% del peso seco <br> Aproximación (1%)',
-        }
-
-ContentMoistureCarbureFormSet = inlineformset_factory(SandCone, ContentMoistureCarbure, form=ContentMoistureCarbureForm, max_num=1, can_delete=False,)
 
 
 class CorrectionSandConeForm(forms.ModelForm):

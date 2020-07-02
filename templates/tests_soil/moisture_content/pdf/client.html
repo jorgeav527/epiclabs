@@ -32,7 +32,7 @@
           {% if obj.created|date:"d/m/Y" != obj.updated|date:"d/m/Y" %}
           <p class="text-left"><strong>Corrección del Ensayo:</strong> {{ obj.updated|default_if_none:"Ninguna Corrección"|date:"d/m/Y P" }}</p>
           {% endif %}
-          <p class="text-left"><strong>Emsion de Certificado:</strong> {% now "d/m/Y P" %}</p>
+          <p class="text-left"><strong>Emisión de Certificado:</strong> {% now "d/m/Y P" %}</p>
           <p class="text-left"><strong>Persona de Referencia:</strong> {{ obj.reference_person.title }} {{ obj.reference_person.name|title }}</p>          
           {% if qs_gravas %}
           <p class="text-left"><strong>Promedio de Humedad en Gravas:</strong> {{ mean_gravas }}%</p>
@@ -50,7 +50,7 @@
         <div style="margin-left: 4rem;" class="col-xs-3 panel panel-default">
           <p class="text-left panel-heading"><strong>Datos del Ensayo</strong></p>
           <p class="text-left"><strong>ID:</strong> {{ obj.id }}</p>
-          <p class="text-left"><strong>Codigo QR:</strong></p>
+          <p class="text-left"><strong>Código QR:</strong></p>
           <p class="text-center">{% qr_from_text obj.code size=4 image_format="png" %}</p>
           <p class="text-left"><strong>Material:</strong> {{ obj.material }}</p>
           <p class="text-left"><strong>Cantera:</strong> {{ obj.quarry }}</p>
@@ -236,7 +236,7 @@
     <footer>
       <div class="row" >
         <div class="col-xs-12 panel panel-default">
-            <p class="text-center">Laboratorio de Ingenieria Civil, Universidad Catolica de Santa Maria, EPICLABS &#169; 2019</p>          
+            <p class="text-center">Laboratorio de Ingeniería Civil, Universidad Católica de Santa Maria, EPICLABS &#169; 2019</p>          
         </div>
       </div>   
     </footer>

@@ -13,7 +13,7 @@
                 <p class="text-left"><span class="font-weight-bold">Nombre:</span> {{ obj.user.first_name|title }}</p>
                 <p class="text-left"><span class="font-weight-bold">Apellidos:</span> {{ obj.user.last_name|title }}</p>
                 <p class="text-left"><span class="font-weight-bold">DNI:</span> {{ obj.user.bachprofile.dni }}</p>
-                <p class="text-left"><span class="font-weight-bold">Codigo:</span> {{ obj.user.bachprofile.codigo }}</p>
+                <p class="text-left"><span class="font-weight-bold">Código:</span> {{ obj.user.bachprofile.codigo }}</p>
                 <hr class="my-3">
 
                 <p class="text-left mt-3"><span class="font-weight-bold"><u>Datos de la Tesis</u></span></p>
@@ -26,14 +26,14 @@
                     <p class="text-left">&#8594; {{ course }}</p>                
                     {% endfor %}
 
-                    <p class="text-left"><span class="font-weight-bold">Acesores:</span> </p>                
+                    <p class="text-left"><span class="font-weight-bold">Asesores:</span> </p>                
                     {% for adviser in thesis.adviser.all %}
                     <p class="text-left">&#8594; {{ adviser }}</p>                
                     {% endfor %}
 
                 <p class="text-left"><span class="font-weight-bold">Comienzo de la Thesis:</span> {{ thesis.start_day|date:"d/m/Y" }}</p>
                 <p class="text-left"><span class="font-weight-bold">Termino de la Thesis:</span> {{ thesis.finish_day|date:"d/m/Y" }}</p>
-                <p class="text-left"><span class="font-weight-bold">Duración:</span> {{ thesis.duration }} dias</p>
+                <p class="text-left"><span class="font-weight-bold">Duración:</span> {{ thesis.duration }} días</p>
                 {% endfor %}
                 <hr class="my-3">
 
@@ -45,7 +45,7 @@
                 <hr class="my-3">
                 
                 <p class="text-left mt-3"><span class="font-weight-bold"><u>Resultados del Ensayo</u></span></p>
-                <p class="text-left"><span class="font-weight-bold">Ensayos de Limite Liquido:</span></p>
+                <p class="text-left"><span class="font-weight-bold">Ensayos de Límite Líquido:</span></p>
                 <table class="table table-sm table-responsive table-bordered text-center">
                     <thead class="primary-color-dark white-text">
                         <tr>
@@ -53,7 +53,7 @@
                             <th>Recipiente</th>
                             <th>Nº de Golpes</th>
                             <th>Peso del Recipiente (gramos)</th>
-                            <th>Peso Humedo (gramos)</th>
+                            <th>Peso Húmedo (gramos)</th>
                             <th>Peso Seco (gramos)</th>
                             <th>Peso Agua (gramos)</th>
                             <th>Peso Material (gramos)</th>
@@ -77,14 +77,14 @@
                     </tbody>
                 </table>
                 
-                <p class="text-left"><span class="font-weight-bold">Ensayos de Limite Plastico:</span></p>
+                <p class="text-left"><span class="font-weight-bold">Ensayos de Límite Plástico:</span></p>
                 <table class="table table-sm table-responsive table-bordered text-center">
                     <thead class="primary-color-dark white-text">
                         <tr>
                             <th>Secuencia</th>
                             <th>Recipiente</th>
                             <th>Peso del Recipiente (gramos)</th>
-                            <th>Peso Humedo (gramos)</th>
+                            <th>Peso Húmedo (gramos)</th>
                             <th>Peso Seco (gramos)</th>
                             <th>Peso Agua (gramos)</th>
                             <th>Peso Material (gramos)</th>
@@ -106,8 +106,8 @@
                         {% endfor %}
                     </tbody>
                 </table>
-                <p class="text-left"><span class="font-weight-bold">Limite Liquido a 25 Golpes:</span> {{ hit_25 }}%</p>
-                <p class="text-left"><span class="font-weight-bold">Limite Platico Promedio:</span> {{ mean_y_moisture_plastic }}%</p>
+                <p class="text-left"><span class="font-weight-bold">Límite Líquido a 25 Golpes:</span> {{ hit_25 }}%</p>
+                <p class="text-left"><span class="font-weight-bold">Límite Plástico Promedio:</span> {{ mean_y_moisture_plastic }}%</p>
                 <p class="text-left"><span class="font-weight-bold">Indice de Plasticidad:</span> {{ plastic_index }}</p>
                 <hr class="my-3">
                                 

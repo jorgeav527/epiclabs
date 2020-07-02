@@ -85,6 +85,5 @@ urlpatterns = [
         # humid-density, content-moisture, moisture-carbure, correction-sandcone  CRUD
     path('humid-density/save/<int:id>/', tests_soil_views.humid_density_save, name="humid_density_save"),
     path('content-moisture/save/<int:id>/', tests_soil_views.content_moisture_save, name="content_moisture_save"),
-    path('moisture-carbure/save/<int:id>/', tests_soil_views.moisture_carbure_save, name="moisture_carbure_save"),
     path('correction-sandcone/save/<int:id>/', tests_soil_views.correction_sandcone_save, name="correction_sandcone_save"),
 ]

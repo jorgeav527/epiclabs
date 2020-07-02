@@ -68,7 +68,7 @@ class BachRegister(UserCreationForm):
 
 class BachUpdateForm(forms.ModelForm):
     dni         = forms.IntegerField(required=True, label='DNI', help_text='Documento Nacional de Identidad',)
-    codigo      = forms.IntegerField(required=True, label='Codigo de Matricula', help_text='2008702131',)
+    codigo      = forms.IntegerField(required=True, label='Código de Matricula', help_text='2008702131',)
 
     class Meta:
         model   = BachProfile
@@ -105,7 +105,7 @@ class TeacherUpdateForm(forms.ModelForm):
 
     title       = forms.ChoiceField(required=True, choices=TITLE_CHOICES, label='Formación', help_text='Selecciona la Formación',)
     dni         = forms.IntegerField(required=True, label='DNI', help_text='Documento Nacional de Identidad',)
-    codigo      = forms.IntegerField(required=True, label='Codigo de Colegiatura',)
+    codigo      = forms.IntegerField(required=True, label='Código de Colegiatura',)
     course      = forms.ModelMultipleChoiceField(queryset=Course.objects.all() ,required=True, label='Cursos Impartidos', help_text='Selecciona todas las materias que imparte.',)
 
     class Meta:
@@ -144,7 +144,7 @@ class ClientUpdateForm(forms.ModelForm):
     direction   = forms.CharField(required=True, label='Dirección de la Empresa',)
     category    = forms.ModelMultipleChoiceField(queryset=Category.objects.all() ,required=True, label='Categoria', help_text='Selecciona la Categoria',)
     ruc         = forms.IntegerField(required=True, label='Registro Único de Contribuyentes',)
-    phone       = forms.IntegerField(required=True, label='Telefono o Celular',)
+    phone       = forms.IntegerField(required=True, label='Teléfono o Celular',)
 
     class Meta:
         model   = ClientProfile
@@ -188,7 +188,7 @@ class AdminUpdateForm(forms.ModelForm):
 
     title       = forms.ChoiceField(required=True, choices=TITLE_CHOICES, label='Formación', help_text='Selecciona la Formación',)
     dni         = forms.IntegerField(required=True, label='DNI', help_text='Documento Nacional de Identidad',)
-    codigo      = forms.IntegerField(required=True, label='Codigo de Colegiatura',)
+    codigo      = forms.IntegerField(required=True, label='Código de Colegiatura',)
     staff       = forms.ChoiceField(required=True, choices=STAFF_CHOICES, label='Labor', help_text='Selecciona la labor',)
 
     class Meta:

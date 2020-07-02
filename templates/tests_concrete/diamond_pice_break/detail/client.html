@@ -13,7 +13,7 @@
                 <p class="text-left mx-auto "><span class="font-weight-bold">Empresa:</span> {{ obj.user.clientprofile.long_name|title }}</p>
                 <p class="text-left mx-auto "><span class="font-weight-bold">Dirección de la Empresa:</span> {{ obj.user.clientprofile.direction|title }}</p>
                 <p class="text-left mx-auto "><span class="font-weight-bold">RUC:</span> {{ obj.user.clientprofile.ruc }}</p>
-                <p class="text-left mx-auto "><span class="font-weight-bold">Telefono:</span> {{ obj.user.clientprofile.phone }}</p>
+                <p class="text-left mx-auto "><span class="font-weight-bold">Teléfono:</span> {{ obj.user.clientprofile.phone }}</p>
                 <hr class="my-3">
 
                 <p class="text-left mx-auto  mt-3"><span class="font-weight-bold"><u>Datos de la Obra</u></span></p>
@@ -38,11 +38,11 @@
                             <th>Elemento</th>
                             <th>Fecha de Extracción</th>
                             <th>Fecha de Rotura</th>
-                            <th>Tiempo de espera (dias)</th>
-                            <th>Diametro (pulgadas)</th>
-                            <th>Largo (pulgadas)</th>
+                            <th>Tiempo de espera (días)</th>
+                            <th>Diámetro (mm)</th>
+                            <th>Largo (mm)</th>
                             <th>Factor L/D</th>
-                            <th>Area (mm²)</th>
+                            <th>Área (mm²)</th>
                             <th>Corrección</th>
                             <th>Carga (kgf)</th>
                             <th>Esfuerzo (kgf/cm²)</th>
@@ -73,7 +73,7 @@
                 
                 <p class="text-left mx-auto  mt-3"><span class="font-weight-bold"><u>Contacto de Referencia</u></span></p>
                 <p class="text-left mx-auto "><span class="font-weight-bold">Referencia:</span> {{ obj.reference_person.title }} {{ obj.reference_person.name|title }}</p>
-                <p class="text-left mx-auto "><span class="font-weight-bold">Telefono:</span> {{ obj.reference_person.dni }}</p>
+                <p class="text-left mx-auto "><span class="font-weight-bold">Teléfono:</span> {{ obj.reference_person.dni }}</p>
                 <p class="text-left mx-auto "><span class="font-weight-bold">DNI:</span> {{ obj.reference_person.phone }}</p>
                 <hr class="my-3">
                 

@@ -96,7 +96,7 @@ class DensityWetDry(models.Model):
 
         # Generate Dry Density
         density_dry = self.wet_density/(1+self.moisture/100)
-        self.dry_density = round(density_dry, 2)
+        self.dry_density = round(density_dry, 3)
 
         super(DensityWetDry, self).save(*args, **kwargs)
 
@@ -123,7 +123,7 @@ class Saturation(models.Model):
         fina_gruesa = 1/((((self.frac_gruesa_weight*100/(100-self.frac_extrad_weight))/100)/self.p_sp_frac_gruesa) + (((self.frac_fina_weight*100/(100-self.frac_extrad_weight))/100)/self.g_sp_frac_fina))
         self.g_frac_fina_gruesa = round(fina_gruesa, 3)
 
-        # Generate Gr Sp Gloval
+        # Generate Gr Sp Global
         sp_global = 1/((self.frac_extrad_weight/100/self.p_sp_frac_extrad)+(self.frac_gruesa_weight/100/self.p_sp_frac_gruesa)+(self.frac_fina_weight/100/self.g_sp_frac_fina))
         self.g_sp_global = round(sp_global, 3)
 

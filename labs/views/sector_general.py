@@ -346,7 +346,7 @@ def general_equivalent(request):
         "tests_clients": tests_clients,
         "tests_bachs": tests_bachs,
         "tests_groups": tests_groups,
-        "title": "ENSAYO ESTANDAR PARA EL VALOR EQUIVALENTE DE ARENA DE SUELOS Y AGREGADO FINO - MTC E114",
+        "title": "ENSAYO ESTÁNDAR PARA EL VALOR EQUIVALENTE DE ARENA DE SUELOS Y AGREGADO FINO - MTC E114",
         "qs": qs,
     }
     return render(request, 'labs/sectors/general/tests_soil/general_equivalent.html', context)

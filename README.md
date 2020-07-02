@@ -64,4 +64,4 @@ https://stackoverflow.com/questions/28190564 custom-column-names-in-intermediary
 
 http://hilite.me/
 
-https://www.yumpu.com/es/document/read/62948404/gravedad-especifica-de-solidos-de-suelo-mediante-picnometro-de-agua
+https://www.yumpu.com/es/document/read/62948404/gravedad-especifica-de-sólidos-de-suelo-mediante-picnometro-de-agua

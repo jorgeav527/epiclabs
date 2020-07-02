@@ -25,14 +25,14 @@
           <p class="text-left panel-heading"><strong>Datos Principales</strong></p>
           <p  class="text-left"><strong>Nombres:</strong> {{ obj.user.first_name|title }} {{ obj.user.last_name|title }}</p> 
           <p  class="text-left"><strong>DNI:</strong> {{ obj.user.bachprofile.dni }}</p> 
-          <p  class="text-left"><strong>Codigo:</strong> {{ obj.user.bachprofile.codigo }}</p> 
+          <p  class="text-left"><strong>Código:</strong> {{ obj.user.bachprofile.codigo }}</p> 
           <p  class="text-left"><strong>Curso Especifico:</strong> {{ obj.course|title }}</p>
           {% for thesis in obj.user.bachprofile.thesis_set.all %}
           <p  class="text-left"><strong>Titulo:</strong> {{ thesis.title|title }}</p> 
           <p  class="text-left"><strong>Linea de Desarrollo:</strong> {{ thesis.line|title }}</p> 
           <p  class="text-left"><strong>Comienzo de la Thesis:</strong> {{ thesis.start_day|date:"d/m/Y" }}</p> 
           <p  class="text-left"><strong>Termino de la Thesis:</strong> {{ thesis.finish_day|date:"d/m/Y" }}</p>
-          <p  class="text-left"><strong>Duración:</strong> {{ thesis.duration }} dias</p>
+          <p  class="text-left"><strong>Duración:</strong> {{ thesis.duration }} días</p>
           <p  class="text-left"><strong>Asesores:</strong></p>
             {% for adviser in thesis.adviser.all %}
             <p  class="text-left">&#8594; {{ adviser }}</p>                
@@ -42,12 +42,12 @@
           {% if obj.created|date:"d/m/Y" != obj.updated|date:"d/m/Y" %}
           <p class="text-left"><strong>Corrección del Ensayo:</strong> {{ obj.updated|default_if_none:"Ninguna Corrección"|date:"d/m/Y P" }}</p>
           {% endif %}
-          <p class="text-left"><strong>Emsion de Certificado:</strong> {% now "d/m/Y P" %}</p>
+          <p class="text-left"><strong>Emisión de Certificado:</strong> {% now "d/m/Y P" %}</p>
         </div>
         <div style="margin-left: 4rem;" class="col-xs-3 panel panel-default">
           <p class="text-left panel-heading"><strong>Datos del Ensayo</strong></p>
           <p  class="text-left"><strong>ID:</strong> {{ obj.id }}</p>
-          <p  class="text-left"><strong>Codigo QR:</strong></p>
+          <p  class="text-left"><strong>Código QR:</strong></p>
           <p  class="text-center">{% qr_from_text obj.code size=4 image_format="png" %}</p>
           <p class="text-left"><strong>Tipo de Diamante:</strong> </p>
           <p class="text-left"><strong>f'c Esp:</strong> {{ obj.fc_esp }} kgf/cm²</p>
@@ -66,20 +66,20 @@
                       <th class="text-center">Item</th>
                       <th colspan="2" class="text-center">Fecha</th>
                       <th class="text-center">Tiempo de Espera</th>
-                      <th class="text-center">Area</th>
+                      <th class="text-center">Área</th>
                       <th class="text-center">Factor</th>
                       <th class="text-center">Corrección</th>
-                      <th colspan="2" class="text-center">Esfuezo de Rotura</th>
+                      <th colspan="2" class="text-center">Esfuerzo de Rotura</th>
                     </tr>
                     <tr>
                       <th class="text-center">Nº</th>
                       <th class="text-center">Elemento</th>
                       <th class="text-center">Extracción</th>
                       <th class="text-center">Rotura</th>
-                      <th class="text-center">(dias)</th>
+                      <th class="text-center">(días)</th>
                       <th class="text-center">(mm²)</th>
                       <th class="text-center">(L/D)</th>
-                      <th class="text-center">(Adimencional)</th>
+                      <th class="text-center">(Adimensional)</th>
                       <th class="text-center">(MPa)</th>
                       <th class="text-center">(kgf/cm²)</th>
                     </tr>
@@ -159,7 +159,7 @@
     <footer>
       <div class="row">
         <div class="col-xs-12 panel panel-default">
-          <p class="text-center">Laboratorio de Ingenieria Civil, Universidad Catolica de Santa Maria, EPICLABS &#169; 2019</p>
+          <p class="text-center">Laboratorio de Ingeniería Civil, Universidad Católica de Santa Maria, EPICLABS &#169; 2019</p>
         </div>
       </div>   
     </footer>

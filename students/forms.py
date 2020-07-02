@@ -15,9 +15,9 @@ class StudentForm(forms.ModelForm):
         ]
         labels = {
             "full_name": "Nombre Completo", 
-            "codigo": "Codigo de Matricula", 
+            "codigo": "Código de Matricula", 
             "email": "Email", 
-            "phone": "Telefono o Celular",
+            "phone": "Teléfono o Celular",
         }
         help_texts = {
             "codigo": "2008702131", 

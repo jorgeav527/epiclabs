@@ -13,7 +13,7 @@
                 <p class="text-left mx-auto "><span class="font-weight-bold">Nombre:</span> {{ obj.user.first_name|title }}</p>
                 <p class="text-left mx-auto "><span class="font-weight-bold">Apellidos:</span> {{ obj.user.last_name|title }}</p>
                 <p class="text-left mx-auto "><span class="font-weight-bold">DNI:</span> {{ obj.user.bachprofile.dni }}</p>
-                <p class="text-left mx-auto "><span class="font-weight-bold">Codigo:</span> {{ obj.user.bachprofile.codigo }}</p>
+                <p class="text-left mx-auto "><span class="font-weight-bold">Código:</span> {{ obj.user.bachprofile.codigo }}</p>
                 <hr class="my-3">
 
                 <p class="text-left mx-auto  mt-3"><span class="font-weight-bold"><u>Datos de la Tesis</u></span></p>
@@ -26,14 +26,14 @@
                     <p class="text-left mx-auto ">&#8594; {{ course }}</p>                
                     {% endfor %}
 
-                    <p class="text-left mx-auto "><span class="font-weight-bold">Acesores:</span> </p>                
+                    <p class="text-left mx-auto "><span class="font-weight-bold">Asesores:</span> </p>                
                     {% for adviser in thesis.adviser.all %}
                     <p class="text-left mx-auto ">&#8594; {{ adviser }}</p>                
                     {% endfor %}
 
                 <p class="text-left mx-auto "><span class="font-weight-bold">Comienzo de la Thesis:</span> {{ thesis.start_day|date:"d/m/Y" }}</p>
                 <p class="text-left mx-auto "><span class="font-weight-bold">Termino de la Thesis:</span> {{ thesis.finish_day|date:"d/m/Y" }}</p>
-                <p class="text-left mx-auto "><span class="font-weight-bold">Duración:</span> {{ thesis.duration }} dias</p>
+                <p class="text-left mx-auto "><span class="font-weight-bold">Duración:</span> {{ thesis.duration }} días</p>
                 {% endfor %}
                 <hr class="my-3">
 
@@ -53,10 +53,10 @@
                             <th>Elemento</th>
                             <th>Fecha de Vaciado</th>
                             <th>Fecha de Rotura</th>
-                            <th>Edad (dias)</th>
+                            <th>Edad (días)</th>
                             <th>Largo (mm)</th>
                             <th>Ancho (mm)</th>
-                            <th>Area (mm²)</th>
+                            <th>Área (mm²)</th>
                             <th>Carga (kgf)</th>
                             <th>Esfuerzo (kgf/cm²)</th>
                             <th>Esfuerzo (MPa)</th>

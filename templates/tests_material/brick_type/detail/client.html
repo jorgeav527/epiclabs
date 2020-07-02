@@ -13,7 +13,7 @@
                 <p class="text-left"><span class="font-weight-bold">Empresa:</span> {{ obj.user.clientprofile.long_name|title }}</p>
                 <p class="text-left"><span class="font-weight-bold">Dirección de la Empresa:</span> {{ obj.user.clientprofile.direction|title }}</p>
                 <p class="text-left"><span class="font-weight-bold">RUC:</span> {{ obj.user.clientprofile.ruc }}</p>
-                <p class="text-left"><span class="font-weight-bold">Telefono:</span> {{ obj.user.clientprofile.phone }}</p>
+                <p class="text-left"><span class="font-weight-bold">Teléfono:</span> {{ obj.user.clientprofile.phone }}</p>
                 <hr class="my-3">
                 
                 <p class="text-left mt-3"><span class="font-weight-bold"><u>Datos de la Obra</u></span></p>
@@ -27,14 +27,14 @@
                 <p class="text-left"><span class="font-weight-bold">Fecha del Ensayo:</span> {{ obj.done_date|date:"d/m/Y" }}</p>
                 <p class="text-left"><span class="font-weight-bold">Nombre del Elemento:</span> {{ obj.name_element }}</p>
                 <p class="text-left"><span class="font-weight-bold">Ladrillera:</span> {{ obj.brick_company }}</p>
-                <p class="text-left"><span class="font-weight-bold">Largo Nominal:</span> {{ obj.n_d_length }}</p>
-                <p class="text-left"><span class="font-weight-bold">Ancho Nominal:</span> {{ obj.n_d_width }}</p>
-                <p class="text-left"><span class="font-weight-bold">Alto Nominal:</span> {{ obj.n_d_high }}</p>
+                <p class="text-left"><span class="font-weight-bold">Largo Nominal:</span> {{ obj.n_d_length }} mm</p>
+                <p class="text-left"><span class="font-weight-bold">Ancho Nominal:</span> {{ obj.n_d_width }} mm</p>
+                <p class="text-left"><span class="font-weight-bold">Alto Nominal:</span> {{ obj.n_d_high }} mm</p>
                 <hr class="my-3">
                 
                 <p class="text-left mt-3"><span class="font-weight-bold"><u>Resultados del Ensayo</u></span></p>
                 {% if qs_variation_dimentions %}
-                <p class="text-left"><span class="font-weight-bold">Determinación de la Variación de Dimenciones:</span></p>
+                <p class="text-left"><span class="font-weight-bold">Determinación de la Variación de Dimensiones:</span></p>
                 <table class="table table-sm table-responsive table-bordered text-center">
                     <thead class="primary-color-dark white-text">
                         <tr>
@@ -93,9 +93,9 @@
                     <thead class="primary-color-dark white-text">
                         <tr>
                             <th>Secuencia</th>
-                            <th>Cara Superior Concavo (mm)</th>
+                            <th>Cara Superior Cóncavo (mm)</th>
                             <th>Cara Superior Convexo (mm)</th>
-                            <th>Cara Inferior Concavo (mm)</th>
+                            <th>Cara Inferior Cóncavo (mm)</th>
                             <th>Cara Inferior Convexo (mm)</th>
                         </tr>
                     </thead>
@@ -121,7 +121,7 @@
                 {% endif %}
 
                 {% if qs_density_voids %}
-                <p class="text-left"><span class="font-weight-bold">Determinación del % de Vacios y la Densidad:</span></p>
+                <p class="text-left"><span class="font-weight-bold">Determinación del % de Vacíos y la Densidad:</span></p>
                 <table class="table table-sm table-responsive table-bordered text-center">
                     <thead class="primary-color-dark white-text">
                         <tr>
@@ -134,7 +134,7 @@
                             <th>Su (gr)</th>
                             <th>Volumen de la Arena Vs (cm³)</th>
                             <th>Volumen Real (cm³)</th>
-                            <th>Porcentaje de Vacios (%)</th>
+                            <th>Porcentaje de Vacíos (%)</th>
                             <th>Peso de la Unidad (gr)</th>
                             <th>Densidad (g/cm³)</th>
                         </tr>
@@ -180,12 +180,12 @@
                     <thead class="primary-color-dark white-text">
                         <tr>
                             <th>Secuencia</th>
-                            <th>Peso Inicil (gr)</th>
+                            <th>Peso Inicial (gr)</th>
                             <th>Peso Final (gr)</th>
                             <th>Diferencia de Peso (gr)</th>
                             <th>Largo (mm)</th>
                             <th>Ancho (mm)</th>
-                            <th>Area de Contacto (cm²)</th>
+                            <th>Área de Contacto (cm²)</th>
                             <th>Peso Mojado (gr)</th>
                             <th>Peso Corregido (gr)</th>
                         </tr>
@@ -226,10 +226,10 @@
                         <tr>
                             <th>Secuencia</th>
                             <th>Peso Seco (gr)</th>
-                            <th>Peso Saturado en Agua Fria (gr)</th>
+                            <th>Peso Saturado en Agua Fría (gr)</th>
                             <th>Peso Saturado en Agua Caliente (gr)</th>
-                            <th>Porcentaje de Absorcion (%)</th>
-                            <th>Porcentaje de Absorcion Máxima (%)</th>
+                            <th>Porcentaje de Absorción (%)</th>
+                            <th>Porcentaje de Absorción Máxima (%)</th>
                             <th>Coeficiente de Saturación</th>
                         </tr>
                     </thead>
@@ -268,9 +268,9 @@
                             <th>Ancho Superior (mm)</th>
                             <th>Largo Inferior (mm)</th>
                             <th>Ancho Inferior (mm)</th>
-                            <th>Area Superior (cm²)</th>
-                            <th>Area Inferior (cm²)</th>
-                            <th>Promedio de Areas (cm²)</th>
+                            <th>Área Superior (cm²)</th>
+                            <th>Área Inferior (cm²)</th>
+                            <th>Promedio de Áreas (cm²)</th>
                             <th>Carga (kgf)</th>
                             <th>Resistencia a la Compresión (MPa (kgf/cm²))</th>
                         </tr>
@@ -319,33 +319,33 @@
                 {% endif %}
                 
                 {% if qs_variation_dimentions %}
-                <p class="text-left"><span class="font-weight-bold">Tipo de Ladrillo segun la Variación Dimencional:</span></p>
-                <p class="text-left"><span class="font-weight-bold">Segun la Altura:</span> {{ type_high }}</p>
-                <p class="text-left"><span class="font-weight-bold">Segun el Ancho:</span> {{ type_width }}</p>
-                <p class="text-left"><span class="font-weight-bold">Segun el Largo:</span> {{ type_lengt }}</p>
+                <p class="text-left"><span class="font-weight-bold">Tipo de Ladrillo según la Variación Dimensional:</span></p>
+                <p class="text-left"><span class="font-weight-bold">Según la Altura:</span> {{ type_high }}</p>
+                <p class="text-left"><span class="font-weight-bold">Según el Ancho:</span> {{ type_width }}</p>
+                <p class="text-left"><span class="font-weight-bold">Según el Largo:</span> {{ type_lengt }}</p>
                 {% endif %}
                 {% if qs_warping %}
-                <p class="text-left"><span class="font-weight-bold">Tipo de Ladrillo segun el Alabeo:</span> {{ type_warping }}</p>
+                <p class="text-left"><span class="font-weight-bold">Tipo de Ladrillo según el Alabeo:</span> {{ type_warping }}</p>
                 {% endif %}
                 {% if qs_density_voids %}
-                <p class="text-left"><span class="font-weight-bold">Tipo de Ladrillo segun la Densidad:</span> {{ type_density }}</p>
+                <p class="text-left"><span class="font-weight-bold">Tipo de Ladrillo según la Densidad:</span> {{ type_density }}</p>
                 {% endif %}
                 {% if qs_suctidon %}
-                <p class="text-left"><span class="font-weight-bold">Tipo de Ladrillo segun la Succión:</span> {{ type_face_wet_weight_correction }}</p>
+                <p class="text-left"><span class="font-weight-bold">Tipo de Ladrillo según la Succión:</span> {{ type_face_wet_weight_correction }}</p>
                 {% endif %}
                 {% if qs_abs_sat_coff %}
-                <p class="text-left"><span class="font-weight-bold">Tipo de Ladrillo segun la Absorcion:</span> {{ type_abs }}</p>
-                <p class="text-left"><span class="font-weight-bold">Tipo de Ladrillo segun el Coeficiente de Absorción:</span> {{ type_coeff_sat }}</p>
+                <p class="text-left"><span class="font-weight-bold">Tipo de Ladrillo según la Absorción:</span> {{ type_abs }}</p>
+                <p class="text-left"><span class="font-weight-bold">Tipo de Ladrillo según el Coeficiente de Absorción:</span> {{ type_coeff_sat }}</p>
                 {% endif %}
                 {% if qs_compretion_brick %}
-                <p class="text-left"><span class="font-weight-bold">Resistencia Caracteristica:</span> {{ fc_caracteristic_MPA }} MPa - {{ fc_caracteristic }} kgf/cm²</p>
-                <p class="text-left"><span class="font-weight-bold">Tipo de Ladrillo segun el Compresión:</span> {{ type_compretion }}</p>
+                <p class="text-left"><span class="font-weight-bold">Resistencia Característica:</span> {{ fc_caracteristic_MPA }} MPa - {{ fc_caracteristic }} kgf/cm²</p>
+                <p class="text-left"><span class="font-weight-bold">Tipo de Ladrillo según el Compresión:</span> {{ type_compretion }}</p>
                 {% endif %}
                 <hr class="my-3">
                 
                 <p class="text-left mt-3"><span class="font-weight-bold"><u>Contacto de Referencia</u></span></p>
                 <p class="text-left"><span class="font-weight-bold">Referencia:</span> {{ obj.reference_person.title }} {{ obj.reference_person.name|title }}</p>
-                <p class="text-left"><span class="font-weight-bold">Telefono:</span> {{ obj.reference_person.dni }}</p>
+                <p class="text-left"><span class="font-weight-bold">Teléfono:</span> {{ obj.reference_person.dni }}</p>
                 <p class="text-left"><span class="font-weight-bold">DNI:</span> {{ obj.reference_person.phone }}</p>
                 <hr class="my-3">
                 

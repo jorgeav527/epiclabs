@@ -39,7 +39,7 @@ def sucs(pass_200, pass_4, CU, CC, LL, IP):
         elif LL > 50 and LL <= 110:
             name_3 = "H"
         else:
-            name_3 = "Verifique el Limite Liquido"
+            name_3 = "Verifique el Límite Líquido"
         if IP < 0.73 * (LL - 20):
             name_4 = "M"
         else: 
@@ -63,7 +63,7 @@ def sucs(pass_200, pass_4, CU, CC, LL, IP):
                 elif LL > 50 and LL <= 110:
                     name_3 = "H"
                 else:
-                    name_3 = "Verifique el Limite Liquido"
+                    name_3 = "Verifique el Límite Líquido"
                 if IP < 0.73 * (LL - 20):
                     name_4 = "M"
                 else: 
@@ -90,7 +90,7 @@ def sucs(pass_200, pass_4, CU, CC, LL, IP):
                 elif LL > 50 and LL <= 110:
                     name_3 = "H"
                 else:
-                    name_3 = "Verifique el Limite Liquido"
+                    name_3 = "Verifique el Límite Líquido"
                 if IP < 0.73 * (LL - 20):
                     name_4 = "M"
                 else: 
@@ -112,8 +112,8 @@ def granulometric_global_list(request):
     if request.user.is_bach or request.user.is_group or request.user.is_client:
         obj_list = GranulometricGlobal.objects.filter(user=request.user)
         context = {
-            "file_name": "Granulometria_Gloval",
-            "title": "Ensayos de Granulometria Gloval",
+            "file_name": "Granulometría_Global",
+            "title": "Ensayos de Granulometría Global",
             "obj_list": obj_list,
         }
         return render(request, 'tests_soil/granulometric_global/granulometric_global_list.html', context) 
@@ -121,8 +121,8 @@ def granulometric_global_list(request):
     elif request.user.is_superuser or request.user.is_admin:
         obj_list = GranulometricGlobal.objects.all()
         context = {
-            "file_name": "Granulometria_Gloval",
-            "title": "Ensayos de Granulometria Gloval",
+            "file_name": "Granulometría_Global",
+            "title": "Ensayos de Granulometría Global",
             "obj_list": obj_list,
         }
         return render(request, 'tests_soil/granulometric_global/granulometric_global_list.html', context)        
@@ -160,7 +160,7 @@ def granulometric_global_create(request):
 
     context = {
         "form": form,
-        "title": "Crear Ensayo de Granulometria Gloval",
+        "title": "Crear Ensayo de Granulometría Global",
     }
 
     return render(request, "tests_soil/granulometric_global/granulometric_global_form.html", context)
@@ -189,7 +189,7 @@ def global_mesh_save(request, id):
     context = {
         "obj": obj,
         "formset": formset,
-        "title": "Crear Ensayo de Granulometria Gloval",
+        "title": "Crear Ensayo de Granulometría Global",
     }
 
     return render(request, "tests_soil/granulometric_global/global_mesh_form.html", context)
@@ -219,7 +219,7 @@ def granulometric_global_update(request, id):
     context = {
         "form": form,
         "obj": obj,
-        "title": "Actualizar Ensayo de Granulometria Gloval",
+        "title": "Actualizar Ensayo de Granulometría Global",
     }
 
     return render(request, "tests_soil/granulometric_global/granulometric_global_form.html", context)
@@ -487,7 +487,7 @@ def granulometric_global_detail(request, id):
 
     TOOLS="hover,crosshair,pan,wheel_zoom,reset,save,"
     plot = figure(x_axis_type="log", x_range=(max_x, min_x), y_range=(min_y, max_y), tools=TOOLS, 
-        title="Curva Granulometrica", x_axis_label= 'Diametro de la Malla (mm)', y_axis_label= 'Porcentaje Pasante (%)',
+        title="Curva Granulometrica", x_axis_label= 'Diámetro de la Malla (mm)', y_axis_label= 'Porcentaje Pasante (%)',
         sizing_mode="scale_width",)
     plot.circle(diameter_mesh, passing_percentage, size=8, legend="Resultados")
     plot.line(diameter_mesh, passing_percentage, line_width=2, line_dash='dashed')
@@ -521,7 +521,7 @@ def granulometric_global_detail(request, id):
         "name_sucs_M_C": name_sucs_M_C,
         "norma_ASTM": "",
         "noma_NTP": "NPT 339.134",
-        "title": "Detalles del Ensayo Granulometria Gloval",
+        "title": "Detalles del Ensayo Granulometría Global",
     }
 
     return render(request, 'tests_soil/granulometric_global/granulometric_global_detail.html', context)
@@ -541,7 +541,7 @@ def granulometric_global_delete(request, id):
 
     context = {
         "obj": obj,
-        "title": "Eliminar el Ensayo Granulometria Gloval",
+        "title": "Eliminar el Ensayo Granulometría Global",
     }
 
     return render(request, 'tests_soil/granulometric_global/granulometric_global_delete_comfirm.html', context)
@@ -823,7 +823,7 @@ def granulometric_global_pdf(request, id):
     plt.scatter(decil_30, decil[1], label='Decil 30', marker="x", s=20, c='m',)
     plt.scatter(decil_10, decil[2], label='Decil 10', marker="x", s=20, c='y',)
 
-    plt.xlabel('Diametro de la Malla (mm)')
+    plt.xlabel('Diámetro de la Malla (mm)')
     plt.ylabel('Porcentaje Pasante (%)')
     plt.title("Curva Granulometrica")
     plt.legend()

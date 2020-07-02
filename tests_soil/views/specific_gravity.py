@@ -25,7 +25,7 @@ def specific_gravity_list(request):
         obj_list = SpecificGravity.objects.filter(user=request.user)
         context = {
             "file_name": "Gravedad_Especifica_de_los_Solidos",
-            "title": "Ensayos de Gravedad Especifica de Solidos mediante el Picometro de Agua",
+            "title": "Ensayos de Gravedad Especifica de Solidos",
             "obj_list": obj_list,
         }
         return render(request, 'tests_soil/specific_gravity/specific_gravity_list.html', context)        
@@ -34,7 +34,7 @@ def specific_gravity_list(request):
         obj_list = SpecificGravity.objects.all()
         context = {
             "file_name": "Gravedad_Especifica_de_los_Solidos",
-            "title": "Ensayos de Gravedad Especifica de Solidos mediante el Picometro de Agua",
+            "title": "Ensayos de Gravedad Especifica de Solidos",
             "obj_list": obj_list,
         }
         return render(request, 'tests_soil/specific_gravity/specific_gravity_list.html', context)        
@@ -72,7 +72,7 @@ def specific_gravity_create(request):
 
     context = {
         "form": form,
-        "title": "Crear Ensayo de Gravedad Especifica de Solidos mediante el Picometro de Agua",
+        "title": "Crear Ensayo de Gravedad Especifica de Solidos",
     }
 
     return render(request, "tests_soil/specific_gravity/specific_gravity_form.html", context)
@@ -164,7 +164,7 @@ def specific_gravity_update(request, id):
     context = {
         "form": form,
         "obj": obj,
-        "title": "Actualizar Ensayo de Gravedad Especifica de Solidos mediante el Picometro de Agua",
+        "title": "Actualizar Ensayo de Gravedad Especifica de Solidos",
     }
 
     return render(request, "tests_soil/specific_gravity/specific_gravity_form.html", context)
@@ -225,7 +225,7 @@ def specific_gravity_detail(request, id):
         "total_average_specific_gravity": total_average_specific_gravity,
         "norma_ASTM": "",
         "noma_NTP": "NTP 339.131 / NTP 400.021",
-        "title": "Detalles del Ensayo de Gravedad Especifica de Solidos mediante el Picometro de Agua",
+        "title": "Detalles del Ensayo de Gravedad Especifica de Solidos",
     }
 
     return render(request, 'tests_soil/specific_gravity/specific_gravity_detail.html', context)
@@ -246,7 +246,7 @@ def specific_gravity_delete(request, id):
 
     context = {
         "obj": obj,
-        "title": "Eliminar el Ensayo de Gravedad Especifica de Solidos mediante el Picometro de Agua",
+        "title": "Eliminar el Ensayo de Gravedad Especifica de Solidos",
     }
 
     return render(request, 'tests_soil/specific_gravity/specific_gravity_delete_comfirm.html', context)
@@ -307,7 +307,7 @@ def specific_gravity_pdf(request, id):
         "qs_fraction_pass": qs_fraction_pass,
         "qs_fraction_retained": qs_fraction_retained,
         "total_average_specific_gravity": total_average_specific_gravity,
-        "title": "DETERMINACIÓN DE LA GRAVEDAD ESPECIFICA DE SOLIDOS MEDIANTE EL PICOMETRO DE AGUA DE UN SUELO MTC E108",
+        "title": "DETERMINACIÓN DE LA GRAVEDAD ESPECIFICA DE SOLIDOS DE UN SUELO MTC E108",
         "norma_ASTM": "",
         "noma_NTP": "NTP 339.131 / NTP 400.021",
         "coordinator": coordinator,

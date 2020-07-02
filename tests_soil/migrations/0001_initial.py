@@ -24,7 +24,7 @@ class Migration(migrations.Migration):
             name='Limit',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(default='Limite Liquido Pastico', max_length=50)),
+                ('name', models.CharField(default='Límite Líquido Pastico', max_length=50)),
                 ('pit', models.CharField(blank=True, max_length=50, null=True)),
                 ('layer', models.CharField(choices=[('UNO', 'Estrato 1'), ('DOS', 'Estrato 2'), ('TRES', 'Estrato 3'), ('CUATRO', 'Estrato 4')], max_length=6)),
                 ('code', models.CharField(editable=False, max_length=255, unique=True)),

@@ -94,8 +94,8 @@ class PiceForm(forms.ModelForm):
             'break_date': 'Fecha de Rotura',
             'element': 'Elemento',    
             'check_per': 'Verificación de la Perpendicularidad',
-            'D_1': 'Diametro 1',
-            'D_2': 'Diametro 2',
+            'D_1': 'Diámetro 1',
+            'D_2': 'Diámetro 2',
             'load': 'Carga',
         }
         help_texts = {

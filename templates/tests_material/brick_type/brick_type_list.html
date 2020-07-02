@@ -70,13 +70,13 @@
                 <th rowspan="2">Id</th>
                 <th colspan="3">Item</th>
                 <th colspan="2">Fecha</th>
-                <th rowspan="2">Tiempo de Espera (dias)</th>
+                <th rowspan="2">Tiempo de Espera (días)</th>
                 <th rowspan="2">Acciones</th>
               </tr>
               <tr>
                 <th>Elemento</th>
                 <th>Ladrillera</th>
-                <th>Codigo</th>
+                <th>Código</th>
                 <th>Muestreo</th>
                 <th>Ensayo</th>
               </tr>
@@ -102,7 +102,7 @@
                     {% if user.is_superuser or user.is_group or user.is_bach or user.is_admin %}
                     <a
                       href="{% url 'tests_material:variation_dimensions_save' obj.id %}"
-                      data-toggle="tooltip" title="Editar o Crear Variación de Dimenciones" role="button" class="btn btn-dark btn-sm px-2 mx-1"><i class="fas fa-plus"></i>
+                      data-toggle="tooltip" title="Editar o Crear Variación de Dimensiones" role="button" class="btn btn-dark btn-sm px-2 mx-1"><i class="fas fa-plus"></i>
                     </a>
                     <a
                       href="{% url 'tests_material:warping_save' obj.id %}"
@@ -110,7 +110,7 @@
                     </a>
                     <a
                       href="{% url 'tests_material:density_voids_save' obj.id %}"
-                      data-toggle="tooltip" title="Editar o Crear Densidad y % de Vacios" role="button" class="btn btn-dark btn-sm px-2 mx-1"><i class="fas fa-plus"></i>
+                      data-toggle="tooltip" title="Editar o Crear Densidad y % de Vacíos" role="button" class="btn btn-dark btn-sm px-2 mx-1"><i class="fas fa-plus"></i>
                     </a>
                     <a
                       href="{% url 'tests_material:suction_save' obj.id %}"
@@ -118,7 +118,7 @@
                     </a>
                     <a
                       href="{% url 'tests_material:abs_satu_coeff_save' obj.id %}"
-                      data-toggle="tooltip" title="Editar o Crear % Absorción y Coefficiente de Saturación" role="button" class="btn btn-dark btn-sm px-2 mx-1"><i class="fas fa-plus"></i>
+                      data-toggle="tooltip" title="Editar o Crear % Absorción y Coeficiente de Saturación" role="button" class="btn btn-dark btn-sm px-2 mx-1"><i class="fas fa-plus"></i>
                     </a>
                     <a
                       href="{% url 'tests_material:compretion_brick_save' obj.id %}"

@@ -154,7 +154,7 @@ def diamond_pice_break_detail(request, id):
         "obj": obj,
         "qs_diamond_pice": qs_diamond_pice,
         "title": "Detalles del Ensayo de Rotura de Testigos Diamantinos",
-        "norma_ASTM": "ASTM C-109",
+        "norma_ASTM": "",
         "noma_NTP": "NTP 334.034",
     }
 
@@ -194,7 +194,7 @@ def diamond_pice_break_pdf(request, id):
         "obj": obj,
         "qs_diamond_pice": qs_diamond_pice,
         "title": "CONCRETO. MÉTODO DE ENSAYO NORMALIZADO PARA LA DETERMINACIÓN DE LA RESISTENCIA A LA COMPRESIÓN DE TESTIGOS DIAMANTINOS EN MUESTRAS CILINDRICAS.",
-        "norma_ASTM": "ASTM C-109",
+        "norma_ASTM": "",
         "noma_NTP": "NTP 334.034",
         "coordinator": coordinator,
         "tecnic": tecnic,

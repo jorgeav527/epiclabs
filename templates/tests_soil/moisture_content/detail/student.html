@@ -4,7 +4,7 @@
             <div class="card-body">
                 <!-- Section heading -->
                 <h4 class="h4-responsive font-weight-bold text-center ">{{ title }}</h4>
-                <p class="text-center dark-grey-text w-responsive mx-auto ">((NORMA ASTM C-109) / (NTP 334.051))</p>
+                <p class="text-center dark-grey-text w-responsive mx-auto ">/ {{ noma_NTP }}</p>
                 <hr class="my-3">
 
                 <!-- Section description -->
@@ -13,7 +13,7 @@
                 <p class="text-left"><span class="font-weight-bold">Nombre:</span> {{ obj.user.first_name|title }}</p>
                 <p class="text-left"><span class="font-weight-bold">Apellidos:</span> {{ obj.user.last_name|title }}</p>
                 <p class="text-left"><span class="font-weight-bold">DNI:</span> {{ obj.user.groupprofile.dni }}</p>
-                <p class="text-left"><span class="font-weight-bold">Codigo:</span> {{ obj.user.groupprofile.codigo }}</p>
+                <p class="text-left"><span class="font-weight-bold">Código:</span> {{ obj.user.groupprofile.codigo }}</p>
                 <hr class="my-3">
 
                 <p class="text-left mt-3"><span class="font-weight-bold"><u>Datos del Ensayo Ingresados</u></span></p>

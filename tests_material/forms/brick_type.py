@@ -28,10 +28,10 @@ class BrickTypeForm(forms.ModelForm):
         ]
         labels = {
             'name_element': 'Nombre del Elemento',
-            'brick_company': 'Compañia de Ladrillos',
-            'n_d_length': 'Dimención Nominal Largo',
-            'n_d_width': 'Dimención Nominal Ancho',
-            'n_d_high': 'Dimención Nominal Alto',
+            'brick_company': 'Compañía de Ladrillos',
+            'n_d_length': 'Dimensión Nominal Largo',
+            'n_d_width': 'Dimensión Nominal Ancho',
+            'n_d_high': 'Dimensión Nominal Alto',
             'sampling_date': 'Fecha de Muestreo',
             'done_date': 'Fecha de Ensayo',
         }
@@ -65,10 +65,10 @@ class BrickTypeFormClient(forms.ModelForm):
         ]
         labels = {
             'name_element': 'Nombre del Elemento',
-            'brick_company': 'Compañia de Ladrillos',
-            'n_d_length': 'Dimención Nominal Largo',
-            'n_d_width': 'Dimención Nominal Ancho',
-            'n_d_high': 'Dimención Nominal Alto',
+            'brick_company': 'Compañía de Ladrillos',
+            'n_d_length': 'Dimensión Nominal Largo',
+            'n_d_width': 'Dimensión Nominal Ancho',
+            'n_d_high': 'Dimensión Nominal Alto',
             'sampling_date': 'Fecha de Muestreo',
             'done_date': 'Fecha de Ensayo',
             'reference_person': 'Persona de Referencia',
@@ -111,6 +111,7 @@ class VadriationDimensionsForm(forms.ModelForm):
     class Meta:
         model = VariationDimensions
         fields = [
+            'name_element',
             'upface_length',
             'downface_length',
             'upface_width',
@@ -121,6 +122,7 @@ class VadriationDimensionsForm(forms.ModelForm):
             'high_lefside',
         ]
         labels = {
+            'name_element': 'Nombre del Elemento',
             'upface_length': 'Largo Cara Superior',
             'downface_length': 'Largo Cara Inferior',
             'upface_width': 'Ancho Cara Superior',
@@ -149,15 +151,17 @@ class WarpingForm(forms.ModelForm):
     class Meta:
         model = Warping
         fields = [
+            'name_element',
             'upface_concave',
             'upface_convex',
             'downface_concave',
             'downface_convex',        
         ]
         labels = {
-            'upface_concave': 'Cara Superior Concavo',
+            'name_element': 'Nombre del Elemento',
+            'upface_concave': 'Cara Superior Cóncavo',
             'upface_convex': 'Cara Superior Convexo',
-            'downface_concave': 'Cara Inferior Concavo',
+            'downface_concave': 'Cara Inferior Cóncavo',
             'downface_convex': 'Cara Inferior Convexo',
         }
         help_texts = {
@@ -175,6 +179,7 @@ class DensityVoidsForm(forms.ModelForm):
     class Meta:
         model = DensityVoids
         fields = [
+            'name_element',
             'length',
             'width',
             'high',
@@ -183,18 +188,19 @@ class DensityVoidsForm(forms.ModelForm):
             'weight',
         ]
         labels = {
+            'name_element': 'Nombre del Elemento',
             'length': 'Largo',
             'width': 'Ancho',
             'high': 'Alto',
-            'sc': 'Peso de 500ml de arena contenida en el cilindro graduado (Sc)',
-            'su': 'Peso de la arena contenido en el espécimen de ensayo (Su)',
-            'weight': 'Peso del Especimen',
+            'sc': 'Densidad de la arena calibrada',
+            'su': 'Peso de la arena contenido en el espécimen de ensayo',
+            'weight': 'Peso del Espécimen',
         }
         help_texts = {
             'length': 'Unidades (mm) <br> Aproximación (1 mm)',
             'width': 'Unidades (mm) <br> Aproximación (1 mm)',
             'high': 'Unidades (mm) <br> Aproximación (1 mm)',
-            'sc': 'Unidades (gr) <br> Aproximación (0.5 gr)',
+            'sc': 'Unidades (gr/cm³) <br> Aproximación (0.01 gr/cm³)',
             'su': 'Unidades (gr) <br> Aproximación (0.5 gr)',
             'weight': 'Unidades (gr) <br> Aproximación (0.5 gr)',
         }
@@ -207,6 +213,7 @@ class SuctionForm(forms.ModelForm):
     class Meta:
         model = Suction
         fields = [
+            'name_element',
             'nomal_weight', 
             'dry_weight', 
             'length', 
@@ -214,6 +221,7 @@ class SuctionForm(forms.ModelForm):
             'face_wet_weight', 
         ]
         labels = {
+            'name_element': 'Nombre del Elemento',
             'nomal_weight': 'Peso Inicial Normal', 
             'dry_weight': 'Peso Seco', 
             'length': 'Largo', 
@@ -236,14 +244,16 @@ class AbsSatuCoeffForm(forms.ModelForm):
     class Meta:
         model = AbsSatuCoeff
         fields = [
+            'name_element',
             'dry_weight',
             'wet_weight_cool_24',
             'wet_weight_hot_5',
         ]
         labels = {
-            'dry_weight': 'Peso Seco del Especímen',
-            'wet_weight_cool_24': 'Peso del Especimen Saturado en Agua Fria a 24 Horas',
-            'wet_weight_hot_5': 'Peso del Especimen Saturado en Agua Caliente a 5 Horas',
+            'name_element': 'Nombre del Elemento',
+            'dry_weight': 'Peso Seco del Espécimen',
+            'wet_weight_cool_24': 'Peso del Espécimen Saturado en Agua Fría a 24 Horas',
+            'wet_weight_hot_5': 'Peso del Espécimen Saturado en Agua Caliente a 5 Horas',
         }
         help_texts = {
             'dry_weight': 'Unidades (gr) <br> Aproximación (0.5 gr)',
@@ -259,6 +269,7 @@ class CompretionBrickForm(forms.ModelForm):
     class Meta:
         model = CompretionBrick
         fields = [
+            'name_element',
             'upface_length',
             'upface_width',
             'downface_length',
@@ -266,6 +277,7 @@ class CompretionBrickForm(forms.ModelForm):
             'load',
         ]
         labels = {
+            'name_element': 'Nombre del Elemento',
             'upface_length': 'Largo Superior',
             'upface_width': 'Ancho Superior',
             'downface_length': 'Largo Inferior',

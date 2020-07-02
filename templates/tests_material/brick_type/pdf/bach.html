@@ -41,14 +41,14 @@
           <p class="text-left panel-heading"><strong>Datos Principales</strong></p>
           <p  class="text-left"><strong>Nombres:</strong> {{ obj.user.first_name|title }} {{ obj.user.last_name|title }}</p> 
           <p  class="text-left"><strong>DNI:</strong> {{ obj.user.bachprofile.dni }}</p> 
-          <p  class="text-left"><strong>Codigo:</strong> {{ obj.user.bachprofile.codigo }}</p> 
+          <p  class="text-left"><strong>Código:</strong> {{ obj.user.bachprofile.codigo }}</p> 
           <p  class="text-left"><strong>Curso Especifico:</strong> {{ obj.course|title }}</p>
           {% for thesis in obj.user.bachprofile.thesis_set.all %}
           <p  class="text-left"><strong>Titulo:</strong> {{ thesis.title|title }}</p> 
           <p  class="text-left"><strong>Linea de Desarrollo:</strong> {{ thesis.line|title }}</p> 
           <p  class="text-left"><strong>Comienzo de la Thesis:</strong> {{ thesis.start_day|date:"d/m/Y" }}</p> 
           <p  class="text-left"><strong>Termino de la Thesis:</strong> {{ thesis.finish_day|date:"d/m/Y" }}</p>
-          <p  class="text-left"><strong>Duración:</strong> {{ thesis.duration }} dias</p>
+          <p  class="text-left"><strong>Duración:</strong> {{ thesis.duration }} días</p>
           <p  class="text-left"><strong>Asesores:</strong></p>
             {% for adviser in thesis.adviser.all %}
             <p  class="text-left">&#8594; {{ adviser }}</p>                
@@ -58,47 +58,47 @@
           {% if obj.created|date:"d/m/Y" != obj.updated|date:"d/m/Y" %}
           <p class="text-left"><strong>Corrección del Ensayo:</strong> {{ obj.updated|default_if_none:"Ninguna Corrección"|date:"d/m/Y P" }}</p>
           {% endif %}
-          <p class="text-left"><strong>Emsion de Certificado:</strong> {% now "d/m/Y P" %}</p>
+          <p class="text-left"><strong>Emisión de Certificado:</strong> {% now "d/m/Y P" %}</p>
           {% if qs_variation_dimentions %}
-          <p class="text-left"><strong>Tipo de Ladrillo segun la Variación Dimencional:</strong></p>
-          <p class="text-left"><strong>Segun la Altura:</strong> {{ type_high }}</p>
-          <p class="text-left"><strong>Segun el Ancho:</strong> {{ type_width }}</p>
-          <p class="text-left"><strong>Segun el Largo:</strong> {{ type_lengt }}</p>
+          <p class="text-left"><strong>Tipo de Ladrillo según la Variación Dimensional:</strong></p>
+          <p class="text-left"><strong>Según la Altura:</strong> {{ type_high }}</p>
+          <p class="text-left"><strong>Según el Ancho:</strong> {{ type_width }}</p>
+          <p class="text-left"><strong>Según el Largo:</strong> {{ type_lengt }}</p>
           {% endif %}
           {% if qs_warping %}
-          <p class="text-left"><strong>Tipo de Ladrillo segun el Alabeo:</strong> {{ type_warping }}</p>
+          <p class="text-left"><strong>Tipo de Ladrillo según el Alabeo:</strong> {{ type_warping }}</p>
           {% endif %}
           {% if qs_density_voids %}
-          <p class="text-left"><strong>Tipo de Ladrillo segun la Densidad:</strong> {{ type_density }}</p>
+          <p class="text-left"><strong>Tipo de Ladrillo según la Densidad:</strong> {{ type_density }}</p>
           {% endif %}
           {% if qs_suctidon %}
-          <p class="text-left"><strong>Tipo de Ladrillo segun la Succión:</strong> {{ type_face_wet_weight_correction }}</p>
+          <p class="text-left"><strong>Tipo de Ladrillo según la Succión:</strong> {{ type_face_wet_weight_correction }}</p>
           {% endif %}
           {% if qs_abs_sat_coff %}
-          <p class="text-left"><strong>Tipo de Ladrillo segun la Absorcion:</strong> {{ type_abs }}</p>
-          <p class="text-left"><strong>Tipo de Ladrillo segun el Coeficiente de Absorción:</strong> {{ type_coeff_sat }}</p>
+          <p class="text-left"><strong>Tipo de Ladrillo según la Absorción:</strong> {{ type_abs }}</p>
+          <p class="text-left"><strong>Tipo de Ladrillo según el Coeficiente de Absorción:</strong> {{ type_coeff_sat }}</p>
           {% endif %}
           {% if qs_compretion_brick %}
-          <p class="text-left"><strong>Resistencia Caracteristica:</strong> {{ fc_caracteristic_MPA }} MPa - {{ fc_caracteristic }} kgf/cm²</p>
-          <p class="text-left"><strong>Tipo de Ladrillo segun el Compresión:</strong> {{ type_compretion }}</p>
+          <p class="text-left"><strong>Resistencia Característica:</strong> {{ fc_caracteristic_MPA }} MPa - {{ fc_caracteristic }} kgf/cm²</p>
+          <p class="text-left"><strong>Tipo de Ladrillo según el Compresión:</strong> {{ type_compretion }}</p>
           {% endif %}
         </div>
         <div style="margin-left: 4rem;" class="col-xs-3 panel panel-default">
           <p class="text-left panel-heading"><strong>Datos del Ensayo</strong></p>
           <p class="text-left"><strong>ID:</strong> {{ obj.id }}</p>
-          <p class="text-left"><strong>Codigo QR:</strong></p>
+          <p class="text-left"><strong>Código QR:</strong></p>
           <p class="text-center">{% qr_from_text obj.code size=4 image_format="png" %}</p>
           <p class="text-left"><strong>Ladrillera:</strong> {{ obj.brick_company }}</p>
-          <p class="text-left"><strong>Largo Nominal:</strong> {{ obj.n_d_length }}</p>
-          <p class="text-left"><strong>Ancho Nominal:</strong> {{ obj.n_d_width }}</p>
-          <p class="text-left"><strong>Alto Nominal:</strong> {{ obj.n_d_high }}</p>
+          <p class="text-left"><strong>Largo Nominal:</strong> {{ obj.n_d_length }} mm</p>
+          <p class="text-left"><strong>Ancho Nominal:</strong> {{ obj.n_d_width }} mm</p>
+          <p class="text-left"><strong>Alto Nominal:</strong> {{ obj.n_d_high }} mm</p>
         </div>
       </div>    
       <div class="row">
         <div class="col-xs-12">
                 <!-- Default panel contents -->
                 {% if qs_variation_dimentions %}                
-                <div class="panel-heading"><strong>Resultados del Ensayo:</strong> Variación de Dimenciones:</div>
+                <div class="panel-heading"><strong>Resultados del Ensayo:</strong> Variación de Dimensiones:</div>
                 <table class="table-bordered">
                   <thead class="">
                       <tr>
@@ -157,9 +157,9 @@
                   <thead class="primary-color-dark white-text">
                       <tr>
                           <th class="text-center">Secuencia</th>
-                          <th class="text-center">Cara Superior Concavo (mm)</th>
+                          <th class="text-center">Cara Superior Cóncavo (mm)</th>
                           <th class="text-center">Cara Superior Convexo (mm)</th>
-                          <th class="text-center">Cara Inferior Concavo (mm)</th>
+                          <th class="text-center">Cara Inferior Cóncavo (mm)</th>
                           <th class="text-center">Cara Inferior Convexo (mm)</th>
                       </tr>
                   </thead>
@@ -185,7 +185,7 @@
                 {% endif %}
               <br>
                 {% if qs_density_voids %}
-                <div class="panel-heading"><strong>Resultados del Ensayo:</strong> Porcentaje de Vacios y Densidad:</div>
+                <div class="panel-heading"><strong>Resultados del Ensayo:</strong> Porcentaje de Vacíos y Densidad:</div>
                 <table class="table-bordered">
                     <thead class="">
                         <tr>
@@ -196,9 +196,9 @@
                             <th class="text-center">Volumen Vm (cm³)</th>
                             <th class="text-center">Sc (gr)</th>
                             <th class="text-center">Su (gr)</th>
-                            <th class="text-center">Volimen de la Arena Vs (cm³)</th>
+                            <th class="text-center">Volumen de la Arena Vs (cm³)</th>
                             <th class="text-center">Volumen Real (cm³)</th>
-                            <th class="text-center">Porcentaje de Vacios (%)</th>
+                            <th class="text-center">Porcentaje de Vacíos (%)</th>
                             <th class="text-center">Peso de la Unidad (gr)</th>
                             <th class="text-center">Densidad (g/cm³)</th>
                         </tr>
@@ -244,12 +244,12 @@
                     <thead class="">
                         <tr>
                             <th class="text-center">Secuencia</th>
-                            <th class="text-center">Peso Inicil (gr)</th>
+                            <th class="text-center">Peso Inicial (gr)</th>
                             <th class="text-center">Peso Final (gr)</th>
                             <th class="text-center">Diferencia de Peso (gr)</th>
                             <th class="text-center">Largo (mm)</th>
                             <th class="text-center">Ancho (mm)</th>
-                            <th class="text-center">Area de Contacto (cm²)</th>
+                            <th class="text-center">Área de Contacto (cm²)</th>
                             <th class="text-center">Peso Mojado (gr)</th>
                             <th class="text-center">Peso Corregido (gr)</th>
                         </tr>
@@ -290,10 +290,10 @@
                         <tr>
                             <th class="text-center">Secuencia</th>
                             <th class="text-center">Peso Seco (gr)</th>
-                            <th class="text-center">Peso Saturado en Agua Fria (gr)</th>
-                            <th class="text-center">Peso Satura despues de 5 horas en Agua Caliente (gr)</th>
-                            <th class="text-center">Porcentaje de Absorcion (%)</th>
-                            <th class="text-center">Porcentaje de Absorcion Máxima (%)</th>
+                            <th class="text-center">Peso Saturado en Agua Fría (gr)</th>
+                            <th class="text-center">Peso Satura después de 5 horas en Agua Caliente (gr)</th>
+                            <th class="text-center">Porcentaje de Absorción (%)</th>
+                            <th class="text-center">Porcentaje de Absorción Máxima (%)</th>
                             <th class="text-center">Coeficiente de Saturación</th>
                         </tr>
                     </thead>
@@ -332,9 +332,9 @@
                               <th class="text-center">Ancho Superior (mm)</th>
                               <th class="text-center">Largo Inferior (mm)</th>
                               <th class="text-center">Ancho Inferior (mm)</th>
-                              <th class="text-center">Area Superior (cm²)</th>
-                              <th class="text-center">Area Inferior (cm²)</th>
-                              <th class="text-center">Promedio de Areas (cm²)</th>
+                              <th class="text-center">Área Superior (cm²)</th>
+                              <th class="text-center">Área Inferior (cm²)</th>
+                              <th class="text-center">Promedio de Áreas (cm²)</th>
                               <th class="text-center">Carga (kgf)</th>
                               <th class="text-center">Resistencia a la Compresión (MPa (kgf/cm²))</th>
                           </tr>
@@ -438,7 +438,7 @@
     <footer>
       <div class="row">
         <div class="col-xs-12 panel panel-default">
-          <p class="text-center">Laboratorio de Ingenieria Civil, Universidad Catolica de Santa Maria, EPICLABS &#169; 2019</p>
+          <p class="text-center">Laboratorio de Ingeniería Civil, Universidad Católica de Santa Maria, EPICLABS &#169; 2019</p>
         </div>
       </div>   
     </footer>

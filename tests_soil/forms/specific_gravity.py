@@ -138,7 +138,7 @@ class FractionPassForm(forms.ModelForm):
             'mass_pyc_w_sample': 'Unidades (gramos) <br> Aproximación (0.01 g)',
             'mass_bowl': 'Unidades (gramos) <br> Aproximación (0.01 g)',
             'mass_bowl_sample': 'Unidades (gramos) <br> Aproximación (0.01 g)',
-            'coefficient_water': 'Adimencional <br> Aproximación (0.00001)',
+            'coefficient_water': 'Adimensional <br> Aproximación (0.00001)',
         }
 
 FractionPassFormSet = inlineformset_factory(SpecificGravity, FractionPass, form=FractionPassForm, extra=3 , max_num=3)
@@ -176,7 +176,7 @@ class FractionRetainedForm(forms.ModelForm):
             'w_basket_water_sample': 'Unidades (gramos) <br> Aproximación (0.1 g)',
             'w_bowl': 'Unidades (gramos) <br> Aproximación (0.1 g)',
             'w_bowl_sample': 'Unidades (gramos) <br> Aproximación (0.1 g)',
-            'coefficient_water': 'Unidades (Adimencional) <br> Aproximación (0.00001)',
+            'coefficient_water': 'Unidades (Adimensional) <br> Aproximación (0.00001)',
         }
 
 FractionRetainedFormSet = inlineformset_factory(SpecificGravity, FractionRetained, form=FractionRetainedForm, extra=3, max_num=3)

@@ -235,18 +235,6 @@ class ContentMoistureAdmin(admin.TabularInline):
     can_delete = False
 
 
-class ContentMoistureCarbureAdmin(admin.TabularInline):
-    model = ContentMoistureCarbure
-    fields = (
-        'wet_weight_percentage', 'dry_weight_percentage',
-    )
-    readonly_fields = (
-        'wet_weight_percentage', 'dry_weight_percentage',
-    )
-    extra = 0
-    can_delete = False
-
-
 class CorrectionSandConeAdmin(admin.TabularInline):
     model = CorrectionSandCone
     fields = (
@@ -265,6 +253,6 @@ class SandConeAdmin(admin.ModelAdmin):
         'weight_dry_max', 'opt_moisture', 'moisture', 'code', 'sampling_date', 'done_date', 'dilate',
         'course', 'reference_person', 'construction', 'created', 'updated',
     ]
-    inlines = [HumidDensityAdmin, ContentMoistureAdmin, ContentMoistureCarbureAdmin, CorrectionSandConeAdmin]
+    inlines = [HumidDensityAdmin, ContentMoistureAdmin, CorrectionSandConeAdmin]
 
 admin.site.register(SandCone, SandConeAdmin)

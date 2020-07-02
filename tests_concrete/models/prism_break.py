@@ -72,7 +72,7 @@ class Prism(models.Model):
 
         # Generate the area
         avg_D = self.D_1 * self.D_2
-        self.area = round(avg_D, 2)
+        self.area = round(avg_D, 1)
 
         # Generate the fc
         effort_fc = self.load / (self.area/100)

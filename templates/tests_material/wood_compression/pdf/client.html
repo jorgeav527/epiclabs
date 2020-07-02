@@ -32,19 +32,19 @@
           {% if obj.created|date:"d/m/Y" != obj.updated|date:"d/m/Y" %}
           <p class="text-left"><strong>Corrección del Ensayo:</strong> {{ obj.updated|default_if_none:"Ninguna Corrección"|date:"d/m/Y P" }}</p>
           {% endif %}
-          <p class="text-left"><strong>Emsion de Certificado:</strong> {% now "d/m/Y P" %}</p>
+          <p class="text-left"><strong>Emisión de Certificado:</strong> {% now "d/m/Y P" %}</p>
           <p class="text-left"><strong>Persona de Referencia:</strong> {{ obj.reference_person.title }} {{ obj.reference_person.name|title }}</p>
           {% if qs_parallel %}
-          <p class="text-left"><strong>Grupo segun Esfuerzos Admisibles (Paralela):</strong> {{ type_parallel }}</p>
+          <p class="text-left"><strong>Grupo según Esfuerzos Admisibles (Paralela):</strong> {{ type_parallel }}</p>
           {% endif %}
           {% if qs_perpendicular %}
-          <p class="text-left"><strong>Grupo segun Esfuerzos Admisibles (Perpendicular):</strong> {{ type_perpendicular }}</p>
+          <p class="text-left"><strong>Grupo según Esfuerzos Admisibles (Perpendicular):</strong> {{ type_perpendicular }}</p>
           {% endif %}
         </div>
         <div style="margin-left: 4rem;" class="col-xs-3 panel panel-default">
           <p class="text-left panel-heading"><strong>Datos del Ensayo</strong></p>
           <p class="text-left"><strong>ID:</strong> {{ obj.id }}</p>
-          <p class="text-left"><strong>Codigo QR:</strong></p>
+          <p class="text-left"><strong>Código QR:</strong></p>
           <p class="text-center">{% qr_from_text obj.code size=4 image_format="png" %}</p>
           <p class="text-left"><strong>Nombre del Elemento:</strong> {{ obj.name_element }}</p>
           <p class="text-left"><strong>Nombre de la Madera:</strong> {{ obj.wood_name }}</p>
@@ -63,11 +63,11 @@
                             <th class="text-center">Tipo de Compresión</th>
                             <th class="text-center">Superior Largo (mm)</th>
                             <th class="text-center">Superior Ancho (mm)</th>
-                            <th class="text-center">Area Superior (cm²)</th>
+                            <th class="text-center">Área Superior (cm²)</th>
                             <th class="text-center">Inferior Largo (mm)</th>
                             <th class="text-center">Inferior Ancho (mm)</th>
-                            <th class="text-center">Area Inferior (cm²)</th>
-                            <th class="text-center">Prom. Areas (cm²)</th>
+                            <th class="text-center">Área Inferior (cm²)</th>
+                            <th class="text-center">Prom. Áreas (cm²)</th>
                             <th class="text-center">Carga (kgf)</th>
                             <th class="text-center">Resistencia a la Compresión (MPa (kgf/cm²))</th>
                         </tr>
@@ -114,11 +114,11 @@
                             <th class="text-center">Tipo de Compresión</th>
                             <th class="text-center">Superior Largo (mm)</th>
                             <th class="text-center">Superior Ancho (mm)</th>
-                            <th class="text-center">Area Superior (cm²)</th>
+                            <th class="text-center">Área Superior (cm²)</th>
                             <th class="text-center">Inferior Largo (mm)</th>
                             <th class="text-center">Inferior Ancho (mm)</th>
-                            <th class="text-center">Area Inferior (cm²)</th>
-                            <th class="text-center">Prom. Areas (cm²)</th>
+                            <th class="text-center">Área Inferior (cm²)</th>
+                            <th class="text-center">Prom. Áreas (cm²)</th>
                             <th class="text-center">Carga (kgf)</th>
                             <th class="text-center">Resistencia a la Compresión (MPa (kgf/cm²))</th>
                         </tr>
@@ -213,7 +213,7 @@
     <footer>
       <div class="row" >
         <div class="col-xs-12 panel panel-default">
-            <p class="text-center">Laboratorio de Ingenieria Civil, Universidad Catolica de Santa Maria, EPICLABS &#169; 2019</p>          
+            <p class="text-center">Laboratorio de Ingeniería Civil, Universidad Católica de Santa Maria, EPICLABS &#169; 2019</p>          
         </div>
       </div>   
     </footer>

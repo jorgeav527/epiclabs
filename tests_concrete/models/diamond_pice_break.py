@@ -72,7 +72,7 @@ class DiamondPice(models.Model):
         # Generate the area
         d_cm = self.D
         area_cm2 = ((d_cm**2)*math.pi)/4
-        self.area = round(area_cm2, 2)
+        self.area = round(area_cm2, 1)
         
         # Generate the correction factor
         x_ld = [1, 1.25, 1.50, 1.75]

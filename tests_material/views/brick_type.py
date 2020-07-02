@@ -22,7 +22,7 @@ def brick_type_list(request):
         obj_list = BrickType.objects.filter(user=request.user)
         context = {
             "file_name": "Propiedades_Tipo_del_Ladrillo",
-            "title": "Ensayos de Propiedades en Unidades de Albañileria Calcinada para la Construcción",
+            "title": "Ensayos de Propiedades en Unidades de Albañilería Calcinada para la Construcción",
             "obj_list": obj_list,
         }
         return render(request, 'tests_material/brick_type/brick_type_list.html', context)        
@@ -31,7 +31,7 @@ def brick_type_list(request):
         obj_list = BrickType.objects.all()
         context = {
             "file_name": "Propiedades_Tipo_del_Ladrillo",
-            "title": "Ensayos de Propiedades en Unidades de Albañileria Calcinada para la Construcción",
+            "title": "Ensayos de Propiedades en Unidades de Albañilería Calcinada para la Construcción",
             "obj_list": obj_list,
         }
         return render(request, 'tests_material/brick_type/brick_type_list.html', context)        
@@ -69,7 +69,7 @@ def brick_type_create(request):
 
     context = {
         "form": form,
-        "title": "Crear Ensayo de Propiedades en Unidades de Albañileria Calcinada para la Construcción",
+        "title": "Crear Ensayo de Propiedades en Unidades de Albañilería Calcinada para la Construcción",
     }
 
     return render(request, "tests_material/brick_type/brick_type_form.html", context)
@@ -100,7 +100,7 @@ def variation_dimensions_save(request, id):
     context = {
         "obj": obj,
         "formset": formset,
-        "title": "Crear Ensayos de Determinación de Variación de Dimenciones",
+        "title": "Crear Ensayos de Determinación de Variación de Dimensiones",
     }
 
     return render(request, "tests_material/brick_type/variation_dimensions_form.html", context)
@@ -162,7 +162,7 @@ def density_voids_save(request, id):
     context = {
         "obj": obj,
         "formset": formset,
-        "title": "Crear Ensayos de Determinación de la Densidad y el Porcentaje de Vacios",
+        "title": "Crear Ensayos de Determinación de la Densidad y el Porcentaje de Vacíos",
     }
 
     return render(request, "tests_material/brick_type/density_voids_form.html", context)
@@ -285,7 +285,7 @@ def brick_type_update(request, id):
     context = {
         "form": form,
         "obj": obj,
-        "title": "Actualizar Ensayo de Propiedades en Unidades de Albañileria Calcinada para la Construcción",
+        "title": "Actualizar Ensayo de Propiedades en Unidades de Albañilería Calcinada para la Construcción",
     }
 
     return render(request, "tests_material/brick_type/brick_type_form.html", context)
@@ -525,7 +525,7 @@ def brick_type_detail(request, id):
         "type_compretion": type_compretion,
         "norma_NTP_compretion_brick": "NTP 339.604",
 
-        "title": "Detalles del En Propiedades en Unidades de Albañileria Calcinada para la Construcción",
+        "title": "Detalles del En Propiedades en Unidades de Albañilería Calcinada para la Construcción",
     }
 
     return render(request, 'tests_material/brick_type/brick_type_detail.html', context)
@@ -546,7 +546,7 @@ def brick_type_delete(request, id):
 
     context = {
         "obj": obj,
-        "title": "Eliminar el Ensayo de Propiedades en Unidades de Albañileria Calcinada para la Construcción",
+        "title": "Eliminar el Ensayo de Propiedades en Unidades de Albañilería Calcinada para la Construcción",
     }
 
     return render(request, 'tests_material/brick_type/brick_type_delete_comfirm.html', context)

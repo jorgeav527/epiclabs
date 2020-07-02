@@ -60,7 +60,6 @@ class Masonry(models.Model):
     L               = models.FloatField()
     A               = models.FloatField()
     hp              = models.FloatField()
-    tp              = models.FloatField()
     hp_tp           = models.FloatField(editable=False)
     correction      = models.FloatField(editable=False)
     area            = models.FloatField(editable=False)
@@ -83,12 +82,12 @@ class Masonry(models.Model):
         self.area = round(area_cm2, 2)
 
         # Generate the hp_tp
-        hp_tp_factor = self.hp / self.tp
+        hp_tp_factor = self.hp / self.A
         self.hp_tp = round(hp_tp_factor, 1)
 
         # Generate correction
-        x_ld = [1.3, 1.5, 2.0, 2.5, 3.0, 4.0, 5.0]
-        y_correction = [0.75, 0.86, 1.00, 1.04, 1.07, 1.15, 1.22]
+        x_ld = [2.0, 2.5, 3.0, 4.0, 4.5, 5.0]
+        y_correction = [0.73, 0.80, 0.91, 0.95, 0.98, 1.00]
         correc = np.interp(self.hp_tp, x_ld, y_correction)
         self.correction = round(correc, 2)
 

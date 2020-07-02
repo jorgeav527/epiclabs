@@ -23,7 +23,7 @@
                     <p class="card-meta mb-2"><i class="fas fa-graduation-cap mr-2"></i><strong>Nombres: </strong>{{ user.first_name|default_if_none:"Complete el Formulario"|title }}</p>
                     <p class="card-meta mb-2"><i class="fas fa-graduation-cap mr-2"></i><strong>Apellidos: </strong>{{ user.last_name|default_if_none:"Complete el Formulario"|title }}</p>
                     <p class="card-meta mb-2"><i class="fas fa-graduation-cap mr-2"></i><strong>DNI: </strong>{{ user.bachprofile.dni }}</p>
-                    <p class="card-meta mb-2"><i class="fas fa-graduation-cap mr-2"></i><strong>Codigo: </strong>{{ user.bachprofile.codigo }}</p>
+                    <p class="card-meta mb-2"><i class="fas fa-graduation-cap mr-2"></i><strong>Código: </strong>{{ user.bachprofile.codigo }}</p>
                 </div>
             </div>
             <hr class="my-3">
@@ -50,14 +50,14 @@
                       <h4 class="h4-responsive card-title">{{ obj.title }}</h4>
                       <hr class="my-3 rgba-white-light">
                       <p class="card-meta mb-2"><i class="fas fa-graduation-cap mr-2"></i><strong>Linea de Desarrollo: </strong>{{ obj.line }}</p>
-                      <p class="card-meta mb-2"><i class="fas fa-graduation-cap mr-2"></i><strong>Duración: </strong>{{ obj.duration }} dias</p>
+                      <p class="card-meta mb-2"><i class="fas fa-graduation-cap mr-2"></i><strong>Duración: </strong>{{ obj.duration }} días</p>
                       <p class="card-meta mb-2"><i class="fas fa-graduation-cap mr-2"></i><strong>Fecha de Inicio: </strong>{{ obj.start_day }}</p>
                       <p class="card-meta mb-2"><i class="fas fa-graduation-cap mr-2"></i><strong>Fecha de Finalización: </strong>{{ obj.finish_day }}</p>
                       <p class="card-meta mb-2"><strong>Cursos Afines: </strong></p>
                       {% for course in obj.course.all %}
                       <p class="card-meta mb-2"><i class="fas fa-graduation-cap mr-2"></i>{{ course }}</p>
                       {% endfor %}
-                      <p class="card-meta mb-2"><strong>Acesores: </strong></p>
+                      <p class="card-meta mb-2"><strong>Asesores: </strong></p>
                       {% for adviser in obj.adviser.all %}
                       <p class="card-meta mb-2"><i class="fas fa-graduation-cap mr-2"></i>{{ adviser }}</p>
                       {% endfor %}

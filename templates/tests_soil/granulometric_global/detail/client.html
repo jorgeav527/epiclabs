@@ -13,7 +13,7 @@
                 <p class="text-left"><span class="font-weight-bold">Empresa:</span> {{ obj.user.clientprofile.long_name|title }}</p>
                 <p class="text-left"><span class="font-weight-bold">Dirección de la Empresa:</span> {{ obj.user.clientprofile.direction|title }}</p>
                 <p class="text-left"><span class="font-weight-bold">RUC:</span> {{ obj.user.clientprofile.ruc }}</p>
-                <p class="text-left"><span class="font-weight-bold">Telefono:</span> {{ obj.user.clientprofile.phone }}</p>
+                <p class="text-left"><span class="font-weight-bold">Teléfono:</span> {{ obj.user.clientprofile.phone }}</p>
                 <hr class="my-3">
                 
                 <p class="text-left mt-3"><span class="font-weight-bold"><u>Datos de la Obra</u></span></p>
@@ -30,15 +30,15 @@
                 <p class="text-left"><span class="font-weight-bold">Total:</span> {{ total_amount }} g</p>
                 <p class="text-left"><span class="font-weight-bold">Humedad Higroscópica:</span> {{ obj.hygr_humid }}%</p>
                 <p class="text-left"><span class="font-weight-bold">Tamaño Max.:</span> {{ obj.max_size }}"</p>
-                <p class="text-left"><span class="font-weight-bold">Limite Líquido:</span> {{ obj.liquid_limit }}%</p>
-                <p class="text-left"><span class="font-weight-bold">Limite Plástico:</span> {{ obj.plastic_limit }}%</p>
-                <p class="text-left"><span class="font-weight-bold">Indice Plastico:</span> {{ obj.plastic_index }}%</p>
-                <p class="text-left"><span class="font-weight-bold">Organico:</span> {{ obj.organic }}</p>
+                <p class="text-left"><span class="font-weight-bold">Límite Líquido:</span> {{ obj.liquid_limit }}%</p>
+                <p class="text-left"><span class="font-weight-bold">Límite Plástico:</span> {{ obj.plastic_limit }}%</p>
+                <p class="text-left"><span class="font-weight-bold">Indice Plástico:</span> {{ obj.plastic_index }}%</p>
+                <p class="text-left"><span class="font-weight-bold">Orgánico:</span> {{ obj.organic }}</p>
                       <p class="text-left"><span class="font-weight-bold">Peso Retenido en las Mallas:</span></p>
                 <table class="table table-sm table-responsive table-bordered text-center">
                     <thead class="primary-color-dark white-text">
                         <tr>
-                            <th>Tamizes</th>
+                            <th>Tamices</th>
                             {% for name in name_mesh %}
                             <th>{{ name }}</th>
                             {% endfor %}
@@ -109,7 +109,7 @@
                 
                 <p class="text-left mt-3"><span class="font-weight-bold"><u>Contacto de Referencia</u></span></p>
                 <p class="text-left"><span class="font-weight-bold">Referencia:</span> {{ obj.reference_person.title }} {{ obj.reference_person.name|title }}</p>
-                <p class="text-left"><span class="font-weight-bold">Telefono:</span> {{ obj.reference_person.dni }}</p>
+                <p class="text-left"><span class="font-weight-bold">Teléfono:</span> {{ obj.reference_person.dni }}</p>
                 <p class="text-left"><span class="font-weight-bold">DNI:</span> {{ obj.reference_person.phone }}</p>
                 <hr class="my-3">
                 

@@ -5,4 +5,4 @@ from .proctor_m import ProctorM, DensityWetDry, Saturation, Correction
 from .moisture_content import MoistureContent, MoistureMaterial
 from .specific_gravity import SpecificGravity, FractionPass, FractionRetained
 from .granulometric_global import GranulometricGlobal, GlobalMesh
-from .sand_cone import SandCone, HumidDensity, ContentMoisture, ContentMoistureCarbure, CorrectionSandCone
+from .sand_cone import SandCone, HumidDensity, ContentMoisture, CorrectionSandCone

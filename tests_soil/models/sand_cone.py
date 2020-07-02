@@ -14,12 +14,12 @@ class SandCone(models.Model):
     user                = models.ForeignKey(User, on_delete=models.CASCADE)
     name                = models.CharField(max_length=50, default="Sand Cone")
     sampling_name       = models.CharField(max_length=50,)
-    progressive_sector  = models.CharField(max_length=50,)
-    section_level       = models.CharField(max_length=50,)
-    element_side        = models.CharField(max_length=50,)
-    layer               = models.CharField(max_length=50,)
-    weight_dry_max      = models.FloatField()
-    opt_moisture        = models.FloatField()
+    progressive_sector  = models.CharField(max_length=50, null=True, blank=True)
+    section_level       = models.CharField(max_length=50, null=True, blank=True)
+    element_side        = models.CharField(max_length=50, null=True, blank=True)
+    layer               = models.CharField(max_length=50, null=True, blank=True)
+    weight_dry_max      = models.FloatField(null=True, blank=True)
+    opt_moisture        = models.FloatField(null=True, blank=True)    
     moisture            = models.BooleanField(default=False)
     code            = models.CharField(max_length=255, unique=True, editable=False)
     sampling_date   = models.DateField()
@@ -126,16 +126,6 @@ class ContentMoisture(models.Model):
     def __str__(self):
         return f"Contenido Humedad {self.id}"
 
-
-class ContentMoistureCarbure(models.Model):
-    wet_weight_percentage   = models.FloatField()
-    dry_weight_percentage   = models.IntegerField()
-    sand_cone   = models.ForeignKey(SandCone, on_delete=models.CASCADE)
-    equipment   = models.ManyToManyField(Equip)
-    tool        = models.ManyToManyField(Tool)    
-
-    def __str__(self):
-        return f"Contenido Humedad Carbono {self.id}"
 
 
 class CorrectionSandCone(models.Model):

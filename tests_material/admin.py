@@ -124,11 +124,11 @@ admin.site.register(WoodCompression, WoodCompressionAdmin)
 class MasonryAdmin(admin.TabularInline):
     model = Masonry
     fields = ( 
-        "poured_date", "break_date", "dilate", "L", "A", "hp", "tp", 
+        "poured_date", "break_date", "dilate", "L", "A", "hp", 
         "hp_tp", "correction", "area", "load", "fc", "fc_MPa",
     )
     readonly_fields = (
-        "poured_date", "break_date", "dilate", "L", "A", "hp", "tp", 
+        "poured_date", "break_date", "dilate", "L", "A", "hp", 
         "hp_tp", "correction", "area", "load", "fc", "fc_MPa",
     )
     extra = 0

@@ -164,7 +164,7 @@ def pice_break_detail(request, id):
         "zippedList": zippedList,
         "mean_pice_fc_MPa": mean_pice_fc_MPa,
         "std_pice_fc_MPa": std_pice_fc_MPa,
-        "norma_ASTM": "NORMA ASTM C-109",
+        "norma_ASTM": "",
         "noma_NTP": "NTP 334.034",
         "title": "Detalles del Ensayo de Rotura de Testigos",
     }
@@ -223,7 +223,7 @@ def pice_break_pdf(request, id):
         "mean_pice_fc_MPa": mean_pice_fc_MPa,
         "std_pice_fc_MPa": std_pice_fc_MPa,
         "title": "CONCRETO. MÉTODO DE ENSAYO NORMALIZADO PARA LA DETERMINACIÓN DE LA RESISTENCIA A LA COMPRESIÓN DE TESTIGOS EN MUESTRAS CILINDRICAS.",
-        "norma_ASTM": "NORMA ASTM C-109",
+        "norma_ASTM": "",
         "noma_NTP": "NTP 334.034",
         "coordinator": coordinator,
         "tecnic": tecnic,

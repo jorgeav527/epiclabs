@@ -4,7 +4,7 @@
             <div class="card-body">
                 <!-- Section heading -->
                 <h4 class="h4-responsive font-weight-bold text-center ">{{ title }}</h4>
-                <p class="dark-grey-text w-responsive text-center mx-auto">{{ norma_NTP_parallel }} / {{ norma_NTP_perpendicular }}</p>
+                <p class="dark-grey-text w-responsive text-center mx-auto">/ {{ norma_NTP_fb }}</p>
                 <hr class="my-3">
 
                 <!-- Section description -->
@@ -13,7 +13,7 @@
                 <p class="text-left"><span class="font-weight-bold">Nombre:</span> {{ obj.user.first_name|title }}</p>
                 <p class="text-left"><span class="font-weight-bold">Apellidos:</span> {{ obj.user.last_name|title }}</p>
                 <p class="text-left"><span class="font-weight-bold">DNI:</span> {{ obj.user.bachprofile.dni }}</p>
-                <p class="text-left"><span class="font-weight-bold">Codigo:</span> {{ obj.user.bachprofile.codigo }}</p>
+                <p class="text-left"><span class="font-weight-bold">Código:</span> {{ obj.user.bachprofile.codigo }}</p>
                 <hr class="my-3">
 
                 <p class="text-left mt-3"><span class="font-weight-bold"><u>Datos de la Tesis</u></span></p>
@@ -26,14 +26,14 @@
                     <p class="text-left">&#8594; {{ course }}</p>                
                     {% endfor %}
 
-                    <p class="text-left"><span class="font-weight-bold">Acesores:</span> </p>                
+                    <p class="text-left"><span class="font-weight-bold">Asesores:</span> </p>                
                     {% for adviser in thesis.adviser.all %}
                     <p class="text-left">&#8594; {{ adviser }}</p>                
                     {% endfor %}
 
                 <p class="text-left"><span class="font-weight-bold">Comienzo de la Thesis:</span> {{ thesis.start_day|date:"d/m/Y" }}</p>
                 <p class="text-left"><span class="font-weight-bold">Termino de la Thesis:</span> {{ thesis.finish_day|date:"d/m/Y" }}</p>
-                <p class="text-left"><span class="font-weight-bold">Duración:</span> {{ thesis.duration }} dias</p>
+                <p class="text-left"><span class="font-weight-bold">Duración:</span> {{ thesis.duration }} días</p>
                 {% endfor %}
                 <hr class="my-3">
 
@@ -54,14 +54,13 @@
                             <th>Nombre</th>
                             <th>Fecha de Vaciado</th>
                             <th>Fecha de Rotura</th>
-                            <th>Edad (dias)</th>
+                            <th>Edad (días)</th>
                             <th>Largo (mm)</th>
                             <th>Ancho (mm)</th>
                             <th>Altura de la Pila (mm)</th>
-                            <th>Menor Dimensión Lateral (mm)</th>
                             <th>hp/tp</th>
                             <th>Corrección</th>
-                            <th>Area (cm²)</th>
+                            <th>Área (cm²)</th>
                             <th>Carga (kgf)</th>
                             <th>Esfuerzo (kgf/cm²)</th>
                             <th>Esfuerzo (MPa)</th>
@@ -78,7 +77,6 @@
                             <td>{{ masonry.L }}</td>
                             <td>{{ masonry.A }}</td>
                             <td>{{ masonry.hp }}</td>
-                            <td>{{ masonry.tp }}</td>
                             <td>{{ masonry.hp_tp }}</td>
                             <td>{{ masonry.correction }}</td>
                             <td>{{ masonry.area }}</td>
@@ -89,7 +87,6 @@
                         {% endfor %}
                         <tr>
                             <th scope="row">Promedio</th>
-                            <td></td>
                             <td></td>
                             <td></td>
                             <td></td>

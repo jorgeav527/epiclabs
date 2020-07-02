@@ -13,7 +13,7 @@
                 <p class="text-left"><span class="font-weight-bold">Empresa:</span> {{ obj.user.clientprofile.long_name|title }}</p>
                 <p class="text-left"><span class="font-weight-bold">Dirección de la Empresa:</span> {{ obj.user.clientprofile.direction|title }}</p>
                 <p class="text-left"><span class="font-weight-bold">RUC:</span> {{ obj.user.clientprofile.ruc }}</p>
-                <p class="text-left"><span class="font-weight-bold">Telefono:</span> {{ obj.user.clientprofile.phone }}</p>
+                <p class="text-left"><span class="font-weight-bold">Teléfono:</span> {{ obj.user.clientprofile.phone }}</p>
                 <hr class="my-3">
                 
                 <p class="text-left mt-3"><span class="font-weight-bold"><u>Datos de la Obra</u></span></p>
@@ -39,11 +39,11 @@
                             <th>Tipo de Compresión</th>
                             <th>Superior Largo (mm)</th>
                             <th>Superior Ancho (mm)</th>
-                            <th>Area Superior (cm²)</th>
+                            <th>Área Superior (cm²)</th>
                             <th>Inferior Largo (mm)</th>
                             <th>Inferior Ancho (mm)</th>
-                            <th>Area Inferior (cm²)</th>
-                            <th>Prom. Areas (cm²)</th>
+                            <th>Área Inferior (cm²)</th>
+                            <th>Prom. Áreas (cm²)</th>
                             <th>Carga (kgf)</th>
                             <th>Resistencia a la Compresión (MPa (kgf/cm²))</th>
                         </tr>
@@ -90,11 +90,11 @@
                             <th>Tipo de Compresión</th>
                             <th>Superior Largo (mm)</th>
                             <th>Superior Ancho (mm)</th>
-                            <th>Area Superior (cm²)</th>
+                            <th>Área Superior (cm²)</th>
                             <th>Inferior Largo (mm)</th>
                             <th>Inferior Ancho (mm)</th>
-                            <th>Area Inferior (cm²)</th>
-                            <th>Prom. Areas (cm²)</th>
+                            <th>Área Inferior (cm²)</th>
+                            <th>Prom. Áreas (cm²)</th>
                             <th>Carga (kgf)</th>
                             <th>Resistencia a la Compresión (MPa (kgf/cm²))</th>
                         </tr>
@@ -133,16 +133,16 @@
                 {% endif %}
                 
                 {% if qs_parallel %}
-                <p class="text-left"><span class="font-weight-bold">Grupo segun Esfuerzos Admisibles (Paralela):</span> {{ type_parallel }}</p>
+                <p class="text-left"><span class="font-weight-bold">Grupo según Esfuerzos Admisibles (Paralela):</span> {{ type_parallel }}</p>
                 {% endif %}
                 {% if qs_perpendicular %}
-                <p class="text-left"><span class="font-weight-bold">Grupo segun Esfuerzos Admisibles (Perpendicular):</span> {{ type_perpendicular }}</p>
+                <p class="text-left"><span class="font-weight-bold">Grupo según Esfuerzos Admisibles (Perpendicular):</span> {{ type_perpendicular }}</p>
                 {% endif %}
                 <hr class="my-3">
                 
                 <p class="text-left mt-3"><span class="font-weight-bold"><u>Contacto de Referencia</u></span></p>
                 <p class="text-left"><span class="font-weight-bold">Referencia:</span> {{ obj.reference_person.title }} {{ obj.reference_person.name|title }}</p>
-                <p class="text-left"><span class="font-weight-bold">Telefono:</span> {{ obj.reference_person.dni }}</p>
+                <p class="text-left"><span class="font-weight-bold">Teléfono:</span> {{ obj.reference_person.dni }}</p>
                 <p class="text-left"><span class="font-weight-bold">DNI:</span> {{ obj.reference_person.phone }}</p>
                 <hr class="my-3">
                 

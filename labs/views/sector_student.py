@@ -333,7 +333,7 @@ def student_equips_soil_view(request):
         tests = [
             "Valor Equivalente de Arena y Fino",
             "Material más Fino que el Tamiz 75μm (Nro. 200)",
-            "Granulometria Gloval",
+            "Granulometria Global",
             "Límite Líquido y Límite Plástico",
             "Contenido de Humedad de un Suelo",
             "Proctor Modificado",
@@ -346,7 +346,7 @@ def student_equips_soil_view(request):
             'equips': equips,
             'Valor Equivalente de Arena y Fino': qs_sum_equips_Equivalent,
             'Material más Fino que el Tamiz 75μm (Nro. 200)': qs_sum_equips_FineMaterial,
-            'Granulometria Gloval': qs_sum_equips_GranulometricGlobal,
+            'Granulometria Global': qs_sum_equips_GranulometricGlobal,
             'Límite Líquido y Límite Plástico': qs_sum_equips_Limit,
             'Contenido de Humedad de un Suelo': qs_sum_equips_MoistureContent,
             'Proctor Modificado': qs_sum_equips_ProctorM,

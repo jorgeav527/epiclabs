@@ -32,7 +32,7 @@
           {% if obj.created|date:"d/m/Y" != obj.updated|date:"d/m/Y" %}
           <p class="text-left"><strong>Corrección del Ensayo:</strong> {{ obj.updated|default_if_none:"Ninguna Corrección"|date:"d/m/Y P" }}</p>
           {% endif %}
-          <p class="text-left"><strong>Emsion de Certificado:</strong> {% now "d/m/Y P" %}</p>
+          <p class="text-left"><strong>Emisión de Certificado:</strong> {% now "d/m/Y P" %}</p>
           <p class="text-left"><strong>Persona de Referencia:</strong> {{ obj.reference_person.title }} {{ obj.reference_person.name|title }}</p>          
           <p class="text-left"><strong>Densidad Humeda:</strong></p>
           <p class="text-left"><strong>Peso del frasco + arena:</strong> {{ humid.bowl_weight_sand }} g</p>
@@ -54,10 +54,7 @@
           <p class="text-left"><strong>Peso de agua:</strong> {{ moisture.weight_water }} g</p>
           <p class="text-left"><strong>Peso de la muestra seca:</strong> {{ moisture.dry_sample_weight }} g</p>
           <p class="text-left"><strong>Contenido de humedad de la muestra:</strong> {{ moisture.sample_moisture }} %</p>
-          <p class="text-left"><strong>Contenido de Humedad - Carbono 14:</strong></p>
-          <p class="text-left"><strong>Contenido de humedad de fracción gruesa+fina (% del peso húmedo):</strong> {{ carbure.wet_weight_percentage }} %</p>
-          <p class="text-left"><strong>Contenido de humedad de fracción gruesa+fina (% del peso seco):</strong> {{ carbure.dry_weight_percentage }} %</p>
-          <p class="text-left"><strong>Correctión del Peso Unitario y Contenido de Agua:</strong></p>
+          <p class="text-left"><strong>Corrección del Peso Unitario y Contenido de Agua:</strong></p>
           <p class="text-left"><strong>Peso de fracción extradimensionada húmeda:</strong> {{ correction.wet_fraction_weight }} g</p>
           <p class="text-left"><strong>P.E Ap. Frac. Extrad. A 20°c:</strong> {{ correction.p_e_ap_frac_extrad }} g/cm³</p>
           <p class="text-left"><strong>% Abs. Frac. Extrad.:</strong> {{ correction.per_abs_tails_extrad }} %</p>
@@ -73,7 +70,7 @@
         <div style="margin-left: 4rem;" class="col-xs-3 panel panel-default">
           <p class="text-left panel-heading"><strong>Datos del Ensayo</strong></p>
           <p class="text-left"><strong>ID:</strong> {{ obj.id }}</p>
-          <p class="text-left"><strong>Codigo QR:</strong></p>
+          <p class="text-left"><strong>Código QR:</strong></p>
           <p class="text-center">{% qr_from_text obj.code size=4 image_format="png" %}</p>
           <p class="text-left"><strong>Muestra:</strong> {{ obj.sampling_name }}</p>
           <p class="text-left"><strong>Sector o Progresiva:</strong> {{ obj.progressive_sector }}</p>
@@ -82,8 +79,11 @@
           <p class="text-left"><strong>Capa:</strong> {{ obj.layer }}</p>
           <p class="text-left"><strong>Peso unit. Seco máx.:</strong> {{ obj.weight_dry_max }} %</p>
           <p class="text-left"><strong>Ópt. Cont. de humedad:</strong> {{ obj.opt_moisture }} %</p>
+          <p class="text-left"><strong>Densidad de la muestra total seca</strong> {{ Densidad_muestra_total_seca }} g/cm³</p>
+          <p class="text-left"><strong>Porcentaje o grado de compactación</strong> {{ Porcentaje_grado_compac }} %</p>
         </div>
-      </div>    
+      </div>
+      {% if obj.moisture %}
       <div class="row">
         <div class="col-xs-12">
             <div class="panel panel-default">
@@ -94,6 +94,7 @@
             </div>
         </div>
       </div>
+      {% endif %}
       <div class="row signature">
         <div class="col-xs-6">
           <table class="table-bordered">
@@ -148,7 +149,7 @@
     <footer>
       <div class="row" >
         <div class="col-xs-12 panel panel-default">
-            <p class="text-center">Laboratorio de Ingenieria Civil, Universidad Catolica de Santa Maria, EPICLABS &#169; 2019</p>          
+            <p class="text-center">Laboratorio de Ingeniería Civil, Universidad Católica de Santa Maria, EPICLABS &#169; 2019</p>          
         </div>
       </div>   
     </footer>

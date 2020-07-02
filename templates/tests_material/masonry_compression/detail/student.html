@@ -13,7 +13,7 @@
                 <p class="text-left"><span class="font-weight-bold">Nombre:</span> {{ obj.user.first_name|title }}</p>
                 <p class="text-left"><span class="font-weight-bold">Apellidos:</span> {{ obj.user.last_name|title }}</p>
                 <p class="text-left"><span class="font-weight-bold">DNI:</span> {{ obj.user.groupprofile.dni }}</p>
-                <p class="text-left"><span class="font-weight-bold">Codigo:</span> {{ obj.user.groupprofile.codigo }}</p>
+                <p class="text-left"><span class="font-weight-bold">Código:</span> {{ obj.user.groupprofile.codigo }}</p>
                 <hr class="my-3">
 
                 <p class="text-left mt-3"><span class="font-weight-bold"><u>Datos del Ensayo Ingresados</u></span></p>
@@ -33,14 +33,13 @@
                             <th>Nombre</th>
                             <th>Fecha de Vaciado</th>
                             <th>Fecha de Rotura</th>
-                            <th>Edad (dias)</th>
+                            <th>Edad (días)</th>
                             <th>Largo (mm)</th>
                             <th>Ancho (mm)</th>
                             <th>Altura de la Pila (mm)</th>
-                            <th>Menor Dimensión Lateral (mm)</th>
                             <th>hp/tp</th>
                             <th>Corrección</th>
-                            <th>Area (cm²)</th>
+                            <th>Área (cm²)</th>
                             <th>Carga (kgf)</th>
                             <th>Esfuerzo (kgf/cm²)</th>
                             <th>Esfuerzo (MPa)</th>
@@ -57,7 +56,6 @@
                             <td>{{ masonry.L }}</td>
                             <td>{{ masonry.A }}</td>
                             <td>{{ masonry.hp }}</td>
-                            <td>{{ masonry.tp }}</td>
                             <td>{{ masonry.hp_tp }}</td>
                             <td>{{ masonry.correction }}</td>
                             <td>{{ masonry.area }}</td>
@@ -68,7 +66,6 @@
                         {% endfor %}
                         <tr>
                             <th scope="row">Promedio</th>
-                            <td></td>
                             <td></td>
                             <td></td>
                             <td></td>

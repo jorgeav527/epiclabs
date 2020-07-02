@@ -31,16 +31,16 @@ def limit_list(request):
     if request.user.is_bach or request.user.is_group or request.user.is_client:
         obj_list = Limit.objects.filter(user=request.user)
         context = {
-            "file_name": "Limite_Liquido_Limite_Plastico",
-            "title": "Ensayos de Limite Liquido y Limite Plastico",
+            "file_name": "Límite_Líquido_Límite_Plástico",
+            "title": "Ensayos de Límite Líquido y Límite Plástico",
             "obj_list": obj_list,
         }
         return render(request, 'tests_soil/limit/limit_list.html', context)        
     elif request.user.is_superuser or request.user.is_admin:
         obj_list = Limit.objects.all()
         context = {
-            "file_name": "Limite_Liquido_Limite_Plastico",
-            "title": "Ensayos de Limite Liquido y Limite Plastico",
+            "file_name": "Límite_Líquido_Límite_Plástico",
+            "title": "Ensayos de Límite Líquido y Límite Plástico",
             "obj_list": obj_list,
         }
         return render(request, 'tests_soil/limit/limit_list.html', context)        
@@ -76,7 +76,7 @@ def limit_create(request):
 
     context = {
         "form": form,
-        "title": "Crear Ensayo de Limite Liquido y Limite Plastico",
+        "title": "Crear Ensayo de Límite Líquido y Límite Plástico",
     }
 
     return render(request, "tests_soil/limit/limit_form.html", context)
@@ -117,7 +117,7 @@ def liquid_save(request, id):
     context = {
         "obj": obj,
         "formset": formset,
-        "title": "Crear Ensayos de Limite Liquido",
+        "title": "Crear Ensayos de Límite Líquido",
     }
 
     return render(request, "tests_soil/limit/liquid_form.html", context)
@@ -147,7 +147,7 @@ def plastic_save(request, id):
     context = {
         "obj": obj,
         "formset": formset,
-        "title": "Crear Ensayos de Limite Plastico",
+        "title": "Crear Ensayos de Límite Plástico",
     }
 
     return render(request, "tests_soil/limit/plastic_form.html", context)
@@ -176,7 +176,7 @@ def limit_update(request, id):
     context = {
         "form": form,
         "obj": obj,
-        "title": "Actualizar Ensayo de Limite Liquido y Limite Plastico",
+        "title": "Actualizar Ensayo de Límite Líquido y Límite Plástico",
     }
 
     return render(request, "tests_soil/limit/limit_form.html", context)
@@ -235,7 +235,7 @@ def limit_detail(request, id):
     y = C + m*x
     TOOLS="hover,crosshair,pan,wheel_zoom,reset,save,"
     plot = figure(x_axis_type="log", x_range=(min_x, max_x), y_range=(min_y, max_y), tools=TOOLS, 
-        title="Limite Liquido", x_axis_label= 'Numero de Golpes', y_axis_label= 'Porcentaje de Humedad (%)',
+        title="Límite Líquido", x_axis_label= 'Numero de Golpes', y_axis_label= 'Porcentaje de Humedad (%)',
         sizing_mode="scale_width",)
     plot.circle(x_hit, y_moisture, size=8, legend="Resultados")
     plot.line(x, y, line_width=2, color='green', legend="Linea de Tendencia", line_dash='dashed')
@@ -253,7 +253,7 @@ def limit_detail(request, id):
         "obj": obj,
         "norma_ASTM": "",
         "noma_NTP": "NTP 339.129",
-        "title": "Detalles del Ensayo de Limite Liquido y Limite Plastico",
+        "title": "Detalles del Ensayo de Límite Líquido y Límite Plástico",
     }
 
     return render(request, 'tests_soil/limit/limit_detail.html', context)
@@ -273,7 +273,7 @@ def limit_delete(request, id):
 
     context = {
         "obj": obj,
-        "title": "Eliminar el Ensayo de Limite Liquido y Limite Plastico",
+        "title": "Eliminar el Ensayo de Límite Líquido y Límite Plástico",
     }
 
     return render(request, 'tests_soil/limit/limit_delete_comfirm.html', context)
@@ -308,7 +308,17 @@ def limit_pdf(request, id):
     mean_y_moisture_plastic = round(np.mean(y_moisture_plastic), 1)
 
     # plastic index
-    plastic_index =  round(hit_25 - mean_y_moisture_plastic, 1)   
+    count = 0
+    for i in x_hit:
+        if i <= 25:
+            count += 1
+        else:
+            count += 0
+    
+    if count == 3:
+        plastic_index = "No se pudo Determinar"
+    else:
+        plastic_index = round(hit_25 - mean_y_moisture_plastic, 1) 
 
     # ploting
     max_x = np.max(x_hit) + 5
@@ -331,7 +341,7 @@ def limit_pdf(request, id):
 
     plt.xlabel('Numero de Glopes')
     plt.ylabel('Porcentaje de Humedad (%)')
-    plt.title("Limite Liquido")
+    plt.title("Límite Líquido")
     plt.legend()
 
     buf = BytesIO()

@@ -104,7 +104,7 @@ class EquivForm(forms.ModelForm):
             'max_high_sand',
         ]
         labels = {
-            'max_size': 'Tamaño Maximo',
+            'max_size': 'Tamaño Máximo',
             'start_sat_time': 'Hora de Entrada a Saturación',
             'out_sat_time': 'Hora de Salida de Saturación',
             'start_dec_time': 'Hora de Entrada a Decantación',

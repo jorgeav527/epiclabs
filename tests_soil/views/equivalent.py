@@ -190,7 +190,7 @@ def equivalent_pdf(request, id):
         "obj": obj,
         "qs_equiv": qs_equiv,
         "mean_equiv_sand": mean_equiv_sand,
-        "title": "METODO DE ENSAYO ESTANDAR PARA EL VALOR EQUIVALENTE DE ARENA DE SUELOS Y AGREGADO FINO - MTC E114",
+        "title": "METODO DE ENSAYO ESTÁNDAR PARA EL VALOR EQUIVALENTE DE ARENA DE SUELOS Y AGREGADO FINO - MTC E114",
         "norma_ASTM": "",
         "noma_NTP": "NTP 339.146",
         "coordinator": coordinator,

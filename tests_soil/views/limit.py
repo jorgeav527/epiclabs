@@ -358,8 +358,8 @@ def limit_pdf(request, id):
         "obj": obj,
         "graphic": graphic,
         "title": "METODO DE ENSAYO PARA DETERMINAR EL LIMITE LÍQUIDO, LIMITE PLÁSTICO E INDICE DE PLASTICIDAD DE SUELOS MTC E110 - MTC E111",
-        "norma_ASTM": "ASTM C 4318",
-        "noma_NTP": "",
+        "norma_ASTM": "",
+        "noma_NTP": "NTP 339.129",
         "coordinator": coordinator,
         "tecnic": tecnic,
     }

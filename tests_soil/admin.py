@@ -89,18 +89,18 @@ class DensityAdmin(admin.TabularInline):
     can_delete = False
 
 
-class SaturationAdmin(admin.TabularInline):
-    model = Saturation
-    fields = (
-        "frac_extrad_weight", "frac_gruesa_weight", "frac_fina_weight", "p_sp_frac_extrad", "p_sp_frac_gruesa", "g_sp_frac_fina", 
-        "g_frac_fina_gruesa", "g_sp_global",
-    )
-    readonly_fields = (
-        "frac_extrad_weight", "frac_gruesa_weight", "frac_fina_weight", "p_sp_frac_extrad", "p_sp_frac_gruesa", "g_sp_frac_fina", 
-        "g_frac_fina_gruesa", "g_sp_global",
-    )
-    extra = 0
-    can_delete = False
+# class SaturationAdmin(admin.TabularInline):
+#     model = Saturation
+#     fields = (
+#         "frac_extrad_weight", "frac_gruesa_weight", "frac_fina_weight", "p_sp_frac_extrad", "p_sp_frac_gruesa", "g_sp_frac_fina", 
+#         "g_frac_fina_gruesa", "g_sp_global",
+#     )
+#     readonly_fields = (
+#         "frac_extrad_weight", "frac_gruesa_weight", "frac_fina_weight", "p_sp_frac_extrad", "p_sp_frac_gruesa", "g_sp_frac_fina", 
+#         "g_frac_fina_gruesa", "g_sp_global",
+#     )
+#     extra = 0
+#     can_delete = False
 
 
 class CorrectionAdmin(admin.TabularInline):
@@ -122,7 +122,7 @@ class ProctorMAdmin(admin.ModelAdmin):
         "user", "material", "quarry", "code", "sampling_date", "done_date", "dilate", 
         "reference_person", "construction", "created", "updated",
     ]
-    inlines = [DensityAdmin, SaturationAdmin, CorrectionAdmin]
+    inlines = [DensityAdmin, CorrectionAdmin]
 
 admin.site.register(ProctorM, ProctorMAdmin)
 

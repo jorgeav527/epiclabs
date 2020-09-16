@@ -19,8 +19,8 @@ import matplotlib
 matplotlib.use('Agg')
 from matplotlib import pyplot as plt
 
-from tests_soil.models import ProctorM, DensityWetDry, Saturation, Correction
-from tests_soil.forms import ProctorMForm, ProctorMFormClient, DensityWetDryFormSet, SaturationFormSet, CorrectionFormSet
+from tests_soil.models import ProctorM, DensityWetDry, Correction
+from tests_soil.forms import ProctorMForm, ProctorMFormClient, DensityWetDryFormSet, CorrectionFormSet
 from equipments.models import Equip
 from accounts.models import AdminProfile
 
@@ -114,34 +114,34 @@ def density_save(request, id):
     return render(request, "tests_soil/proctor_m/density_form.html", context)
 
 
-@login_required
-def saturation_save(request, id):
-    obj = get_object_or_404(ProctorM, id=id)
-    equips = Equip.objects.filter(name__in=("Maquinas Varias", "Balanza"))
-    if request.user.is_bach or request.user.is_group or request.user.is_superuser or request.user.is_admin:
-        if request.method == "POST":
-            formset = SaturationFormSet(request.POST, instance=obj)
-            if formset.is_valid():
-                instances = formset.save(commit=False)
-                for instance in instances:
-                    instance.save()
-                    for equip in equips:    
-                        instance.equipment.add(equip)
-                        equip.use = F("use") + 1
-                        equip.save()
-                formset.save()                
-                messages.success(request, f"Los ensayos han sido creados")
-                return redirect('tests_soil:saturation_save', id=obj.id)
+# @login_required
+# def saturation_save(request, id):
+#     obj = get_object_or_404(ProctorM, id=id)
+#     equips = Equip.objects.filter(name__in=("Maquinas Varias", "Balanza"))
+#     if request.user.is_bach or request.user.is_group or request.user.is_superuser or request.user.is_admin:
+#         if request.method == "POST":
+#             formset = SaturationFormSet(request.POST, instance=obj)
+#             if formset.is_valid():
+#                 instances = formset.save(commit=False)
+#                 for instance in instances:
+#                     instance.save()
+#                     for equip in equips:    
+#                         instance.equipment.add(equip)
+#                         equip.use = F("use") + 1
+#                         equip.save()
+#                 formset.save()                
+#                 messages.success(request, f"Los ensayos han sido creados")
+#                 return redirect('tests_soil:saturation_save', id=obj.id)
     
-    formset = SaturationFormSet(instance=obj)
+#     formset = SaturationFormSet(instance=obj)
 
-    context = {
-        "obj": obj,
-        "formset": formset,
-        "title": "Crear Ensayo de Saturación",
-    }
+#     context = {
+#         "obj": obj,
+#         "formset": formset,
+#         "title": "Crear Corrección por Saturación (Parte 1)",
+#     }
 
-    return render(request, "tests_soil/proctor_m/saturation_form.html", context)
+#     return render(request, "tests_soil/proctor_m/saturation_form.html", context)
 
 
 @login_required
@@ -228,57 +228,58 @@ def proctor_m_detail(request, id):
 
     # Max Dry Density Optimum Moisture 
     max_y_dry_density = round(np.max(y), 2) 
-    max_x_moisture = round(x[np.argmax(y)], 1) 
+    max_x_moisture = round(x[np.argmax(y)], 1)
 
 
-    if obj.saturation_check:
-        qs_saturation = Saturation.objects.filter(proctor_m=obj.id)
+    if obj.saturation_check and obj.gs:
+        qs_saturation = Correction.objects.filter(proctor_m=obj.id)
+        # Saturation Curve to 100%
+        max_w_100 = obj.gs / (1 + obj.gs * max_x_moisture/100)
+        min_w_100 = obj.gs / (1 + obj.gs * (max_x+5)/100)
+    elif obj.saturation_check and obj.gs == Null:
+        qs_saturation = Correction.objects.filter(proctor_m=obj.id)
         ys_list = qs_saturation.values_list("g_frac_fina_gruesa", flat=True).order_by('id')
         ys = np.max(ys_list)
+        # Saturation Curve to 100%
+        max_w_100 = (((ys/min_y)-1)*100/100*1)/ys*100
+        min_w_100 = (((ys/max_y)-1)*100/100*1)/ys*100
+    else:
+        qs_saturation = None
+        pfe = None
+        pf_f_g = None
+        correction_moisture = None
+        correction_dry_density =None
+
+
+    if obj.correction_check:
+        qs_saturation = Correction.objects.filter(proctor_m=obj.id)
         pfe_list = qs_saturation.values_list("frac_extrad_weight", flat=True).order_by('id')
         pfe = np.max(pfe_list)
         pf_f_g = 100 - pfe
         pefe_list = qs_saturation.values_list("p_sp_frac_extrad", flat=True).order_by('id')
         pefe = np.max(pefe_list)
-
-        # Saturation Curve to 100% 80% 60%
-        max_w_100 = (((ys/min_y)-1)*100/100*1)/ys*100
-        min_w_100 = (((ys/max_y)-1)*100/100*1)/ys*100
-        max_w_80 = (((ys/min_y)-1)*80/100*1)/ys*100
-        min_w_80 = (((ys/max_y)-1)*80/100*1)/ys*100
-        max_w_60 = (((ys/min_y)-1)*60/100*1)/ys*100
-        min_w_60 = (((ys/max_y)-1)*60/100*1)/ys*100
-    else:
-        qs_saturation = None
-        pfe =None
-        pf_f_g = None
-
-
-    if obj.correction_check:
-        qs_correction = Correction.objects.filter(proctor_m=obj.id)
-        moisture_correction_list = qs_correction.values_list("moisture", flat=True).order_by('id')
+        moisture_correction_list = qs_saturation.values_list("moisture", flat=True).order_by('id')
         moisture_correction = np.max(moisture_correction_list)
-
         # Correction
         correction_moisture = round(max_x_moisture*pf_f_g/100+moisture_correction*pfe/100, 1) 
         correction_dry_density = round(100*max_y_dry_density*pefe*0.99821/(max_y_dry_density*pfe+pefe*0.99821*pf_f_g), 2)
     else:
-        qs_correction = None
+        qs_saturation = None
+        pfe = None
+        pf_f_g = None
         correction_moisture = None
         correction_dry_density =None
 
 
     # ploting
     TOOLS="hover,crosshair,pan,wheel_zoom,reset,save,"
-    plot = figure(x_range=(min_x-1, max_x+5), y_range=(min_y-0.05, max_y+0.1), tools=TOOLS, 
+    plot = figure(x_range=(min_x, max_x), y_range=(min_y, max_y), tools=TOOLS, 
         title="Curva Humedad - Densidad Seca", x_axis_label= 'Porcentaje de Humedad (%)', y_axis_label= 'Densidad Seca (g/cm³)',
         sizing_mode="scale_width",)
     plot.circle(x_moisture, y_dry_density, size=8, legend="Resultados")
     plot.line(x, y, line_width=2, line_dash='dashed')
     if obj.saturation_check:    
-        plot.line([max_w_100, min_w_100], [min_y, max_y], line_width=1, line_dash='dashed', color="red")
-        plot.line([max_w_80, min_w_80], [min_y, max_y], line_width=1, line_dash='dashed', color="red")
-        plot.line([max_w_60, min_w_60], [min_y, max_y], line_width=1, line_dash='dashed', color="red")
+        plot.line([max_x_moisture, max_x], [max_w_100, min_w_100], line_width=1, line_dash='dashed', color="red")
     plot.circle(max_x_moisture, max_y_dry_density, size=8, color="red", legend="Máximo Punto")
     script, div = components(plot)
 
@@ -289,7 +290,6 @@ def proctor_m_detail(request, id):
         "max_y_dry_density": max_y_dry_density,
         "max_x_moisture": max_x_moisture,
         "qs_saturation": qs_saturation,
-        "qs_correction": qs_correction,
         "pfe": pfe,
         "pf_f_g": pf_f_g,
         "correction_moisture": correction_moisture,
@@ -353,39 +353,42 @@ def proctor_m_pdf(request, id):
     max_x_moisture = round(x[np.argmax(y)], 1) 
 
 
-    if obj.saturation_check:
-        qs_saturation = Saturation.objects.filter(proctor_m=obj.id)
+    if obj.saturation_check and obj.gs:
+        qs_saturation = Correction.objects.filter(proctor_m=obj.id)
+        # Saturation Curve to 100%
+        max_w_100 = obj.gs / (1 + obj.gs * max_x_moisture/100)
+        min_w_100 = obj.gs / (1 + obj.gs * (max_x+5)/100)
+    elif obj.saturation_check and obj.gs == Null:
+        qs_saturation = Correction.objects.filter(proctor_m=obj.id)
         ys_list = qs_saturation.values_list("g_frac_fina_gruesa", flat=True).order_by('id')
         ys = np.max(ys_list)
+        # Saturation Curve to 100%
+        max_w_100 = (((ys/min_y)-1)*100/100*1)/ys*100
+        min_w_100 = (((ys/max_y)-1)*100/100*1)/ys*100
+    else:
+        qs_saturation = None
+        pfe = None
+        pf_f_g = None
+        correction_moisture = None
+        correction_dry_density =None
+
+
+    if obj.correction_check:
+        qs_saturation = Correction.objects.filter(proctor_m=obj.id)
         pfe_list = qs_saturation.values_list("frac_extrad_weight", flat=True).order_by('id')
         pfe = np.max(pfe_list)
         pf_f_g = 100 - pfe
         pefe_list = qs_saturation.values_list("p_sp_frac_extrad", flat=True).order_by('id')
         pefe = np.max(pefe_list)
-
-        # Saturation Curve to 100% 80% 60%
-        max_w_100 = (((ys/min_y)-1)*100/100*1)/ys*100
-        min_w_100 = (((ys/max_y)-1)*100/100*1)/ys*100
-        max_w_80 = (((ys/min_y)-1)*80/100*1)/ys*100
-        min_w_80 = (((ys/max_y)-1)*80/100*1)/ys*100
-        max_w_60 = (((ys/min_y)-1)*60/100*1)/ys*100
-        min_w_60 = (((ys/max_y)-1)*60/100*1)/ys*100
-    else:
-        qs_saturation = None
-        pfe =None
-        pf_f_g = None
-
-
-    if obj.correction_check:
-        qs_correction = Correction.objects.filter(proctor_m=obj.id)
-        moisture_correction_list = qs_correction.values_list("moisture", flat=True).order_by('id')
+        moisture_correction_list = qs_saturation.values_list("moisture", flat=True).order_by('id')
         moisture_correction = np.max(moisture_correction_list)
-
         # Correction
         correction_moisture = round(max_x_moisture*pf_f_g/100+moisture_correction*pfe/100, 1) 
         correction_dry_density = round(100*max_y_dry_density*pefe*0.99821/(max_y_dry_density*pfe+pefe*0.99821*pf_f_g), 2)
     else:
-        qs_correction = None
+        qs_saturation = None
+        pfe = None
+        pf_f_g = None
         correction_moisture = None
         correction_dry_density =None
 
@@ -398,9 +401,7 @@ def proctor_m_pdf(request, id):
     plt.scatter(x_moisture, y_dry_density, label='Resultados', s=20, c='blue',)
     plt.plot(x, y, color='green', linestyle='dashed',)
     if obj.saturation_check:    
-        plt.plot([max_w_100, min_w_100], [min_y, max_y], linestyle='dashed', color="red")
-        plt.plot([max_w_80, min_w_80], [min_y, max_y], linestyle='dashed', color="red")
-        plt.plot([max_w_60, min_w_60], [min_y, max_y], linestyle='dashed', color="red")
+        plt.plot([max_x_moisture, max_x], [max_w_100, min_w_100], linestyle='dashed', color="red")
     plt.scatter(max_x_moisture, max_y_dry_density, label='Máximo Punto', s=20, c='red',)
 
     plt.xlabel('Porcentaje de Humedad (%)')
@@ -418,7 +419,6 @@ def proctor_m_pdf(request, id):
         "max_y_dry_density": max_y_dry_density,
         "max_x_moisture": max_x_moisture,
         "qs_saturation": qs_saturation,
-        "qs_correction": qs_correction,
         "pfe": pfe,
         "pf_f_g": pf_f_g,
         "correction_moisture": correction_moisture,

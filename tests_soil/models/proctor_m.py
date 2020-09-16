@@ -25,6 +25,7 @@ class ProctorM(models.Model):
     sampling_date   = models.DateField()
     done_date       = models.DateField(default=datetime.datetime.now)
     dilate          = models.IntegerField(editable=False)
+    gs              = models.FloatField(null=True, blank=True)
     saturation_check = models.BooleanField(default=False)
     correction_check = models.BooleanField(default=False)
     created         = models.DateTimeField(auto_now_add=True)
@@ -104,15 +105,50 @@ class DensityWetDry(models.Model):
         return f"Densidad Seca y Humeda {self.id}"
 
 
-class Saturation(models.Model):
+# class Saturation(models.Model):
+#     frac_extrad_weight  = models.FloatField()
+#     frac_gruesa_weight  = models.FloatField()
+#     frac_fina_weight    = models.FloatField()
+#     p_sp_frac_extrad    = models.FloatField()
+#     p_sp_frac_gruesa    = models.FloatField()
+#     g_sp_frac_fina      = models.FloatField()
+#     g_frac_fina_gruesa  = models.FloatField(editable=False)         
+#     g_sp_global         = models.FloatField(editable=False)
+#     proctor_m   = models.ForeignKey(ProctorM, on_delete=models.CASCADE)
+#     equipment   = models.ManyToManyField(Equip)
+#     tool        = models.ManyToManyField(Tool)    
+
+#     def save(self, *args, **kwargs):
+
+#         # Generate Faction fina + gruesa
+#         fina_gruesa = 1/((((self.frac_gruesa_weight*100/(100-self.frac_extrad_weight))/100)/self.p_sp_frac_gruesa) + (((self.frac_fina_weight*100/(100-self.frac_extrad_weight))/100)/self.g_sp_frac_fina))
+#         self.g_frac_fina_gruesa = round(fina_gruesa, 3)
+
+#         # Generate Gr Sp Global
+#         sp_global = 1/((self.frac_extrad_weight/100/self.p_sp_frac_extrad)+(self.frac_gruesa_weight/100/self.p_sp_frac_gruesa)+(self.frac_fina_weight/100/self.g_sp_frac_fina))
+#         self.g_sp_global = round(sp_global, 3)
+
+#         super(Saturation, self).save(*args, **kwargs)
+
+#     def __str__(self):
+#         return f"Saturation {self.id}"
+
+
+class Correction(models.Model):
     frac_extrad_weight  = models.FloatField()
-    frac_gruesa_weight  = models.FloatField()       
-    frac_fina_weight    = models.FloatField()       
+    frac_gruesa_weight  = models.FloatField()
+    frac_fina_weight    = models.FloatField()
     p_sp_frac_extrad    = models.FloatField()
     p_sp_frac_gruesa    = models.FloatField()
     g_sp_frac_fina      = models.FloatField()
     g_frac_fina_gruesa  = models.FloatField(editable=False)         
     g_sp_global         = models.FloatField(editable=False)
+    bowl_weight         = models.FloatField()
+    wet_weight          = models.FloatField()
+    dry_weight          = models.FloatField()
+    water_weight        = models.FloatField(editable=False)
+    material_weight     = models.FloatField(editable=False)
+    moisture            = models.FloatField(editable=False)
     proctor_m   = models.ForeignKey(ProctorM, on_delete=models.CASCADE)
     equipment   = models.ManyToManyField(Equip)
     tool        = models.ManyToManyField(Tool)    
@@ -126,25 +162,6 @@ class Saturation(models.Model):
         # Generate Gr Sp Global
         sp_global = 1/((self.frac_extrad_weight/100/self.p_sp_frac_extrad)+(self.frac_gruesa_weight/100/self.p_sp_frac_gruesa)+(self.frac_fina_weight/100/self.g_sp_frac_fina))
         self.g_sp_global = round(sp_global, 3)
-
-        super(Saturation, self).save(*args, **kwargs)
-
-    def __str__(self):
-        return f"Saturation {self.id}"
-
-
-class Correction(models.Model):
-    bowl_weight         = models.FloatField()
-    wet_weight          = models.FloatField()
-    dry_weight          = models.FloatField()
-    water_weight        = models.FloatField(editable=False)
-    material_weight     = models.FloatField(editable=False)
-    moisture            = models.FloatField(editable=False)
-    proctor_m   = models.ForeignKey(ProctorM, on_delete=models.CASCADE)
-    equipment   = models.ManyToManyField(Equip)
-    tool        = models.ManyToManyField(Tool)    
-
-    def save(self, *args, **kwargs):
 
         # Generate Water Weight
         water = self.wet_weight - self.dry_weight

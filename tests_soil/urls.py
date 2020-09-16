@@ -45,7 +45,7 @@ urlpatterns = [
     path('proctor-m/<int:id>/pdf/', tests_soil_views.proctor_m_pdf, name="proctor_m_pdf"),
         # Density CRUD
     path('density/save/<int:id>/', tests_soil_views.density_save, name="density_save"),
-    path('saturation/save/<int:id>/', tests_soil_views.saturation_save, name="saturation_save"),
+    # path('saturation/save/<int:id>/', tests_soil_views.saturation_save, name="saturation_save"),
     path('correction/save/<int:id>/', tests_soil_views.correction_save, name="correction_save"),
     # Moisture Content CRUD and PDF
     path('moisture-content/', tests_soil_views.moisture_content_list, name="moisture_content_list"),

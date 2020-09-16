@@ -4,7 +4,7 @@ from datetime import datetime
 from django.forms import inlineformset_factory
 
 from accounts.models import User
-from tests_soil.models import ProctorM, DensityWetDry, Saturation, Correction
+from tests_soil.models import ProctorM, DensityWetDry, Correction
 from construction.models import Construction
 from reference_person.models import ReferencePerson
 from course.models import Course
@@ -21,6 +21,7 @@ class ProctorMForm(forms.ModelForm):
             'quarry',
             'process',
             'saturation_check',
+            'gs',
             'correction_check',
             'sampling_date',
             'done_date',
@@ -31,6 +32,7 @@ class ProctorMForm(forms.ModelForm):
             'quarry': 'Cantera',
             'process': 'Tipo de Procedimiento',
             'saturation_check': 'Curva de 100% de Saturación',
+            'gs': 'Gravedad Específica',
             'correction_check': 'Corrección',
             'sampling_date': 'Fecha de Muestreo',
             'done_date': 'Fecha del Ensayo',
@@ -38,6 +40,7 @@ class ProctorMForm(forms.ModelForm):
         help_texts = {
             'material': 'Tipo de Material',
             'quarry': 'Nombre Propio de la Cantera',
+            'gs': 'Dimensional',
         }
         widgets = {
             'sampling_date': DateInput(),
@@ -57,6 +60,7 @@ class ProctorMFormClient(forms.ModelForm):
             'sampling_date',
             'process',
             'saturation_check',
+            'gs',
             'correction_check',
             'done_date',
             'reference_person',
@@ -67,6 +71,7 @@ class ProctorMFormClient(forms.ModelForm):
             'quarry': 'Cantera',
             'process': 'Tipo de Procedimiento',
             'saturation_check': 'Curva de 100% de Saturación',
+            'gs': 'Gravedad Específica',
             'correction_check': 'Corrección',
             'sampling_date': 'Fecha de Muestreo',
             'done_date': 'Fecha del Ensayo',
@@ -76,6 +81,7 @@ class ProctorMFormClient(forms.ModelForm):
         help_texts = {
             'material': 'Tipo de Material',
             'quarry': 'Nombre Propio de la Cantera',
+            'gs': 'Dimensional',
         }
         widgets = {
             'sampling_date': DateInput(),
@@ -144,36 +150,36 @@ class DensityWetDryForm(forms.ModelForm):
 DensityWetDryFormSet = inlineformset_factory(ProctorM, DensityWetDry, form=DensityWetDryForm, max_num=5, extra=5)
 
 
-class SaturationForm(forms.ModelForm):
+# class SaturationForm(forms.ModelForm):
 
-    class Meta:
-        model = Saturation
-        fields = [
-            'frac_extrad_weight',
-            'frac_gruesa_weight',
-            'frac_fina_weight',  
-            'p_sp_frac_extrad',  
-            'p_sp_frac_gruesa',  
-            'g_sp_frac_fina',    
-        ]
-        labels = {
-            'frac_extrad_weight': '% en peso de fracción extradim',
-            'frac_gruesa_weight': '% en peso de fracción gruesa',
-            'frac_fina_weight': '% en peso de fracción fina',  
-            'p_sp_frac_extrad': 'P.Esp. aparente de la fracción extrad. a 20°c',  
-            'p_sp_frac_gruesa': 'P.Esp. aparente de la fracción gruesa a 20°c',  
-            'g_sp_frac_fina': 'G.Esp. específica de la fracción fina a 20°c',    
-        }
-        help_texts = {
-            'frac_extrad_weight': 'Unidades (%) <br> Aproximación (0.01%)',
-            'frac_gruesa_weight': 'Unidades (%) <br> Aproximación (0.01%)',
-            'frac_fina_weight': 'Unidades (%) <br> Aproximación (0.01%)',  
-            'p_sp_frac_extrad': 'Unidades (g/cm³) <br> Aproximación (0.001 g/cm³)',  
-            'p_sp_frac_gruesa': 'Unidades (g/cm³) <br> Aproximación (0.001 g/cm³)',  
-            'g_sp_frac_fina': 'Adimensional <br> Aproximación (0.001)',    
-        }
+#     class Meta:
+#         model = Saturation
+#         fields = [
+#             'frac_extrad_weight',
+#             'frac_gruesa_weight',
+#             'frac_fina_weight',  
+#             'p_sp_frac_extrad',  
+#             'p_sp_frac_gruesa',  
+#             'g_sp_frac_fina',    
+#         ]
+#         labels = {
+#             'frac_extrad_weight': '% en peso de fracción extradim',
+#             'frac_gruesa_weight': '% en peso de fracción gruesa',
+#             'frac_fina_weight': '% en peso de fracción fina',  
+#             'p_sp_frac_extrad': 'P.Esp. aparente de la fracción extrad. a 20°c',  
+#             'p_sp_frac_gruesa': 'P.Esp. aparente de la fracción gruesa a 20°c',  
+#             'g_sp_frac_fina': 'G.Esp. específica de la fracción fina a 20°c',    
+#         }
+#         help_texts = {
+#             'frac_extrad_weight': 'Unidades (%) <br> Aproximación (0.01%)',
+#             'frac_gruesa_weight': 'Unidades (%) <br> Aproximación (0.01%)',
+#             'frac_fina_weight': 'Unidades (%) <br> Aproximación (0.01%)',  
+#             'p_sp_frac_extrad': 'Unidades (g/cm³) <br> Aproximación (0.001 g/cm³)',  
+#             'p_sp_frac_gruesa': 'Unidades (g/cm³) <br> Aproximación (0.001 g/cm³)',  
+#             'g_sp_frac_fina': 'Adimensional <br> Aproximación (0.001)',    
+#         }
 
-SaturationFormSet = inlineformset_factory(ProctorM, Saturation, form=SaturationForm, max_num=1, can_delete=False)
+# SaturationFormSet = inlineformset_factory(ProctorM, Saturation, form=SaturationForm, max_num=1, can_delete=False)
 
 
 class CorrectionForm(forms.ModelForm):

@@ -46,8 +46,8 @@
           {% for thesis in obj.user.bachprofile.thesis_set.all %}
           <p  class="text-left"><strong>Titulo:</strong> {{ thesis.title|title }}</p> 
           <p  class="text-left"><strong>Linea de Desarrollo:</strong> {{ thesis.line|title }}</p> 
-          <p  class="text-left"><strong>Comienzo de la Thesis:</strong> {{ thesis.start_day|date:"d/m/Y" }}</p> 
-          <p  class="text-left"><strong>Termino de la Thesis:</strong> {{ thesis.finish_day|date:"d/m/Y" }}</p>
+          <p  class="text-left"><strong>Comienzo de la Tesis:</strong> {{ thesis.start_day|date:"d/m/Y" }}</p> 
+          <p  class="text-left"><strong>Termino de la Tesis:</strong> {{ thesis.finish_day|date:"d/m/Y" }}</p>
           <p  class="text-left"><strong>Duración:</strong> {{ thesis.duration }} días</p>
           <p  class="text-left"><strong>Asesores:</strong></p>
             {% for adviser in thesis.adviser.all %}
@@ -94,8 +94,8 @@
           <p class="text-left"><strong>Alto Nominal:</strong> {{ obj.n_d_high }} mm</p>
         </div>
       </div>    
-      <div class="row">
-        <div class="col-xs-12">
+      <!-- <div class="row"> -->
+        <!-- <div class="col-xs-12"> -->
                 <!-- Default panel contents -->
                 {% if qs_variation_dimentions %}                
                 <div class="panel-heading"><strong>Resultados del Ensayo:</strong> Variación de Dimensiones:</div>
@@ -284,7 +284,7 @@
                 {% endif %}
               <br>
                 {% if qs_abs_sat_coff %}
-                <div class="panel-heading"><strong>Resultados del Ensayo:</strong> % de Absorción y Coeficiente de Absorción:</div>
+                <div class="panel-heading"><strong>Resultados del Ensayo:</strong> Porcentaje de Absorción y Coeficiente de Saturación:</div>
                 <table class="table-bordered">
                     <thead class="">
                         <tr>
@@ -378,12 +378,24 @@
                             <td class="text-center"></td>
                             <td class="text-center">{{ std_fc_MPA }} ({{ std_fc }})</td>
                         </tr>
+                        <tr>
+                          <th class="text-center" scope="row">Resistencia Característica</th>
+                          <td class="text-center"></td>
+                          <td class="text-center"></td>
+                          <td class="text-center"></td>
+                          <td class="text-center"></td>
+                          <td class="text-center"></td>
+                          <td class="text-center"></td>
+                          <td class="text-center"></td>
+                          <td class="text-center"></td>
+                          <td class="text-center">{{ fc_caracteristic_MPA }} ({{ fc_caracteristic }})</td>
+                      </tr>
                     </tbody>
                   </table>
                   {% endif %}
                 <br>
-        </div>
-      </div>
+        <!-- </div> -->
+      <!-- </div> -->
       <div class="row signature">
         <div class="col-xs-6">
           <table class="table-bordered">
@@ -435,11 +447,11 @@
         </div>
         </div>
     </main>
-    <footer>
+    <!-- <footer>
       <div class="row">
         <div class="col-xs-12 panel panel-default">
           <p class="text-center">Laboratorio de Ingeniería Civil, Universidad Católica de Santa Maria, EPICLABS &#169; 2019</p>
         </div>
       </div>   
-    </footer>
+    </footer> -->
 </div>

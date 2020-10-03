@@ -25,84 +25,154 @@ from equipments.models import Equip
 from accounts.models import AdminProfile
 
 # Classification SUCS.
-name_0 = ""
-name_1 = ""
-name_2 = ""
-name_3 = ""
-name_4 = ""
-def sucs(pass_200, pass_4, CU, CC, LL, IP):
-    global name_0, name_1, name_2, name_3, name_4
-    if pass_200 >= 50:
-        name_0 = "Suelo Fino"
-        if LL <= 50 and LL > 0:
-            name_3 = "L"
-        elif LL > 50 and LL <= 110:
-            name_3 = "H"
-        else:
-            name_3 = "Verifique el Límite Líquido"
-        if IP < 0.73 * (LL - 20):
-            name_4 = "M"
-        else: 
-            name_4 = "C"
-    elif pass_200 < 50:
-        name_0 = "Suelo Grueso"
-        if pass_4 >= 50:
-            name_1 = "S"
-            if pass_200 < 5:
-                if CU > 6 and CC >=1 and CC <=3:
-                    name_2 = "W"
-                else:
-                    name_2 = "P" 
-            elif pass_200 >= 5 and pass_200 <= 12:
-                if CU > 6 and CC >=1 and CC <=3:
-                    name_2 = "W"
-                else:
-                    name_2 = "P"
-                if LL <= 50 and LL > 0:
-                    name_3 = "L"
-                elif LL > 50 and LL <= 110:
-                    name_3 = "H"
-                else:
-                    name_3 = "Verifique el Límite Líquido"
-                if IP < 0.73 * (LL - 20):
-                    name_4 = "M"
-                else: 
-                    name_4 = "C"
-            elif pass_200 > 12:
-                if IP < 0.73 * (LL - 20):
-                    name_4 = "M"
-                else: 
-                    name_4 = "C"
-        elif pass_4 < 50:
-            name_1 = "G"
-            if pass_200 < 5:
-                if CU > 6 and CC >=1 and CC <=3:
-                    name_2 = "W"
-                else:
-                    name_2 = "P" 
-            elif pass_200 >= 5 and pass_200 <= 12:
-                if CU > 6 and CC >=1 and CC <=3:
-                    name_2 = "W"
-                else:
-                    name_2 = "P"
-                if LL <= 50 and LL > 0:
-                    name_3 = "L"
-                elif LL > 50 and LL <= 110:
-                    name_3 = "H"
-                else:
-                    name_3 = "Verifique el Límite Líquido"
-                if IP < 0.73 * (LL - 20):
-                    name_4 = "M"
-                else: 
-                    name_4 = "C"
-            elif pass_200 > 12:
-                if IP < 0.73 * (LL - 20):
-                    name_4 = "M"
-                else: 
-                    name_4 = "C"
-    
-    return name_0, name_1, name_2, name_3, name_4
 
+name_sucs = ""
+def sucs(pass200, pass4, cu, cc, ll, ip, t_g, t_a):
+    global name_sucs
+    if pass200 < 50:
+        if pass4 > 50:
+            if pass200 < 5:
+                if cu >= 4 and cc >= 1 and cc <=3:
+                    if t_a < 15:
+                        name_sucs = "GW (Grava bien graduada)"
+                        return name_sucs
+                    elif t_a >= 15:
+                        name_sucs = "GW (Grava bien graduada con arena)"
+                        return name_sucs
+                elif cu < 4 or cc < 1 or cc > 3:
+                    if t_a < 15:
+                        name_sucs = "GP (Grava mal graduada)"
+                        return name_sucs
+                    elif t_a >= 15:
+                        name_sucs = "GP (Grava mal graduada con arena)"
+                        return name_sucs
+            elif pass200 >= 5 and pass200 <= 12:
+                if cu >= 4 and cc >= 1 and cc <=3:
+                    if ip < 0.73 * (ll - 20) and ip < 4:
+                        if t_a < 15:
+                            name_sucs = "GW-GM (Grava bien graduada con limo)"
+                            return name_sucs
+                        elif t_a >= 15:
+                            name_sucs = "GW-GM (Grava bien graduada con limo y arena)"
+                            return name_sucs
+                    elif ip >= 0.73 * (ll - 20) and ip >= 4:
+                        if t_a < 15:
+                            name_sucs = "GW-GC (Grava bien graduada con arcilla)"
+                            return name_sucs
+                        elif t_a >= 15:
+                            name_sucs = "GW-GC (Grava bien graduada con arcilla y arena)"
+                            return name_sucs
+                elif cu < 4 or cc < 1 or cc > 3:
+                    if ip < 0.73 * (ll - 20) and ip < 4:
+                        if t_a < 15:
+                            name_sucs = "GP-GM (Grava mal graduada con limo)"
+                            return name_sucs
+                        elif t_a >= 15:
+                            name_sucs = "GP-GM (Grava mal graduada con limo y arena)"
+                            return name_sucs
+                    elif ip >= 0.73 * (ll - 20) and ip >= 4:
+                        if t_a < 15:
+                            name_sucs = "GP-GC (Grava mal graduada con arcilla)"
+                            return name_sucs
+                        elif t_a >= 15:
+                            name_sucs = "GP-GC (Grava mal graduada con arcilla y arena)"
+                            return name_sucs              
+            elif pass200 > 12:
+                if ip < 0.73 * (ll - 20) and ip < 4:
+                    if t_a < 15:
+                        name_sucs = "GM (Grava limosa)"
+                        return name_sucs
+                    elif t_a >= 15:
+                        name_sucs = "GM (Grava limosa con arena)"
+                        return name_sucs
+                elif ip >= 0.73 * (ll - 20) and ip >= 4:
+                    if t_a < 15:
+                        name_sucs = "GC (Grava arcillosa)"
+                        return name_sucs
+                    elif t_a >= 15:
+                        name_sucs = "GC (Grava arcillosa con arena)"
+                        return name_sucs
+                elif ip > 4 and ip <= 7 and ip >= 0.73 * (ll - 20):
+                    if t_a < 15:
+                        name_sucs = "GC-GM (Grava limosa arcillosa)"
+                        return name_sucs
+                    elif t_a >= 15:
+                        name_sucs = "GC-GM (Grava limosa arcillosa con arena)"
+                        return name_sucs
+        elif pass4 <= 50:
+            if pass200 < 5:
+                if cu >= 6 and cc >= 1 and cc <= 3:
+                    if t_g < 15:
+                        name_sucs = "SW (Arena bien graduada)"
+                        return name_sucs
+                    elif t_g >= 15:
+                        name_sucs = "SW (Arena bien graduada con grava)"
+                        return name_sucs
+                elif cu < 6 or cc < 1 or cc > 3:
+                    if t_g < 15:
+                        name_sucs = "SP (Arena mal graduada)"
+                        return name_sucs
+                    elif t_g >= 15:
+                        name_sucs = "SP (Arena mal graduada con grava)"
+                        return name_sucs
+            elif pass200 >= 5 and pass200 <= 12:
+                if cu >= 6 and cc >= 1 and cc <= 3:
+                    if ip < 0.73 * (ll - 20) and ip < 4:
+                        if t_g < 15:
+                            name_sucs = "SW-SM (Arena bien graduada con limo)"
+                            return name_sucs
+                        elif t_g >= 15:
+                            name_sucs = "SW-SM (Arena bien graduada con limo y grava)"
+                            return name_sucs
+                    elif ip >= 0.73 * (ll - 20) and ip >= 4:
+                        if t_g < 15:
+                            name_sucs = "SW-SC (Arena bien graduada con arcilla)"
+                            return name_sucs
+                        elif t_g >= 15:
+                            name_sucs = "SW-SC (Arena bien graduada con arcilla y grava)"
+                            return name_sucs
+                elif cu < 6 or cc < 1 or cc > 3:
+                    if ip < 0.73 * (ll - 20) and ip < 4:
+                        if t_g < 15:
+                            name_sucs = "SP-SM (Arena mal graduada con limo)"
+                            return name_sucs
+                        elif t_g >= 15:
+                            name_sucs = "SP-SM (Arena mal graduada con limo y grava)"
+                            return name_sucs
+                    elif ip >= 0.73 * (ll - 20) and ip >= 4:
+                        if t_g < 15:
+                            name_sucs = "SP-SC (Arena mal graduada con arcilla)"
+                            return name_sucs
+                        elif t_g >= 15:
+                            name_sucs = "SP-SC (Arena mal graduada con arcilla y grava)"
+                            return name_sucs
+            elif pass200 > 12:
+                if ip < 0.73 * (ll - 20) and ip < 4:
+                    if t_g < 15:
+                        name_sucs = "SM (Arena limosa)"
+                        return name_sucs
+                    elif t_g >= 15:
+                        name_sucs = "SM (Arena limosa con grava)"
+                        return name_sucs
+                elif ip >= 0.73 * (ll - 20) and ip >= 4:
+                    if t_g < 15:
+                        name_sucs = "SC (Arena arcillosa)"
+                        return name_sucs
+                    elif t_g >= 15:
+                        name_sucs = "SC (Arena arcillosa con grava)"
+                        return name_sucs
+                elif ip > 4 and ip <= 7 and ip >= 0.73 * (ll - 20):
+                    if t_g < 15:
+                        name_sucs = "SC-SM (Arena limosa arcillosa)"
+                        return name_sucs
+                    elif t_g >= 15:
+                        name_sucs = "SC-SM (Arena limosa arcillosa con grava)"
+                        return name_sucs       
+    elif pass200 >= 50:
+        name_sucs = "Suelo Fino"
+        return name_sucs
+    else:
+        pass
 
 # Create your views here.
 
@@ -470,13 +540,8 @@ def granulometric_global_detail(request, id):
     pass_4 = passing_percentage[used.index(10)]
     pass_200 = passing_percentage[used.index(22)]
 
-    names = sucs(pass_200, pass_4, CU, CC, obj.liquid_limit, obj.plastic_index)
-    name_sucs_fino_grueso = names[0]
-    name_sucs_S_G = names[1]
-    name_sucs_W_P = names[2]
-    name_sucs_L_H = names[3]
-    name_sucs_M_C = names[4]
-
+    names = sucs(pass_200, pass_4, CU, CC, obj.liquid_limit, obj.plastic_index, total_gravas, total_arenas)
+    
     # ASSTHO
 
     # Ploting
@@ -511,14 +576,10 @@ def granulometric_global_detail(request, id):
         "decil_60": decil_60,
         "decil_30": decil_30,
         "decil_10": decil_10,
+        "names": names,
         "CU": CU,
         "CC": CC,
         "min_total_amount": min_total_amount,
-        "name_sucs_fino_grueso": name_sucs_fino_grueso,
-        "name_sucs_S_G": name_sucs_S_G,
-        "name_sucs_W_P": name_sucs_W_P,
-        "name_sucs_L_H": name_sucs_L_H,
-        "name_sucs_M_C": name_sucs_M_C,
         "norma_ASTM": "",
         "noma_NTP": "NPT 339.134",
         "title": "Detalles del Ensayo Granulometría Global",
@@ -795,13 +856,7 @@ def granulometric_global_pdf(request, id):
     pass_4 = passing_percentage[used.index(10)]
     pass_200 = passing_percentage[used.index(22)]
 
-    names = sucs(pass_200, pass_4, CU, CC, obj.liquid_limit, obj.plastic_index)
-    name_sucs_fino_grueso = names[0]
-    name_sucs_S_G = names[1]
-    name_sucs_W_P = names[2]
-    name_sucs_L_H = names[3]
-    name_sucs_M_C = names[4]
-
+    names = sucs(pass_200, pass_4, CU, CC, obj.liquid_limit, obj.plastic_index, total_gravas, total_arenas)
     # ASSTHO
 
     # Ploting
@@ -851,11 +906,7 @@ def granulometric_global_pdf(request, id):
         "CU": CU,
         "CC": CC,
         "min_total_amount": min_total_amount,
-        "name_sucs_fino_grueso": name_sucs_fino_grueso,
-        "name_sucs_S_G": name_sucs_S_G,
-        "name_sucs_W_P": name_sucs_W_P,
-        "name_sucs_L_H": name_sucs_L_H,
-        "name_sucs_M_C": name_sucs_M_C,
+        "names": names,
         "graphic": graphic,
         "title": "CLASIFICACIÓN DE SUELOS PARA FINES DE INGENIERÍA Y CONSTRUCCIÓN DE CARRETERAS",
         "norma_ASTM": "",

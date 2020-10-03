@@ -249,12 +249,10 @@ def client_equips_soil_view(request):
             qs_MoistureMaterial = Equip.objects.get(name=name).moisturematerial_set.filter(moisture_content__user__is_client=True).count()
             qs_ProctorM = Equip.objects.get(name=name).proctorm_set.filter(user__is_client=True).count()
             qs_DensityWetDry = Equip.objects.get(name=name).densitywetdry_set.filter(proctor_m__user__is_client=True).count()
-            qs_Saturation = Equip.objects.get(name=name).saturation_set.filter(proctor_m__user__is_client=True).count()
             qs_Correction = Equip.objects.get(name=name).correction_set.filter(proctor_m__user__is_client=True).count()
             qs_SandCone = Equip.objects.get(name=name).sandcone_set.filter(user__is_client=True).count()
             qs_HumidDensity = Equip.objects.get(name=name).humiddensity_set.filter(sand_cone__user__is_client=True).count()
             qs_ContentMoisture = Equip.objects.get(name=name).contentmoisture_set.filter(sand_cone__user__is_client=True).count()
-            qs_ContentMoistureCarbure = Equip.objects.get(name=name).contentmoisturecarbure_set.filter(sand_cone__user__is_client=True).count()
             qs_CorrectionSandCone = Equip.objects.get(name=name).correctionsandcone_set.filter(sand_cone__user__is_client=True).count()
             qs_SpecificGravity = Equip.objects.get(name=name).specificgravity_set.filter(user__is_client=True).count()
             qs_FractionPass = Equip.objects.get(name=name).fractionpass_set.filter(specific_gravity__user__is_client=True).count()
@@ -272,12 +270,10 @@ def client_equips_soil_view(request):
             qs_MoistureMaterial_equips.append(qs_MoistureMaterial)
             qs_ProctorM_equips.append(qs_ProctorM)
             qs_DensityWetDry_equips.append(qs_DensityWetDry)
-            qs_Saturation_equips.append(qs_Saturation)
             qs_Correction_equips.append(qs_Correction)
             qs_SandCone_equips.append(qs_SandCone)
             qs_HumidDensity_equips.append(qs_HumidDensity)
             qs_ContentMoisture_equips.append(qs_ContentMoisture)
-            qs_ContentMoistureCarbure_equips.append(qs_ContentMoistureCarbure)
             qs_CorrectionSandCone_equips.append(qs_CorrectionSandCone)
             qs_SpecificGravity_equips.append(qs_SpecificGravity)
             qs_FractionPass_equips.append(qs_FractionPass)
@@ -311,7 +307,6 @@ def client_equips_soil_view(request):
         qs_sum_equips_ProctorM = list(map(sum, zip(
             qs_ProctorM_equips,
             qs_DensityWetDry_equips,
-            qs_Saturation_equips,
             qs_Correction_equips,
         )))
         
@@ -319,7 +314,6 @@ def client_equips_soil_view(request):
             qs_SandCone_equips,
             qs_HumidDensity_equips,
             qs_ContentMoisture_equips,
-            qs_ContentMoistureCarbure_equips,
             qs_CorrectionSandCone_equips,
         )))
 

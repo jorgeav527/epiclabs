@@ -275,7 +275,7 @@
                 {% endif %}
               <br>
                 {% if qs_abs_sat_coff %}
-                <div class="panel-heading"><strong>Resultados del Ensayo:</strong> % de Absorción y Coeficiente de Absorción:</div>
+                <div class="panel-heading"><strong>Resultados del Ensayo:</strong> Porcentaje de Absorción y Coeficiente de Saturación:</div>
                 <table class="table-bordered">
                     <thead class="">
                         <tr>
@@ -369,6 +369,18 @@
                               <td class="text-center"></td>
                               <td class="text-center">{{ std_fc_MPA }} ({{ std_fc }})</td>
                           </tr>
+                          <tr>
+                            <th class="text-center" scope="row">Resistencia Característica</th>
+                            <td class="text-center"></td>
+                            <td class="text-center"></td>
+                            <td class="text-center"></td>
+                            <td class="text-center"></td>
+                            <td class="text-center"></td>
+                            <td class="text-center"></td>
+                            <td class="text-center"></td>
+                            <td class="text-center"></td>
+                            <td class="text-center">{{ fc_caracteristic_MPA }} ({{ fc_caracteristic }})</td>
+                        </tr>  
                     </tbody>
                   </table>
                   {% endif %}
@@ -426,11 +438,11 @@
         </div>
         </div>
     </main>
-    <footer>
+    <!-- <footer>
       <div class="row" >
         <div class="col-xs-12 panel panel-default">
           <p class="text-center">Laboratorio de Ingeniería Civil, Universidad Católica de Santa Maria, EPICLABS &#169; 2019</p>          
         </div>
       </div>   
-    </footer>
+    </footer> -->
 </div>

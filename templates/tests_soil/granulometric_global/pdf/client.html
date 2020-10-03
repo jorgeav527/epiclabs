@@ -43,7 +43,7 @@
           <p class="text-left"><strong>Finos:</strong> {{ total_finos }}%</p>
           <p class="text-left"><strong>Arenas:</strong> {{ total_arenas }}%</p>
           <p class="text-left"><strong>Peso Seco Mínimo según el Tamaño Máximo:</strong> {{ min_total_amount }}</p>
-          <p class="text-left"><strong>Clasificación SUCS:</strong> {{ name_sucs_fino_grueso }} {{ name_sucs_S_G }}{{ name_sucs_W_P }} {{ name_sucs_M_C }}{{ name_sucs_L_H }}</p>
+          <p class="text-left"><strong>Clasificación SUCS:</strong> {{ names }}</p>
         </div>
         <div style="margin-left: 4rem;" class="col-xs-3 panel panel-default">
           <p class="text-left panel-heading"><strong>Datos del Ensayo</strong></p>
@@ -71,19 +71,9 @@
                   <thead class="">
                       <tr>
                           <th class="text-center">Tamices</th>
-                          <th class="text-center">Tamiz 1 1/2"</th>
-                          <th class="text-center">Tamiz 1"</th>
-                          <th class="text-center">Tamiz 3/4"</th>
-                          <th class="text-center">Tamiz 1/2"</th>
-                          <th class="text-center">Tamiz 3/8"</th>
-                          <th class="text-center">Tamiz Nº 4</th>
-                          <th class="text-center">Tamiz Nº 10</th>
-                          <th class="text-center">Tamiz Nº 20</th>
-                          <th class="text-center">Tamiz Nº 40</th>
-                          <th class="text-center">Tamiz Nº 60</th>
-                          <th class="text-center">Tamiz Nº 100</th>
-                          <th class="text-center">Tamiz Nº 200</th>
-                          <th class="text-center">Tamiz de Fondo</th>
+                          {% for name in name_mesh %}
+                          <th class="text-center">{{ name }}</th>
+                          {% endfor %}
                       </tr>
                   </thead>
                   <tbody>

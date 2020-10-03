@@ -30,8 +30,8 @@
           {% for thesis in obj.user.bachprofile.thesis_set.all %}
           <p class="text-left"><strong>Titulo:</strong> {{ thesis.title|title }}</p> 
           <p  class="text-left"><strong>Linea de Desarrollo:</strong> {{ thesis.line|title }}</p> 
-          <p  class="text-left"><strong>Comienzo de la Thesis:</strong> {{ thesis.start_day|date:"d/m/Y" }}</p> 
-          <p  class="text-left"><strong>Termino de la Thesis:</strong> {{ thesis.finish_day|date:"d/m/Y" }}</p>
+          <p  class="text-left"><strong>Comienzo de la Tesis:</strong> {{ thesis.start_day|date:"d/m/Y" }}</p> 
+          <p  class="text-left"><strong>Termino de la Tesis:</strong> {{ thesis.finish_day|date:"d/m/Y" }}</p>
           <p  class="text-left"><strong>Duración:</strong> {{ thesis.duration }} días</p>
           <p  class="text-left"><strong>Asesores:</strong></p>
             {% for adviser in thesis.adviser.all %}

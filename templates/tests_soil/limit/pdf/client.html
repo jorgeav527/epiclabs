@@ -34,8 +34,8 @@
           {% endif %}
           <p class="text-left"><strong>Emisión de Certificado:</strong> {% now "d/m/Y P" %}</p>
           <p class="text-left"><strong>Persona de Referencia:</strong> {{ obj.reference_person.title }} {{ obj.reference_person.name|title }}</p>          
-          <p class="text-left"><strong>Límite Líquido:</strong> {{ hit_25 }}%</p>          
-          <p class="text-left"><strong>Límite Plástico:</strong> {{ mean_y_moisture_plastic }}%</p>          
+          <p class="text-left"><strong>Límite Líquido:</strong> {{ hit_25 }}</p>          
+          <p class="text-left"><strong>Límite Plástico:</strong> {{ mean_y_moisture_plastic }}</p>          
           <p class="text-left"><strong>Indice de Plasticidad:</strong> {{ plastic_index }}</p>          
         </div>
         <div style="margin-left: 4rem;" class="col-xs-3 panel panel-default">

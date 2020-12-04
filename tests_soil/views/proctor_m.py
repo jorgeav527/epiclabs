@@ -233,17 +233,16 @@ def proctor_m_detail(request, id):
 
     if obj.saturation_check and obj.gs:
         qs_saturation = Correction.objects.filter(proctor_m=obj.id)
-        # Saturation Curve to 100%
-        max_w_100 = obj.gs / (1 + obj.gs * max_x_moisture/100)
-        min_w_100 = obj.gs / (1 + obj.gs * (max_x+5)/100)
+        # Saturation Curve to 100% densidad agua 1 gf/cm3
+        sat_points = [1/((i/100)+(1/obj.gs)) for i in x_moisture]
+        max_y_sat = np.max(sat_points)
+        min_y_sat = np.min(sat_points)
     elif obj.saturation_check and obj.gs == Null:
         qs_saturation = Correction.objects.filter(proctor_m=obj.id)
         ys_list = qs_saturation.values_list("g_frac_fina_gruesa", flat=True).order_by('id')
         ys = np.max(ys_list)
-        # Saturation Curve to 100%
-        max_w_100 = (((ys/min_y)-1)*100/100*1)/ys*100
-        min_w_100 = (((ys/max_y)-1)*100/100*1)/ys*100
     else:
+        sat_points = None
         qs_saturation = None
         pfe = None
         pf_f_g = None
@@ -273,13 +272,15 @@ def proctor_m_detail(request, id):
 
     # ploting
     TOOLS="hover,crosshair,pan,wheel_zoom,reset,save,"
-    plot = figure(x_range=(min_x, max_x), y_range=(min_y, max_y), tools=TOOLS, 
-        title="Curva Humedad - Densidad Seca", x_axis_label= 'Porcentaje de Humedad (%)', y_axis_label= 'Densidad Seca (g/cm³)',
-        sizing_mode="scale_width",)
+    if obj.saturation_check:    
+        plot = figure(x_range=(min_x, max_x), y_range=(min_y, max_y_sat), tools=TOOLS, title="Curva Humedad - Densidad Seca", x_axis_label= 'Porcentaje de Humedad (%)', y_axis_label= 'Densidad Seca (g/cm³)', sizing_mode="scale_width",)
+        plot.line(x_moisture, sat_points, line_width=2, line_dash='dashed', color="green", legend="Saturación 100%")
+        plot.circle(x_moisture, sat_points, size=8, color="green")
+    else:
+        plot = figure(x_range=(min_x, max_x), y_range=(min_y, max_y), tools=TOOLS, title="Curva Humedad - Densidad Seca", x_axis_label= 'Porcentaje de Humedad (%)', y_axis_label= 'Densidad Seca (g/cm³)', sizing_mode="scale_width",)
+
     plot.circle(x_moisture, y_dry_density, size=8, legend="Resultados")
     plot.line(x, y, line_width=2, line_dash='dashed')
-    if obj.saturation_check:    
-        plot.line([max_x_moisture, max_x], [max_w_100, min_w_100], line_width=1, line_dash='dashed', color="red")
     plot.circle(max_x_moisture, max_y_dry_density, size=8, color="red", legend="Máximo Punto")
     script, div = components(plot)
 
@@ -355,16 +356,14 @@ def proctor_m_pdf(request, id):
 
     if obj.saturation_check and obj.gs:
         qs_saturation = Correction.objects.filter(proctor_m=obj.id)
-        # Saturation Curve to 100%
-        max_w_100 = obj.gs / (1 + obj.gs * max_x_moisture/100)
-        min_w_100 = obj.gs / (1 + obj.gs * (max_x+5)/100)
+        # Saturation Curve to 100% densidad agua 1 gf/cm3
+        sat_points = [1/((i/100)+(1/obj.gs)) for i in x_moisture]
+        max_y_sat = np.max(sat_points)
+        min_y_sat = np.min(sat_points)
     elif obj.saturation_check and obj.gs == Null:
         qs_saturation = Correction.objects.filter(proctor_m=obj.id)
         ys_list = qs_saturation.values_list("g_frac_fina_gruesa", flat=True).order_by('id')
         ys = np.max(ys_list)
-        # Saturation Curve to 100%
-        max_w_100 = (((ys/min_y)-1)*100/100*1)/ys*100
-        min_w_100 = (((ys/max_y)-1)*100/100*1)/ys*100
     else:
         qs_saturation = None
         pfe = None
@@ -394,15 +393,21 @@ def proctor_m_pdf(request, id):
 
     # ploting
     fig = plt.figure(figsize=(5.5, 4.1), dpi=80)
-    plt.xlim(min_x-1, max_x+5)
-    plt.ylim(min_y-0.05, max_y+0.1)
+    if obj.saturation_check:
+        plt.xlim(min_x-1, max_x+1)
+        plt.ylim(min_y-0.05, max_y_sat+0.1)
+    else:
+        plt.xlim(min_x-1, max_x+1)
+        plt.ylim(min_y-0.05, max_y+0.1)
+
     plt.grid(b=True, which='both', axis='both')
     
-    plt.scatter(x_moisture, y_dry_density, label='Resultados', s=20, c='blue',)
-    plt.plot(x, y, color='green', linestyle='dashed',)
+    plt.scatter(x_moisture, y_dry_density, label='Resultados', s=25, c='blue',)
+    plt.plot(x, y, color='blue', linestyle='dashed',)
     if obj.saturation_check:    
-        plt.plot([max_x_moisture, max_x], [max_w_100, min_w_100], linestyle='dashed', color="red")
-    plt.scatter(max_x_moisture, max_y_dry_density, label='Máximo Punto', s=20, c='red',)
+        plt.plot(x_moisture, sat_points, linestyle='dashed', color="green")
+        plt.scatter(x_moisture, sat_points, label='Saturación 100%', s=25, c='green')
+    plt.scatter(max_x_moisture, max_y_dry_density, label='Máximo Punto', s=25, c='red',)
 
     plt.xlabel('Porcentaje de Humedad (%)')
     plt.ylabel('Densidad Seca (g/cm³)')

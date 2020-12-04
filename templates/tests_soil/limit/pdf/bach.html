@@ -43,8 +43,8 @@
           <p class="text-left"><strong>Corrección del Ensayo:</strong> {{ obj.updated|default_if_none:"Ninguna Corrección"|date:"d/m/Y P" }}</p>
           {% endif %}
           <p class="text-left"><strong>Emisión de Certificado:</strong> {% now "d/m/Y P" %}</p>
-          <p class="text-left"><strong>Límite Líquido:</strong> {{ hit_25 }}%</p>          
-          <p class="text-left"><strong>Límite Plástico:</strong> {{ mean_y_moisture_plastic }}%</p>          
+          <p class="text-left"><strong>Límite Líquido:</strong> {{ hit_25 }}</p>          
+          <p class="text-left"><strong>Límite Plástico:</strong> {{ mean_y_moisture_plastic }}</p>          
           <p class="text-left"><strong>Indice de Plasticidad:</strong> {{ plastic_index }}</p>          
         </div>
         <div style="margin-left: 4rem;" class="col-xs-3 panel panel-default">

@@ -99,7 +99,7 @@ def liquid_save(request, id):
                             instance.equipment.add(equip)
                             equip.use = F("use") + 1
                             equip.save()
-                        messages.warning(request, f"Si el numero de golpes de los tres ensayos es menor a 25 el Indice de Plasticidad no se podrá determinar")
+                        messages.warning(request, f"Si el numero de golpes para serrar la ranura es siempre menor de 25 el Límite Líquido no podrá determinarse, y se determinara al suelo como no plástico sin realizar el ensayo de Límite Plástico")
                         messages.success(request, f"Los ensayos han sido creados")
                     else:
                         instance.save()
@@ -207,11 +207,11 @@ def limit_detail(request, id):
     coef_x1 = np.polyfit(x_hit, y_moisture, 1)
     m = coef_x1[0]
     C = coef_x1[1]
-    hit_25 = round(m*25 + C, 1)
+    hit_25 = round(m*25 + C, 0)
 
     # Y values in a list format plastic test
     y_moisture_plastic = qs_plastic.values_list("moisture", flat=True).order_by('id')
-    mean_y_moisture_plastic = round(np.mean(y_moisture_plastic), 1)
+    mean_y_moisture_plastic = round(np.mean(y_moisture_plastic), 0)
 
     # plastic index
     count = 0
@@ -221,8 +221,8 @@ def limit_detail(request, id):
         else:
             count += 0
     
-    if count == 3:
-        plastic_index = "No se pudo Determinar"
+    if count == 4:
+        plastic_index = "NP (No Plástico)"
     else:
         plastic_index = round(hit_25 - mean_y_moisture_plastic, 1) 
 
@@ -301,11 +301,11 @@ def limit_pdf(request, id):
         denom += (x_hit[i] - mean_x_hit) ** 2
     m = number / denom
     C = mean_y_moisture - (m * mean_x_hit)
-    hit_25 = round(C + m*25, 1)
+    hit_25 = round(C + m*25, 0)
 
     # Y values in a list format plastic test
     y_moisture_plastic = qs_plastic.values_list("moisture", flat=True).order_by('id')
-    mean_y_moisture_plastic = round(np.mean(y_moisture_plastic), 1)
+    mean_y_moisture_plastic = round(np.mean(y_moisture_plastic), 0)
 
     # plastic index
     count = 0
@@ -315,8 +315,8 @@ def limit_pdf(request, id):
         else:
             count += 0
     
-    if count == 3:
-        plastic_index = "No se pudo Determinar"
+    if count == 4:
+        plastic_index = "NP (No Plástico)"
     else:
         plastic_index = round(hit_25 - mean_y_moisture_plastic, 1) 
 

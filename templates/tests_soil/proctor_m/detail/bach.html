@@ -106,35 +106,6 @@
                         {% endfor %}
                     </tbody>
                 </table>
-                <p class="text-left"><span class="font-weight-bold">Determinación de la Curva de Saturación:</span></p>
-                <table class="table table-sm table-responsive table-bordered text-center">
-                    <thead class="primary-color-dark white-text">
-                        <tr>
-                            <th>Peso de fracción extradim (%)</th>
-                            <th>Peso de fracción gruesa (%)</th>
-                            <th>Peso de fracción fina (%)</th>
-                            <th>P.Esp. aparente de la fracción extrad. a 20°c</th>
-                            <th>P.Esp. aparente de la fracción gruesa a 20°c</th>
-                            <th>G.Esp. específica de la fracción fina a 20°c</th>
-                            <th>G. Esp. frac. Fina+gruesa a 20°c (Gmfg)</th>
-                            <th>Gravedad específica global a 20°c (Gmg)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for saturation in qs_saturation %}
-                        <tr>
-                            <td>{{ saturation.frac_extrad_weight }}</td>
-                            <td>{{ saturation.frac_gruesa_weight }}</td>
-                            <td>{{ saturation.frac_fina_weight }}</td>
-                            <td>{{ saturation.p_sp_frac_extrad }}</td>
-                            <td>{{ saturation.p_sp_frac_gruesa }}</td>
-                            <td>{{ saturation.g_sp_frac_fina }}</td>
-                            <td>{{ saturation.g_frac_fina_gruesa }}</td>
-                            <td>{{ saturation.g_sp_global }}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
                 <p class="text-left"><span class="font-weight-bold">Determinación de la Correccion:</span></p>
                 <table class="table table-sm table-responsive table-bordered text-center">
                     <thead class="primary-color-dark white-text">

@@ -44,9 +44,6 @@
                           <th>Carga (kgf)</th>
                           <th>Esfuerzo (kgf/cm²)</th>
                           <th>Esfuerzo (MPa)</th>
-                          <th>Esfuerzo a 175 (kgf/cm²)</th>
-                          <th>Esfuerzo a 210 (kgf/cm²)</th>
-                          <th>Esfuerzo a 280 (kgf/cm²)</th>
                           <th>Creado</th>
                           <th>Actualizado</th>
                         </tr>
@@ -177,39 +174,6 @@
                                 {% for test_ref in test.pice_set.all %}
                                 <tr>
                                   <td nowrap="nowrap">{{ test_ref.fc_MPa }}</td>
-                                </tr>
-                                {% endfor %}
-                              </tbody>
-                            </table>
-                          </td>
-                          <td>
-                            <table style="width:100%">
-                              <tbody>
-                                {% for test_ref in test.pice_set.all %}
-                                <tr>
-                                  <td nowrap="nowrap">{{ test_ref.fc_175 }}</td>
-                                </tr>
-                                {% endfor %}
-                              </tbody>
-                            </table>
-                          </td>
-                          <td>
-                            <table style="width:100%">
-                              <tbody>
-                                {% for test_ref in test.pice_set.all %}
-                                <tr>
-                                  <td nowrap="nowrap">{{ test_ref.fc_210 }}</td>
-                                </tr>
-                                {% endfor %}
-                              </tbody>
-                            </table>
-                          </td>
-                          <td>
-                            <table style="width:100%">
-                              <tbody>
-                                {% for test_ref in test.pice_set.all %}
-                                <tr>
-                                  <td nowrap="nowrap">{{ test_ref.fc_280 }}</td>
                                 </tr>
                                 {% endfor %}
                               </tbody>

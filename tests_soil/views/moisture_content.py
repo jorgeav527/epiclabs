@@ -45,7 +45,7 @@ def moisture_content_create(request):
 
     if request.user.is_bach or request.user.is_group:
         form = MoistureContentForm(request.POST or None)
-        equips = Equip.objects.filter(name__in=("Balanza", "Maquinas Varias",))
+        equips = Equip.objects.filter(name__in=("Balanza", "Espátula"))
         if request.method == "POST":
             if form.is_valid():
                 form.instance.user = request.user
@@ -59,7 +59,7 @@ def moisture_content_create(request):
 
     elif request.user.is_superuser or request.user.is_admin:
         form = MoistureContentFormClient(request.POST or None)
-        equips = Equip.objects.filter(name__in=("Balanza", "Maquinas Varias",))
+        equips = Equip.objects.filter(name__in=("Balanza", "Espátula"))
         if request.method == "POST":
             if form.is_valid():
                 form.save()
@@ -81,7 +81,7 @@ def moisture_content_create(request):
 @login_required
 def moisture_material_save(request, id):
     obj = get_object_or_404(MoistureContent, id=id)
-    equips = Equip.objects.filter(name__in=("Horno Eléctrico", "Balanza",))
+    equips = Equip.objects.filter(name__in=("Horno eléctrico", "Balanza", "Cocina", "Contenedores de muestras"))
 
     if request.user.is_bach or request.user.is_group or request.user.is_superuser or request.user.is_admin:
         if request.method == "POST":
@@ -177,7 +177,7 @@ def moisture_content_detail(request, id):
 @login_required
 def moisture_content_delete(request, id):
     obj = get_object_or_404(MoistureContent, id=id)
-    equips = Equip.objects.filter(name__in=("Horno Eléctrico", "Balanza"))
+    equips = Equip.objects.filter(name__in=("Horno eléctrico", "Balanza", "Cocina", "Contenedores de muestras", "Espátula"))
 
     if request.method == "POST":
         obj.delete()

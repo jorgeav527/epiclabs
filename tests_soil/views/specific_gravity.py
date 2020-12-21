@@ -45,7 +45,7 @@ def specific_gravity_create(request):
 
     if request.user.is_bach or request.user.is_group:
         form = SpecificGravityForm(request.POST or None)
-        equips = Equip.objects.filter(name__in=("Balanza", "Maquinas Varias",))
+        equips = Equip.objects.filter(name__in=("Balanza", "Herramientas varias", "Tamiz No 4"))
         if request.method == "POST":
             if form.is_valid():
                 form.instance.user = request.user
@@ -59,7 +59,7 @@ def specific_gravity_create(request):
 
     elif request.user.is_superuser or request.user.is_admin:
         form = SpecificGravityFormClient(request.POST or None)
-        equips = Equip.objects.filter(name__in=("Balanza", "Maquinas Varias",))
+        equips = Equip.objects.filter(name__in=("Balanza", "Herramientas varias", "Tamiz No 4"))
         if request.method == "POST":
             if form.is_valid():
                 form.save()
@@ -81,7 +81,7 @@ def specific_gravity_create(request):
 @login_required
 def fraction_pass_save(request, id):
     obj = get_object_or_404(SpecificGravity, id=id)
-    equips = Equip.objects.filter(name__in=("Horno Eléctrico", "Balanza", "Fiola",))
+    equips = Equip.objects.filter(name__in=("Horno eléctrico", "Balanza", "Picnómetro", "Termómetro", "Embudo", "Herramientas varias"))
 
     if request.user.is_bach or request.user.is_group or request.user.is_superuser or request.user.is_admin:
         if request.method == "POST":
@@ -112,7 +112,7 @@ def fraction_pass_save(request, id):
 @login_required
 def fraction_retained_save(request, id):
     obj = get_object_or_404(SpecificGravity, id=id)
-    equips = Equip.objects.filter(name__in=("Horno Eléctrico", "Balanza", "Fiola",))
+    equips = Equip.objects.filter(name__in=("Horno eléctrico", "Balanza", "Cesta con malla de alambre", "Depósito de agua", "Termómetro", "Herramientas varias"))
 
     if request.user.is_bach or request.user.is_group or request.user.is_superuser or request.user.is_admin:
         if request.method == "POST":
@@ -234,7 +234,7 @@ def specific_gravity_detail(request, id):
 @login_required
 def specific_gravity_delete(request, id):
     obj = get_object_or_404(SpecificGravity, id=id)
-    equips = Equip.objects.filter(name__in=("Horno Eléctrico", "Balanza", "Fiola",))
+    equips = Equip.objects.filter(name__in=("Horno eléctrico", "Balanza", "Picnómetro", "Termómetro", "Embudo", "Herramientas varias", "Cesta con malla de alambre", "Depósito de agua"))
 
     if request.method == "POST":
         obj.delete()

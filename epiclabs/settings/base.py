@@ -32,7 +32,6 @@ INSTALLED_APPS = [
     'django_extensions',
     'crispy_forms',
     'qr_code',
-    'import_export',
     # Django Apps Default
     'django.contrib.admin',
     'django.contrib.auth',
@@ -41,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # Others
+    'import_export',
 ]
 
 AUTH_USER_MODEL = "accounts.User" 

@@ -203,7 +203,7 @@ def granulometric_global_create(request):
 
     if request.user.is_bach or request.user.is_group:
         form = GranulometricGlobalForm(request.POST or None)
-        equips = Equip.objects.filter(name__in=("Tamizadora", "Balanza"))
+        equips = Equip.objects.filter(name__in=("Balanza", "Herramientas varias"))
         if request.method == "POST":
             if form.is_valid():
                 form.instance.user = request.user
@@ -217,7 +217,7 @@ def granulometric_global_create(request):
 
     elif request.user.is_superuser or request.user.is_admin:
         form = GranulometricGlobalFormClient(request.POST or None)
-        equips = Equip.objects.filter(name__in=("Tamizadora", "Balanza"))
+        equips = Equip.objects.filter(name__in=("Balanza", "Herramientas varias"))
         if request.method == "POST":
             if form.is_valid():
                 form.save()
@@ -238,7 +238,7 @@ def granulometric_global_create(request):
 @login_required
 def global_mesh_save(request, id):
     obj = get_object_or_404(GranulometricGlobal, id=id)
-    equips = Equip.objects.filter(name__in=("Tamizadora", "Balanza",))
+    equips = Equip.objects.filter(name__in=("Tamizadora eléctrica", "Balanza", "Juego de tamices", "Herramientas varias"))
     if request.user.is_bach or request.user.is_group or request.user.is_superuser or request.user.is_admin:
         if request.method == "POST":
             formset = GlobalMeshFormSet(request.POST, instance=obj)
@@ -591,7 +591,7 @@ def granulometric_global_detail(request, id):
 @login_required
 def granulometric_global_delete(request, id):
     obj = get_object_or_404(GranulometricGlobal, id=id)
-    equips = Equip.objects.filter(name__in=("Tamizadora", "Balanza"))
+    equips = Equip.objects.filter(name__in=("Tamizadora eléctrica", "Balanza", "Juego de tamices", "Herramientas varias"))
     if request.method == "POST":
         obj.delete()
         for equip in equips:

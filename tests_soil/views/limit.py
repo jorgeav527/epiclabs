@@ -50,7 +50,7 @@ def limit_list(request):
 def limit_create(request):
     if request.user.is_bach or request.user.is_group:
         form = LimitForm(request.POST or None)
-        equips = Equip.objects.filter(name__in=("Balanza"))
+        equips = Equip.objects.filter(name__in=("Balanza", "Tamiz No 4"))
         if request.method == "POST":
             if form.is_valid():
                 form.instance.user = request.user
@@ -63,7 +63,7 @@ def limit_create(request):
                 return redirect('tests_soil:limit_list')
     elif request.user.is_superuser or request.user.is_admin:
         form = LimitFormClient(request.POST or None)
-        equips = Equip.objects.filter(name__in=("Balanza"))
+        equips = Equip.objects.filter(name__in=("Balanza", "Tamiz No 4"))
         if request.method == "POST":
             if form.is_valid():
                 form.save()
@@ -85,7 +85,7 @@ def limit_create(request):
 @login_required
 def liquid_save(request, id):
     obj = get_object_or_404(Limit, id=id)
-    equips = Equip.objects.filter(name__in=("Horno Eléctrico", "Balanza"))
+    equips = Equip.objects.filter(name__in=("Horno eléctrico", "Balanza", "Copa de bronce", "Acanalador", "Contenedores de muestras", "Espátula"))
     if request.user.is_bach or request.user.is_group or request.user.is_superuser or request.user.is_admin:
         if request.method == "POST":
             formset = LiquidFormSet(request.POST, instance=obj)
@@ -126,7 +126,7 @@ def liquid_save(request, id):
 @login_required
 def plastic_save(request, id):
     obj = get_object_or_404(Limit, id=id)
-    equips = Equip.objects.filter(name__in=("Horno Eléctrico", "Balanza"))
+    equips = Equip.objects.filter(name__in=("Horno eléctrico", "Balanza", "Base de acrílico", "Contenedores de muestras", "Espátula"))
     if request.user.is_bach or request.user.is_group or request.user.is_superuser or request.user.is_admin:
         if request.method == "POST":
             formset = PlasticFormSet(request.POST, instance=obj)
@@ -262,7 +262,7 @@ def limit_detail(request, id):
 @login_required
 def limit_delete(request, id):
     obj = get_object_or_404(Limit, id=id)
-    equips = Equip.objects.filter(name__in=("Horno Eléctrico", "Balanza"))
+    equips = Equip.objects.filter(name__in=("Horno eléctrico", "Balanza", "Base de acrílico", "Contenedores de muestras", "Espátula", "Copa de bronce", "Acanalador"))
     if request.method == "POST":
         obj.delete()
         for equip in equips:

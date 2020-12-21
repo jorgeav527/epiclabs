@@ -42,7 +42,7 @@ def brick_type_create(request):
 
     if request.user.is_bach or request.user.is_group:
         form = BrickTypeForm(request.POST or None)
-        equips = Equip.objects.filter(name__in=("Balanza", "Maquinas Varias",))
+        equips = Equip.objects.filter(name__in=("Regla graduada", "Carro de mano"))
         if request.method == "POST":
             if form.is_valid():
                 form.instance.user = request.user
@@ -56,7 +56,7 @@ def brick_type_create(request):
 
     elif request.user.is_superuser or request.user.is_admin:
         form = BrickTypeFormClient(request.POST or None)
-        equips = Equip.objects.filter(name__in=("Balanza", "Maquinas Varias",))
+        equips = Equip.objects.filter(name__in=("Regla graduada", "Carro de mano"))
         if request.method == "POST":
             if form.is_valid():
                 form.save()
@@ -78,7 +78,7 @@ def brick_type_create(request):
 @login_required
 def variation_dimensions_save(request, id):
     obj = get_object_or_404(BrickType, id=id)
-    equips = Equip.objects.filter(name__in=("Regla Graduada", "Cuñas de medición",))
+    equips = Equip.objects.filter(name__in=("Regla graduada", "Cuñas de medición", "Bandejas metálicas planas"))
 
     if request.user.is_bach or request.user.is_group or request.user.is_superuser or request.user.is_admin:
         if request.method == "POST":
@@ -109,7 +109,7 @@ def variation_dimensions_save(request, id):
 @login_required
 def warping_save(request, id):
     obj = get_object_or_404(BrickType, id=id)
-    equips = Equip.objects.filter(name__in=("Regla Graduada", "Cuñas de medición",))
+    equips = Equip.objects.filter(name__in=("Regla graduada", "Cuñas de medición", "Bandejas metálicas planas", "Varilla de acero con borde recto"))
 
     if request.user.is_bach or request.user.is_group or request.user.is_superuser or request.user.is_admin:
         if request.method == "POST":
@@ -140,7 +140,7 @@ def warping_save(request, id):
 @login_required
 def density_voids_save(request, id):
     obj = get_object_or_404(BrickType, id=id)
-    equips = Equip.objects.filter(name__in=("Regla Graduada", "Balanza",))
+    equips = Equip.objects.filter(name__in=("Regla graduada", "Balanza", "Bandejas metálicas planas", "Escobilla de cerdas suaves"))
 
     if request.user.is_bach or request.user.is_group or request.user.is_superuser or request.user.is_admin:
         if request.method == "POST":
@@ -171,7 +171,7 @@ def density_voids_save(request, id):
 @login_required
 def suction_save(request, id):
     obj = get_object_or_404(BrickType, id=id)
-    equips = Equip.objects.filter(name__in=("Horno Eléctrico", "Balanza", "Cronómetro",))
+    equips = Equip.objects.filter(name__in=("Regla graduada", "Horno eléctrico", "Balanza", "Cronómetro", "Bandeja metálica plana", "Soportes para ladrillos"))
 
     if request.user.is_bach or request.user.is_group or request.user.is_superuser or request.user.is_admin:
         if request.method == "POST":
@@ -202,7 +202,7 @@ def suction_save(request, id):
 @login_required
 def abs_satu_coeff_save(request, id):
     obj = get_object_or_404(BrickType, id=id)
-    equips = Equip.objects.filter(name__in=("Horno Eléctrico", "Balanza", "Cocina",))
+    equips = Equip.objects.filter(name__in=("Horno eléctrico", "Balanza", "Cocina", "Olla"))
 
     if request.user.is_bach or request.user.is_group or request.user.is_superuser or request.user.is_admin:
         if request.method == "POST":
@@ -233,7 +233,7 @@ def abs_satu_coeff_save(request, id):
 @login_required
 def compretion_brick_save(request, id):
     obj = get_object_or_404(BrickType, id=id)
-    equips = Equip.objects.filter(name__in=("Horno Eléctrico", "Maquina Compresora",))
+    equips = Equip.objects.filter(name__in=("Regla graduada", "Maquina compresora", "Carro de mano"))
 
     if request.user.is_bach or request.user.is_group or request.user.is_superuser or request.user.is_admin:
         if request.method == "POST":
@@ -534,7 +534,7 @@ def brick_type_detail(request, id):
 @login_required
 def brick_type_delete(request, id):
     obj = get_object_or_404(BrickType, id=id)
-    equips = Equip.objects.filter(name__in=("Horno Eléctrico", "Balanza", "Maquina Compresora", "Cocina", "Regla Graduada", "Cuñas de medición",))
+    equips = Equip.objects.filter(name__in=("Horno eléctrico", "Balanza", "Maquina compresora", "Cocina", "Regla Graduada", "Cuñas de medición", "Varilla de acero con borde recto", "Cronómetro", "Bandeja metálica plana", "Soportes para ladrillos"))
 
     if request.method == "POST":
         obj.delete()

@@ -42,7 +42,7 @@ def wood_compression_create(request):
 
     if request.user.is_bach or request.user.is_group:
         form = WoodCompressionForm(request.POST or None)
-        equips = Equip.objects.filter(name__in=("Balanza", "Maquinas Varias",))
+        equips = Equip.objects.filter(name__in=("Bandejas metálicas planas",))
         if request.method == "POST":
             if form.is_valid():
                 form.instance.user = request.user
@@ -78,7 +78,7 @@ def wood_compression_create(request):
 @login_required
 def parallel_perpendicular_save(request, id):
     obj = get_object_or_404(WoodCompression, id=id)
-    equips = Equip.objects.filter(name__in=("Balanza", "Maquina Compresora", "Regla Graduada",))
+    equips = Equip.objects.filter(name__in=("Maquina compresora", "Regla graduada"))
 
     if request.user.is_bach or request.user.is_group or request.user.is_superuser or request.user.is_admin:
         if request.method == "POST":

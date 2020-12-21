@@ -44,7 +44,7 @@ def fine_material_create(request):
 
     if request.user.is_bach or request.user.is_group:
         form = FineMaterialForm(request.POST or None)
-        equips = Equip.objects.filter(name__in=("Horno Eléctrico", "Balanza"))
+        equips = Equip.objects.filter(name__in=("Horno eléctrico", "Balanza", "Tamiz No 4", "Tamiz No 200"))
         if request.method == "POST":
             if form.is_valid():
                 form.instance.user = request.user
@@ -58,7 +58,7 @@ def fine_material_create(request):
 
     elif request.user.is_superuser or request.user.is_admin:
         form = FineMaterialFormClient(request.POST or None)
-        equips = Equip.objects.filter(name__in=("Horno Eléctrico", "Balanza"))
+        equips = Equip.objects.filter(name__in=("Horno eléctrico", "Balanza", "Tamiz No 4", "Tamiz No 200"))
         if request.method == "POST":
             if form.is_valid():
                 form.save()
@@ -124,7 +124,7 @@ def fine_material_detail(request, id):
 @login_required
 def fine_material_delete(request, id):
     obj = get_object_or_404(FineMaterial, id=id)
-    equips = Equip.objects.filter(name__in=("Horno Eléctrico", "Balanza"))
+    equips = Equip.objects.filter(name__in=("Horno eléctrico", "Balanza", "Tamiz No 4", "Tamiz No 200"))
     if request.method == "POST":
         obj.delete()
         for equip in equips:

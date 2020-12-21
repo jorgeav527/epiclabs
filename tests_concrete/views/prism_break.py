@@ -42,7 +42,7 @@ def prism_break_list(request):
 def prism_break_create(request):
     if request.user.is_bach or request.user.is_group:
         form = PrismBreakForm(request.POST or None)
-        equip = Equip.objects.get(name="Carro de Mano",)
+        equip = Equip.objects.get(name="Carro de mano",)
         if request.method == "POST":
             if form.is_valid():
                 form.instance.user = request.user
@@ -75,7 +75,7 @@ def prism_break_create(request):
 @login_required
 def prism_save(request, id):
     obj = get_object_or_404(PrismBreak, id=id)
-    equips = Equip.objects.filter(name__in=("Maquina Compresora", "Regla Graduada",))
+    equips = Equip.objects.filter(name__in=("Maquina compresora", "Vernier electrónico", "Sierra cortadora de concreto"))
 
     if request.user.is_bach or request.user.is_group or request.user.is_superuser or request.user.is_admin:
         if request.method == "POST":
@@ -176,7 +176,7 @@ def prism_break_detail(request, id):
 @login_required
 def prism_break_delete(request, id):
     obj = get_object_or_404(PrismBreak, id=id)
-    equips = Equip.objects.filter(name__in=("Maquina Compresora", "Regla Graduada", "Carro de Mano",))
+    equips = Equip.objects.filter(name__in=("Maquina compresora", "Vernier electrónico", "Carro de mano",))
 
     if request.method == "POST":
         obj.delete()

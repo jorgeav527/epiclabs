@@ -51,7 +51,7 @@ def proctor_m_create(request):
 
     if request.user.is_bach or request.user.is_group:
         form = ProctorMForm(request.POST or None)
-        equips = Equip.objects.filter(name__in=("Balanza",))
+        equips = Equip.objects.filter(name__in=("Balanza", "Tamiz No 4", "Tamiz 3/4", "Tamiz 3/8"))
         if request.method == "POST":
             if form.is_valid():
                 form.instance.user = request.user
@@ -65,7 +65,7 @@ def proctor_m_create(request):
 
     elif request.user.is_superuser or request.user.is_admin:
         form = ProctorMFormClient(request.POST or None)
-        equips = Equip.objects.filter(name__in=("Balanza",))
+        equips = Equip.objects.filter(name__in=("Balanza", "Herramientas varias"))
         if request.method == "POST":
             if form.is_valid():
                 form.save()
@@ -87,7 +87,7 @@ def proctor_m_create(request):
 @login_required
 def density_save(request, id):
     obj = get_object_or_404(ProctorM, id=id)
-    equips = Equip.objects.filter(name__in=("Horno Eléctrico", "Balanza", "Proctor", "Pison"))
+    equips = Equip.objects.filter(name__in=("Horno eléctrico", "Balanza", "Proctor", "Pison", "Contenedores de muestras"))
     if request.user.is_bach or request.user.is_group or request.user.is_superuser or request.user.is_admin:
         if request.method == "POST":
             formset = DensityWetDryFormSet(request.POST, instance=obj)
@@ -307,7 +307,7 @@ def proctor_m_detail(request, id):
 @login_required
 def proctor_m_delete(request, id):
     obj = get_object_or_404(ProctorM, id=id)
-    equips = Equip.objects.filter(name__in=("Horno Eléctrico", "Balanza"))
+    equips = Equip.objects.filter(name__in=("Tamiz No 4", "Tamiz 3/4", "Tamiz 3/8", "Horno eléctrico", "Balanza", "Proctor", "Pison", "Contenedores de muestras", "Herramientas varias"))
     if request.method == "POST":
         obj.delete()
         for equip in equips:

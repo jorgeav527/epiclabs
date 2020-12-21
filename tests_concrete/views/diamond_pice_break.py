@@ -41,7 +41,7 @@ def diamond_pice_break_list(request):
 def diamond_pice_break_create(request):
     if request.user.is_bach or request.user.is_group:
         form = DiamondPiceBreakForm(request.POST or None)
-        equips = Equip.objects.filter(name__in=("Maquina Compresora", "Equipo Perforador"))
+        equips = Equip.objects.filter(name__in=("Carro de mano", "Detector de metales"))
         if request.method == "POST":
             if form.is_valid():
                 form.instance.user = request.user
@@ -54,7 +54,7 @@ def diamond_pice_break_create(request):
                 return redirect('tests_concrete:diamond_pice_break_list')
     elif request.user.is_superuser or request.user.is_admin:
         form = DiamondPiceBreakFormClient(request.POST or None)
-        equips = Equip.objects.filter(name__in=("Maquina Compresora", "Equipo Perforador"))
+        equips = Equip.objects.filter(name__in=("Carro de mano", "Detector de metales"))
         if request.method == "POST":
             if form.is_valid():
                 form.save()
@@ -105,7 +105,7 @@ def diamond_pice_break_update(request, id):
 @login_required
 def diamond_pice_save(request, id):
     obj = get_object_or_404(DiamondPiceBreak, id=id)
-    equips = Equip.objects.filter(name__in=("Maquina Compresora", "Regla Graduada",))
+    equips = Equip.objects.filter(name__in=("Maquina compresora", "Vernier electrónico", "Taladro perforador", "Compresor de aire", "Brocas"))
 
     if request.user.is_bach or request.user.is_group or request.user.is_superuser or request.user.is_admin:
         if request.method == "POST":
@@ -164,7 +164,7 @@ def diamond_pice_break_detail(request, id):
 @login_required
 def diamond_pice_break_delete(request, id):
     obj = get_object_or_404(DiamondPiceBreak, id=id)
-    equips = Equip.objects.filter(name__in=("Maquina Compresora", "Equipo Perforador"))
+    equips = Equip.objects.filter(name__in=("Maquina compresora", "Vernier electrónico", "Taladro perforador", "Compresor de aire", "Brocas", "Carro de mano", "Detector de metales"))
     if request.method == "POST":
         obj.delete()
         for equip in equips:

@@ -47,7 +47,7 @@ def sand_cone_create(request):
 
     if request.user.is_bach or request.user.is_group:
         form = SandConeForm(request.POST or None)
-        equips = Equip.objects.filter(name__in=("Balanza", "Maquinas Varias",))
+        equips = Equip.objects.filter(name__in=("Balanza", "Herramientas varias"))
         if request.method == "POST":
             if form.is_valid():
                 form.instance.user = request.user
@@ -61,7 +61,7 @@ def sand_cone_create(request):
 
     elif request.user.is_superuser or request.user.is_admin:
         form = SandConeFormClient(request.POST or None)
-        equips = Equip.objects.filter(name__in=("Balanza", "Maquinas Varias",))
+        equips = Equip.objects.filter(name__in=("Balanza", "Herramientas varias"))
         if request.method == "POST":
             if form.is_valid():
                 form.save()
@@ -83,7 +83,7 @@ def sand_cone_create(request):
 @login_required
 def humid_density_save(request, id):
     obj = get_object_or_404(SandCone, id=id)
-    equips = Equip.objects.filter(name__in=("Cono de Arena", "Balanza", "Horno Eléctrico",))
+    equips = Equip.objects.filter(name__in=("Cono de arena", "Balanza", "Herramientas varias"))
     if request.user.is_bach or request.user.is_group or request.user.is_superuser or request.user.is_admin:
         if request.method == "POST":
             formset = HumidDensityFormSet(request.POST, instance=obj)
@@ -113,7 +113,7 @@ def humid_density_save(request, id):
 @login_required
 def content_moisture_save(request, id):
     obj = get_object_or_404(SandCone, id=id)
-    equips = Equip.objects.filter(name__in=("Maquinas Varias", "Balanza", "Horno Eléctrico",))
+    equips = Equip.objects.filter(name__in=("Herramientas varias", "Balanza", "Horno eléctrico", "Contenedores de muestras"))
     if request.user.is_bach or request.user.is_group or request.user.is_superuser or request.user.is_admin:
         if request.method == "POST":
             formset = ContentMoistureFormSet(request.POST, instance=obj)
@@ -143,7 +143,7 @@ def content_moisture_save(request, id):
 @login_required
 def correction_sandcone_save(request, id):
     obj = get_object_or_404(SandCone, id=id)
-    equips = Equip.objects.filter(name__in=("Maquinas Varias", "Balanza"))
+    equips = Equip.objects.filter(name__in=("Herramientas varias", "Balanza"))
     if request.user.is_bach or request.user.is_group or request.user.is_superuser or request.user.is_admin:
         if request.method == "POST":
             formset = CorrectionSandConeFormSet(request.POST, instance=obj)
@@ -274,7 +274,7 @@ def sand_cone_detail(request, id):
 @login_required
 def sand_cone_delete(request, id):
     obj = get_object_or_404(SandCone, id=id)
-    equips = Equip.objects.filter(name__in=("Horno Eléctrico", "Balanza"))
+    equips = Equip.objects.filter(name__in=("Horno eléctrico", "Balanza", "Cono de arena", "Herramientas varias", "Contenedores de muestras"))
     if request.method == "POST":
         obj.delete()
         for equip in equips:

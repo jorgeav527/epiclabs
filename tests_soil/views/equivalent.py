@@ -42,7 +42,7 @@ def equivalent_list(request):
 def equivalent_create(request):
     if request.user.is_bach or request.user.is_group:
         form = EquivalentForm(request.POST or None)
-        equips = Equip.objects.filter(name__in=("Balanza"))
+        equips = Equip.objects.filter(name__in=("Tamiz No 4", "Cloruro de calcio", "Horno eléctrico"))
         if request.method == "POST":
             if form.is_valid():
                 form.instance.user = request.user
@@ -55,7 +55,7 @@ def equivalent_create(request):
                 return redirect('tests_soil:equivalent_list')
     elif request.user.is_superuser or request.user.is_admin:
         form = EquivalentFormClient(request.POST or None)
-        equips = Equip.objects.filter(name__in=("Balanza"))
+        equips = Equip.objects.filter(name__in=("Tamiz No 4", "Cloruro de Calcio", "Horno eléctrico"))
         if request.method == "POST":
             if form.is_valid():
                 form.save()
@@ -77,7 +77,7 @@ def equivalent_create(request):
 @login_required
 def equiv_save(request, id):
     obj = get_object_or_404(Equivalent, id=id)
-    equips = Equip.objects.filter(name__in=("Horno Eléctrico", "Balanza"))
+    equips = Equip.objects.filter(name__in=("Recipiente cilíndrico 2_1/4", "Cronómetro", "Embudo"))
     
     if request.user.is_bach or request.user.is_group or request.user.is_superuser or request.user.is_admin:
         if request.method == "POST":
@@ -158,7 +158,7 @@ def equivalent_detail(request, id):
 @login_required
 def equivalent_delete(request, id):
     obj = get_object_or_404(Equivalent, id=id)
-    equips = Equip.objects.filter(name__in=("Horno Eléctrico", "Balanza"))
+    equips = Equip.objects.filter(name__in=("Tamiz No 4", "Cloruro de calcio", "Horno eléctrico", "Recipiente cilíndrico 2_1/4", "Cronómetro", "Embudo"))
     if request.method == "POST":
         obj.delete()
         for equip in equips:

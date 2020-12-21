@@ -42,7 +42,7 @@ def pice_break_list(request):
 def pice_break_create(request):
     if request.user.is_bach or request.user.is_group:
         form = PiceBreakForm(request.POST or None)
-        equip = Equip.objects.get(name="Carro de Mano",)
+        equip = Equip.objects.get(name="Carro de mano",)
         if request.method == "POST":
             if form.is_valid():
                 form.instance.user = request.user
@@ -54,7 +54,7 @@ def pice_break_create(request):
                 return redirect('tests_concrete:pice_break_list')
     elif request.user.is_superuser or request.user.is_admin:
         form = PiceBreakFormClient(request.POST or None)
-        equip = Equip.objects.get(name="Carro de Mano",)
+        equip = Equip.objects.get(name="Carro de mano",)
         if request.method == "POST":
             if form.is_valid():
                 form.save()
@@ -75,7 +75,7 @@ def pice_break_create(request):
 @login_required
 def pice_save(request, id):
     obj = get_object_or_404(PiceBreak, id=id)
-    equips = Equip.objects.filter(name__in=("Maquina Compresora", "Regla Graduada",))
+    equips = Equip.objects.filter(name__in=("Maquina compresora", "Vernier electrónico",))
 
     if request.user.is_bach or request.user.is_group or request.user.is_superuser or request.user.is_admin:
         if request.method == "POST":
@@ -145,11 +145,12 @@ def pice_break_detail(request, id):
     qs_pice = Pice.objects.filter(pice_break=obj.id)
 
     pice_fc = qs_pice.values_list("fc", flat=True).order_by("id")
+    print(pice_fc, obj.fc_esp)
     mean_pice_fc = round(np.mean(pice_fc), 2)
     std_pice_fc = round(np.std(pice_fc), 2)
 
     pice_element_name = list(qs_pice.values_list("element_name", flat=True).order_by("id"))
-    porcentage_off = list(map(lambda x:round((x-obj.fc_esp)/obj.fc_esp*100, 1), pice_fc))
+    porcentage_off = list(map(lambda x:round(((x-obj.fc_esp)/obj.fc_esp)*100, 1), pice_fc))
     zippedList = zip(pice_element_name, porcentage_off)
 
     pice_fc_MPa = qs_pice.values_list("fc_MPa", flat=True).order_by("id")
@@ -175,7 +176,7 @@ def pice_break_detail(request, id):
 @login_required
 def pice_break_delete(request, id):
     obj = get_object_or_404(PiceBreak, id=id)
-    equips = Equip.objects.filter(name__in=("Maquina Compresora", "Regla Graduada", "Carro de Mano",))
+    equips = Equip.objects.filter(name__in=("Maquina compresora", "Vernier electrónico", "Carro de mano",))
 
     if request.method == "POST":
         obj.delete()
